@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Git 與 GitHub 白話講｜Vibe Coding 實戰課</title>
+  <meta name="description" content="用存檔點和雲端相簿的比喻，搞懂 repo、commit、push、pull、branch、merge、PR。附互動存檔點模擬器。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css">
+  <link rel="stylesheet" href="../assets/css/git-sim.css">
+</head>
+<body data-module="m4" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <!-- ============ 開場 ============ -->
+  <section class="module-hero slide" data-tour="hero">
+    <span class="eyebrow"><b>04</b> B 上線．Git 與 GitHub</span>
+    <h1>Git 是<em>無限存檔點</em>，<br>GitHub 是<em>雲端保險箱</em></h1>
+    <p class="lead">寫程式最怕的不是寫錯，而是「改壞了回不去」。這個單元不用背指令，只要搞懂幾個關鍵詞，你就看得懂 Claude Code 在幫你做什麼。</p>
+    <ul class="goals">
+      <li>用自己的話說出 commit、push、pull 的差別</li>
+      <li>知道為什麼要「開分支」再「合併」</li>
+      <li>看得懂 Claude Code 說的 Git 術語，敢放手讓它存檔</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 45 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div class="teacher teacher-note">
+      <b>講師提示．開場 3 分鐘</b>
+      先問全班：「誰的電腦裡有『報告_最終版_真的最終版_v3.docx』這種檔名？」幾乎每個人都會笑著舉手。接著說：Git 就是專門解決這件事的工具。
+    </div>
+  </section>
+
+  <!-- ============ 1 為什麼 ============ -->
+  <section class="slide" id="why">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <div><span class="kicker">先從痛點開始</span><h2>你一定這樣存過檔</h2></div>
+    </div>
+    <div class="split">
+      <div>
+        <div class="card files-mess" aria-label="混亂的檔名範例">
+          <div>📄 報名表.html</div>
+          <div>📄 報名表_改.html</div>
+          <div>📄 報名表_改_OK版.html</div>
+          <div>📄 報名表_最終版.html</div>
+          <div>📄 報名表_最終版_真的最終版.html</div>
+          <div class="muted">📄 報名表_最終版_真的最終版(1).html ← 到底哪個能用？</div>
+        </div>
+      </div>
+      <div>
+        <p>用 AI 寫程式時，這個問題會放大十倍：AI 一次可以改幾十個地方，改好了很棒，<strong>改壞了你根本不知道它動了哪裡</strong>。</p>
+        <div class="analogy"><strong>Git 就像遊戲的存檔點。</strong>每次做到一個段落就存一次，每個存檔都附一句「這次做了什麼」。哪天改壞了，直接讀回上一個存檔點，不怕闖關失敗。</div>
+        <div class="callout callout-ok">
+          <b>講師的真實數字：</b>講師用 Claude Code 做的一個教會報名系統，半年內存檔超過 <b>600 次</b>，平均一天 3～4 次。每次只改一小塊，壞了就退回去。這就是 Vibe Coding 能做大專案的秘密。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 Git vs GitHub ============ -->
+  <section class="slide" id="git-vs-github">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <div><span class="kicker">最多人搞混的一件事</span><h2>Git 和 GitHub 不是同一個東西</h2></div>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="pill pill-brand">Git．在你的電腦裡</span>
+        <h3>📷 手機裡的相簿</h3>
+        <p>Git 是裝在你電腦裡的「存檔工具」。沒有網路也能存檔、也能讀回舊版本。但是電腦壞了、被偷了，存檔就跟著不見。</p>
+      </div>
+      <div class="card">
+        <span class="pill pill-ok">GitHub．在網路上</span>
+        <h3>☁️ 雲端相簿（像 Google 相簿）</h3>
+        <p>GitHub 是一個網站，幫你把存檔點備份到雲端。換電腦也拿得回來、可以分享給別人看、可以多人一起做，還能直接把網站「發佈上線」。</p>
+      </div>
+    </div>
+    <div class="analogy">一句話記住：<strong>Git 負責「存」，GitHub 負責「放」。</strong>手機拍照（Git）→ 同步到雲端相簿（GitHub）。</div>
+  </section>
+
+  <!-- ============ 3 術語卡 ============ -->
+  <section class="slide" id="glossary" data-tour="glossary">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <div><span class="kicker">點一下卡片翻面</span><h2>12 個術語，一次搞懂</h2>
+        <p>正面是術語，背面是白話解釋、生活比喻，還有「你會聽到 Claude Code 怎麼說」。</p></div>
+    </div>
+    <div class="chip-row screen-only" style="margin-bottom:16px" data-glossary-filter>
+      <button type="button" class="chip" aria-pressed="true" data-level="all">全部 12 個</button>
+      <button type="button" class="chip" aria-pressed="false" data-level="core">一定要會的 6 個</button>
+      <button type="button" class="chip" aria-pressed="false" data-level="team">多人合作 6 個</button>
+    </div>
+    <div class="grid grid-3" data-glossary></div>
+    <div class="teacher teacher-note">
+      <b>講師提示．術語快問快答（5 分鐘）</b>
+      兩人一組，一人念背面的比喻，另一人搶答是哪個術語。先玩「一定要會的 6 個」，全班通過再開放全部。
+    </div>
+  </section>
+
+  <!-- ============ 4 模擬器 ============ -->
+  <section class="slide" id="simulator" data-tour="sim">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <div><span class="kicker">動手玩</span><h2>存檔點模擬器</h2>
+        <p>左邊是你的電腦，右邊是 GitHub。照著任務按按鈕，看看每個動作到底改變了哪一邊。</p></div>
+    </div>
+    <div class="sim screen-only" data-sim>
+      <div class="sim-missions card">
+        <h3>🎯 任務清單</h3>
+        <ol data-missions></ol>
+        <button type="button" class="btn btn-sm btn-ghost" data-sim-reset>重新開始</button>
+      </div>
+      <div class="sim-stage">
+        <div class="sim-panes">
+          <div class="sim-pane">
+            <div class="sim-pane-head">💻 你的電腦 <span class="pill pill-brand" data-head></span><span class="pill pill-warn" data-dirty hidden>有未存檔的修改</span></div>
+            <svg data-graph="local" role="img" aria-label="你電腦裡的存檔紀錄"></svg>
+          </div>
+          <div class="sim-pane">
+            <div class="sim-pane-head">☁️ GitHub</div>
+            <svg data-graph="remote" role="img" aria-label="GitHub 上的存檔紀錄"></svg>
+          </div>
+        </div>
+        <div class="sim-controls">
+          <div class="sim-group"><span>寫程式</span>
+            <button type="button" class="btn btn-sm" data-do="edit">✏️ 修改檔案</button>
+            <button type="button" class="btn btn-sm btn-primary" data-do="commit">💾 存檔 commit</button>
+          </div>
+          <div class="sim-group"><span>平行世界</span>
+            <button type="button" class="btn btn-sm" data-do="branch">🌿 開分支</button>
+            <button type="button" class="btn btn-sm" data-do="checkout">🔀 切換分支</button>
+            <button type="button" class="btn btn-sm" data-do="merge">🤝 合併 merge</button>
+          </div>
+          <div class="sim-group"><span>跟雲端同步</span>
+            <button type="button" class="btn btn-sm btn-ok" data-do="push">⬆️ 上傳 push</button>
+            <button type="button" class="btn btn-sm" data-do="pull">⬇️ 下載更新 pull</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-do="teammate">👥 同事改了 GitHub</button>
+          </div>
+        </div>
+        <div class="sim-commit" data-commit-box hidden>
+          <label for="commit-msg"><b>這次存檔要寫什麼說明？</b>（選一個，看看哪種比較好）</label>
+          <div class="options" id="commit-msg" data-commit-options></div>
+        </div>
+        <p class="sim-log" data-log aria-live="polite">從任務 1 開始：先按「修改檔案」，再按「存檔」。</p>
+      </div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單：畫出你的存檔點</h3>
+      <p>照課堂上的「人體 Git」活動，在下面兩條線畫出圓點（存檔）和箭頭（上傳／下載）。</p>
+      <p>你的電腦 main：●────────────────────────────────</p>
+      <p>你的電腦 feature：　 ──────────────────────────</p>
+      <p>GitHub main：●────────────────────────────────</p>
+    </div>
+    <div class="teacher teacher-note">
+      <b>講師提示．模擬器帶領重點</b>
+      <ul>
+        <li>任務 2 做完後停下來問：「剛剛存檔的時候，GitHub 有變嗎？」讓學員自己發現<strong>存檔只在本機</strong>。</li>
+        <li>任務 5 故意先存檔再 push，讓全班看到「上傳被拒絕」，說明這是在保護同事的修改，不是壞掉。</li>
+        <li>存檔說明的選項裡有「update」這種爛說明，選到時問大家：三個月後你看得懂嗎？</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5 Claude Code 翻譯機 ============ -->
+  <section class="slide" id="claude-git" data-tour="translate">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <div><span class="kicker">好消息</span><h2>你不用背指令，跟 Claude Code 說人話就好</h2>
+        <p>Git 的指令很多，但你只要知道「想做什麼」。左邊這樣說，Claude Code 就會幫你執行右邊的指令。</p></div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table class="talk-table">
+        <thead><tr><th>你對 Claude Code 說</th><th>它做的事</th><th>背後的指令（看得懂就好）</th></tr></thead>
+        <tbody>
+          <tr><td>「幫我存檔，說明寫清楚這次改了什麼」</td><td>存檔 commit</td><td><code>git add</code>．<code>git commit</code></td></tr>
+          <tr><td>「推上 GitHub」</td><td>上傳 push</td><td><code>git push</code></td></tr>
+          <tr><td>「把 GitHub 上最新的版本拉下來」</td><td>下載更新 pull</td><td><code>git pull</code></td></tr>
+          <tr><td>「開一個新分支試做深色模式，不要動到 main」</td><td>開分支 branch</td><td><code>git switch -c dark-mode</code></td></tr>
+          <tr><td>「做好了，幫我開 PR」</td><td>發合併請求 PR</td><td><code>gh pr create</code></td></tr>
+          <tr><td>「剛剛那次改壞了，退回上一個存檔」</td><td>讀回存檔</td><td><code>git revert</code></td></tr>
+          <tr><td>「這個專案最近改了哪些東西？」</td><td>看存檔紀錄</td><td><code>git log</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-warn">
+      <b>小心這句話：</b>「強制上傳」「把遠端蓋掉」（<code>git push --force</code>）會把 GitHub 上別人的修改直接覆蓋掉。Claude Code 要執行這種動作時會先問你，<strong>看不懂就按「拒絕」，再問它為什麼要這樣做</strong>。
+    </div>
+    <div class="analogy"><strong>冷知識：</strong>用 Claude Code 桌面版或網頁版做事時，它常會自動開一個叫 <code>claude/某某某</code> 的分支，做完再請你合併。講師有好幾個專案的分支都是這個名字，這很正常，代表它有乖乖在平行世界裡工作。</div>
+  </section>
+
+  <!-- ============ 6 真實故事 ============ -->
+  <section class="slide" id="stories">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <div><span class="kicker">講師踩過的坑</span><h2>三個真實故事</h2></div>
+    </div>
+    <div class="grid grid-3">
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">👯</div><h3>一模一樣的雙胞胎專案</h3><p>講師有兩個幾乎一樣的行政系統：一個是展示版，一個給教會實際使用。</p><span class="flip-hint">點我看發生什麼事 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-danger">教訓</span><p>當初是整包複製一份。後來修好展示版的錯誤，卻忘了另一份也要修，兩份越差越多。</p><p><b>學到：</b>同一份程式要給不同地方用，應該用「設定檔」區分，不要複製成兩個 repo。</p><span class="flip-hint">點我翻回來 ↻</span></div>
+      </div></div>
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">🪦</div><h3>三個空空的 repo</h3><p>講師的 GitHub 上有三個 repo 從建立到現在一次都沒存檔過。</p><span class="flip-hint">點我看發生什麼事 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-ok">這其實沒關係</span><p>開 repo 是免費的，像先買一本新筆記本。想法先佔個位子，有空再做。</p><p><b>學到：</b>不要因為怕做不完就不開始。不過私人想法記得設成 Private。</p><span class="flip-hint">點我翻回來 ↻</span></div>
+      </div></div>
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">🌏</div><h3>一萬次存檔的開源專案</h3><p>講師的 GitHub 上有一份 Taiwan.md，這是世界各地的人一起編寫的台灣知識庫。</p><span class="flip-hint">點我看發生什麼事 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-brand">Fork 與多人合作</span><p>講師是用 <b>fork</b>，把別人的公開專案整包複製一份到自己帳號，可以隨意研究，不會影響原作者。這個專案累積超過一萬次存檔、一千多個 PR。</p><p><b>學到：</b>想幫別人的專案出力，就是 fork → 修改 → 發 PR 請原作者合併。</p><span class="flip-hint">點我翻回來 ↻</span></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ============ 7 工作坊 ============ -->
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <div><span class="kicker">課中工作坊</span><h2>人體 Git：用便利貼演一次</h2>
+        <p>不用電腦。4 人一組，用便利貼和桌子把 Git 演出來。</p></div>
+    </div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 25 分</span>　準備：每組一疊便利貼、兩張 A4（一張寫「我的電腦」，一張寫「GitHub」）、一支筆。</p>
+      <ol>
+        <li><span class="time">0–3 分</span>分配角色：<b>開發者 A</b>、<b>開發者 B</b>、<b>GitHub 管理員</b>（顧雲端那張紙）、<b>記錄員</b>（畫在學習單上）。</li>
+        <li><span class="time">3–8 分</span>A 在便利貼寫「存檔 1：做好標題」貼到「我的電腦」。問：GitHub 上有這張嗎？（沒有！）</li>
+        <li><span class="time">8–12 分</span>A 走過去把便利貼<b>複製一張</b>貼到 GitHub，這就是 push。</li>
+        <li><span class="time">12–18 分</span>B 也想改，先從 GitHub 複製一份到自己桌上（clone／pull），寫「存檔 2：改顏色」。B 想 push，但 A 已經先上傳了新的，管理員要<b>拒絕</b>，請 B 先 pull。</li>
+        <li><span class="time">18–25 分</span>A 拿另一種顏色的便利貼當「分支」，在旁邊試做新功能，做完寫一張「PR：請看我的新功能」交給 B 審核，B 同意後才合併到主線。</li>
+      </ol>
+      <div class="teacher">
+        <p><b>收尾提問（5 分）：</b></p>
+        <ul>
+          <li>剛剛什麼時候最混亂？（通常是兩人同時改）→ 這就是為什麼要 pull 和分支。</li>
+          <li>如果管理員沒有拒絕 B 的上傳，會發生什麼事？（A 的成果被蓋掉）</li>
+          <li>PR 為什麼需要另一個人看？換成 AI 寫的程式，誰來當那個「另一個人」？（預告單元 8：Vibe Check）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 測驗 ============ -->
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關，進度會記在這台電腦的瀏覽器裡。</p></div>
+    </div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <!-- ============ 9 課後 ============ -->
+  <section class="slide" id="homework" data-tour="homework">
+    <div class="section-head">
+      <span class="section-num">09</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這三件事</h2><p>做完就打勾，下次上課我們從這裡接著做。</p></div>
+    </div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m4-home">
+        <li><label><input type="checkbox" value="account"> 到 <a href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> 註冊帳號（用常用的 Email，使用者名稱之後會出現在網址裡）</label></li>
+        <li><label><input type="checkbox" value="repo"> 在 GitHub 按右上角「＋」→「New repository」，建一個叫 <code>my-first-site</code> 的 repo，勾選 <b>Private</b></label></li>
+        <li><label><input type="checkbox" value="push"> 打開 Claude Code，對它說：「幫我在這個資料夾做一個自我介紹網頁，存檔後推上我的 my-first-site repo」</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>commit 是 <span class="blank"></span>，push 是 <span class="blank"></span>，pull 是 <span class="blank"></span>。</p>
+      <p>為什麼要開分支？</p><div class="write-lines"></div>
+      <p>今天最有收穫的一件事：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 04　內容以教學為目的簡化，實際指令以官方文件為準。</div></footer>
+
+<script src="../assets/js/lib.js"></script>
+<script src="../assets/js/git-sim.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/tour.js"></script>
+<script src="../assets/js/modules/m4.js"></script>
+</body>
+</html>
