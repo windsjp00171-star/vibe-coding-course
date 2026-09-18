@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609181223">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181655">
 </head>
 <body data-module="m2" data-base="../">
 <header data-course-header></header>
@@ -28,14 +28,7 @@
       <span class="phase phase-in">課中安裝派對 約 40 分</span>
       <span class="phase phase-post">課後任務 約 10 分</span>
     </div>
-    <div class="teacher teacher-note">
-      <b>講師提示．課前一定要做</b>
-      <ul>
-        <li>上課前一週寄信提醒：先確認已有 Claude 付費方案、電腦有管理員權限（公司電腦常常沒有，要先跟 IT 申請）。</li>
-        <li>現場準備紅、綠兩色便利貼：卡住的人把紅色貼在螢幕上，助教看到就過去。</li>
-        <li>安裝介面和價格常常更新，上課前一天自己重新走一次，截圖以當天為準。</li>
-      </ul>
-    </div>
+    <div data-teacher-slot="m2-1"></div>
   </section>
 
   <section class="slide" id="tools" data-tour="tools">
@@ -152,7 +145,7 @@
       <div class="card"><span class="pill pill-danger">直接拒絕</span><p>刪除一大堆檔案、看起來像亂碼的長指令、要你輸入密碼、「強制」覆蓋什麼東西。</p></div>
     </div>
     <div class="card screen-only" data-classify-permission></div>
-    <div class="teacher teacher-note"><b>講師提示</b>現場示範一次按「拒絕」：Claude Code 會停下來問你想怎麼做，並不會壞掉。很多學員不敢按拒絕，怕把東西弄壞。</div>
+    <div data-teacher-slot="m2-2"></div>
   </section>
 
   <section class="slide" id="terminal">
@@ -183,7 +176,7 @@
         <li><span class="time">25–35 分</span>複製第 04 段的指令，做出自我介紹網頁，再用自己的話改一次樣式。</li>
         <li><span class="time">35–40 分</span>兩人互看對方的網頁，各說一個「我會想請 AI 再改的地方」。</li>
       </ol>
-      <div class="teacher"><p><b>常見卡關：</b>公司電腦沒有安裝權限、防毒軟體攔截、帳號其實是免費版、資料夾選到桌面或整個 C 槽。最後一種一定要改：請學員選「專案資料夾」，不要選整個磁碟。</p></div>
+      <div data-teacher-slot="m2-3"></div>
     </div>
     <div class="print-only card">
       <h3>✍️ 安裝紀錄</h3>
@@ -214,10 +207,12 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 02　安裝步驟與價格以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609181223"></script>
-<script src="../assets/js/quiz-bank.js?v=202609181223"></script>
-<script src="../assets/js/core.js?v=202609181223"></script>
-<script src="../assets/js/tour.js?v=202609181223"></script>
-<script src="../assets/js/modules/m2.js?v=202609181223"></script>
+<script src="../assets/js/lib.js?v=202609181655"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181655"></script>
+<script src="../assets/js/config.js?v=202609181655"></script>
+<script src="../assets/js/core.js?v=202609181655"></script>
+<script src="../assets/js/members.js?v=202609181655"></script>
+<script src="../assets/js/tour.js?v=202609181655"></script>
+<script src="../assets/js/modules/m2.js?v=202609181655"></script>
 </body>
 </html>

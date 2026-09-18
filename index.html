@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609181223">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609181223">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609181655">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609181655">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -26,7 +26,7 @@
       </div>
     </div>
     <aside class="hero-card card" aria-label="課程數字">
-      <div class="hero-stat"><b>9</b><span>個必修單元，外加 5 個選修</span></div>
+      <div class="hero-stat"><b>9</b><span>個必修單元，外加 6 個選修</span></div>
       <div class="hero-stat"><b>4</b><span>段旅程：起步、上線、資安、進階</span></div>
       <div class="hero-stat"><b>0</b><span>行程式要背</span></div>
       <p class="muted" style="margin:10px 0 0;font-size:.85rem">教材裡的案例，全部來自講師用 Vibe Coding 做過的 17 個真實專案。</p>
@@ -49,6 +49,15 @@
     <div class="course-map" data-map></div>
   </section>
 
+  <section class="slide" data-join hidden data-tour="join">
+    <div class="section-head"><span class="section-num">+</span>
+      <div><span class="kicker">上課的班級</span><h2>加入你的班級</h2><p>輸入講師給你的 6 碼加入碼，講師就能看到你的學習進度，幫你找出卡住的地方。</p></div></div>
+    <form class="card split" data-join-form style="align-items:end">
+      <label class="form-grid">加入碼<input type="text" name="code" maxlength="6" required placeholder="例如：K7QM2P" style="text-transform:uppercase;letter-spacing:.2em"></label>
+      <div><button type="submit" class="btn btn-primary">加入班級</button> <span data-join-msg aria-live="polite"></span></div>
+    </form>
+  </section>
+
   <section class="slide">
     <div class="section-head"><span class="section-num">?</span>
       <div><span class="kicker">上課前</span><h2>你需要準備什麼？</h2></div></div>
@@ -60,11 +69,13 @@
   </section>
 </main>
 
-<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．進度只存在你這台電腦的瀏覽器裡，換電腦或清除瀏覽資料會重新開始。</div></footer>
+<footer class="site-footer"><div class="wrap"><a href="teacher.html">講師後台</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609181223"></script>
-<script src="assets/js/core.js?v=202609181223"></script>
-<script src="assets/js/tour.js?v=202609181223"></script>
+<script src="assets/js/lib.js?v=202609181655"></script>
+<script src="assets/js/config.js?v=202609181655"></script>
+<script src="assets/js/core.js?v=202609181655"></script>
+<script src="assets/js/members.js?v=202609181655"></script>
+<script src="assets/js/tour.js?v=202609181655"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -89,6 +100,22 @@
     $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '必修約 5 小時，可以分次上完';
     const next = MODULES.find((m) => !progress[m.id]?.done && built.has(m.id));
     if (count && next) { const a = $('[data-continue]'); a.href = next.file; a.textContent = `繼續：${next.emoji} ${next.title} →`; }
+
+    // 會員功能啟用時才顯示加入班級
+    if (window.Members?.enabled) {
+      $('[data-join]').hidden = false;
+      $('[data-join-form]').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = $('[data-join-msg]');
+        const code = new FormData(e.target).get('code').toString().trim().toUpperCase();
+        try {
+          const name = await window.Members.joinClass(code);
+          msg.textContent = `✅ 已加入「${name}」`;
+        } catch (err) {
+          msg.textContent = err.message === '請先登入' ? '請先按右上角「登入保存進度」' : `❌ ${err.message}`;
+        }
+      });
+    }
 
     window.Tour.register([
       { tour: 'start', title: '從這裡開始', text: '第一次來就從單元 1 開始。之後回來，這個按鈕會變成「繼續上次的進度」。' },

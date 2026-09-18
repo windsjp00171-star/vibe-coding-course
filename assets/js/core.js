@@ -17,10 +17,11 @@
     { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 35 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '總測驗與結業證書', file: 'modules/09-final.html', minutes: 25 },
     { id: 'm10', part: 'D 進階選修', emoji: '🗄️', title: 'Supabase：雲端資料庫', file: 'modules/10-supabase.html', minutes: 35 },
-    { id: 'm11', part: 'D 進階選修', emoji: '🤖', title: 'LINE Bot：做一個 AI 小秘書', file: 'modules/11-line-bot.html', minutes: 40 },
-    { id: 'm12', part: 'D 進階選修', emoji: '💚', title: 'LINE 登入：免記帳號密碼', file: 'modules/12-line-login.html', minutes: 35 },
-    { id: 'm13', part: 'D 進階選修', emoji: '📱', title: 'PWA：讓網站變成手機 App', file: 'modules/13-pwa.html', minutes: 30 },
-    { id: 'm14', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/14-push.html', minutes: 30 },
+    { id: 'm11', part: 'D 進階選修', emoji: '🪪', title: '會員系統：註冊、登入、權限', file: 'modules/11-members.html', minutes: 40 },
+    { id: 'm12', part: 'D 進階選修', emoji: '🤖', title: 'LINE Bot：做一個 AI 小秘書', file: 'modules/12-line-bot.html', minutes: 40 },
+    { id: 'm13', part: 'D 進階選修', emoji: '💚', title: 'LINE 登入：免記帳號密碼', file: 'modules/13-line-login.html', minutes: 35 },
+    { id: 'm14', part: 'D 進階選修', emoji: '📱', title: 'PWA：讓網站變成手機 App', file: 'modules/14-pwa.html', minutes: 30 },
+    { id: 'm15', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/15-push.html', minutes: 30 },
   ];
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
   const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9']);
@@ -45,6 +46,7 @@
     const progress = { ...state.progress, [moduleId]: { done: prev.done || result.passed, best } };
     update({ progress });
     refreshProgressBar();
+    document.dispatchEvent(new CustomEvent('course:progress', { detail: { moduleId, ...progress[moduleId] } }));
   }
 
   function completedCount() {
@@ -70,7 +72,11 @@
   }
 
   // ---------- 模式 ----------
-  function applyMode(mode) {
+  // 講師內容不在公開網站裡：只有載入講師檔案（本機）或講師登入（雲端）後才會有
+  let teacherReady = false;
+
+  function applyMode(requested) {
+    const mode = teacherReady ? requested : 'student';
     document.documentElement.dataset.mode = mode;
     $$('.mode-switch button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
     const banner = $('.teacher-banner');
@@ -81,6 +87,32 @@
     update({ mode });
     applyMode(mode);
     toast(mode === 'teacher' ? '已切到講師模式：紫色框是教學提示' : '已切回學員模式');
+  }
+
+  // ---------- 講師內容：填進各頁的 data-teacher-slot ----------
+  function enableTeacher(notes) {
+    if (!notes) return;
+    $$('[data-teacher-slot]').forEach((slot) => {
+      const note = notes[slot.dataset.teacherSlot];
+      if (!note) return;
+      slot.className = note.cls;
+      slot.innerHTML = note.html; // 內容來自講師自己的檔案或受權限保護的資料庫，不是使用者輸入
+    });
+    teacherReady = true;
+    const sw = $('.mode-switch');
+    if (sw) sw.hidden = false;
+    applyMode(getState().mode);
+  }
+
+  // 講師在自己電腦上課時，課程資料夾裡會有私人的 teacher/notes.js（公開 repo 不含這個檔案）
+  function loadLocalTeacherNotes() {
+    const local = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+    if (!local) return;
+    const script = document.createElement('script');
+    script.src = `${document.body.dataset.base || './'}teacher/notes.js`;
+    script.onload = () => enableTeacher(window.TEACHER_NOTES);
+    script.onerror = () => {}; // 學員自己在本機開也沒有這個檔案，安靜略過
+    document.head.append(script);
   }
 
   // ---------- 頁首 ----------
@@ -99,12 +131,13 @@
           <span>Vibe Coding 實戰課<small>${esc(where)}</small></span>
         </a>
         <div class="header-tools">
-          <div class="mode-switch" role="group" aria-label="檢視模式" data-tour="mode">
+          <div class="mode-switch" role="group" aria-label="檢視模式" data-tour="mode" hidden>
             <button type="button" data-mode="student" aria-pressed="true">學員</button>
             <button type="button" data-mode="teacher" aria-pressed="false">講師</button>
           </div>
           <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">🖥️ 投影</button>
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="印出本單元的學習單">🖨️ 講義</button>' : ''}
+          <span data-auth-slot data-tour="auth"></span>
           <button type="button" class="btn btn-sm btn-help" data-action="tour">？ 教學</button>
         </div>
       </div>
@@ -411,6 +444,7 @@
     renderModuleNav();
     renderTimer();
     applyMode(getState().mode);
+    loadLocalTeacherNotes();
     initFlips();
     initTabs();
     initChecklists();
@@ -420,7 +454,7 @@
 
   window.Course = {
     MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz,
-    mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide,
+    mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

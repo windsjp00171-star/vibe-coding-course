@@ -3,3 +3,6 @@ Thumbs.db
 node_modules/
 .env
 .env.*
+
+# 講師專用內容：放在獨立的私人 repo，絕不進公開網站
+teacher/

@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609181223">
-  <link rel="stylesheet" href="../assets/css/git-sim.css?v=202609181223">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181655">
+  <link rel="stylesheet" href="../assets/css/git-sim.css?v=202609181655">
 </head>
 <body data-module="m4" data-base="../">
 <header data-course-header></header>
@@ -30,10 +30,7 @@
       <span class="phase phase-in">課中工作坊 約 45 分</span>
       <span class="phase phase-post">課後任務 約 15 分</span>
     </div>
-    <div class="teacher teacher-note">
-      <b>講師提示．開場 3 分鐘</b>
-      先問全班：「誰的電腦裡有『報告_最終版_真的最終版_v3.docx』這種檔名？」幾乎每個人都會笑著舉手。接著說：Git 就是專門解決這件事的工具。
-    </div>
+    <div data-teacher-slot="m4-1"></div>
   </section>
 
   <!-- ============ 1 為什麼 ============ -->
@@ -97,10 +94,7 @@
       <button type="button" class="chip" aria-pressed="false" data-level="team">多人合作 6 個</button>
     </div>
     <div class="grid grid-3" data-glossary></div>
-    <div class="teacher teacher-note">
-      <b>講師提示．術語快問快答（5 分鐘）</b>
-      兩人一組，一人念背面的比喻，另一人搶答是哪個術語。先玩「一定要會的 6 個」，全班通過再開放全部。
-    </div>
+    <div data-teacher-slot="m4-2"></div>
   </section>
 
   <!-- ============ 4 模擬器 ============ -->
@@ -157,14 +151,7 @@
       <p>你的電腦 feature：　 ──────────────────────────</p>
       <p>GitHub main：●────────────────────────────────</p>
     </div>
-    <div class="teacher teacher-note">
-      <b>講師提示．模擬器帶領重點</b>
-      <ul>
-        <li>任務 2 做完後停下來問：「剛剛存檔的時候，GitHub 有變嗎？」讓學員自己發現<strong>存檔只在本機</strong>。</li>
-        <li>任務 5 故意先存檔再 push，讓全班看到「上傳被拒絕」，說明這是在保護同事的修改，不是壞掉。</li>
-        <li>存檔說明的選項裡有「update」這種爛說明，選到時問大家：三個月後你看得懂嗎？</li>
-      </ul>
-    </div>
+    <div data-teacher-slot="m4-3"></div>
   </section>
 
   <!-- ============ 5 Claude Code 翻譯機 ============ -->
@@ -232,14 +219,7 @@
         <li><span class="time">12–18 分</span>B 也想改，先從 GitHub 複製一份到自己桌上（clone／pull），寫「存檔 2：改顏色」。B 想 push，但 A 已經先上傳了新的，管理員要<b>拒絕</b>，請 B 先 pull。</li>
         <li><span class="time">18–25 分</span>A 拿另一種顏色的便利貼當「分支」，在旁邊試做新功能，做完寫一張「PR：請看我的新功能」交給 B 審核，B 同意後才合併到主線。</li>
       </ol>
-      <div class="teacher">
-        <p><b>收尾提問（5 分）：</b></p>
-        <ul>
-          <li>剛剛什麼時候最混亂？（通常是兩人同時改）→ 這就是為什麼要 pull 和分支。</li>
-          <li>如果管理員沒有拒絕 B 的上傳，會發生什麼事？（A 的成果被蓋掉）</li>
-          <li>PR 為什麼需要另一個人看？換成 AI 寫的程式，誰來當那個「另一個人」？（預告單元 8：Vibe Check）</li>
-        </ul>
-      </div>
+      <div data-teacher-slot="m4-4"></div>
     </div>
   </section>
 
@@ -278,11 +258,13 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 04　內容以教學為目的簡化，實際指令以官方文件為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609181223"></script>
-<script src="../assets/js/quiz-bank.js?v=202609181223"></script>
-<script src="../assets/js/git-sim.js?v=202609181223"></script>
-<script src="../assets/js/core.js?v=202609181223"></script>
-<script src="../assets/js/tour.js?v=202609181223"></script>
-<script src="../assets/js/modules/m4.js?v=202609181223"></script>
+<script src="../assets/js/lib.js?v=202609181655"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181655"></script>
+<script src="../assets/js/git-sim.js?v=202609181655"></script>
+<script src="../assets/js/config.js?v=202609181655"></script>
+<script src="../assets/js/core.js?v=202609181655"></script>
+<script src="../assets/js/members.js?v=202609181655"></script>
+<script src="../assets/js/tour.js?v=202609181655"></script>
+<script src="../assets/js/modules/m4.js?v=202609181655"></script>
 </body>
 </html>
