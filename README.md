@@ -12,7 +12,7 @@
 | B 上線 | 4 Git 與 GitHub 白話講｜5 把作品放上網路 | ✅ |
 | C 資安 | 6 鑰匙與機密別外流｜7 AI 會被騙：你是門神｜8 上線前的 Vibe Check | ✅ |
 | 結業 | 9 總測驗與結業證書 | ✅ |
-| D 進階選修 | 10 Supabase｜11 LINE Bot｜12 LINE 登入｜13 PWA｜14 推播 | 製作中 |
+| D 進階選修 | 10 Supabase｜11 會員系統｜12 LINE Bot｜13 LINE 登入｜14 PWA｜15 推播 | ✅ |
 
 ## 使用方式
 

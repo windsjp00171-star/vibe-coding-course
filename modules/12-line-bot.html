@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LINE Bot：做一個 AI 小秘書｜Vibe Coding 實戰課</title>
+  <meta name="description" content="拆解講師的 LINE 小秘書：訊息怎麼從 LINE 送到你的程式、AI 怎麼分類、資料存哪裡、排程怎麼每天提醒，以及時區的坑。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181712">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609181712">
+</head>
+<body data-module="m12" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>12</b> D 進階選修．LINE Bot</span>
+    <h1>在 LINE 裡住一位<br><em>AI 小秘書</em></h1>
+    <p class="lead">講師做過一個 LINE 小秘書：隨手傳一句「明天下午去阿秦家」，它就自動記成待辦，隔天早上 8 點提醒你。這個單元把它拆開來看，你會發現整個系統只有四個零件。</p>
+    <ul class="goals">
+      <li>說得出 LINE Bot 的四個零件怎麼串起來</li>
+      <li>理解為什麼「分類」交給 AI、「提醒」交給程式</li>
+      <li>避開排程的時區陷阱</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 40 分</span>
+      <span class="phase phase-post">課後任務 約 20 分</span>
+    </div>
+    <div data-teacher-slot="m12-1"></div>
+  </section>
+
+  <section class="slide" id="flow" data-tour="flow">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">拆解</span><h2>一則訊息的旅程</h2><p>按「下一步」，看一句話從你的手機到被記下來、再被提醒，中間經過哪些地方。</p></div></div>
+    <div data-flow></div>
+    <p class="muted" style="margin-top:12px">這個小秘書是公開的專案 <a href="https://github.com/windsjp00171-star/emmask-secret" target="_blank" rel="noopener">emmask-secret</a>，用 Vercel 放程式、Supabase 存資料、Claude 做分類。</p>
+  </section>
+
+  <section class="slide" id="sim" data-tour="sim">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">動手玩</span><h2>小秘書模擬器</h2>
+        <p>輸入一句話，看它被分成哪一類，以及程式實際收到的資料長什麼樣子。</p></div></div>
+    <div class="split">
+      <div>
+        <div class="chat" data-chat aria-live="polite"></div>
+        <form data-chat-form style="display:flex;gap:8px;margin-top:10px">
+          <input type="text" name="msg" maxlength="60" placeholder="例如：明天下午去阿秦家" aria-label="傳給小秘書的訊息">
+          <button type="submit" class="btn btn-primary">送出</button>
+        </form>
+        <div class="chip-row" data-chat-examples style="margin-top:10px"></div>
+      </div>
+      <div>
+        <p class="kicker">程式收到的資料（JSON）</p>
+        <pre class="json-out" data-json>先在左邊傳一句話。</pre>
+        <div class="callout callout-warn" style="margin-top:12px"><b>這是教學簡化版：</b>這裡用固定的關鍵字規則模擬。真實的小秘書是把訊息交給 Claude 判斷，並要求它「只輸出這個格式」。規則寫在給 AI 的指示裡，例如：<i>有時間詞的句子，絕對不能分類為筆記。</i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="split">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">設計原則</span><h2>AI 做判斷，程式做排程</h2></div></div>
+    <div class="grid grid-2">
+      <div class="card"><span class="pill pill-brand">交給 AI</span><h3>🤖 需要「懂意思」的事</h3><ul><li>這句話是待辦、提醒還是筆記？</li><li>「下週三」是幾月幾號？</li><li>用自然的口氣回一句話</li></ul></div>
+      <div class="card"><span class="pill pill-ok">交給程式</span><h3>⚙️ 規則固定的事</h3><ul><li>每天早上 8 點檢查今天的待辦</li><li>每週五整理一週摘要</li><li>把資料存進資料庫</li></ul></div>
+    </div>
+    <div class="analogy" style="margin-top:16px">這就是講師 CLAUDE.md 守則第 5 條：<strong>能用程式判斷的，就不要問 AI。</strong>程式每次結果都一樣、不花錢；AI 貴又不一定每次一樣，只用在真正需要判斷的地方。</div>
+  </section>
+
+  <section class="slide" id="tz" data-tour="tz">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">最常見的坑</span><h2>排程的時區陷阱</h2>
+        <p>Vercel 這類平台的排程用的是<b>國際標準時間（UTC）</b>，台灣比它快 8 小時。拉拉看：</p></div></div>
+    <div class="split">
+      <div class="card">
+        <label for="utc" class="kicker">排程設定的時間（UTC）</label>
+        <input type="range" id="utc" min="0" max="23" value="0" data-utc style="width:100%;accent-color:var(--brand)">
+        <p style="font-size:1.4rem;margin-top:10px">UTC <b data-utc-out>0</b> 點 → 台灣 <b data-tw-out style="color:var(--brand)">8</b> 點</p>
+        <p class="muted" data-tz-note></p>
+      </div>
+      <div class="card">
+        <h3>小秘書真實的排程設定</h3>
+        <pre class="gen-out">每天提醒：   "0 0 * * *"   → UTC 0 點  = 台灣早上 8 點
+每週摘要：   "0 0 * * 5"   → 週五 UTC 0 點 = 台灣週五早上 8 點</pre>
+        <p class="muted" style="margin-top:8px">這串「0 0 * * *」叫 cron，五個位置依序是：分、時、日、月、星期。看不懂沒關係，請 Claude Code 翻譯就好。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="keys">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">金鑰清單</span><h2>一個 LINE Bot 需要幾把鑰匙？</h2></div></div>
+    <div class="card"><div class="table-wrap"><table class="compare">
+      <thead><tr><th>鑰匙</th><th>做什麼用</th><th>放在哪</th></tr></thead>
+      <tbody>
+        <tr><th>LINE Channel Secret</th><td>確認訊息真的是 LINE 送來的，不是別人偽造的</td><td>Vercel 環境變數</td></tr>
+        <tr><th>LINE Access Token</th><td>讓程式可以回覆、主動推播</td><td>Vercel 環境變數</td></tr>
+        <tr><th>Claude API Key</th><td>請 AI 做分類</td><td>Vercel 環境變數</td></tr>
+        <tr><th>Supabase 萬能鑰匙</th><td>程式在伺服器端讀寫資料</td><td>Vercel 環境變數（<b>絕不進網頁</b>）</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="margin:10px 0 0">專案裡只放 <code>.env.example</code>，列出這幾把鑰匙的名字，沒有值。單元 6 教過的規矩，在這裡全部用得上。</p></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>設計你的小秘書</h2><p>不寫程式，先把「它要懂什麼、怎麼回」想清楚，這才是最難也最重要的部分。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 40 分</span>　3 人一組。</p>
+      <ol>
+        <li><span class="time">0–10 分</span>決定你的 Bot 要幫誰做什麼（例如：幫小組長記錄每週出席）。</li>
+        <li><span class="time">10–25 分</span>定義 3～5 個分類，每個分類寫兩句例句。再寫一條最重要的規則（像是「有時間詞的一定是待辦」）。</li>
+        <li><span class="time">25–35 分</span>寫下回覆口氣：要像誰？哪些話不能說？</li>
+        <li><span class="time">35–40 分</span>把結果交給 Claude Code：「請依照這份設計寫一個 LINE Bot，先給我看計畫」。</li>
+      </ol>
+      <div data-teacher-slot="m12-2"></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的小秘書設計</h3>
+      <p>幫誰做什麼：<span class="blank" style="min-width:18em"></span></p>
+      <p>分類與例句：</p><div class="write-lines"></div><div class="write-lines"></div>
+      <p>最重要的一條規則：<span class="blank" style="min-width:16em"></span></p>
+      <p>回覆口氣：<span class="blank" style="min-width:16em"></span></p>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m12-home">
+      <li><label><input type="checkbox" value="read"> 打開 emmask-secret 的 GitHub，請 Claude Code 用白話介紹這個專案每個資料夾在做什麼</label></li>
+      <li><label><input type="checkbox" value="channel"> 到 LINE Developers 建立一個 Messaging API 頻道（練習用）</label></li>
+      <li><label><input type="checkbox" value="echo"> 請 Claude Code 做一個最簡單的「你說什麼我就回什麼」Bot，部署到 Vercel</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 12　LINE 平台設定以 LINE Developers 官方說明為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181712"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181712"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609181712"></script>
+<script src="../assets/js/config.js?v=202609181712"></script>
+<script src="../assets/js/core.js?v=202609181712"></script>
+<script src="../assets/js/members.js?v=202609181712"></script>
+<script src="../assets/js/tour.js?v=202609181712"></script>
+<script src="../assets/js/modules/electives.js?v=202609181712"></script>
+<script src="../assets/js/modules/m12.js?v=202609181712"></script>
+</body>
+</html>

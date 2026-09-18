@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PWA：讓網站變成手機 App｜Vibe Coding 實戰課</title>
+  <meta name="description" content="不用上架 App Store，網站也能加到手機主畫面。PWA 的三個零件、iPhone 與 Android 安裝方式、快取更新的坑。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181712">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609181712">
+</head>
+<body data-module="m14" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>14</b> D 進階選修．PWA</span>
+    <h1>不用上架，<br>網站也能<em>住進手機桌面</em></h1>
+    <p class="lead">上架 App Store 要審核、要付年費、要等好幾天。PWA 讓你的網站可以「加到主畫面」，點開就是全螢幕，看起來跟 App 一樣。講師的報名系統、靈修日記、讀經網站都做成了 PWA。</p>
+    <ul class="goals">
+      <li>說得出 PWA 和一般 App 的差別</li>
+      <li>會在 iPhone 和 Android 安裝 PWA</li>
+      <li>避開「改了網站，使用者還看到舊版」的坑</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 15 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div data-teacher-slot="m14-1"></div>
+  </section>
+
+  <section class="slide" id="what">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先比較</span><h2>PWA 和 App Store 的 App 差在哪？</h2></div></div>
+    <div class="card"><div class="table-wrap"><table class="compare">
+      <thead><tr><th></th><th>App Store 上的 App</th><th class="hl">PWA</th></tr></thead>
+      <tbody>
+        <tr><th>怎麼安裝</th><td>到商店下載</td><td class="hl">打開網站 → 加到主畫面</td></tr>
+        <tr><th>上架審核</th><td>要，可能被退件</td><td class="hl">不用</td></tr>
+        <tr><th>費用</th><td>開發者年費</td><td class="hl">跟一般網站一樣</td></tr>
+        <tr><th>更新</th><td>使用者要去更新</td><td class="hl">重新整理就是新版（前提是快取做對，見第 04 段）</td></tr>
+        <tr><th>能做的事</th><td>幾乎什麼都能做</td><td class="hl">大部分日常需求：全螢幕、離線、推播（單元 15）</td></tr>
+      </tbody>
+    </table></div></div>
+  </section>
+
+  <section class="slide" id="parts">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">三個零件</span><h2>一個網站要變成 PWA，需要什麼？</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🪪 manifest（名片）</h3><p>一個小檔案，告訴手機：App 叫什麼名字、用什麼圖示、什麼顏色、從哪一頁打開。</p></div>
+      <div class="card"><h3>🧑‍🔧 service worker（管家）</h3><p>一支在背景工作的小程式，負責把檔案存在手機上（快取），讓網站開得快、斷網也能看，也負責接收推播。</p></div>
+      <div class="card"><h3>🔒 HTTPS（安全連線）</h3><p>網址要是 https 開頭。GitHub Pages、Vercel 這些平台都自動幫你做好了。</p></div>
+    </div>
+    <div class="callout callout-warn" style="margin-top:16px"><b>講師的讀經網站就踩過「裝不起來」：</b>名片（manifest）只放在讀經頁，管家的管轄範圍也設錯，結果在其他頁面按安裝，要嘛沒反應，要嘛裝錯東西。<b>名片要放在每一頁，管家要從網站最上層開始管。</b></div>
+  </section>
+
+  <section class="slide" id="install" data-tour="install">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">怎麼安裝</span><h2>iPhone 和 Android 不一樣</h2></div></div>
+    <div data-tabs data-default="ios">
+      <div class="tab-row" role="group" aria-label="選擇手機">
+        <button type="button" data-tab="ios">🍎 iPhone</button>
+        <button type="button" data-tab="android">🤖 Android</button>
+      </div>
+      <div data-panel="ios">
+        <ol class="install-steps">
+          <li><strong class="step-title">用 Safari 打開網站</strong>在 LINE 裡打開的話，先按右下角「⋯」→「用瀏覽器開啟」。</li>
+          <li><strong class="step-title">按下方中間的「分享」按鈕</strong>一個方框加向上箭頭的圖示。</li>
+          <li><strong class="step-title">往下滑，選「加入主畫面」</strong>可以改名字，然後按「新增」。</li>
+          <li><strong class="step-title">回到桌面，點開新的圖示</strong>全螢幕、沒有網址列，就成功了。</li>
+        </ol>
+        <p class="muted" style="margin-top:10px">講師的報名系統曾經有一個坑：iPhone 上用 Chrome 的人，看到的是 Android 的安裝說明，照著做當然裝不起來。<b>安裝教學要依照使用者的手機和瀏覽器顯示。</b></p>
+      </div>
+      <div data-panel="android" hidden>
+        <ol class="install-steps">
+          <li><strong class="step-title">用 Chrome 打開網站</strong></li>
+          <li><strong class="step-title">通常會自動跳出「安裝應用程式」</strong>沒有跳出的話，按右上角「⋮」。</li>
+          <li><strong class="step-title">選「安裝應用程式」或「加到主畫面」</strong></li>
+          <li><strong class="step-title">從桌面或應用程式列表打開</strong></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="cache" data-tour="cache">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">動手玩．最常見的坑</span><h2>改了網站，使用者卻還看到舊版</h2>
+        <p>PWA 的管家會把檔案存在手機上，所以開得很快。但你發布新版時，管家不一定知道要換。選一種更新策略，按「發布新版」，再按「使用者打開 App」。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <p class="kicker">更新策略</p>
+        <div class="toggle-list" data-strategies></div>
+        <div class="flow-controls"><button type="button" class="btn btn-primary" data-release>🚀 發布新版</button><button type="button" class="btn" data-open-app>📱 使用者打開 App</button><button type="button" class="btn btn-ghost" data-cache-reset>重來</button></div>
+      </div>
+      <div class="card" data-cache-view aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="pits" data-tour="pits">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">講師踩過的坑</span><h2>PWA 相關的真實事故</h2></div></div>
+    <div class="grid grid-3" data-pits></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>把你的網站變成 App</h2></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 35 分</span>　用單元 5 已經上線的網站。</p>
+      <ol>
+        <li><span class="time">0–15 分</span>把下面的指令交給 Claude Code，做完 push 上線。</li>
+        <li><span class="time">15–25 分</span>兩人一組，用自己的手機安裝對方的 PWA：一個人用 iPhone、一個人用 Android 最好。</li>
+        <li><span class="time">25–35 分</span>請對方改一個字、push，看你手機上的 App 多久會更新。</li>
+      </ol>
+      <pre class="gen-out" id="pwa-prompt">請把這個網站做成 PWA：
+1. 加上 manifest（名稱、圖示、主題色），每一頁都要連到它
+2. 加上 service worker，快取策略要確保「新版本上線後，使用者下次打開就會拿到新檔案」
+3. 在 iPhone 上顯示「用 Safari → 分享 → 加入主畫面」的安裝說明，Android 顯示「安裝應用程式」
+做完告訴我怎麼在手機上測試安裝和更新。</pre>
+      <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#pwa-prompt">📋 複製指令</button></p>
+      <div data-teacher-slot="m14-2"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m14-home">
+      <li><label><input type="checkbox" value="install"> 在自己的手機裝好你的 PWA，截圖桌面圖示</label></li>
+      <li><label><input type="checkbox" value="update"> 改一個字上線，確認手機上的 App 有更新</label></li>
+      <li><label><input type="checkbox" value="line"> 從 LINE 打開你的網站，確認使用者知道怎麼「用瀏覽器開啟」再安裝</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 14　各手機系統的安裝畫面會隨版本調整。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181712"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181712"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609181712"></script>
+<script src="../assets/js/config.js?v=202609181712"></script>
+<script src="../assets/js/core.js?v=202609181712"></script>
+<script src="../assets/js/members.js?v=202609181712"></script>
+<script src="../assets/js/tour.js?v=202609181712"></script>
+<script src="../assets/js/modules/electives.js?v=202609181712"></script>
+<script src="../assets/js/modules/m14.js?v=202609181712"></script>
+</body>
+</html>

@@ -123,6 +123,57 @@
     return { parts, score: parts.filter((p) => p.ok).length, max: parts.length };
   }
 
+  // ---- LINE 小秘書分類（教學簡化版）----
+  // 真實系統交給 Claude 判斷；這裡用固定規則模擬同一套分類，讓學員看懂輸入與輸出的格式。
+  const TIME_WORDS = [['今天', 0], ['明天', 1], ['後天', 2], ['下週', 7], ['下星期', 7]];
+  const PROJECT_WORDS = ['進度', '完成了', '做好了', '上線', '修好'];
+
+  function classifyNote(text, today = new Date()) {
+    const value = String(text ?? '').trim();
+    const hit = TIME_WORDS.find(([word]) => value.includes(word));
+    const due = hit ? new Date(today.getFullYear(), today.getMonth(), today.getDate() + hit[1]) : null;
+    const dueIso = due ? `${due.getFullYear()}-${String(due.getMonth() + 1).padStart(2, '0')}-${String(due.getDate()).padStart(2, '0')}` : null;
+    let type = 'note';
+    if (/提醒我|記得提醒/.test(value)) type = 'reminder';
+    else if (hit) type = 'task';
+    else if (PROJECT_WORDS.some((w) => value.includes(w))) type = 'project_update';
+    const replies = {
+      reminder: '好，時間到會提醒你。',
+      task: `記下了${dueIso ? `，排在 ${dueIso}` : ''}。`,
+      project_update: '專案進度記錄好了。',
+      note: '筆記存好了。',
+    };
+    return { type, content: value, due_date: type === 'task' || type === 'reminder' ? dueIso : null, reply: replies[type] };
+  }
+
+  // 國際標準時間（UTC）換算台灣時間（UTC+8）
+  const TAIWAN_OFFSET = 8;
+  function utcToTaiwan(hour) { return (((hour + TAIWAN_OFFSET) % 24) + 24) % 24; }
+
+  // ---- 推播設計模擬（單元 15）----
+  // 情境：排程每 15 分鐘跑一次；小明週一到週三沒交回報，週四交了。
+  const RUNS_PER_DAY = 96;          // 24 小時 × 每小時 4 次
+  const RUNS_IN_WINDOW = 44;        // 09:00–20:00 共 11 小時 × 4 次
+  const PENDING_DAYS = 3;           // 週一～週三還沒交
+  const FIRST_RUN_TIME = '00:07';   // 沒設時段時，第一次發送的時間
+
+  function simulatePushWeek({ window: timeWindow, dedupe, askOnClick, siteFirst }) {
+    const subscribed = askOnClick; // 一進站就問，這個情境假設小明直覺按了「不允許」
+    const perRun = timeWindow ? RUNS_IN_WINDOW : RUNS_PER_DAY;
+    const perDay = Array.from({ length: 7 }, (_, day) => {
+      if (!subscribed || day >= PENDING_DAYS) return 0;
+      if (dedupe) return day === 0 ? 1 : 0; // 同一週同一件事只發一次
+      return perRun;
+    });
+    return {
+      perDay,
+      total: perDay.reduce((a, b) => a + b, 0),
+      subscribed,
+      firstTime: subscribed ? (timeWindow ? '09:00' : FIRST_RUN_TIME) : null,
+      emptyOnClick: subscribed && !siteFirst,
+    };
+  }
+
   // ---- 測驗計分 ----
   const PASS_PERCENT = 70;
 
@@ -179,7 +230,7 @@
     return shuffle([...firsts, ...extra], rng).map(({ unit, q }) => ({ ...shuffleOptions(q, rng), unit }));
   }
 
-  const api = { maskPII, scanCode, checkPrompt, scoreQuiz, scoreGate, shuffle, pick, buildExam, PASS_PERCENT, GATE_POINTS };
+  const api = { maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

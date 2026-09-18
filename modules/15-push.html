@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>推播通知：主動提醒使用者｜Vibe Coding 實戰課</title>
+  <meta name="description" content="送推播很簡單，不吵到人才難。推播設計模擬器、講師推播工具包的 12 個坑精選、iPhone 的限制與正確的詢問時機。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181712">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609181712">
+</head>
+<body data-module="m15" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>15</b> D 進階選修．推播</span>
+    <h1>送推播很簡單，<br><em>不吵到人</em>才難</h1>
+    <p class="lead">講師做推播的初衷很單純：「常常有人忘記回報，還要我去提醒，好煩。」但真正難的不是把通知送出去，而是<strong>不要吵到人</strong>。一旦吵到，使用者會把通知關掉，這個功能就永遠失效，而你不會知道。</p>
+    <ul class="goals">
+      <li>知道推播、站內通知、LINE 訊息各適合什麼</li>
+      <li>用模擬器體驗四個「不吵人」的設計原則</li>
+      <li>記住 iPhone 收推播的前提</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 30 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div data-teacher-slot="m15-1"></div>
+  </section>
+
+  <section class="slide" id="compare">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">三種提醒方式</span><h2>推播不是唯一的路</h2></div></div>
+    <div class="card"><div class="table-wrap"><table class="compare">
+      <thead><tr><th></th><th>站內通知</th><th class="hl">網頁推播</th><th>LINE 訊息</th></tr></thead>
+      <tbody>
+        <tr><th>在哪看到</th><td>打開網站才看得到</td><td class="hl">手機直接跳出來</td><td>LINE 聊天室</td></tr>
+        <tr><th>使用者要先做什麼</th><td>什麼都不用</td><td class="hl">允許通知（iPhone 還要先加到主畫面）</td><td>加好友</td></tr>
+        <tr><th>費用</th><td>免費</td><td class="hl">免費</td><td>超過免費則數要付費</td></tr>
+        <tr><th>講師的做法</th><td>一定都有一份</td><td class="hl">報名系統的回報提醒</td><td>LINE 小秘書（單元 12）</td></tr>
+      </tbody>
+    </table></div></div>
+    <div class="analogy" style="margin-top:16px"><strong>講師工具包的第一條原則：推播永遠不可以是唯一的路。</strong>每一則推播都要同時在網站上留一份。而且順序是<b>先寫站內、再推播</b>，否則使用者點了通知進來，卻什麼都沒看到。</div>
+  </section>
+
+  <section class="slide" id="designer" data-tour="designer">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">動手玩</span><h2>推播設計模擬器</h2>
+        <p>情境：每週要提醒小組長交回報，系統每 15 分鐘檢查一次。打開或關掉下面四個設計，看小明這一週會收到什麼。</p></div></div>
+    <div class="split">
+      <div class="card"><div class="toggle-list" data-push-toggles></div></div>
+      <div class="card">
+        <p class="kicker">小明這一週收到的推播</p>
+        <div class="push-week" data-push-week></div>
+        <div data-push-verdict aria-live="polite" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="try" data-tour="try">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">親自體驗</span><h2>什麼時候問「允許通知嗎？」</h2></div></div>
+    <div class="split">
+      <div>
+        <p>很多網站一打開就跳出「允許通知嗎？」，大部分人直覺按「不允許」。<b>瀏覽器會永久記住這個拒絕</b>，之後網站再也問不到他。</p>
+        <p>正確的做法：先說明為什麼需要，讓使用者<b>自己按下按鈕</b>之後才問。試試看：</p>
+        <p><button type="button" class="btn btn-primary" data-notify>🔔 開啟回報提醒（試發一則通知）</button></p>
+        <p class="muted" data-notify-msg aria-live="polite"></p>
+      </div>
+      <div class="card">
+        <h3>🍎 iPhone 的特別規定</h3>
+        <p>在 iPhone 上，<b>Safari 分頁收不到網頁推播</b>，一定要先把網站加到主畫面（單元 14），從桌面圖示打開，才能開啟推播。</p>
+        <div class="callout callout-ok"><b>文案要這樣寫：</b>「請先把網站加到主畫面，就能收到提醒」，而不是「您的裝置不支援」。寫成不支援，使用者就直接放棄了。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="twelve" data-tour="twelve">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">講師工具包的 12 個坑</span><h2>三種失敗的樣子</h2><p>講師把推播做成可以重複使用的工具包，整理了 12 個「會讓你以為做好了」的坑。這裡分成三類。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><span class="pill pill-danger">根本收不到</span><ul>
+        <li>管家（service worker）放錯位置，畫面卡在「處理中」，沒有任何錯誤</li>
+        <li>設定值多了一個斜線，推播一則都送不出去</li>
+        <li>iPhone 沒裝成 PWA</li>
+        <li>收到推播卻沒顯示，瀏覽器會悄悄取消這個網站的推播權限</li></ul></div>
+      <div class="card"><span class="pill pill-warn">收得到，但吵到人</span><ul>
+        <li>一進站就問權限</li>
+        <li>沒有去重：資料庫裡 77 筆通知，有 64 筆是重複的，同一件事最多發了 9 次</li>
+        <li>沒有時段限制：提醒在半夜 00:07 送達</li>
+        <li>通知沒有標籤，重試時同一件事出現兩三則</li></ul></div>
+      <div class="card"><span class="pill pill-brand">看起來正常，其實壞了</span><ul>
+        <li>資料庫抖一下，被當成「沒人交」，全部人被重發一輪</li>
+        <li>網路錯誤就刪掉訂閱，使用者只會發現通知突然不來了</li>
+        <li>推播開關放在頁面最底下，沒有人滑到，看起來跟「功能壞了」一模一樣</li></ul></div>
+    </div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">課中工作坊</span><h2>設計一個不吵人的提醒</h2></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 30 分</span>　3 人一組，用自己的題目。</p>
+      <ol>
+        <li><span class="time">0–10 分</span>你的系統需要提醒誰、提醒什麼？一週最多幾次才不會煩？</li>
+        <li><span class="time">10–20 分</span>填學習單的「推播設計卡」：時段、去重的單位（每天？每週？）、第一次詢問的時機、站內通知放哪。</li>
+        <li><span class="time">20–30 分</span>把設計卡交給 Claude Code：「請依照這張設計卡規劃推播功能，先給我看計畫，並說明你會怎麼避免重複發送」。</li>
+      </ol>
+      <div data-teacher-slot="m15-2"></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 推播設計卡</h3>
+      <p>提醒誰、提醒什麼：<span class="blank" style="min-width:16em"></span></p>
+      <p>只在幾點到幾點發：<span class="blank"></span>　同一件事多久最多發一次：<span class="blank"></span></p>
+      <p>什麼時候問「允許通知嗎？」：<span class="blank" style="min-width:16em"></span></p>
+      <p>站內通知放在哪裡：<span class="blank" style="min-width:16em"></span></p>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m15-home">
+      <li><label><input type="checkbox" value="audit"> 想一想你每天收到最煩的通知是哪一個？它違反了哪一條原則？</label></li>
+      <li><label><input type="checkbox" value="card"> 把工作坊的推播設計卡寫進專案的 CLAUDE.md</label></li>
+      <li><label><input type="checkbox" value="phone"> 在 iPhone 上實際走一次：加到主畫面 → 打開 → 開啟通知</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 15　各瀏覽器的推播規則會隨版本調整。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181712"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181712"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609181712"></script>
+<script src="../assets/js/config.js?v=202609181712"></script>
+<script src="../assets/js/core.js?v=202609181712"></script>
+<script src="../assets/js/members.js?v=202609181712"></script>
+<script src="../assets/js/tour.js?v=202609181712"></script>
+<script src="../assets/js/modules/electives.js?v=202609181712"></script>
+<script src="../assets/js/modules/m15.js?v=202609181712"></script>
+</body>
+</html>

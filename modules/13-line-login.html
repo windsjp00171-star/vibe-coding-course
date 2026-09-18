@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LINE 登入：免記帳號密碼｜Vibe Coding 實戰課</title>
+  <meta name="description" content="LINE 登入的流程白話講、講師踩過的十個「不會報錯的坑」精選，以及把坑寫成交接文件、交給 AI 照做的方法。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181712">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609181712">
+</head>
+<body data-module="m13" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>13</b> D 進階選修．LINE 登入</span>
+    <h1>最好用的登入，<br>坑也<em>最多</em></h1>
+    <p class="lead">在台灣，幾乎每個長輩手機裡都有 LINE。用 LINE 登入，不用記密碼、不用收驗證碼，是講師所有教會系統的共同選擇。但它也是講師踩坑最多的地方：光是「LINE 登入＋裝成手機 App」，就踩了十個<strong>不會報錯、但使用者那邊是壞的</strong>的坑。</p>
+    <ul class="goals">
+      <li>用「去櫃台換證」理解登入流程</li>
+      <li>認得五個最常見、最隱形的 LINE 登入坑</li>
+      <li>學會把踩過的坑寫成交接文件，交給 AI</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m13-1"></div>
+  </section>
+
+  <section class="slide" id="flow" data-tour="flow">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">白話流程</span><h2>LINE 登入就像去櫃台換證</h2><p>你的網站不會碰到使用者的 LINE 密碼，全程由 LINE 負責確認身分。按「下一步」看流程。</p></div></div>
+    <div data-flow></div>
+    <div class="analogy" style="margin-top:16px"><strong>為什麼要「回程票」再換一次？</strong>回程票會出現在網址上，可能被別人看到。所以它只能用一次、很快就過期，真正的身分資料由伺服器在背後向 LINE 換。<b>state（防偽印章）</b>則確認回來的人，就是剛剛出發的那個人。</div>
+  </section>
+
+  <section class="slide" id="pits" data-tour="pits">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">十個坑精選</span><h2>五個「看起來好了，其實是壞的」</h2><p>這些都不會跳錯誤訊息。你以為功能完成了，使用者那邊卻卡住，而且通常不會有人回報。</p></div></div>
+    <div class="grid grid-3" data-line-pits></div>
+  </section>
+
+  <section class="slide" id="handoff" data-tour="handoff">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">最有價值的一課</span><h2>把坑寫成交接文件，交給 AI</h2></div></div>
+    <div class="split">
+      <div>
+        <p>講師第一次做 LINE 登入，前前後後修了很多次。搞定之後，講師請 Claude Code 把整套做法和<b>十個坑</b>整理成一個可以整包帶走的工具包，附上交接文件，準備給其他專案用。每個坑都寫清楚：</p>
+        <ul><li>症狀：使用者會看到什麼</li><li>原因：為什麼會這樣</li><li>驗收：怎麼確認有沒有做對</li></ul>
+        <p>之後要在其他專案加同樣的功能，就把這份文件交給新對話照著做、逐條驗收。講師的靈修日記就是這樣一次補上了「另一個專案踩過的四個坑」。<b>同樣的坑，不用再從頭摸索一次。</b></p>
+        <div class="callout callout-ok"><b>這不只適用於 LINE 登入。</b>任何你花了很多時間才搞定的功能，都值得請 AI 寫一份交接文件。這是 Vibe Coding 裡最被低估的技巧。</div>
+      </div>
+      <div class="card">
+        <h3>交接給新對話的範本</h3>
+        <pre class="gen-out" id="handoff-prompt">我要在這個專案加上「LINE 登入」。
+我有一份在其他專案實際上線、踩過所有坑的交接文件（附在下面）。
+
+請你：
+1. 先讀交接文件，特別是「會靜默失敗的地方」那一節
+2. 說明你打算怎麼接到我的專案，先不要動手
+3. 我同意後再實作
+4. 做完逐條走過文件裡的驗收清單，
+   每一條都說出「你是怎麼確認的」，不要只說「已完成」
+
+（在這裡貼上交接文件）</pre>
+        <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#handoff-prompt">📋 複製範本</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="order">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">動手玩</span><h2>排出 LINE 登入的正確順序</h2></div></div>
+    <div class="card screen-only" data-order></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">課中工作坊</span><h2>寫一份你自己的交接文件</h2><p>挑一個你在課程中「卡最久」的地方，把它變成下次可以直接交給 AI 的文件。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 35 分</span></p>
+      <ol>
+        <li><span class="time">0–10 分</span>回想：到目前為止，你在哪一步卡最久？（安裝、部署、登入、某個 bug…）</li>
+        <li><span class="time">10–25 分</span>對 Claude Code 說：「請回顧我們剛才解決 ＿＿ 的過程，寫成一份交接文件：做法、踩過的坑（症狀／原因／怎麼確認）、驗收清單」。</li>
+        <li><span class="time">25–35 分</span>兩人交換文件：看得懂嗎？照著做能不能避開同樣的坑？</li>
+      </ol>
+      <div data-teacher-slot="m13-2"></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的交接文件大綱</h3>
+      <p>功能：<span class="blank" style="min-width:16em"></span></p>
+      <p>坑 1（症狀／原因／怎麼確認）：</p><div class="write-lines"></div>
+      <p>坑 2：</p><div class="write-lines"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m13-home">
+      <li><label><input type="checkbox" value="doc"> 把工作坊的交接文件存進專案的 docs/ 資料夾，並在 CLAUDE.md 寫「做 ＿＿ 之前先讀 docs/…」</label></li>
+      <li><label><input type="checkbox" value="line-app"> 用 iPhone 的 LINE 打開一個你做的網頁，測試按鈕、上傳、登入是否正常</label></li>
+      <li><label><input type="checkbox" value="channel"> （想做 LINE 登入的人）到 LINE Developers 建立 LINE Login 頻道，先不用接程式</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 13　LINE 平台規則以 LINE Developers 官方說明為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181712"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181712"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609181712"></script>
+<script src="../assets/js/config.js?v=202609181712"></script>
+<script src="../assets/js/core.js?v=202609181712"></script>
+<script src="../assets/js/members.js?v=202609181712"></script>
+<script src="../assets/js/tour.js?v=202609181712"></script>
+<script src="../assets/js/modules/electives.js?v=202609181712"></script>
+<script src="../assets/js/modules/m13.js?v=202609181712"></script>
+</body>
+</html>

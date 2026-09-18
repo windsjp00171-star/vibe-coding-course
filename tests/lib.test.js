@@ -100,3 +100,38 @@ test('scoreQuiz：可以指定較高的及格線（總測驗 80 分）', () => {
   assert.equal(lib.scoreQuiz(qs, sevenFive).passed, true);
   assert.equal(lib.scoreQuiz(qs, sevenFive, 80).passed, false);
 });
+
+test('classifyNote：有時間詞一定是待辦，不能被當成筆記（講師小秘書的核心規則）', () => {
+  const today = new Date(2026, 8, 18);
+  const r = lib.classifyNote('明天下午去阿秦家', today);
+  assert.equal(r.type, 'task');
+  assert.equal(r.due_date, '2026-09-19');
+  assert.equal(lib.classifyNote('提醒我明天繳電話費', today).type, 'reminder');
+  assert.equal(lib.classifyNote('報名系統的推播功能完成了', today).type, 'project_update');
+  assert.equal(lib.classifyNote('會議重點：下一季要多辦親子活動', today).type, 'note');
+});
+
+test('utcToTaiwan：排程 UTC 0 點就是台灣早上 8 點，跨日也要正確', () => {
+  assert.equal(lib.utcToTaiwan(0), 8);
+  assert.equal(lib.utcToTaiwan(16), 0);
+  assert.equal(lib.utcToTaiwan(20), 4);
+});
+
+test('simulatePushWeek：四個原則都做到，一週只發一次、白天發、點進來看得到', () => {
+  const r = lib.simulatePushWeek({ window: true, dedupe: true, askOnClick: true, siteFirst: true });
+  assert.equal(r.total, 1);
+  assert.equal(r.firstTime, '09:00');
+  assert.equal(r.emptyOnClick, false);
+});
+
+test('simulatePushWeek：沒去重又沒時段，一天轟炸 96 次，而且半夜 00:07 開始（講師真實事故的數字）', () => {
+  const r = lib.simulatePushWeek({ window: false, dedupe: false, askOnClick: true, siteFirst: true });
+  assert.equal(r.perDay[0], 96);
+  assert.equal(r.firstTime, '00:07');
+});
+
+test('simulatePushWeek：一進站就問權限，被拒絕後整週一則都收不到', () => {
+  const r = lib.simulatePushWeek({ window: true, dedupe: true, askOnClick: false, siteFirst: true });
+  assert.equal(r.total, 0);
+  assert.equal(r.subscribed, false);
+});

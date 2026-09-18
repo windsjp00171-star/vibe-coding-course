@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>會員系統：註冊、登入、權限｜Vibe Coding 實戰課</title>
+  <meta name="description" content="登入和權限的差別、四種登入方式怎麼選、親手設計權限矩陣，以及講師的會員系統真實設計與踩坑。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181712">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609181712">
+</head>
+<body data-module="m11" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>11</b> D 進階選修．會員</span>
+    <h1>門禁卡證明你是誰，<br><em>樓層權限</em>決定你能去哪</h1>
+    <p class="lead">幾乎每個「真的有人在用」的系統都需要會員：誰能報名、誰能看名單、誰能改設定。這個單元不教寫程式，教你怎麼<strong>把會員的規則想清楚</strong>，再交給 Claude Code 去做。</p>
+    <ul class="goals">
+      <li>分清楚「登入」和「權限」</li>
+      <li>依使用者選對登入方式</li>
+      <li>設計出不會出事的權限矩陣</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 40 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m11-1"></div>
+  </section>
+
+  <section class="slide" id="authn">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">兩件事</span><h2>登入（你是誰）≠ 權限（你能做什麼）</h2></div></div>
+    <div class="grid grid-2">
+      <div class="card"><span class="pill pill-brand">登入 Authentication</span><h3>🪪 門禁卡</h3><p>確認「你就是你」。用密碼、Google、LINE……方法很多，目的都一樣：讓系統知道現在是誰在操作。</p></div>
+      <div class="card"><span class="pill pill-warn">權限 Authorization</span><h3>🏢 樓層權限</h3><p>確認身分後，決定你能看什麼、改什麼、刪什麼。員工卡刷得進大門，不代表進得了財務室。</p></div>
+    </div>
+    <div class="callout callout-warn" style="margin-top:16px"><b>最常見的錯：</b>只做了登入，沒做權限。結果「有登入的人什麼都看得到」。單元 8 講的全域稽核，講師就在自己的系統抓到過這種權限漏洞。</div>
+  </section>
+
+  <section class="slide" id="methods" data-tour="methods">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">怎麼選</span><h2>四種登入方式</h2><p>沒有最好的方式，只有最適合你的使用者的方式。</p></div></div>
+    <div class="table-wrap card"><table class="compare">
+      <thead><tr><th></th><th>帳號密碼</th><th>Email 連結</th><th>Google</th><th class="hl">LINE</th></tr></thead>
+      <tbody>
+        <tr><th>使用者要記的</th><td>一組密碼</td><td>什麼都不用記</td><td>什麼都不用記</td><td class="hl">什麼都不用記</td></tr>
+        <tr><th>適合誰</th><td>習慣上網的人</td><td>有常用信箱的人</td><td>上班族、學生</td><td class="hl">長輩、社區、教會</td></tr>
+        <tr><th>忘記密碼客服</th><td>很多</td><td>幾乎沒有</td><td>幾乎沒有</td><td class="hl">幾乎沒有</td></tr>
+        <tr><th>做起來</th><td>要處理重設密碼</td><td>簡單</td><td>要到 Google 申請憑證</td><td class="hl">要申請 LINE 頻道，坑最多（單元 13）</td></tr>
+        <tr><th>講師用在</th><td>財務系統（有忘記密碼流程）</td><td>—</td><td>這個課程網站</td><td class="hl">報名、小組回報、靈修日記等教會系統</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="slide" id="matrix" data-tour="matrix">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手設計</span><h2>權限矩陣設計器</h2><p>這是一個活動報名系統。勾選每種身分可以做的事，右邊會即時檢查有沒有危險的組合。</p></div></div>
+    <div class="split">
+      <div class="card"><div class="table-wrap"><table class="matrix" data-matrix></table></div>
+        <p style="margin-top:12px"><button type="button" class="btn btn-sm" data-matrix-reset>重設</button> <button type="button" class="btn btn-sm btn-ghost" data-matrix-good>看建議的設定</button></p></div>
+      <div class="card" data-matrix-report aria-live="polite"></div>
+    </div>
+    <div class="analogy" style="margin-top:16px"><strong>講師的財務系統就是這樣做的：</strong>每種角色能進哪些功能，在後台用勾選的方式設定；新帳號預設是「待核准」，<b>在管理員確認之前，什麼資料都看不到</b>。</div>
+  </section>
+
+  <section class="slide" id="this-site">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">活教材</span><h2>這個課程網站的會員設計</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><span class="pill pill-warn">訪客</span><h3>🕶️ 可以試用</h3><p>不用登入就能看幾個試用單元，進度只存在自己的瀏覽器。</p></div>
+      <div class="card"><span class="pill pill-ok">學員</span><h3>🙋 登入＋開通</h3><p>用 Google 登入後是「待開通」；輸入講師給的班級加入碼，就自動開通全部單元，進度存到雲端。</p></div>
+      <div class="card"><span class="pill pill-brand">講師</span><h3>🧑‍🏫 管理後台</h3><p>看得到全部會員和進度、可以開通和設定講師，還看得到講師專用的教學提示。<b>學員自己不能把自己改成講師</b>，這條由資料庫擋。</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="pits" data-tour="pits">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">講師踩過的坑</span><h2>會員系統的真實事故</h2></div></div>
+    <div class="grid grid-2" data-pits></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>設計你的題目的會員規則</h2></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 40 分</span>　3 人一組，用單元 1 選的題目。</p>
+      <ol>
+        <li><span class="time">0–10 分</span>列出會用這個系統的所有「身分」（例如：訪客、會員、組長、管理員）。</li>
+        <li><span class="time">10–25 分</span>在學習單上畫權限矩陣，再用第 03 段的設計器檢查一次，有紅色警告就改。</li>
+        <li><span class="time">25–35 分</span>選一種登入方式，說出理由：你的使用者是誰？</li>
+        <li><span class="time">35–40 分</span>把矩陣整理成一段話交給 Claude Code：「請依照這個權限矩陣設計資料表和 RLS，先給我看計畫」。</li>
+      </ol>
+      <div data-teacher-slot="m11-2"></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 權限矩陣</h3>
+      <p>身分 ＼ 動作：看公開資訊／報名／看自己資料／看全部名單／改設定／刪除資料</p>
+      <div class="write-lines"></div><div class="write-lines"></div>
+      <p>登入方式：<span class="blank" style="min-width:10em"></span>　理由：<span class="blank" style="min-width:16em"></span></p>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m11-home">
+      <li><label><input type="checkbox" value="matrix"> 把工作坊的權限矩陣寫進 CLAUDE.md，當作專案的固定規則</label></li>
+      <li><label><input type="checkbox" value="pending"> 在你的設計裡加上「新帳號預設待開通」</label></li>
+      <li><label><input type="checkbox" value="audit"> 請 Claude Code 檢查：有沒有任何頁面「登入了就看得到」，卻沒有檢查身分？</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 11</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181712"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181712"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609181712"></script>
+<script src="../assets/js/config.js?v=202609181712"></script>
+<script src="../assets/js/core.js?v=202609181712"></script>
+<script src="../assets/js/members.js?v=202609181712"></script>
+<script src="../assets/js/tour.js?v=202609181712"></script>
+<script src="../assets/js/modules/electives.js?v=202609181712"></script>
+<script src="../assets/js/modules/m11.js?v=202609181712"></script>
+</body>
+</html>
