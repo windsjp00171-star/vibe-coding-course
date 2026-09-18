@@ -71,3 +71,25 @@ test('pick：抽題不重複、不超過題庫', () => {
   assert.equal(new Set(picked).size, 3);
   assert.equal(lib.pick([1, 2], 5).length, 2);
 });
+
+test('checkPrompt：模糊的指令要被指出缺少零件，這是單元 3 的教學重點', () => {
+  const r = lib.checkPrompt('幫我做一個網站');
+  assert.ok(r.score <= 1, `模糊指令不該拿高分，得到 ${r.score}`);
+  assert.equal(r.parts.find((p) => p.id === 'done').ok, false);
+});
+
+test('checkPrompt：五個零件齊全的指令要拿滿分，否則學員照範例寫也過不了', () => {
+  const good = '請先列出步驟給我看，我同意再開始。幫我做一個部門聚餐報名表，給同事用手機填，只要一個 html 檔就好，不要用框架。做完自己測一次，並告訴我怎麼打開。';
+  assert.equal(lib.checkPrompt(good).score, 5);
+});
+
+test('checkPrompt：空白或太短不算分', () => {
+  assert.equal(lib.checkPrompt('').score, 0);
+  assert.equal(lib.checkPrompt('幫我做').score, 0);
+});
+
+test('scanCode：單元 6「找鑰匙」遊戲的答案靠這個判斷，寫死的密碼一定要抓到', () => {
+  const lines = (code) => lib.scanCode(code).filter((f) => f.rule === 'secret').map((f) => f.line);
+  assert.deepEqual(lines("const pool = new Pool({\n  host: 'db.example.com',\n  password: 'MyCompany2026!',\n});"), [3]);
+  assert.deepEqual(lines('const c = new OpenAI({\n  apiKey: process.env.OPENAI_API_KEY,\n});'), [], '讀 process.env 的是正確寫法，不能被誤判');
+});

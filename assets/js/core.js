@@ -16,7 +16,15 @@
     { id: 'm7', part: 'C 資安', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 35 },
     { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 35 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '總測驗與結業證書', file: 'modules/09-final.html', minutes: 25 },
+    { id: 'm10', part: 'D 進階選修', emoji: '🗄️', title: 'Supabase：雲端資料庫', file: 'modules/10-supabase.html', minutes: 35 },
+    { id: 'm11', part: 'D 進階選修', emoji: '🤖', title: 'LINE Bot：做一個 AI 小秘書', file: 'modules/11-line-bot.html', minutes: 40 },
+    { id: 'm12', part: 'D 進階選修', emoji: '💚', title: 'LINE 登入：免記帳號密碼', file: 'modules/12-line-login.html', minutes: 35 },
+    { id: 'm13', part: 'D 進階選修', emoji: '📱', title: 'PWA：讓網站變成手機 App', file: 'modules/13-pwa.html', minutes: 30 },
+    { id: 'm14', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/14-push.html', minutes: 30 },
   ];
+  // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
+  const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6']);
+  MODULES.forEach((m) => { m.ready = READY.has(m.id); });
 
   const STORE_KEY = 'vibe-course-v1';
 
@@ -304,6 +312,92 @@
       <div class="print-q"><b>${i + 1}. ${esc(q.q)}</b><ol>${q.options.map((o) => `<li>${esc(o)}</li>`).join('')}</ol></div>`).join('')}`;
   }
 
+  // ---------- 分類遊戲：一次一張卡，選一個類別，立刻看解說 ----------
+  // items: [{ text, answer: 類別 key, why }]；categories: [{ key, label }]
+  function mountClassify(host, items, categories, { title = '分類挑戰', onFinish } = {}) {
+    if (!host) return;
+    let i = 0; let right = 0;
+    function render() {
+      const item = items[i];
+      host.innerHTML = `
+        <div class="quiz-head"><span class="kicker">${esc(title)}．${i + 1}／${items.length}</span><span class="pill pill-ok">答對 ${right}</span></div>
+        <div class="classify-card reveal">${esc(item.text)}</div>
+        <div class="classify-choices">${categories.map((c) =>
+          `<button type="button" class="btn" data-cat="${esc(c.key)}">${esc(c.label)}</button>`).join('')}</div>
+        <div class="classify-after"></div>`;
+      $$('[data-cat]', host).forEach((b) => b.addEventListener('click', () => choose(b.dataset.cat)));
+    }
+    function choose(key) {
+      const item = items[i];
+      const ok = key === item.answer;
+      if (ok) right += 1;
+      $$('[data-cat]', host).forEach((b) => {
+        b.disabled = true;
+        if (b.dataset.cat === item.answer) b.classList.add('btn-ok');
+        else if (b.dataset.cat === key) b.classList.add('btn-danger');
+      });
+      const last = i === items.length - 1;
+      const label = categories.find((c) => c.key === item.answer).label;
+      $('.classify-after', host).innerHTML = `
+        <div class="feedback ${ok ? 'ok' : 'bad'}"><b>${ok ? '✅ 沒錯' : `❌ 答案是「${esc(label)}」`}</b>　${esc(item.why)}</div>
+        <p style="margin-top:12px"><button type="button" class="btn btn-primary" data-next>${last ? '看結果' : '下一張 →'}</button></p>`;
+      $('[data-next]', host).addEventListener('click', () => {
+        if (!last) { i += 1; render(); return; }
+        host.innerHTML = `<div class="reveal" style="text-align:center"><p class="kicker">${esc(title)}</p>
+          <div class="score-big">${right}<small style="font-size:.35em">／${items.length}</small></div>
+          <p>${right === items.length ? '全對！你已經很有概念了。' : '錯的那幾張，上課時我們會拿出來討論。'}</p>
+          <button type="button" class="btn" data-again>再玩一次</button></div>`;
+        $('[data-again]', host).addEventListener('click', () => { i = 0; right = 0; render(); });
+        if (onFinish) onFinish(right);
+      });
+      $('[data-next]', host).focus();
+    }
+    render();
+  }
+
+  // ---------- 排序遊戲：用 ↑↓ 把步驟排好再檢查（不用拖曳，投影和鍵盤都好操作） ----------
+  // steps: 正確順序的字串陣列
+  function mountOrder(host, steps, { title = '排出正確順序', explain = '' } = {}) {
+    if (!host) return;
+    let order = window.CourseLib.shuffle(steps.map((s, k) => k));
+    if (order.every((v, k) => v === k)) order = order.slice().reverse();
+    function render(checked) {
+      host.innerHTML = `
+        <p class="kicker">${esc(title)}</p>
+        <ol class="order-list">${order.map((k, pos) => {
+          let cls = '';
+          if (checked) cls = k === pos ? 'is-right' : 'is-wrong';
+          return `<li class="${cls}"><span>${esc(steps[k])}</span>
+            <span class="order-btns"><button type="button" class="btn btn-sm" data-move="${pos}" data-dir="-1" aria-label="往上" ${pos === 0 ? 'disabled' : ''}>↑</button>
+            <button type="button" class="btn btn-sm" data-move="${pos}" data-dir="1" aria-label="往下" ${pos === order.length - 1 ? 'disabled' : ''}>↓</button></span></li>`;
+        }).join('')}</ol>
+        <p><button type="button" class="btn btn-primary" data-check>檢查順序</button></p>
+        <div class="order-after"></div>`;
+      $$('[data-move]', host).forEach((b) => b.addEventListener('click', () => {
+        const pos = Number(b.dataset.move); const to = pos + Number(b.dataset.dir);
+        const next = order.slice(); [next[pos], next[to]] = [next[to], next[pos]]; order = next; render(false);
+        $(`[data-move="${to}"][data-dir="${b.dataset.dir}"]`, host)?.focus();
+      }));
+      $('[data-check]', host).addEventListener('click', () => {
+        render(true);
+        const ok = order.every((v, k) => v === k);
+        $('.order-after', host).innerHTML = `<div class="feedback ${ok ? 'ok' : 'bad'}"><b>${ok ? '✅ 順序完全正確！' : '還有幾個位置不對（紅色的），再調整看看。'}</b> ${ok ? esc(explain) : ''}</div>`;
+      });
+    }
+    render(false);
+  }
+
+  // ---------- 複製按鈕：<button data-copy="#目標元素"> ----------
+  function initCopy(root = document) {
+    root.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-copy]');
+      if (!btn) return;
+      const target = $(btn.dataset.copy);
+      const text = target ? (target.value ?? target.textContent) : '';
+      try { await navigator.clipboard.writeText(text); toast('已複製，可以貼到 Claude Code 了'); } catch { toast('瀏覽器不讓我複製，請手動選取文字'); }
+    });
+  }
+
   // ---------- 啟動 ----------
   function boot() {
     renderHeader();
@@ -313,12 +407,13 @@
     initFlips();
     initTabs();
     initChecklists();
+    initCopy();
     document.addEventListener('keydown', onKey);
   }
 
   window.Course = {
     MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz,
-    initFlips, initTabs, goSlide,
+    mountClassify, mountOrder, initFlips, initTabs, goSlide,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

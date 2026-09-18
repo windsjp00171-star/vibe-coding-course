@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>怎麼跟 Claude Code 合作｜Vibe Coding 實戰課</title>
+  <meta name="description" content="好指令的五個零件、一次一小步、規劃模式、CLAUDE.md 員工手冊、交接的藝術、卡住時的救援句。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181217">
+</head>
+<body data-module="m3" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>03</b> A 起步．合作</span>
+    <h1>AI 很聰明，<br>但它<em>讀不到你的心</em></h1>
+    <p class="lead">同一個 Claude Code，有人做出好用的系統，有人做出一團亂。差別不在 AI，而在你怎麼交代、怎麼拆工作、怎麼留下規矩。這個單元是整門課最實用的一課。</p>
+    <ul class="goals">
+      <li>寫出有五個零件的好指令</li>
+      <li>把大需求拆成一小步一小步</li>
+      <li>寫出自己的 CLAUDE.md「員工手冊」</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 45 分</span>
+      <span class="phase phase-post">課後任務 約 20 分</span>
+    </div>
+  </section>
+
+  <section class="slide" id="parts" data-tour="parts">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">好指令的秘密</span><h2>五個零件，缺一個就容易走歪</h2></div></div>
+    <div class="grid grid-3" style="margin-bottom:18px">
+      <div class="card"><h3>🎯 要做什麼</h3><p>「做一個報名表」比「幫我弄一下」清楚一百倍。</p></div>
+      <div class="card"><h3>🙋 給誰用</h3><p>給 70 歲長輩用，和給工程師用，做法完全不同。</p></div>
+      <div class="card"><h3>🚧 限制條件</h3><p>「不要」和「只要」：只改這個檔案、手機要能用、不要用框架。</p></div>
+      <div class="card"><h3>✅ 怎樣算完成</h3><p>請它做完自己測一次，並告訴你怎麼確認。</p></div>
+      <div class="card"><h3>🗺️ 先規劃再動手</h3><p>請它先列步驟，你同意再開始。越大的需求越需要。</p></div>
+      <div class="card" style="background:var(--brand-soft)"><h3>💡 記法</h3><p><b>做什麼、給誰、限制、驗收、先規劃。</b>跟交代新同事工作一模一樣。</p></div>
+    </div>
+    <div class="split">
+      <div class="card">
+        <h3>🩺 指令健檢</h3>
+        <p class="muted">寫一段你想對 Claude Code 說的話，看看五個零件齊不齊。</p>
+        <textarea data-prompt-input aria-label="輸入你的指令">幫我做一個網站</textarea>
+        <p style="margin-top:10px"><button type="button" class="btn btn-sm" data-prompt-example>換成好範例看看</button></p>
+      </div>
+      <div class="card" data-prompt-result aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="small-steps" data-tour="steps">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">一次一小步</span><h2>不要一口氣說「幫我做一個報名系統」</h2>
+        <p>大需求一次丟給 AI，它會自作主張補一堆你沒說的東西。拆成小步，每步做完、試過、存檔，再做下一步。</p></div></div>
+    <div class="split">
+      <div class="card screen-only" data-order></div>
+      <div>
+        <div class="analogy"><strong>講師的做法：</strong>一個報名系統存檔超過 600 次，每一次都只做一件事，例如「報名成功後寄確認信」「名額滿了要顯示候補」。每一步都小到 15 分鐘內能做完、測完。</div>
+        <div class="callout callout-ok"><b>判斷太大的訣竅：</b>如果你沒辦法用一句話說出「怎樣算做完」，就代表還要再拆。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="modes" data-tour="modes">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">三種工作模式</span><h2>你可以決定它要多「自動」</h2>
+        <p>Claude Code 可以切換不同的權限模式。名稱和位置可能隨版本調整，概念是一樣的。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card" style="border:2px solid var(--brand)"><span class="pill pill-brand">新手建議</span><h3>🗺️ 規劃模式（Plan）</h3><p>只研究、只提計畫，<b>完全不動手</b>。你看過計畫、說「可以」，它才開始做。大改動前一定先用。</p></div>
+      <div class="card"><span class="pill pill-ok">預設</span><h3>🙋 每次詢問</h3><p>每次修改檔案或執行指令前，都先問你。慢一點，但每一步你都看得到。</p></div>
+      <div class="card"><span class="pill pill-warn">熟練後</span><h3>⚡ 自動接受修改</h3><p>改檔案不再一個一個問，但執行指令還是會問。等你熟悉了、也有存檔習慣，再考慮開。</p></div>
+    </div>
+    <div class="callout callout-danger" style="margin-top:16px"><b>有一種模式叫「略過所有權限」：</b>它什麼都不問就直接做。新手請不要開。單元 7 會說明為什麼。</div>
+    <p class="muted">終端機版用 <kbd>Shift</kbd>＋<kbd>Tab</kbd> 切換模式；桌面版在輸入框附近可以選。</p>
+  </section>
+
+  <section class="slide" id="claude-md" data-tour="claudemd">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">給 AI 的員工手冊</span><h2>CLAUDE.md：寫一次，每次都照做</h2>
+        <p>每次開新對話，Claude Code 都會先讀專案資料夾裡的 <code>CLAUDE.md</code>。把你的規矩寫進去，就不用每次重講。</p></div></div>
+    <div class="analogy"><strong>就像新同事報到第一天拿到的員工手冊：</strong>公司的習慣、不能碰的東西、做完要怎麼回報，寫清楚，大家都省事。</div>
+    <h3 style="margin-top:24px">講師自己的 CLAUDE.md 守則（白話版）</h3>
+    <p class="muted">這是講師所有專案共用的規矩，每一條都是踩過坑換來的。點卡片看原因。</p>
+    <div class="grid grid-3" data-rules></div>
+  </section>
+
+  <section class="slide" id="generator" data-tour="generator">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">動手做</span><h2>產生你的第一份 CLAUDE.md</h2><p>填好、勾選，複製下來貼給 Claude Code，請它存成專案裡的 CLAUDE.md。</p></div></div>
+    <div class="split">
+      <div class="card form-grid">
+        <label>專案名稱<input type="text" data-gen="name" value="部門聚餐報名表"></label>
+        <label>這個專案是給誰用的？<input type="text" data-gen="who" value="公司同事，大多用手機填"></label>
+        <label>介面語言<select data-gen="lang"><option>繁體中文</option><option>English</option></select></label>
+        <fieldset class="card" style="padding:12px 14px"><legend><b>要放哪些規矩？</b></legend><div data-gen-rules class="checklist"></div></fieldset>
+      </div>
+      <div>
+        <pre class="gen-out" id="claude-md-out" data-gen-out></pre>
+        <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#claude-md-out">📋 複製 CLAUDE.md 內容</button></p>
+        <p class="muted">貼給 Claude Code 時可以說：「請把下面的內容存成這個專案的 CLAUDE.md」。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="handoff" data-tour="handoff">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">交接的藝術</span><h2>AI 會「失憶」，所以要留紙條</h2>
+        <p>對話太長時，Claude Code 會把前面的內容壓縮成摘要，細節可能就不見了。開新對話更是從零開始。</p></div></div>
+    <div class="grid grid-2">
+      <div class="card"><h3>📍 收工紙條（Session Snapshot）</h3><p>講師的守則要求 Claude Code 每次收工都寫一張固定格式的紙條，下次開新對話直接貼上：</p>
+        <pre class="gen-out">📍 Session Snapshot — 報名表
+上次做到：完成報名成功後的確認畫面
+目前狀態：可以運行
+卡點：候補名單的規則還沒決定
+下一步：寫「名額滿了顯示候補」
+需要注意：不要改動 data/ 資料夾</pre></div>
+      <div class="card"><h3>📦 把坑打包成工具包</h3><p>講師做「LINE 登入＋裝到手機桌面」時，前後踩了<b>十個不會報錯、但使用者那邊是壞的</b>的坑。例如：裝好 App 打開後，被要求輸入 LINE 的 Email 和密碼，然後就卡住了。</p>
+        <p>後來講師請 Claude Code 把整套做法和十個坑寫成一份<b>交接文件</b>。下一個專案要加同樣功能時，直接把文件交給新對話：「先讀這份，照著做，做完逐條驗收」。<b>同樣的坑，再也沒踩過第二次。</b></p>
+        <p class="muted">這個故事在選修單元 12 會完整拆解。</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="rescue" data-tour="rescue">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">卡住的時候</span><h2>萬用救援句</h2><p>AI 越改越亂、一直出錯的時候，複製這些句子給它。</p></div></div>
+    <div class="grid grid-2" data-rescue></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="kicker">課中工作坊</span><h2>A／B 指令對決</h2><p>同一個題目、兩種說法，看看 Claude Code 交出來的東西差多少。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 45 分</span>　用單元 1 選定的題目。</p>
+      <ol>
+        <li><span class="time">0–5 分</span>兩人一組。A 只能用一句話下指令（例如「幫我做一個報名表」）；B 用五個零件寫完整指令，並開規劃模式。</li>
+        <li><span class="time">5–25 分</span>兩人各自在自己的 Claude Code 操作，A 可以追加指令，但每次只能說一句話。</li>
+        <li><span class="time">25–35 分</span>交換電腦實際使用對方的成果，填學習單的比較表。</li>
+        <li><span class="time">35–45 分</span>每人用第 05 段產生器做一份 CLAUDE.md，放進自己的專案。</li>
+      </ol>
+      <div class="teacher"><p><b>收尾討論：</b>A 組通常會發現 AI 自己加了一堆沒要的功能，或做出來手機不能用。請 B 組分享：哪個零件最有用？通常是「怎樣算完成」。</p></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ A／B 對決比較表</h3>
+      <p>我的題目：<span class="blank" style="min-width:20em"></span></p>
+      <p>A（一句話）的結果：</p><div class="write-lines"></div>
+      <p>B（五個零件）的結果：</p><div class="write-lines"></div>
+      <p>我學到最有用的零件是：□ 做什麼　□ 給誰　□ 限制　□ 驗收　□ 先規劃</p>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">10</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m3-home">
+      <li><label><input type="checkbox" value="md"> 把產生的 CLAUDE.md 放進你的練習專案，開新對話問它「你讀到了哪些規矩？」</label></li>
+      <li><label><input type="checkbox" value="plan"> 用規劃模式請它規劃你的題目，只看計畫、先不要做，把計畫存下來</label></li>
+      <li><label><input type="checkbox" value="snapshot"> 練習結束時請它寫一張 Session Snapshot，下次開新對話貼給它</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 03</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181217"></script>
+<script src="../assets/js/core.js?v=202609181217"></script>
+<script src="../assets/js/tour.js?v=202609181217"></script>
+<script src="../assets/js/modules/m3.js?v=202609181217"></script>
+</body>
+</html>

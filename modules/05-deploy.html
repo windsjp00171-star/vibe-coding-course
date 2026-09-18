@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>把作品放上網路｜Vibe Coding 實戰課</title>
+  <meta name="description" content="部署是什麼？靜態與動態網站、GitHub Pages / Vercel / Render 怎麼選、環境變數、講師真實的部署踩坑故事。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181217">
+</head>
+<body data-module="m5" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>05</b> B 上線．部署</span>
+    <h1>從<em>自家廚房</em><br>到<em>開一家店</em></h1>
+    <p class="lead">你電腦上的網頁，只有你看得到。「部署」就是把它搬到網路上的主機，給別人一個網址就能打開。這個單元教你選平台、搬上去，以及搬家時最常踩的坑。</p>
+    <ul class="goals">
+      <li>分得出靜態網站和動態網站</li>
+      <li>依照需求選一個合適的上線平台</li>
+      <li>把自己的網頁用 GitHub Pages 上線</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+  </section>
+
+  <section class="slide" id="what">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先講概念</span><h2>部署是什麼？</h2></div></div>
+    <div class="split">
+      <div>
+        <div class="analogy"><strong>自家廚房（本機）：</strong>你做的菜只有家人吃得到。Claude Code 幫你開的預覽網址像 <code>localhost:5173</code>，意思是「這台電腦自己」，別人打不開。</div>
+        <div class="analogy"><strong>開一家店（部署）：</strong>把菜單和廚房搬到大街上的店面（網路主機），給大家一個地址（網址），誰都能來。</div>
+      </div>
+      <div class="card">
+        <h3>整個流程只有三步</h3>
+        <ol class="steps" style="padding:0">
+          <li class="step is-on" style="list-style:none">在自己電腦做好、測好</li>
+          <li class="step is-on" style="list-style:none">push 上 GitHub（單元 4 學過）</li>
+          <li class="step is-on" style="list-style:none">上線平台自動從 GitHub 抓下來，給你一個網址</li>
+        </ol>
+        <p class="muted" style="margin-top:12px">設定好之後，以後每次 push，網站就會自動更新。這就是為什麼要先學 GitHub。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="static" data-tour="static">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">最重要的分類</span><h2>靜態網站 vs 動態網站</h2><p>選平台之前，先分清楚你做的是哪一種。</p></div></div>
+    <div class="grid grid-2" style="margin-bottom:18px">
+      <div class="card"><span class="pill pill-ok">靜態網站</span><h3>🖨️ 印好的傳單</h3><p>每個人看到的內容都一樣，網站不用「記住」任何東西。作品集、活動介紹、課程網站（就是你現在看的這個）。</p><p><b>上線：免費、簡單。</b></p></div>
+      <div class="card"><span class="pill pill-warn">動態網站</span><h3>🧑‍💼 有店員的櫃台</h3><p>要存資料、要登入、每個人看到的不一樣。報名系統、會員系統、LINE 機器人。後面需要一台一直開著的主機和資料庫。</p><p><b>上線：要多設定，可能要付費。</b></p></div>
+    </div>
+    <div class="card screen-only" data-classify-static></div>
+  </section>
+
+  <section class="slide" id="picker" data-tour="picker">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手選</span><h2>我該放在哪個平台？</h2><p>回答幾個問題，看看適合哪裡。這些平台講師都實際用過。</p></div></div>
+    <div class="split">
+      <div class="card" data-picker aria-live="polite"></div>
+      <div class="card">
+        <h3>講師用過的平台</h3>
+        <div class="table-wrap"><table class="compare" style="min-width:0">
+          <thead><tr><th>平台</th><th>適合</th><th>講師用在</th></tr></thead>
+          <tbody>
+            <tr><th>GitHub Pages</th><td>靜態網站，免費</td><td>作品集、樂器練習、這個課程網站</td></tr>
+            <tr><th>Vercel</th><td>靜態網站＋簡單的後端</td><td>LINE 小秘書、財務系統、讀經網站</td></tr>
+            <tr><th>Render／Railway／Fly.io</th><td>要一直開著的後端主機（例如 Python）</td><td>報名系統、檔案分享平台、共讀靈修</td></tr>
+            <tr><th>Hugging Face Spaces</th><td>AI 小工具的展示</td><td>PitchPal 音樂調性偵測</td></tr>
+          </tbody>
+        </table></div>
+        <p class="muted" style="margin:10px 0 0">各平台的免費額度和價格常變動，實際以官網為準。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="pages" data-tour="pages">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">最簡單的上線</span><h2>用 GitHub Pages 上線（免費）</h2><p>適合靜態網站。這個課程網站就是這樣上線的。</p></div></div>
+    <div data-tabs data-default="say">
+      <div class="tab-row screen-only" role="group" aria-label="選擇方式">
+        <button type="button" data-tab="say">🤖 請 Claude Code 做</button>
+        <button type="button" data-tab="click">🖱️ 自己在網頁上點</button>
+      </div>
+      <div data-panel="say">
+        <div class="card">
+          <p>在你的專案資料夾對 Claude Code 說：</p>
+          <pre class="gen-out" id="pages-prompt">請幫我把這個網站用 GitHub Pages 上線：
+1. 先確認已經 push 到我的 GitHub repo
+2. 用 gh 指令開啟 GitHub Pages，來源選 main 分支的根目錄
+3. 等它建置完成，給我網址，並確認網址打得開
+每一步做之前先告訴我要做什麼。</pre>
+          <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#pages-prompt">📋 複製</button></p>
+          <p class="muted">注意：免費帳號的 GitHub Pages 需要 repo 設成 Public（公開）。所以<b>絕對不能有密碼在裡面</b>（單元 6）。</p>
+        </div>
+      </div>
+      <div data-panel="click" hidden>
+        <ol class="install-steps">
+          <li><strong class="step-title">打開你在 GitHub 上的 repo</strong>確認網站檔案已經 push 上去，而且首頁檔名是 <code>index.html</code>。</li>
+          <li><strong class="step-title">點上方的「Settings」</strong>再點左邊選單的「Pages」。</li>
+          <li><strong class="step-title">在「Branch」選 main，資料夾選 / (root)，按 Save</strong>等一到兩分鐘。</li>
+          <li><strong class="step-title">重新整理頁面，上方會出現網址</strong>格式是 <code>https://你的帳號.github.io/repo名稱/</code></li>
+          <li><strong class="step-title">用手機打開這個網址</strong>在別的裝置能打開，才算真的上線成功。</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="env" data-tour="env">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">動態網站才需要</span><h2>環境變數：店長手機裡的保險箱密碼</h2></div></div>
+    <div class="split">
+      <div>
+        <p>動態網站要連資料庫、要用 LINE 登入，需要各種密碼和金鑰。可是密碼<b>不能放在 GitHub 上</b>，那上線的網站要去哪裡拿密碼？</p>
+        <div class="analogy"><strong>答案：寫在平台後台的「環境變數」。</strong>就像店裡保險箱的密碼記在店長手機裡，而不是貼在店門口。程式只寫「去問店長」（<code>process.env.資料庫密碼</code>），真正的密碼只存在平台上。</div>
+      </div>
+      <div class="card">
+        <h3>三個地方，三種放法</h3>
+        <div class="table-wrap"><table class="compare" style="min-width:0">
+          <tbody>
+            <tr><th>你的電腦</th><td><code>.env</code> 檔（已經放進 .gitignore，不會上傳）</td></tr>
+            <tr><th>GitHub</th><td><b>完全不放密碼</b>，只放 <code>.env.example</code> 範本（只有名稱沒有值）</td></tr>
+            <tr><th>上線平台</th><td>後台的 Environment Variables 設定頁</td></tr>
+          </tbody>
+        </table></div>
+        <p class="muted" style="margin:10px 0 0">講師的每個動態專案都有 <code>.env.example</code>，告訴下一個人需要哪些密碼，但不給值。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="stories" data-tour="stories">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">講師踩過的坑</span><h2>四個真實的部署故事</h2><p>點卡片看發生什麼事、怎麼解決。</p></div></div>
+    <div class="grid grid-2">
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">🚚</div><h3>搬家後，中文網址全壞了</h3><p>讀經網站從一個平台搬到另一個平台，英文頁面都正常，可是所有中文書卷的網址都顯示「查無此章經文」。</p><span class="flip-hint">點我看解法 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-danger">原因</span><p>兩個平台處理「網址裡的中文字」的方式不一樣，新平台送進來的是編碼過的亂碼。</p><span class="pill pill-ok">學到</span><p>換平台不是按一下就好。搬家後要把<b>每一種網址</b>都點過一次，特別是有中文、有特殊符號的。</p></div>
+      </div></div>
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">🪪</div><h3>部署一直失敗，連試四次</h3><p>一個記帳系統的程式明明沒問題，推上去卻一直部署失敗。存檔紀錄裡連續出現四次「用不同身分重新觸發部署」。</p><span class="flip-hint">點我看解法 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-danger">原因</span><p>上線平台會檢查「是誰存檔的」。存檔者的帳號跟平台的專案擁有者對不上，平台就拒絕部署。</p><span class="pill pill-ok">學到</span><p>部署失敗時，<b>先打開平台的錯誤紀錄（log）</b>，整段複製貼給 Claude Code：「這是部署錯誤，請用白話說明原因」。不要瞎猜。</p></div>
+      </div></div>
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">📦</div><h3>什麼都沒改，網站自己壞了</h3><p>PitchPal 放在 Hugging Face 上好好的，某天突然啟動不了，卡在載入畫面。</p><span class="flip-hint">點我看解法 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-danger">原因</span><p>程式用到的套件自己升級了新版本，新版改了用法，舊程式就壞了。</p><span class="pill pill-ok">學到</span><p>請 Claude Code <b>把套件版本鎖住</b>（寫死版本號）。你沒有改，不代表別人沒有改。</p></div>
+      </div></div>
+      <div class="flip"><div class="flip-inner">
+        <div class="flip-face flip-front"><div class="emoji">😴</div><h3>第一個人打開要等 30 秒</h3><p>檔案分享平台放在免費主機上，早上第一個打開的人總是要等很久，還以為網站壞了。</p><span class="flip-hint">點我看解法 ↻</span></div>
+        <div class="flip-face flip-back"><span class="pill pill-danger">原因</span><p>免費主機沒人用一段時間就會「睡著」省資源，有人來才會慢慢叫醒。</p><span class="pill pill-ok">學到</span><p>用免費的定時服務每隔幾分鐘「戳」它一下保持清醒，或是給重要的系統付一點錢升級。<b>免費的東西都有代價。</b></p></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="slide" id="order">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">動手玩</span><h2>上線的正確順序</h2></div></div>
+    <div class="card screen-only" data-order></div>
+    <div class="print-only card">
+      <h3>✍️ 上線順序（填入 1～6）</h3>
+      <p>（　）push 到 GitHub　（　）在自己電腦測試　（　）用手機打開網址實測</p>
+      <p>（　）存檔 commit　（　）平台自動部署　（　）請朋友試用、回報問題</p>
+    </div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="kicker">課中工作坊</span><h2>30 分鐘上線挑戰</h2><p>把單元 2 做的自我介紹網頁，用 GitHub Pages 放上網路。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 35 分</span></p>
+      <ol>
+        <li><span class="time">0–15 分</span>用第 04 段的指令請 Claude Code 上線（記得 repo 要 Public，而且裡面沒有任何密碼）。</li>
+        <li><span class="time">15–20 分</span>把網址貼到課程群組。</li>
+        <li><span class="time">20–30 分</span>用<b>手機</b>打開三位同學的網址，各找一個問題（字太小、按鈕按不到、圖片跑版），留言給對方。</li>
+        <li><span class="time">30–35 分</span>把收到的問題貼給 Claude Code 修好，再 push 一次，看網站自動更新。</li>
+      </ol>
+      <div class="teacher"><p><b>常見卡關：</b>repo 是 Private 所以 Pages 開不了；首頁檔名不是 index.html；剛開好要等一到兩分鐘才會出現。最後這個最常見，請大家耐心重新整理。</p></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的網站</h3>
+      <p>網址：<span class="blank" style="min-width:24em"></span></p>
+      <p>同學幫我找到的問題：</p><div class="write-lines"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">10</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m5-home">
+      <li><label><input type="checkbox" value="live"> 自我介紹網頁已經上線，而且用手機打得開</label></li>
+      <li><label><input type="checkbox" value="update"> 請 Claude Code 改一個地方、push，確認網站在幾分鐘內自動更新</label></li>
+      <li><label><input type="checkbox" value="plan"> 想一想：你的課程題目是靜態還是動態？如果是動態，會放在哪個平台？</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 05　各平台的方案與介面以官方最新說明為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181217"></script>
+<script src="../assets/js/core.js?v=202609181217"></script>
+<script src="../assets/js/tour.js?v=202609181217"></script>
+<script src="../assets/js/modules/m5.js?v=202609181217"></script>
+</body>
+</html>

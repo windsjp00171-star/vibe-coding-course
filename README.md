@@ -8,10 +8,11 @@
 
 | 段落 | 單元 | 狀態 |
 |---|---|---|
-| A 起步 | 1 什麼是 Vibe Coding｜2 安裝你的 AI 工程師｜3 怎麼跟 Claude Code 合作 | 製作中 |
-| B 上線 | **4 Git 與 GitHub 白話講**｜5 把作品放上網路 | 4 已完成 |
-| C 資安 | 6 鑰匙與機密別外流｜7 AI 會被騙：你是門神｜8 上線前的 Vibe Check | 製作中 |
+| A 起步 | 1 什麼是 Vibe Coding｜2 安裝你的 AI 工程師｜3 怎麼跟 Claude Code 合作 | ✅ |
+| B 上線 | 4 Git 與 GitHub 白話講｜5 把作品放上網路 | ✅ |
+| C 資安 | 6 鑰匙與機密別外流｜7 AI 會被騙：你是門神｜8 上線前的 Vibe Check | 6 ✅，7–8 製作中 |
 | 結業 | 9 總測驗與結業證書 | 製作中 |
+| D 進階選修 | 10 Supabase｜11 LINE Bot｜12 LINE 登入｜13 PWA｜14 推播 | 製作中 |
 
 ## 使用方式
 
@@ -27,6 +28,8 @@
 ```bash
 python -m http.server 5173
 ```
+
+發佈前執行 `python scripts/bump_assets.py`，替 JS/CSS 加上版本號，避免學員瀏覽器用到舊檔。
 
 打開 http://localhost:5173
 

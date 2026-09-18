@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css">
-  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609181217">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609181217">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -26,10 +26,10 @@
       </div>
     </div>
     <aside class="hero-card card" aria-label="課程數字">
-      <div class="hero-stat"><b>9</b><span>個單元</span></div>
-      <div class="hero-stat"><b>3</b><span>段旅程：起步、上線、資安</span></div>
+      <div class="hero-stat"><b>9</b><span>個必修單元，外加 5 個選修</span></div>
+      <div class="hero-stat"><b>4</b><span>段旅程：起步、上線、資安、進階</span></div>
       <div class="hero-stat"><b>0</b><span>行程式要背</span></div>
-      <p class="muted" style="margin:10px 0 0;font-size:.85rem">教材裡的案例，全部來自講師用 Vibe Coding 做過的 20 多個真實專案。</p>
+      <p class="muted" style="margin:10px 0 0;font-size:.85rem">教材裡的案例，全部來自講師用 Vibe Coding 做過的 17 個真實專案。</p>
     </aside>
   </section>
 
@@ -39,13 +39,13 @@
     <div class="grid grid-3 flow">
       <div class="card"><span class="phase phase-pre">① 課前．在家</span><h3>先看、先玩</h3><p>打開這個網站讀單元內容、玩互動練習、做小測驗。不懂的地方記下來。</p></div>
       <div class="card"><span class="phase phase-in">② 課中．教室</span><h3>一起動手</h3><p>上課不再聽講師念投影片，而是分組做工作坊、實際操作 Claude Code，把問題當場解決。</p></div>
-      <div class="card"><span class="phase phase-post">③ 課後．回家</span><h3>做一件真的事</h3><p>每單元都有一個小任務，做完打勾。九個單元做完，你會有一個真的上線的作品。</p></div>
+      <div class="card"><span class="phase phase-post">③ 課後．回家</span><h3>做一件真的事</h3><p>每單元都有一個小任務，做完打勾。必修單元做完，你會有一個真的上線的作品。</p></div>
     </div>
   </section>
 
   <section class="slide" data-tour="map">
     <div class="section-head"><span class="section-num">⌘</span>
-      <div><span class="kicker">課程地圖</span><h2>9 個單元，一路從零到上線</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
+      <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
     <div class="course-map" data-map></div>
   </section>
 
@@ -62,15 +62,15 @@
 
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．進度只存在你這台電腦的瀏覽器裡，換電腦或清除瀏覽資料會重新開始。</div></footer>
 
-<script src="assets/js/lib.js"></script>
-<script src="assets/js/core.js"></script>
-<script src="assets/js/tour.js"></script>
+<script src="assets/js/lib.js?v=202609181217"></script>
+<script src="assets/js/core.js?v=202609181217"></script>
+<script src="assets/js/tour.js?v=202609181217"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
     const { progress } = getState();
     const parts = [...new Set(MODULES.map((m) => m.part))];
-    const built = new Set(['m4']);
+    const built = new Set(MODULES.filter((m) => m.ready).map((m) => m.id));
     $('[data-map]').innerHTML = parts.map((part) => `
       <div class="map-part">
         <h3 class="map-part-title">${esc(part)}</h3>
@@ -86,14 +86,14 @@
       </div>`).join('');
 
     const count = completedCount();
-    $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '大約 5 小時，可以分次上完';
+    $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '必修約 5 小時，可以分次上完';
     const next = MODULES.find((m) => !progress[m.id]?.done && built.has(m.id));
     if (count && next) { const a = $('[data-continue]'); a.href = next.file; a.textContent = `繼續：${next.emoji} ${next.title} →`; }
 
     window.Tour.register([
       { tour: 'start', title: '從這裡開始', text: '第一次來就從單元 1 開始。之後回來，這個按鈕會變成「繼續上次的進度」。' },
       { tour: 'flow', title: '翻轉教室', text: '這門課要先在家自學，上課時做工作坊。每個單元都分成課前、課中、課後三段。' },
-      { tour: 'map', title: '課程地圖', text: '9 個單元分成三段旅程。做完小測驗過關的單元會打勾。' },
+      { tour: 'map', title: '課程地圖', text: 'A 到 C 是必修，D 是進階選修（資料庫、LINE、手機 App）。做完小測驗過關的單元會打勾。' },
     ]);
   })();
 </script>

@@ -105,6 +105,24 @@
     return findings;
   }
 
+  // ---- 指令健檢：好指令的五個零件 ----
+  // 用關鍵字判斷是刻意的簡化：目的是提醒學員「有沒有想到這件事」，不是評分作文。
+  const PROMPT_PARTS = [
+    { id: 'goal', label: '要做什麼', tip: '一開頭就說清楚要做出什麼東西。', re: /(做|建立|新增|修改|改成|加上|寫|製作|幫我)/ },
+    { id: 'who', label: '給誰用', tip: '說明誰會用、在什麼情境用，AI 才知道要做多簡單。', re: /(給|讓|使用者|同事|學生|客人|會員|長輩|主管|大家|誰)/ },
+    { id: 'limit', label: '限制條件', tip: '說出「不要」和「只要」：不要用框架、只改這個檔案、手機要能用。', re: /(不要|只要|只能|不能|必須|限制|不超過|就好|一定要)/ },
+    { id: 'done', label: '怎樣算完成', tip: '告訴它做完要怎麼確認：自己測一次、列出改了什麼、告訴我怎麼打開。', re: /(完成後|做完|確認|測試|驗收|檢查|告訴我|怎麼打開|怎麼知道)/ },
+    { id: 'plan', label: '先規劃再動手', tip: '請它先列步驟給你看，你同意再開始，大的需求尤其需要。', re: /(先.{0,6}(列|說|規劃|計畫|討論|問)|步驟|計畫|規劃|一步一步|分階段)/ },
+  ];
+  const PROMPT_MIN_LENGTH = 8;
+
+  function checkPrompt(text) {
+    const value = String(text ?? '').trim();
+    const long = value.length >= PROMPT_MIN_LENGTH;
+    const parts = PROMPT_PARTS.map((p) => ({ id: p.id, label: p.label, tip: p.tip, ok: long && p.re.test(value) }));
+    return { parts, score: parts.filter((p) => p.ok).length, max: parts.length };
+  }
+
   // ---- 測驗計分 ----
   const PASS_PERCENT = 70;
 
@@ -147,7 +165,7 @@
     return shuffle(list, rng).slice(0, Math.min(n, list.length));
   }
 
-  const api = { maskPII, scanCode, scoreQuiz, scoreGate, shuffle, pick, PASS_PERCENT, GATE_POINTS };
+  const api = { maskPII, scanCode, checkPrompt, scoreQuiz, scoreGate, shuffle, pick, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

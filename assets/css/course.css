@@ -351,6 +351,80 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
   .module-nav a { max-width: 100%; flex: 1 1 100%; }
 }
 
+/* ---------- 分類遊戲 ---------- */
+.classify-card {
+  font-size: clamp(1.1rem, 1rem + .6vw, 1.4rem); font-weight: 700; background: var(--paper-2); border-radius: var(--radius-m);
+  padding: 22px 24px; margin: 10px 0 16px; border-left: 6px solid var(--brand); min-height: 5em; display: flex; align-items: center;
+}
+.classify-choices { display: flex; gap: 10px; flex-wrap: wrap; }
+.classify-choices .btn { flex: 1 1 160px; padding: 14px 16px; }
+
+/* ---------- 排序遊戲 ---------- */
+.order-list { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; counter-reset: ord; }
+.order-list li {
+  counter-increment: ord; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius-m); padding: 8px 10px 8px 48px; position: relative;
+}
+.order-list li::before {
+  content: counter(ord); position: absolute; left: 12px; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--paper-2); display: grid; place-items: center; font-weight: 900; font-size: .85rem;
+}
+.order-list li.is-right { border-color: var(--ok); background: var(--ok-soft); }
+.order-list li.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+.order-btns { display: flex; gap: 4px; flex: none; }
+.order-btns .btn { padding: 4px 10px; }
+
+/* ---------- 分頁按鈕（data-tabs） ---------- */
+.tab-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tab-row [data-tab] { font: inherit; font-weight: 800; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+.tab-row [data-tab][aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ---------- 一步一步的安裝清單 ---------- */
+.install-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; counter-reset: ist; }
+.install-steps > li {
+  counter-increment: ist; background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius-m);
+  padding: 16px 18px 16px 64px; position: relative; box-shadow: var(--shadow);
+}
+.install-steps > li::before {
+  content: counter(ist); position: absolute; left: 16px; top: 14px; width: 34px; height: 34px; border-radius: 10px;
+  background: var(--brand); color: #fff; display: grid; place-items: center; font-weight: 900;
+}
+.install-steps .step-title { display: block; font-size: 1.1rem; margin-bottom: .2em; }
+.install-steps details { margin-top: 8px; }
+.install-steps summary { cursor: pointer; font-weight: 700; color: var(--warn); }
+.terminal {
+  font-family: var(--mono); font-size: .9rem; background: #1b1a26; color: #e9e7f5; border-radius: var(--radius-s);
+  padding: 10px 14px; display: flex; justify-content: space-between; gap: 10px; align-items: center; overflow-x: auto; margin: 8px 0;
+}
+.terminal code::before { content: "$ "; color: #8b85ff; }
+.terminal .btn { flex: none; padding: 3px 10px; font-size: .75rem; background: #34314a; color: #fff; border-color: #34314a; }
+
+/* ---------- 對照表（通用） ---------- */
+.table-wrap { overflow-x: auto; }
+.compare { width: 100%; border-collapse: collapse; min-width: 560px; }
+.compare th, .compare td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.compare thead th { font-size: .82rem; color: var(--muted); }
+.compare tbody th { font-weight: 800; white-space: nowrap; }
+.compare .hl { background: var(--brand-soft); }
+
+/* ---------- 講師作品牆 ---------- */
+.wall { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); }
+.wall-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 14px 16px; box-shadow: var(--shadow); animation: pop var(--normal) var(--ease); }
+.wall-item .when { font-size: .78rem; color: var(--muted); font-weight: 700; }
+.wall-item h4 { margin: 4px 0; font-size: 1.02rem; }
+.wall-item p { font-size: .88rem; margin: 0; color: var(--muted); }
+
+/* ---------- 自評滑桿 ---------- */
+.meter-row { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr) 2.5em; gap: 12px; align-items: center; margin-bottom: 10px; }
+.meter-row input[type="range"] { width: 100%; accent-color: var(--brand); }
+.meter-row output { font-weight: 900; color: var(--brand); text-align: right; }
+@media (max-width: 480px) { .meter-row { grid-template-columns: minmax(0, 1fr) 2em; } .meter-row label { grid-column: 1 / -1; } }
+
+/* ---------- 產生器輸出 ---------- */
+.gen-out { font-family: var(--mono); font-size: .86rem; white-space: pre-wrap; background: #1b1a26; color: #e9e7f5; border-radius: var(--radius-m); padding: 14px 16px; min-height: 8em; margin: 0; }
+.form-grid { display: grid; gap: 12px; }
+.form-grid label { font-weight: 700; font-size: .92rem; display: grid; gap: 4px; }
+
 /* ---------- 課後任務勾選、講義題目 ---------- */
 .checklist { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .checklist label > span, .checklist label { min-width: 0; overflow-wrap: anywhere; }

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>安裝你的 AI 工程師｜Vibe Coding 實戰課</title>
+  <meta name="description" content="Claude Code 桌面版安裝教學（Windows / Mac），認識 Cursor 等 AI 寫程式工具的差別，第一次跟 Claude Code 對話。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181217">
+</head>
+<body data-module="m2" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>02</b> A 起步．安裝</span>
+    <h1>請一位<em>AI 工程師</em><br>住進你的電腦</h1>
+    <p class="lead">聊天機器人只能「給你建議」，Claude Code 可以直接在你電腦上建檔案、改程式、存檔、上傳。這個單元帶你一步一步裝好，並完成第一次對話。</p>
+    <ul class="goals">
+      <li>分得出聊天型、編輯器型、代理型 AI 工具</li>
+      <li>在自己的電腦裝好 Claude Code 桌面版</li>
+      <li>看懂 Claude Code 跳出來的「允許嗎？」</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 15 分</span>
+      <span class="phase phase-in">課中安裝派對 約 40 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div class="teacher teacher-note">
+      <b>講師提示．課前一定要做</b>
+      <ul>
+        <li>上課前一週寄信提醒：先確認已有 Claude 付費方案、電腦有管理員權限（公司電腦常常沒有，要先跟 IT 申請）。</li>
+        <li>現場準備紅、綠兩色便利貼：卡住的人把紅色貼在螢幕上，助教看到就過去。</li>
+        <li>安裝介面和價格常常更新，上課前一天自己重新走一次，截圖以當天為準。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide" id="tools" data-tour="tools">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先搞懂差別</span><h2>AI 寫程式工具的三種類型</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><span class="pill pill-warn">聊天型</span><h3>💬 顧問</h3><p>claude.ai、ChatGPT 的對話視窗。會給你程式碼，但你要自己複製、貼上、存檔、測試。</p><p class="muted">適合：問問題、查概念</p></div>
+      <div class="card"><span class="pill pill-ok">編輯器型</span><h3>🧑‍✈️ 副駕駛</h3><p>Cursor、Windsurf、GitHub Copilot。在寫程式的軟體裡幫你補完、修改，畫面上看得到每一行程式碼。</p><p class="muted">適合：想邊看程式碼邊學的人</p></div>
+      <div class="card" style="border:2px solid var(--brand)"><span class="pill pill-brand">代理型．本課主角</span><h3>🧑‍🔧 包工頭</h3><p>Claude Code。你說要做什麼，它自己規劃、建檔、執行、測試、存檔，做完再跟你報告。</p><p class="muted">適合：想專心在「要做什麼」的人</p></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3>Claude Code vs Cursor：兩個最常被比較的工具</h3>
+      <div class="table-wrap"><table class="compare">
+        <thead><tr><th></th><th class="hl">Claude Code</th><th>Cursor</th></tr></thead>
+        <tbody>
+          <tr><th>長什麼樣子</th><td class="hl">對話視窗（桌面 App、網頁、終端機、編輯器外掛都有）</td><td>寫程式的編輯器（長得像 VS Code），旁邊有 AI 對話</td></tr>
+          <tr><th>工作方式</th><td class="hl">交代任務，它自己做完一整段</td><td>你在旁邊看，它邊寫你邊確認</td></tr>
+          <tr><th>AI 模型</th><td class="hl">Claude</td><td>可以切換多家模型</td></tr>
+          <tr><th>對新手</th><td class="hl">不用看懂程式碼就能開始</td><td>畫面資訊多，需要一點適應</td></tr>
+          <tr><th>費用</th><td class="hl">需要 Claude 付費方案</td><td>有免費方案，進階功能要付費</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="margin:10px 0 0">兩個都是好工具，很多人兩個一起用。這門課用 Claude Code，因為它最不需要懂程式碼就能上手。</p>
+    </div>
+  </section>
+
+  <section class="slide" id="plan">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">要花多少錢？</span><h2>選一個 Claude 方案</h2><p>Claude Code 需要付費方案。價格和額度常調整，請以 <a href="https://claude.com/pricing" target="_blank" rel="noopener">官網價格頁</a> 為準。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>免費版</h3><p>可以在 claude.ai 聊天，但<b>不能用 Claude Code</b>。適合先試試跟 AI 對話的感覺。</p></div>
+      <div class="card" style="border:2px solid var(--brand)"><span class="pill pill-brand">建議從這裡開始</span><h3>Pro</h3><p>可以使用 Claude Code。一般練習、做小工具通常夠用。用完額度要等一段時間才會恢復。</p></div>
+      <div class="card"><h3>Max</h3><p>額度高很多，適合每天大量使用、同時做好幾個專案的人。確定自己會常用再升級。</p></div>
+    </div>
+    <div class="analogy"><strong>講師的經驗：</strong>一開始用 Pro 就夠了。等到你常常「做到一半額度用完」，再考慮升級。</div>
+  </section>
+
+  <section class="slide" id="install" data-tour="install">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">一步一步來</span><h2>安裝 Claude Code 桌面版</h2><p>選你的電腦，照著做。每做完一步就打勾，卡住了就點「卡住了？」。</p></div></div>
+    <div data-tabs data-default="win">
+      <div class="tab-row screen-only" role="group" aria-label="選擇作業系統">
+        <button type="button" data-tab="win">🪟 Windows</button>
+        <button type="button" data-tab="mac">🍎 Mac</button>
+      </div>
+      <div data-panel="win">
+        <ol class="install-steps checklist" data-checklist="m2-win">
+          <li><label><input type="checkbox" value="git"><span><strong class="step-title">先安裝 Git for Windows</strong>
+            Windows 上的 Claude Code 需要 Git 幫忙執行指令。到 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com</a> 下載，安裝時<b>全部按「Next」用預設值</b>就好。</span></label>
+            <details><summary>卡住了？</summary><p>公司電腦跳出「需要管理員權限」：請 IT 幫忙安裝，或改用自己的電腦。</p></details></li>
+          <li><label><input type="checkbox" value="app"><span><strong class="step-title">下載 Claude 桌面版</strong>
+            到 <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> 下載 Windows 版，安裝後打開。</span></label>
+            <details><summary>卡住了？</summary><p>Windows 跳出「Windows 已保護您的電腦」：確認下載網址是 claude.ai 後，按「其他資訊」→「仍要執行」。</p></details></li>
+          <li><label><input type="checkbox" value="login"><span><strong class="step-title">登入你的 Claude 帳號</strong>
+            用註冊 claude.ai 的同一個帳號登入。確認帳號是付費方案。</span></label></li>
+          <li><label><input type="checkbox" value="folder"><span><strong class="step-title">建一個練習用的資料夾</strong>
+            在「文件」裡新增資料夾，取名 <code>vibe-practice</code>。<b>一個專案就是一個資料夾</b>，之後 Claude Code 只會在這個資料夾裡工作。</span></label></li>
+          <li><label><input type="checkbox" value="code"><span><strong class="step-title">切到「Code」分頁，選擇資料夾</strong>
+            桌面版上方有 Chat 和 Code 兩個分頁。切到 <b>Code</b>，選擇剛剛建立的 <code>vibe-practice</code>。</span></label>
+            <details><summary>卡住了？</summary><p>找不到 Code 分頁：確認 App 已更新到最新版，而且帳號是付費方案。介面若有調整，以官方說明為準。</p></details></li>
+          <li><label><input type="checkbox" value="hello"><span><strong class="step-title">說出第一句話</strong>
+            在輸入框打：<b>「請用一句話介紹你自己，然後告訴我這個資料夾裡有什麼」</b>。看到它回答，就大功告成了。</span></label></li>
+        </ol>
+      </div>
+      <div data-panel="mac" hidden>
+        <ol class="install-steps checklist" data-checklist="m2-mac">
+          <li><label><input type="checkbox" value="app"><span><strong class="step-title">下載 Claude 桌面版</strong>
+            到 <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> 下載 Mac 版，把 Claude 拖進「應用程式」資料夾，然後打開。</span></label>
+            <details><summary>卡住了？</summary><p>跳出「無法打開，因為來自未識別的開發者」：到「系統設定」→「隱私權與安全性」，按「強制打開」。</p></details></li>
+          <li><label><input type="checkbox" value="login"><span><strong class="step-title">登入你的 Claude 帳號</strong>
+            用註冊 claude.ai 的同一個帳號登入。確認帳號是付費方案。</span></label></li>
+          <li><label><input type="checkbox" value="git"><span><strong class="step-title">確認 Mac 有 Git</strong>
+            打開「終端機」（按 ⌘＋空白鍵，輸入 Terminal），貼上下面這行按 Enter：
+            <span class="terminal"><code>git --version</code><button type="button" class="btn" data-copy="#mac-git">複製</button></span><span id="mac-git" hidden>git --version</span>
+            出現版本號碼就是有了。如果跳出要你安裝「開發者工具」，按「安裝」等它跑完。</span></label></li>
+          <li><label><input type="checkbox" value="folder"><span><strong class="step-title">建一個練習用的資料夾</strong>
+            在「文件」裡新增資料夾，取名 <code>vibe-practice</code>。<b>一個專案就是一個資料夾</b>。</span></label></li>
+          <li><label><input type="checkbox" value="code"><span><strong class="step-title">切到「Code」分頁，選擇資料夾</strong>
+            桌面版上方有 Chat 和 Code 兩個分頁。切到 <b>Code</b>，選擇 <code>vibe-practice</code>。</span></label></li>
+          <li><label><input type="checkbox" value="hello"><span><strong class="step-title">說出第一句話</strong>
+            在輸入框打：<b>「請用一句話介紹你自己，然後告訴我這個資料夾裡有什麼」</b>。</span></label></li>
+        </ol>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:12px">官方安裝說明：<a href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Claude Code 文件</a>。畫面和步驟若與官方不同，以官方為準。</p>
+  </section>
+
+  <section class="slide" id="first-task">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">第一個作品</span><h2>5 分鐘做出一個網頁</h2><p>裝好之後，把下面這段話複製貼給 Claude Code。</p></div></div>
+    <div class="split">
+      <div>
+        <pre class="gen-out" id="first-prompt">請在這個資料夾做一個「我的自我介紹」網頁：
+1. 一個 index.html 檔案就好，不要用任何框架
+2. 放我的名字（先用「小明」代替）、三個興趣、一句座右銘
+3. 配色溫暖一點，手機和電腦都好看
+4. 做完告訴我：怎麼在瀏覽器打開它？</pre>
+        <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#first-prompt">📋 複製這段指令</button></p>
+      </div>
+      <div>
+        <div class="analogy"><strong>你會看到：</strong>Claude Code 說它要「建立 index.html」，然後問你允不允許。按允許之後，資料夾裡就真的多了一個檔案。用瀏覽器打開它，那就是你的第一個網頁。</div>
+        <div class="callout callout-ok"><b>再玩一步：</b>對它說「背景換成深藍色，名字加上彩虹漸層」，再重新整理瀏覽器看看。這個「說 → 看 → 再說」的循環，就是 Vibe Coding。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="permission" data-tour="permission">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">最重要的一件事</span><h2>它問「允許嗎？」的時候</h2>
+        <p>Claude Code 在修改檔案、執行指令之前，預設會先問你。這是保護你的安全帶，不是囉唆。</p></div></div>
+    <div class="grid grid-3" style="margin-bottom:18px">
+      <div class="card"><span class="pill pill-ok">放心允許</span><p>建立或修改<b>專案資料夾裡</b>的檔案、看檔案內容、開啟本機預覽。</p></div>
+      <div class="card"><span class="pill pill-warn">先問清楚</span><p>安裝套件、上傳到 GitHub、動到專案資料夾<b>以外</b>的地方。問它：「這一步是要做什麼？為什麼需要？」</p></div>
+      <div class="card"><span class="pill pill-danger">直接拒絕</span><p>刪除一大堆檔案、看起來像亂碼的長指令、要你輸入密碼、「強制」覆蓋什麼東西。</p></div>
+    </div>
+    <div class="card screen-only" data-classify-permission></div>
+    <div class="teacher teacher-note"><b>講師提示</b>現場示範一次按「拒絕」：Claude Code 會停下來問你想怎麼做，並不會壞掉。很多學員不敢按拒絕，怕把東西弄壞。</div>
+  </section>
+
+  <section class="slide" id="terminal">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">進階．可以先跳過</span><h2>終端機：電腦的「文字遙控器」</h2>
+        <p>你偶爾會看到 Claude Code 在執行像 <code>git status</code> 這樣的文字指令。那就是終端機的語言。你不用自己打，但認得的話會安心很多。</p></div></div>
+    <div class="grid grid-3" data-terms></div>
+    <details class="card" style="margin-top:16px">
+      <summary><b>想用終端機版 Claude Code？（進階）</b></summary>
+      <p style="margin-top:10px">終端機版功能最完整，適合想更進一步的人。安裝指令以<a href="https://docs.claude.com/en/docs/claude-code/setup" target="_blank" rel="noopener">官方文件</a>為準，目前是：</p>
+      <p><b>Mac：</b>打開「終端機」貼上</p>
+      <span class="terminal"><code>curl -fsSL https://claude.ai/install.sh | bash</code><button type="button" class="btn" data-copy="#cli-mac">複製</button></span><span id="cli-mac" hidden>curl -fsSL https://claude.ai/install.sh | bash</span>
+      <p><b>Windows：</b>打開「PowerShell」貼上</p>
+      <span class="terminal"><code>irm https://claude.ai/install.ps1 | iex</code><button type="button" class="btn" data-copy="#cli-win">複製</button></span><span id="cli-win" hidden>irm https://claude.ai/install.ps1 | iex</span>
+      <p>裝好後，先用 <code>cd</code> 進入專案資料夾，再輸入 <code>claude</code> 就能開始。</p>
+      <div class="callout callout-warn"><b>資安小提醒：</b>「從網路下載一段程式直接執行」是很強大的動作。只貼<b>官方網站</b>上的指令，不要貼網路上來路不明的教學裡的指令。</div>
+    </details>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">課中工作坊</span><h2>安裝派對</h2><p>兩人一組當「安裝夥伴」，一起完成、一起做出第一個網頁。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 40 分</span>　準備：每人紅、綠便利貼各一張。</p>
+      <ol>
+        <li><span class="time">0–5 分</span>跟旁邊的人組成安裝夥伴。一個人操作時，另一個人念步驟、幫忙看。</li>
+        <li><span class="time">5–25 分</span>照第 03 段完成安裝。<b>卡住超過 3 分鐘就把紅色便利貼貼在螢幕上</b>，助教會過來。完成的人貼綠色，去幫紅色的人。</li>
+        <li><span class="time">25–35 分</span>複製第 04 段的指令，做出自我介紹網頁，再用自己的話改一次樣式。</li>
+        <li><span class="time">35–40 分</span>兩人互看對方的網頁，各說一個「我會想請 AI 再改的地方」。</li>
+      </ol>
+      <div class="teacher"><p><b>常見卡關：</b>公司電腦沒有安裝權限、防毒軟體攔截、帳號其實是免費版、資料夾選到桌面或整個 C 槽。最後一種一定要改：請學員選「專案資料夾」，不要選整個磁碟。</p></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 安裝紀錄</h3>
+      <p>我的電腦：□ Windows　□ Mac　　Claude 方案：<span class="blank"></span></p>
+      <p>練習資料夾的位置：<span class="blank" style="min-width:20em"></span></p>
+      <p>我卡在哪一步？怎麼解決的？</p><div class="write-lines"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m2-home">
+      <li><label><input type="checkbox" value="again"> 用自己家裡的電腦再裝一次（如果上課用的是別人的電腦）</label></li>
+      <li><label><input type="checkbox" value="page"> 請 Claude Code 把自我介紹網頁改成你的真實資料（不要放電話、地址）</label></li>
+      <li><label><input type="checkbox" value="ask"> 問它三次「你剛剛做了什麼？用白話跟我說」，習慣要它解釋</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 02　安裝步驟與價格以官方最新說明為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181217"></script>
+<script src="../assets/js/core.js?v=202609181217"></script>
+<script src="../assets/js/tour.js?v=202609181217"></script>
+<script src="../assets/js/modules/m2.js?v=202609181217"></script>
+</body>
+</html>
