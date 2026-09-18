@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>踩坑圖鑑｜Vibe Coding 實戰課</title>
+  <meta name="description" content="講師用 Vibe Coding 做了 17 個專案，真實踩過的 25 個坑：時區、LINE 與 iPhone、靜默失敗、AI 服務、個資、使用者體驗、上線快取。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609181658">
+  <style>
+    .pit-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+    .pit-grid .flip { min-height: 300px; }
+    .pit-grid .flip-back p { font-size: .9rem; margin-bottom: .5em; }
+    .pit-say { font-size: .85rem; background: rgb(255 255 255 / 10%); border-radius: 8px; padding: 8px 10px; }
+    .pit-where { font-size: .78rem; color: var(--muted); }
+  </style>
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">番外篇．真實案例</span>
+    <h1>講師踩過的 <em>25 個坑</em></h1>
+    <p class="lead">這些都來自講師 17 個專案的真實修正紀錄。大部分的坑都有一個共同點：<strong>不會報錯</strong>。功能看起來做好了，使用者那邊卻是壞的。先看過一遍，你就不用再親自踩一次。</p>
+    <p class="muted">為保護使用單位，私人專案已匿名化；情境描述經過教學改寫，原因與解法來自實際修正紀錄。</p>
+  </section>
+
+  <section class="slide" data-tour="guess">
+    <div class="section-head"><span class="section-num">?</span>
+      <div><span class="kicker">挑戰</span><h2>看症狀，猜原因</h2><p>隨機 8 題。當使用者跟你說「怪怪的」，你猜得到是哪裡出問題嗎？</p></div></div>
+    <div class="card" data-guess></div>
+  </section>
+
+  <section class="slide" data-tour="pits">
+    <div class="section-head"><span class="section-num">✦</span>
+      <div><span class="kicker">圖鑑</span><h2>全部的坑</h2><p>正面是使用者看到的狀況，翻面看原因、教訓，以及下次可以直接對 Claude Code 說的話。</p></div></div>
+    <div class="chip-row" data-cats style="margin-bottom:16px"></div>
+    <p class="muted" data-cat-desc></p>
+    <div class="pit-grid" data-pits></div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．踩坑圖鑑</div></footer>
+
+<script src="assets/js/lib.js?v=202609181658"></script>
+<script src="assets/js/pitfalls-data.js?v=202609181658"></script>
+<script src="assets/js/config.js?v=202609181658"></script>
+<script src="assets/js/core.js?v=202609181658"></script>
+<script src="assets/js/members.js?v=202609181658"></script>
+<script src="assets/js/tour.js?v=202609181658"></script>
+<script>
+  (function () {
+    const { $, $$, esc, initFlips, mountQuiz } = window.Course;
+    const { CATEGORIES, PITFALLS } = window.Pitfalls;
+    const { shuffle, pick } = window.CourseLib;
+    const GUESS_COUNT = 8;
+
+    // ---------- 圖鑑 ----------
+    $('[data-cats]').innerHTML = [['all', { label: `全部 ${PITFALLS.length}` }], ...Object.entries(CATEGORIES)]
+      .map(([k, c], i) => `<button type="button" class="chip" aria-pressed="${i === 0}" data-cat="${k}">${esc(c.label)}</button>`).join('');
+
+    function renderPits(cat) {
+      $('[data-cat-desc]').textContent = cat === 'all' ? '' : CATEGORIES[cat].desc;
+      $('[data-pits]').innerHTML = PITFALLS.filter((p) => cat === 'all' || p.cat === cat).map((p) => `
+        <div class="flip"><div class="flip-inner">
+          <div class="flip-face flip-front"><span class="pill pill-brand">${esc(CATEGORIES[p.cat].label)}</span>
+            <h3 style="margin-top:10px">${esc(p.title)}</h3><p>${esc(p.symptom)}</p><p class="pit-where">${esc(p.where)}</p>
+            <span class="flip-hint">為什麼？點我 ↻</span></div>
+          <div class="flip-face flip-back"><p><b>原因：</b>${esc(p.cause)}</p><p><b>學到：</b>${esc(p.lesson)}</p>
+            <p class="pit-say">🤖 下次這樣說：「${esc(p.say)}」</p></div>
+        </div></div>`).join('');
+      initFlips($('[data-pits]'));
+    }
+    $('[data-cats]').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-cat]');
+      if (!b) return;
+      $$('[data-cat]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      renderPits(b.dataset.cat);
+    });
+    renderPits('all');
+
+    // ---------- 猜原因（題目由圖鑑資料產生，選項打亂） ----------
+    function startGuess() {
+      const questions = pick(PITFALLS, GUESS_COUNT).map((p) => {
+        const options = shuffle([p.cause, ...p.wrong]);
+        return { q: `「${p.symptom}」最可能的原因是？`, options, answer: options.indexOf(p.cause), why: p.lesson };
+      });
+      mountQuiz($('[data-guess]'), questions, { title: '猜原因挑戰', onRetry: startGuess });
+    }
+    startGuess();
+
+    window.Tour.register([
+      { tour: 'guess', title: '猜原因挑戰', text: '看使用者遇到的狀況，猜是什麼原因。每次隨機 8 題。' },
+      { tour: 'pits', title: '踩坑圖鑑', text: '上方可以依類型篩選，點卡片翻面看原因和解法。' },
+    ]);
+  })();
+</script>
+</body>
+</html>

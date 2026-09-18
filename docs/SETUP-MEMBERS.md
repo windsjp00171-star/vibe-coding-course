@@ -94,7 +94,7 @@ window.COURSE_CONFIG = {
 2. 回到 Supabase **SQL Editor**，執行（把 Email 換成你的）：
 
 ```sql
-update public.profiles set role = 'teacher'
+update public.profiles set role = 'teacher', enrolled = true
   where id = (select id from auth.users where email = '你的Email@gmail.com');
 ```
 

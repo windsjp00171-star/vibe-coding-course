@@ -351,6 +351,10 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
   .module-nav a { max-width: 100%; flex: 1 1 100%; }
 }
 
+/* ---------- 試用閘門：只留單元開頭與開通卡片 ---------- */
+body.is-locked main > section:not(.module-hero):not([data-gate-card]) { display: none; }
+body.is-locked [data-module-nav] { display: none; }
+
 /* ---------- 分類遊戲 ---------- */
 .classify-card {
   font-size: clamp(1.1rem, 1rem + .6vw, 1.4rem); font-weight: 700; background: var(--paper-2); border-radius: var(--radius-m);
@@ -376,8 +380,8 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 
 /* ---------- 分頁按鈕（data-tabs） ---------- */
 .tab-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.tab-row [data-tab] { font: inherit; font-weight: 800; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 18px; cursor: pointer; }
-.tab-row [data-tab][aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tab-row [data-tab], .tab-row [data-admin-tab] { font: inherit; font-weight: 800; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+.tab-row [data-tab][aria-pressed="true"], .tab-row [data-admin-tab][aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 /* ---------- 一步一步的安裝清單 ---------- */
 .install-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; counter-reset: ist; }

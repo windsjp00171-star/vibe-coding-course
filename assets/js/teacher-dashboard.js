@@ -1,4 +1,4 @@
-/* teacher-dashboard.js — 講師後台：開班級、看全班進度（資料權限由 Supabase RLS 把關） */
+/* teacher-dashboard.js — 管理後台：會員開通與身分、開班級、看全班進度（資料權限由 Supabase RLS 把關） */
 (function () {
   'use strict';
   const { $, esc, MODULES, toast } = window.Course;
@@ -28,15 +28,67 @@
       show(`<h3>這個帳號不是講師</h3><p>目前登入：${esc(M.user.email)}。如果這是你的講師帳號，請到 Supabase 的 SQL Editor 執行 <code>schema.sql</code> 最下方那行「設定講師」。</p>`);
       return;
     }
-    await renderClasses();
+    host.innerHTML = `<div class="tab-row" data-admin-tabs>
+        <button type="button" data-admin-tab="members" aria-pressed="${tab === 'members'}">👥 會員管理</button>
+        <button type="button" data-admin-tab="classes" aria-pressed="${tab === 'classes'}">🏫 班級</button>
+      </div><div data-admin-body></div>`;
+    if (tab === 'members') await renderMembers(); else await renderClasses();
+  }
+
+  let tab = 'members';
+  let memberFilter = 'pending';
+
+  // ---------- 會員管理 ----------
+  async function renderMembers() {
+    const db = window.Members.client;
+    const [{ data: people, error }, { data: rows }] = await Promise.all([
+      db.from('profiles').select('id, display_name, email, role, enrolled, created_at').order('created_at', { ascending: false }),
+      db.from('progress').select('user_id, done'),
+    ]);
+    const body = $('[data-admin-body]');
+    if (error) { body.innerHTML = `<div class="card"><p>讀取會員失敗：${esc(error.message)}</p></div>`; return; }
+    const doneCount = (uid) => (rows || []).filter((r) => r.user_id === uid && r.done).length;
+    const filters = {
+      pending: (u) => !u.enrolled && u.role !== 'teacher',
+      enrolled: (u) => u.enrolled && u.role !== 'teacher',
+      teacher: (u) => u.role === 'teacher',
+      all: () => true,
+    };
+    const counts = Object.fromEntries(Object.entries(filters).map(([k, f]) => [k, people.filter(f).length]));
+    const list = people.filter(filters[memberFilter]);
+    const label = { pending: '待開通', enrolled: '已開通', teacher: '講師', all: '全部' };
+    body.innerHTML = `<div class="card">
+      <div class="chip-row" style="margin-bottom:12px">${Object.keys(filters).map((k) =>
+        `<button type="button" class="chip" aria-pressed="${k === memberFilter}" data-member-filter="${k}">${label[k]} ${counts[k]}</button>`).join('')}</div>
+      <div class="table-wrap"><table class="roster"><thead><tr><th>會員</th><th>Email</th><th>加入日期</th><th>完成單元</th><th>狀態</th><th>操作</th></tr></thead>
+      <tbody>${list.map((u) => `<tr>
+        <td>${esc(u.display_name || '（未命名）')}</td><td>${esc(u.email)}</td>
+        <td>${new Date(u.created_at).toLocaleDateString('zh-TW')}</td><td>${doneCount(u.id)}</td>
+        <td>${u.role === 'teacher' ? '<span class="pill pill-brand">講師</span>' : u.enrolled ? '<span class="pill pill-ok">已開通</span>' : '<span class="pill pill-warn">待開通</span>'}</td>
+        <td>${u.id === window.Members.user.id ? '<span class="muted">（你自己）</span>' : `
+          <button type="button" class="btn btn-sm" data-set="${u.id}" data-enrolled="${!u.enrolled}" data-role="${u.role}">${u.enrolled ? '取消開通' : '開通'}</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-set="${u.id}" data-enrolled="true" data-role="${u.role === 'teacher' ? 'student' : 'teacher'}">${u.role === 'teacher' ? '改回學員' : '設為講師'}</button>`}</td>
+      </tr>`).join('') || '<tr><td colspan="6" class="muted">這個分類目前沒有會員。</td></tr>'}</tbody></table></div>
+      <p class="muted" style="margin:10px 0 0">學員用 Google 登入後會出現在「待開通」。用加入碼加入班級的學員會自動開通。</p></div>`;
+  }
+
+  async function setMember(btn) {
+    const role = btn.dataset.role;
+    if (role === 'teacher' && !window.confirm('講師看得到所有會員的資料和進度，確定要設為講師嗎？')) return;
+    const { error } = await window.Members.client.rpc('admin_set_member', {
+      target: btn.dataset.set, new_enrolled: btn.dataset.enrolled === 'true', new_role: role,
+    });
+    if (error) { toast(`設定失敗：${error.message}`); return; }
+    toast('已更新');
+    renderMembers();
   }
 
   async function renderClasses() {
     const db = window.Members.client;
     const { data: classes, error } = await db.from('classes').select('id, name, join_code, created_at').eq('teacher_id', window.Members.user.id).order('created_at', { ascending: false });
-    if (error) { show(`<p>讀取班級失敗：${esc(error.message)}</p>`); return; }
+    if (error) { $('[data-admin-body]').innerHTML = `<div class="card"><p>讀取班級失敗：${esc(error.message)}</p></div>`; return; }
     const blocks = await Promise.all((classes || []).map(renderClass));
-    host.innerHTML = `
+    $('[data-admin-body]').innerHTML = `
       <div class="card" style="margin-bottom:18px">
         <h3>開一個新班級</h3>
         <form class="split" data-new-class style="align-items:end">
@@ -82,10 +134,19 @@
     renderClasses();
   });
 
+  host.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-admin-tab]');
+    if (t) { tab = t.dataset.adminTab; render(); return; }
+    const f = e.target.closest('[data-member-filter]');
+    if (f) { memberFilter = f.dataset.memberFilter; renderMembers(); return; }
+    const setBtn = e.target.closest('[data-set]');
+    if (setBtn) setMember(setBtn);
+  });
+
   document.addEventListener('course:auth', render);
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '講師後台', text: '先用講師的 Google 帳號登入。開好班級後，把 6 碼加入碼給學員，這裡就會出現全班的進度表。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度。' },
   ]);
 })();

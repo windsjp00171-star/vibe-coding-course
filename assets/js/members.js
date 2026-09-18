@@ -12,7 +12,15 @@
   let client = null;
   let user = null;
   let profile = null;
-  const ready = enabled ? loadSdk().then(init) : Promise.resolve(null);
+  if (enabled) applyGateSoon();
+  // 套件載入失敗時解除畫面鎖定：目前的鎖只是畫面限制，寧可讓學員繼續上課
+  const ready = enabled
+    ? loadSdk().then(init).catch((err) => {
+      document.body.classList.remove('is-locked');
+      window.Course?.toast(`${err.message}，先以訪客身分瀏覽`);
+      return null;
+    })
+    : Promise.resolve(null);
 
   function loadSdk() {
     return new Promise((resolve, reject) => {
@@ -40,14 +48,48 @@
     user = next;
     profile = null;
     if (user) {
-      const { data, error } = await client.from('profiles').select('display_name, role').eq('id', user.id).maybeSingle();
+      const { data, error } = await client.from('profiles').select('display_name, role, enrolled').eq('id', user.id).maybeSingle();
       if (error) console.warn('[會員] 讀取會員資料失敗', error.message);
-      profile = data || { display_name: '', role: 'student' };
+      profile = data || { display_name: '', role: 'student', enrolled: false };
       await syncProgress();
       if (profile.role === 'teacher') await loadTeacherNotes();
     }
     renderAuth();
+    applyGate();
     document.dispatchEvent(new CustomEvent('course:auth', { detail: { user, profile } }));
+  }
+
+  // ---------- 試用閘門：非試用單元要登入並開通 ----------
+  // 注意：這只是畫面上的限制，公開 repo 裡仍有完整內容；正式收費前要把付費內容移到資料庫。
+  function canSeeAll() { return Boolean(profile && (profile.enrolled || profile.role === 'teacher')); }
+
+  function applyGate() {
+    const current = window.Course.MODULES.find((m) => m.id === document.body.dataset.module);
+    const locked = Boolean(current && !current.trial && !canSeeAll());
+    document.body.classList.toggle('is-locked', locked);
+    document.querySelector('[data-gate-card]')?.remove();
+    if (!locked) return;
+    const card = document.createElement('section');
+    card.className = 'slide';
+    card.dataset.gateCard = '';
+    card.innerHTML = user
+      ? `<div class="card" style="border:2px solid var(--brand)"><h2>🔒 這個單元需要開通</h2>
+          <p>你已經登入了，還差一步：到<a href="${document.body.dataset.base || './'}index.html#join">課程首頁</a>輸入講師給你的 6 碼加入碼，就會自動開通全部單元。</p>
+          <p class="muted">還沒有加入碼？請聯繫講師。</p></div>`
+      : `<div class="card" style="border:2px solid var(--brand)"><h2>🔒 這是正式課程單元</h2>
+          <p>你正在試用。單元 ${trialList()} 和踩坑圖鑑可以免費看；其他單元請用 Google 登入，並輸入講師給你的加入碼。</p>
+          <button type="button" class="btn btn-primary" data-auth="in">用 Google 登入</button></div>`;
+    document.querySelector('main .module-hero')?.after(card);
+  }
+
+  function trialList() {
+    return window.Course.MODULES.filter((m) => m.trial).map((m) => m.id.slice(1)).join('、');
+  }
+
+  // SDK 載入前先擋住，避免非試用單元內容先閃一下
+  function applyGateSoon() {
+    const current = window.Course?.MODULES.find((m) => m.id === document.body.dataset.module);
+    if (current && !current.trial) document.body.classList.add('is-locked');
   }
 
   // ---------- 登入／登出 ----------

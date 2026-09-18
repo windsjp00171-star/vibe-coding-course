@@ -11,6 +11,9 @@ create table if not exists public.profiles (
   role text not null default 'student' check (role in ('student', 'teacher')),
   created_at timestamptz not null default now()
 );
+-- 管理後台需要：Email（auth.users 網頁讀不到，所以複製一份）、是否已開通完整課程
+alter table public.profiles add column if not exists email text not null default '';
+alter table public.profiles add column if not exists enrolled boolean not null default false;
 
 -- 新帳號第一次登入時自動建立會員資料（一律是學員）
 create or replace function public.handle_new_user()
@@ -20,8 +23,8 @@ security definer
 set search_path = ''
 as $$
 begin
-  insert into public.profiles (id, display_name)
-  values (new.id, coalesce(left(new.raw_user_meta_data ->> 'full_name', 40), ''))
+  insert into public.profiles (id, display_name, email)
+  values (new.id, coalesce(left(new.raw_user_meta_data ->> 'full_name', 40), ''), coalesce(new.email, ''))
   on conflict (id) do nothing;
   return new;
 end;
@@ -115,7 +118,29 @@ begin
   end if;
   insert into public.class_members (class_id, user_id) values (target.id, auth.uid())
   on conflict do nothing;
+  update public.profiles set enrolled = true where id = auth.uid();  -- 用加入碼加入班級就自動開通
   return target.name;
+end;
+$$;
+
+-- 管理員（講師）開通會員或調整身分。不能把自己降級，避免把自己鎖在後台外面
+create or replace function public.admin_set_member(target uuid, new_enrolled boolean, new_role text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if not public.is_teacher() then
+    raise exception '只有講師可以設定會員';
+  end if;
+  if new_role not in ('student', 'teacher') then
+    raise exception '身分只能是 student 或 teacher';
+  end if;
+  if target = auth.uid() and new_role <> 'teacher' then
+    raise exception '不能取消自己的講師身分';
+  end if;
+  update public.profiles set enrolled = new_enrolled, role = new_role where id = target;
 end;
 $$;
 
@@ -154,9 +179,9 @@ grant select on public.class_members to authenticated;
 grant select, insert, update on public.progress to authenticated;
 grant select on public.teacher_notes to authenticated;
 
-drop policy if exists "看自己或自己班上學員的資料" on public.profiles;
-create policy "看自己或自己班上學員的資料" on public.profiles for select to authenticated
-  using (id = auth.uid() or public.teaches(id));
+drop policy if exists "看自己的資料；講師看全部會員" on public.profiles;
+create policy "看自己的資料；講師看全部會員" on public.profiles for select to authenticated
+  using (id = auth.uid() or public.is_teacher());
 
 drop policy if exists "只能改自己的名字" on public.profiles;
 create policy "只能改自己的名字" on public.profiles for update to authenticated
@@ -182,9 +207,9 @@ drop policy if exists "學員讀寫自己的進度" on public.progress;
 create policy "學員讀寫自己的進度" on public.progress for all to authenticated
   using (user_id = auth.uid()) with check (user_id = auth.uid());
 
-drop policy if exists "講師看自己班上的進度" on public.progress;
-create policy "講師看自己班上的進度" on public.progress for select to authenticated
-  using (public.teaches(user_id));
+drop policy if exists "講師看全部進度" on public.progress;
+create policy "講師看全部進度" on public.progress for select to authenticated
+  using (public.is_teacher());
 
 drop policy if exists "只有講師讀得到講師內容" on public.teacher_notes;
 create policy "只有講師讀得到講師內容" on public.teacher_notes for select to authenticated
@@ -192,12 +217,12 @@ create policy "只有講師讀得到講師內容" on public.teacher_notes for se
 
 -- 函式只給登入的人呼叫（RLS 規則裡用到的檢查函式也要能執行，規則才不會失敗）
 revoke execute on function public.join_class(text), public.is_teacher(), public.teaches(uuid),
-  public.owns_class(uuid), public.in_class(uuid) from anon, public;
+  public.owns_class(uuid), public.in_class(uuid), public.admin_set_member(uuid, boolean, text) from anon, public;
 grant execute on function public.join_class(text), public.is_teacher(), public.teaches(uuid),
-  public.owns_class(uuid), public.in_class(uuid) to authenticated;
+  public.owns_class(uuid), public.in_class(uuid), public.admin_set_member(uuid, boolean, text) to authenticated;
 
 -- ============================================================
 -- 設定講師：你用 Google 登入網站一次之後，把下面的 Email 換成你的，單獨執行這一行
--- update public.profiles set role = 'teacher'
+-- update public.profiles set role = 'teacher', enrolled = true
 --   where id = (select id from auth.users where email = '你的Email@gmail.com');
 -- ============================================================
