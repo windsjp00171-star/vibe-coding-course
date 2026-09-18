@@ -23,7 +23,7 @@
     { id: 'm14', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/14-push.html', minutes: 30 },
   ];
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
-  const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6']);
+  const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9']);
   MODULES.forEach((m) => { m.ready = READY.has(m.id); });
 
   const STORE_KEY = 'vibe-course-v1';
@@ -204,7 +204,7 @@
 
   // ---------- 測驗引擎 ----------
   // questions: [{ q, options: [...], answer: 索引, why: '解說' }]
-  function mountQuiz(host, questions, { moduleId, title = '隨堂小測驗', onFinish } = {}) {
+  function mountQuiz(host, questions, { moduleId, title = '隨堂小測驗', onFinish, onRetry, passPercent = window.CourseLib.PASS_PERCENT } = {}) {
     if (!host) return;
     const answers = [];
     let i = 0;
@@ -246,11 +246,11 @@
     }
 
     function finish() {
-      const result = window.CourseLib.scoreQuiz(questions, answers);
+      const result = window.CourseLib.scoreQuiz(questions, answers, passPercent);
       if (moduleId) recordModule(moduleId, result);
       const message = result.passed
         ? '這個單元過關了！進度已經幫你記下來。'
-        : `還差一點，${window.CourseLib.PASS_PERCENT} 分就過關。回頭看一下答錯的地方再試一次吧。`;
+        : `還差一點，${passPercent} 分就過關。回頭看一下答錯的地方再試一次吧。`;
       host.innerHTML = `
         <div class="reveal" style="text-align:center">
           <p class="kicker">${esc(title)}成績</p>
@@ -258,7 +258,11 @@
           <p>答對 ${result.correct}／${result.total} 題．${esc(message)}</p>
           <button type="button" class="btn" data-retry>再做一次</button>
         </div>`;
-      $('[data-retry]', host).addEventListener('click', () => { answers.length = 0; i = 0; renderQuestion(); });
+      // onRetry：讓呼叫者決定重做的方式（例如總測驗要重新抽題）
+      $('[data-retry]', host).addEventListener('click', () => {
+        if (onRetry) { onRetry(); return; }
+        answers.length = 0; i = 0; renderQuestion();
+      });
       if (onFinish) onFinish(result);
     }
 
@@ -267,7 +271,9 @@
 
   // ---------- 翻牌卡：點一下翻面 ----------
   function initFlips(root = document) {
-    $$('.flip', root).forEach((card) => {
+    // 單元程式可能先綁過一次，boot 時會再掃全頁；已綁過的跳過，避免點一下翻兩次
+    $$('.flip:not([data-flip-ready])', root).forEach((card) => {
+      card.dataset.flipReady = '';
       card.setAttribute('tabindex', '0');
       card.setAttribute('role', 'button');
       const flip = () => card.classList.toggle('is-flipped');
@@ -291,7 +297,8 @@
 
   // ---------- 課後任務勾選：<ul data-checklist="唯一名稱"> 內的 checkbox 自動記住 ----------
   function initChecklists(root = document) {
-    $$('[data-checklist]', root).forEach((list) => {
+    $$('[data-checklist]:not([data-checklist-ready])', root).forEach((list) => {
+      list.dataset.checklistReady = '';
       const key = list.dataset.checklist;
       const saved = getState().checklists?.[key] || [];
       $$('input[type="checkbox"]', list).forEach((box) => {
@@ -413,7 +420,7 @@
 
   window.Course = {
     MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz,
-    mountClassify, mountOrder, initFlips, initTabs, goSlide,
+    mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

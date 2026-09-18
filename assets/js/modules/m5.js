@@ -56,13 +56,7 @@
   ], { title: '把上線步驟排好', explain: '每一步都是下一步的前提。最常被跳過的是最後兩步：在正式網址上自己測、再請別人試。' });
 
   // ---------- 測驗 ----------
-  const QUIZ = [
-    { q: 'Claude Code 給你一個 localhost:5173 的網址，你傳給朋友，朋友打不開。為什麼？', options: ['朋友的網路太慢', 'localhost 指的是「你自己這台電腦」，還沒有部署到網路上', 'Claude Code 壞了'], answer: 1, why: 'localhost 就是「自家廚房」。要給別人看，必須部署到網路主機上。' },
-    { q: '一個報名表，大家填完主辦人要看得到名單，它是？', options: ['靜態網站', '動態網站'], answer: 1, why: '要存資料就是動態網站，需要後端和資料庫。' },
-    { q: '動態網站需要資料庫密碼，這個密碼應該放在哪裡？', options: ['寫在程式碼裡，push 上 GitHub', '上線平台後台的「環境變數」', '寫在網頁上方便查'], answer: 1, why: '密碼永遠不進 GitHub，上線的網站從平台的環境變數讀取。' },
-    { q: '部署失敗了，最有效的第一步是？', options: ['一直重新部署到成功為止', '打開平台的錯誤紀錄（log），複製給 Claude Code 請它解釋', '換一個平台'], answer: 1, why: '錯誤紀錄會告訴你真正的原因。講師就曾經在沒看 log 的情況下連續重試了四次。' },
-    { q: '網站什麼都沒改，突然壞了，可能是什麼原因？', options: ['用到的套件自己升級了，新版改了用法', '網站會自己變老', '一定是被駭客攻擊'], answer: 0, why: '這就是為什麼要「鎖版本」。講師的 PitchPal 就遇過這件事。' },
-  ];
+  const QUIZ = window.QuizBank.m5;
   mountQuiz($('[data-quiz]'), QUIZ, { moduleId: 'm5' });
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 

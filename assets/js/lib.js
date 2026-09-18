@@ -126,11 +126,11 @@
   // ---- 測驗計分 ----
   const PASS_PERCENT = 70;
 
-  function scoreQuiz(questions, answers) {
+  function scoreQuiz(questions, answers, passPercent = PASS_PERCENT) {
     const total = questions.length;
     const correct = questions.reduce((n, q, i) => n + (answers[i] === q.answer ? 1 : 0), 0);
     const percent = total === 0 ? 0 : Math.round((correct / total) * 100);
-    return { correct, total, percent, passed: percent >= PASS_PERCENT };
+    return { correct, total, percent, passed: percent >= passPercent };
   }
 
   // ---- 門神遊戲計分 ----
@@ -165,7 +165,21 @@
     return shuffle(list, rng).slice(0, Math.min(n, list.length));
   }
 
-  const api = { maskPII, scanCode, checkPrompt, scoreQuiz, scoreGate, shuffle, pick, PASS_PERCENT, GATE_POINTS };
+  // ---- 總測驗組卷：每個單元至少一題，其餘隨機補滿；選項順序打亂，避免背位置 ----
+  function shuffleOptions(q, rng) {
+    const order = shuffle(q.options.map((_, i) => i), rng);
+    return { ...q, options: order.map((i) => q.options[i]), answer: order.indexOf(q.answer) };
+  }
+
+  function buildExam(bank, units, total, rng = Math.random) {
+    const firsts = units.map((u) => ({ unit: u, q: pick(bank[u], 1, rng)[0] }));
+    const used = new Set(firsts.map((x) => x.q));
+    const rest = units.flatMap((u) => bank[u].filter((q) => !used.has(q)).map((q) => ({ unit: u, q })));
+    const extra = pick(rest, Math.max(0, total - firsts.length), rng);
+    return shuffle([...firsts, ...extra], rng).map(({ unit, q }) => ({ ...shuffleOptions(q, rng), unit }));
+  }
+
+  const api = { maskPII, scanCode, checkPrompt, scoreQuiz, scoreGate, shuffle, pick, buildExam, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

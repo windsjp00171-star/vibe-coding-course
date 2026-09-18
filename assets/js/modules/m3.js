@@ -104,13 +104,7 @@
       <button type="button" class="btn btn-sm" data-copy="#rescue-${i}">📋 複製</button></div>`).join('');
 
   // ---------- 測驗 ----------
-  const QUIZ = [
-    { q: '下面哪一句指令最好？', options: ['幫我做一個網站', '幫我做一個給同事用手機填的聚餐報名表，只要一個 html 檔，做完告訴我怎麼測試', '做一個很棒很漂亮功能很多的系統'], answer: 1, why: '有做什麼、給誰、限制、驗收，四個零件都有了。' },
-    { q: '想請 Claude Code 做一個比較大的改動，最好先用哪種模式？', options: ['規劃模式：先看計畫再動手', '略過所有權限：讓它快點做完', '都一樣'], answer: 0, why: '規劃模式只提計畫不動手，你同意了才開始，最不容易走歪。' },
-    { q: 'CLAUDE.md 是什麼？', options: ['Claude 的安裝檔', '放在專案裡、每次對話都會先讀的「員工手冊」', '存密碼的檔案'], answer: 1, why: '把規矩寫一次，每次新對話它都會照做。' },
-    { q: 'Claude Code 同一個錯誤修了三次都沒修好，比較好的做法是？', options: ['繼續叫它修第四次', '停下來，請它先說明原因、寫能重現問題的測試', '刪掉專案重來'], answer: 1, why: '一直原地打轉時，先停下來找原因，比一直叫它「再修一次」有效。' },
-    { q: '為什麼要寫 Session Snapshot（收工紙條）？', options: ['因為 AI 下次開新對話不會記得之前的事', '因為老闆要看', '因為可以節省電費'], answer: 0, why: '新對話從零開始。一張好紙條可以讓下一次馬上接著做。' },
-  ];
+  const QUIZ = window.QuizBank.m3;
   mountQuiz($('[data-quiz]'), QUIZ, { moduleId: 'm3' });
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 

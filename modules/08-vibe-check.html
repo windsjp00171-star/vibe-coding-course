@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上線前的 Vibe Check｜Vibe Coding 實戰課</title>
+  <meta name="description" content="Vibe Coding 五大坑、AI 程式碼體檢器、OWASP AI 應用十大風險白話版、上線前檢查表與全域稽核。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181223">
+</head>
+<body data-module="m8" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>08</b> C 資安．上線前檢查</span>
+    <h1>AI 說「做好了」，<br>你要說「<em>我檢查一下</em>」</h1>
+    <p class="lead">Vibe Check 就是上線前的健康檢查。AI 寫的程式常常「看起來能跑」，底下卻藏著漏洞。這個單元給你一套不用看懂程式碼也能做的檢查方法。</p>
+    <ul class="goals">
+      <li>認得 Vibe Coding 最常見的 5 個坑</li>
+      <li>會用體檢工具和 AI 稽核找問題</li>
+      <li>上線前照著檢查表走一遍</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+  </section>
+
+  <section class="slide" id="layers">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">三層檢查</span><h2>Vibe Check 不是一件事，是三道關卡</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><span class="pill pill-brand">第一關</span><h3>🙋 自己用一次</h3><p>用手機、用電腦，像真正的使用者一樣從頭操作一遍。故意亂填、按兩次、中途關掉，看會不會壞。</p></div>
+      <div class="card"><span class="pill pill-brand">第二關</span><h3>🤖 請 AI 當稽核員</h3><p>開一個<b>新的對話</b>，請 Claude Code 扮演資安稽核員，專門找問題、先不要修（第 05 段有現成指令）。</p></div>
+      <div class="card"><span class="pill pill-brand">第三關</span><h3>🔍 自動化掃描</h3><p>用工具自動檢查密碼外流、危險寫法、有毒套件。第 03 段的體檢器就是簡化版的示範。</p></div>
+    </div>
+    <div class="callout callout-ok" style="margin-top:16px"><b>講師的真實經驗：</b>一個已經上線、每週有人在用的小組回報系統，做了一次「全域稽核」，找到三個大問題：<b>權限漏洞</b>（不該看到的人看得到）、<b>資料被默默洗掉</b>、<b>刪除帳號後整個網站當掉</b>。這些問題平常用起來完全看不出來。</div>
+  </section>
+
+  <section class="slide" id="traps" data-tour="traps">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">點卡片翻面</span><h2>Vibe Coding 的 5 個坑</h2></div></div>
+    <div class="grid grid-3" data-traps></div>
+  </section>
+
+  <section class="slide" id="scanner" data-tour="scanner">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手玩</span><h2>AI 程式碼體檢器</h2><p>選一段 AI 寫的程式，按「開始體檢」。你也可以直接修改程式碼，看看改了之後問題有沒有消失。</p></div></div>
+    <div class="split screen-only">
+      <div class="card">
+        <div class="chip-row" data-presets style="margin-bottom:10px"></div>
+        <label for="scan-code" class="sr-only">要體檢的程式碼</label>
+        <textarea id="scan-code" class="code-input" data-scan-input spellcheck="false"></textarea>
+        <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-scan>🩺 開始體檢</button></p>
+      </div>
+      <div class="card" data-scan-result aria-live="polite"><p class="muted">體檢報告會出現在這裡。</p></div>
+    </div>
+    <p class="muted">這個體檢器只認得幾種常見問題，目的是讓你知道「有工具可以幫忙抓」。真實專案可以請 Claude Code 幫你設定 GitHub 的自動掃描。</p>
+  </section>
+
+  <section class="slide" id="owasp" data-tour="owasp">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">國際標準白話版</span><h2>AI 應用的十大風險（OWASP 2025）</h2>
+        <p>OWASP 是國際知名的資安組織，每隔一段時間整理「最常出事的風險清單」。這是它針對 AI 應用的 2025 年版，翻成白話。</p></div></div>
+    <div class="card screen-only" data-match style="margin-bottom:18px"></div>
+    <div class="grid grid-2" data-owasp></div>
+  </section>
+
+  <section class="slide" id="checklist" data-tour="checklist">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">上線前一定要做</span><h2>上線前檢查表</h2><p>每個專案上線前走一遍。勾選會記在瀏覽器裡。講師的專案裡就有一份類似的「上線前總檢查清單」。</p></div></div>
+    <div class="split">
+      <div class="card"><ul class="checklist" data-checklist="m8-launch" data-launch></ul></div>
+      <div>
+        <div class="card">
+          <h3>🤖 全域稽核指令</h3>
+          <p class="muted">開一個新對話，貼給 Claude Code：</p>
+          <pre class="gen-out" id="audit-prompt">請你扮演資安稽核員，檢查這整個專案，先不要修改任何東西。
+請逐一檢查並用白話回報：
+1. 有沒有密碼、金鑰寫在程式裡，或被上傳到 GitHub
+2. 每個頁面和功能，是不是只有「該看到的人」看得到
+3. 使用者輸入的資料有沒有檢查（亂填、超長、特殊符號）
+4. 刪除或修改資料時，會不會連帶弄壞其他東西
+5. 錯誤訊息會不會洩漏系統內部資訊
+6. 用到的套件是不是都真實存在、版本有沒有鎖住
+最後依嚴重程度排序，列出問題、影響和建議的修法。</pre>
+          <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#audit-prompt">📋 複製稽核指令</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>交換 Vibe Check</h2><p>自己的作品自己看不出問題。交換專案，互相當稽核員。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 35 分</span>　兩人一組，交換網址（和 GitHub repo，如果是公開的）。</p>
+      <ol>
+        <li><span class="time">0–10 分</span><b>第一關</b>：用手機打開對方的網站，照「上線前檢查表」的「使用者」段落實際操作，故意亂填亂按。</li>
+        <li><span class="time">10–20 分</span><b>第二關</b>：在自己的專案用第 05 段的稽核指令跑一次，把 Claude Code 的報告存下來。</li>
+        <li><span class="time">20–30 分</span>把找到的問題寫在學習單上交給對方，每人挑一個最嚴重的，請 Claude Code 修好。</li>
+        <li><span class="time">30–35 分</span>全班分享：最意想不到的問題是什麼？</li>
+      </ol>
+      <div class="teacher"><p><b>引導重點：</b>強調「找到問題是好事」。講師自己的系統上線後也做過全域稽核，找到權限漏洞。稽核不是在挑毛病，是在救未來的自己。</p></div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ Vibe Check 紀錄</h3>
+      <p>我檢查的專案：<span class="blank" style="min-width:16em"></span></p>
+      <p>找到的問題（依嚴重程度）：</p><div class="write-lines"></div><div class="write-lines"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m8-home">
+      <li><label><input type="checkbox" value="audit"> 對你的練習專案跑一次全域稽核指令，把報告存成 AUDIT.md</label></li>
+      <li><label><input type="checkbox" value="fix"> 挑報告中最嚴重的一個問題，請 Claude Code 修好並存檔</label></li>
+      <li><label><input type="checkbox" value="md"> 在 CLAUDE.md 加一條：「新增任何套件前，先告訴我套件名稱和用途」</label></li>
+    </ul></div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 08　OWASP 內容依據 OWASP Top 10 for LLM Applications 2025，白話改寫僅供教學。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181223"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181223"></script>
+<script src="../assets/js/core.js?v=202609181223"></script>
+<script src="../assets/js/tour.js?v=202609181223"></script>
+<script src="../assets/js/modules/m8.js?v=202609181223"></script>
+</body>
+</html>

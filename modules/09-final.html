@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>總測驗與結業證書｜Vibe Coding 實戰課</title>
+  <meta name="description" content="Vibe Coding 實戰課總測驗：從八個必修單元抽題，80 分以上可以列印結業證書。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609181223">
+  <link rel="stylesheet" href="../assets/css/final.css?v=202609181223">
+</head>
+<body data-module="m9" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>09</b> 結業</span>
+    <h1>最後一哩：<br>證明你<em>不是閉眼踩油門</em></h1>
+    <p class="lead">從前面八個單元隨機抽 12 題，每個單元至少一題，選項順序也會打亂。80 分以上，就可以印出你的結業證書。</p>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前 總測驗 約 15 分</span>
+      <span class="phase phase-in">課中 成果發表會 約 60 分</span>
+    </div>
+  </section>
+
+  <section class="slide" id="review" data-tour="review">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">回顧</span><h2>你的學習紀錄</h2><p>每個單元的小測驗成績。還沒過關的，可以點進去再做一次。</p></div></div>
+    <div class="review-grid" data-review></div>
+  </section>
+
+  <section class="slide" id="exam" data-tour="exam">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">總測驗</span><h2>12 題，80 分過關</h2><p>每次重新開始都會重新抽題。</p></div></div>
+    <div class="card screen-only" data-exam></div>
+    <div class="print-only card"><p>總測驗請在網站上作答：每次抽題不同，無法印成固定考卷。</p></div>
+  </section>
+
+  <section class="slide" id="certificate" data-tour="cert">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">結業證書</span><h2>你的證書</h2><p>輸入想印在證書上的名字。證書只存在你的電腦，不會上傳到任何地方。</p></div></div>
+    <div class="split screen-only" style="margin-bottom:20px">
+      <label class="form-grid"><b>證書上的名字</b><input type="text" data-cert-name maxlength="20" placeholder="例如：王小明"></label>
+      <div data-cert-status aria-live="polite"></div>
+    </div>
+    <div class="certificate" data-cert>
+      <div class="cert-inner">
+        <p class="cert-kicker">CERTIFICATE OF COMPLETION</p>
+        <h2 class="cert-title">Vibe Coding 實戰課　結業證書</h2>
+        <p class="cert-name" data-cert-out-name>＿＿＿＿＿＿</p>
+        <p class="cert-body">已完成「Vibe Coding 實戰課」必修八個單元與總測驗，<br>具備使用 Claude Code 從本機開發、版本管理、部署上線，<br>到辨識 AI 資安風險的基本能力。</p>
+        <ul class="cert-skills"><li>與 AI 協作</li><li>Git ＆ GitHub</li><li>部署上線</li><li>金鑰與個資保護</li><li>AI 攻擊防護</li><li>上線前檢查</li></ul>
+        <div class="cert-foot"><span data-cert-date></span><span class="cert-seal" aria-hidden="true">V</span><span data-cert-score></span></div>
+      </div>
+    </div>
+    <p class="screen-only" style="margin-top:14px"><button type="button" class="btn btn-primary" data-cert-print disabled>🖨️ 列印證書（也可以存成 PDF）</button></p>
+  </section>
+
+  <section class="slide" id="next" data-tour="next">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">結業之後</span><h2>明天就能做的 5 件事</h2></div></div>
+    <div class="card"><ul class="checklist" data-checklist="m9-next">
+      <li><label><input type="checkbox" value="topic"> 挑一個工作上的小麻煩，用五個零件寫成一段指令</label></li>
+      <li><label><input type="checkbox" value="claudemd"> 每個新專案都先放一份 CLAUDE.md</label></li>
+      <li><label><input type="checkbox" value="commit"> 養成「做完一小段就存檔、push」的習慣</label></li>
+      <li><label><input type="checkbox" value="env"> 密碼一律放 .env，上線前跑一次全域稽核</label></li>
+      <li><label><input type="checkbox" value="elective"> 挑一個 D 段選修（資料庫、LINE、手機 App）繼續學</label></li>
+    </ul></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">課中</span><h2>成果發表會</h2><p>每個人三分鐘，讓大家看到你做出了什麼。</p></div></div>
+    <div class="workshop">
+      <p><span class="phase phase-in">課中．約 60 分</span></p>
+      <ol>
+        <li><span class="time">每人 3 分鐘</span>打開自己上線的網址，說三件事：<b>解決了誰的什麼問題</b>、<b>卡最久的地方怎麼過的</b>、<b>Vibe Check 找到什麼問題</b>。</li>
+        <li><span class="time">每人 1 分鐘</span>台下每人用便利貼寫一個「我想借用的點子」，貼給發表者。</li>
+        <li><span class="time">最後 10 分</span>全班一起點開總測驗，還沒過的當場挑戰，過關的人上台領（或列印）證書。</li>
+      </ol>
+      <div class="teacher"><p><b>講師收尾建議：</b>分享你自己「做到一半放棄」的專案，提醒大家：做不完沒關係，重要的是學會小步前進、每步都檢查。邀請學員加入後續的交流群組，互相 Vibe Check。</p></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 09</div></footer>
+
+<script src="../assets/js/lib.js?v=202609181223"></script>
+<script src="../assets/js/quiz-bank.js?v=202609181223"></script>
+<script src="../assets/js/core.js?v=202609181223"></script>
+<script src="../assets/js/tour.js?v=202609181223"></script>
+<script src="../assets/js/modules/m9.js?v=202609181223"></script>
+</body>
+</html>

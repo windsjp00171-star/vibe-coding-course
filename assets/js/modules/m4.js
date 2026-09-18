@@ -163,13 +163,7 @@
   renderSim();
 
   // ---------- 測驗 ----------
-  const QUIZ = [
-    { q: '你請 Claude Code「幫我存檔」，然後電腦就壞了。GitHub 上會有這次的存檔嗎？', options: ['會，存檔就會自動上傳', '不會，存檔（commit）只在本機，要 push 才會上傳', '看網路快不快'], answer: 1, why: 'commit 只存在你的電腦，push 之後 GitHub 才有備份。這是新手最常搞混的地方。' },
-    { q: '想試做一個大改版，但怕把現在能用的版本弄壞，應該怎麼做？', options: ['直接改，壞了再說', '複製整個資料夾改名成「新版」', '開一個分支（branch），做好再合併'], answer: 2, why: '分支就是 Git 內建的「另存新檔」，而且之後合併時會幫你對齊兩邊的修改。' },
-    { q: '上傳時被拒絕：「GitHub 上有你電腦沒有的新版本」。正確的下一步是？', options: ['強制上傳，蓋掉 GitHub 上的', '先 pull 下載更新，再 push', '刪掉專案重來'], answer: 1, why: '被拒絕是在保護同事（或你在別台電腦）的修改。先 pull 合併，再 push 才安全。' },
-    { q: '哪一個檔案「絕對不能」上傳到 GitHub？', options: ['index.html', 'README.md', '.env（放密碼和金鑰的檔案）'], answer: 2, why: '.env 通常存著密碼和 API 金鑰，要放進 .gitignore（不上傳清單）。單元 6 會再詳細說。' },
-    { q: 'Pull Request（PR）最接近下面哪一種情境？', options: ['把稿子交給主管簽核，同意後才定稿', '從網路上下載檔案', '把電腦裡的檔案全部刪掉'], answer: 0, why: 'PR 是「請幫我看一下，沒問題就合併」的申請單，讓第二個人把關。' },
-  ];
+  const QUIZ = window.QuizBank.m4;
   mountQuiz($('[data-quiz]'), QUIZ, { moduleId: 'm4' });
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 

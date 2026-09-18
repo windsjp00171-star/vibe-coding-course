@@ -36,13 +36,7 @@
   initFlips($('[data-terms]'));
 
   // ---------- 測驗 ----------
-  const QUIZ = [
-    { q: 'Claude Code 跟 claude.ai 聊天視窗最大的差別是？', options: ['Claude Code 比較會聊天', 'Claude Code 可以直接在你的電腦上建檔案、執行、存檔', '聊天視窗要付費，Claude Code 免費'], answer: 1, why: '聊天視窗只能給建議，Claude Code 會實際動手做。' },
-    { q: '在 Claude Code 的「Code」分頁選資料夾時，應該選哪一個？', options: ['整個 C 槽', '桌面', '專門為這個專案建立的資料夾'], answer: 2, why: '一個專案一個資料夾。選整個磁碟等於讓它能碰到你所有的檔案。' },
-    { q: 'Claude Code 問你能不能執行 rm -rf 開頭的指令，你看不懂，該怎麼辦？', options: ['按允許，它應該知道自己在做什麼', '拒絕，請它用白話解釋要做什麼', '重新安裝 Claude Code'], answer: 1, why: 'rm -rf 是刪除指令。看不懂就拒絕並請它解釋，這是最重要的安全習慣。' },
-    { q: 'Windows 電腦在使用 Claude Code 前，建議先安裝什麼？', options: ['Git for Windows', 'Microsoft Office', '防毒軟體'], answer: 0, why: 'Windows 上的 Claude Code 需要 Git 來執行指令和管理存檔。' },
-    { q: '網路上有教學說「貼上這行指令就能安裝」，最安全的做法是？', options: ['照貼，網路上的應該都沒問題', '只貼官方網站上的指令', '請朋友幫忙貼'], answer: 1, why: '從網路下載並執行程式的指令威力很大，只信任官方來源。' },
-  ];
+  const QUIZ = window.QuizBank.m2;
   mountQuiz($('[data-quiz]'), QUIZ, { moduleId: 'm2' });
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 

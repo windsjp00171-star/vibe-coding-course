@@ -120,13 +120,7 @@
   renderMask();
 
   // ---------- 測驗 ----------
-  const QUIZ = [
-    { q: 'API 金鑰最像下面哪一個？', options: ['公司的地址', '一張不用密碼就能刷的信用卡', '網站的名字'], answer: 1, why: '誰拿到誰就能用你的名義花錢、讀資料。' },
-    { q: '密碼應該放在哪裡？', options: ['直接寫在程式碼裡', '.env 檔，並且把 .env 放進 .gitignore', 'README.md'], answer: 1, why: '.env 是鑰匙盒，.gitignore 確保它不會被上傳。' },
-    { q: '不小心把金鑰 push 到 GitHub 了，最重要的第一步是？', options: ['刪掉檔案再 push 一次', '到服務商後台把那把金鑰作廢、換新的', '把 repo 改成 Private 就好'], answer: 1, why: 'Git 的歷史紀錄還留著舊金鑰，改成 Private 前也可能已經被抓走。只有作廢才安全。' },
-    { q: '想請 AI 整理一份含有客戶電話的名單，比較好的做法是？', options: ['直接整份貼上', '先把個資遮起來，或請 AI 寫程式在自己電腦上處理', '改用另一家 AI 就沒關係'], answer: 1, why: '先遮再送，或讓資料留在自己電腦上。換一家 AI 並不會比較安全。' },
-    { q: '.env.example 是做什麼用的？', options: ['放真正的密碼', '列出需要哪些鑰匙的名稱，但不放值，可以安全上傳', '備份用的 .env'], answer: 1, why: '讓下一個人知道要準備哪些鑰匙，卻不會洩漏任何密碼。' },
-  ];
+  const QUIZ = window.QuizBank.m6;
   mountQuiz($('[data-quiz]'), QUIZ, { moduleId: 'm6' });
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 

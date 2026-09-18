@@ -93,3 +93,10 @@ test('scanCode：單元 6「找鑰匙」遊戲的答案靠這個判斷，寫死�
   assert.deepEqual(lines("const pool = new Pool({\n  host: 'db.example.com',\n  password: 'MyCompany2026!',\n});"), [3]);
   assert.deepEqual(lines('const c = new OpenAI({\n  apiKey: process.env.OPENAI_API_KEY,\n});'), [], '讀 process.env 的是正確寫法，不能被誤判');
 });
+
+test('scoreQuiz：可以指定較高的及格線（總測驗 80 分）', () => {
+  const qs = Array.from({ length: 10 }, () => ({ answer: 0 }));
+  const sevenFive = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1];
+  assert.equal(lib.scoreQuiz(qs, sevenFive).passed, true);
+  assert.equal(lib.scoreQuiz(qs, sevenFive, 80).passed, false);
+});

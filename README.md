@@ -10,8 +10,8 @@
 |---|---|---|
 | A 起步 | 1 什麼是 Vibe Coding｜2 安裝你的 AI 工程師｜3 怎麼跟 Claude Code 合作 | ✅ |
 | B 上線 | 4 Git 與 GitHub 白話講｜5 把作品放上網路 | ✅ |
-| C 資安 | 6 鑰匙與機密別外流｜7 AI 會被騙：你是門神｜8 上線前的 Vibe Check | 6 ✅，7–8 製作中 |
-| 結業 | 9 總測驗與結業證書 | 製作中 |
+| C 資安 | 6 鑰匙與機密別外流｜7 AI 會被騙：你是門神｜8 上線前的 Vibe Check | ✅ |
+| 結業 | 9 總測驗與結業證書 | ✅ |
 | D 進階選修 | 10 Supabase｜11 LINE Bot｜12 LINE 登入｜13 PWA｜14 推播 | 製作中 |
 
 ## 使用方式
@@ -49,7 +49,8 @@ modules/                各單元頁面
 assets/css/course.css   共用樣式（設計 token、講師模式、投影、列印）
 assets/js/core.js       共用骨架：頁首、模式、進度、測驗引擎、計時器
 assets/js/tour.js       聚焦式教學導覽（只用 data-tour 定位）
-assets/js/lib.js        純邏輯：個資遮罩、程式碼體檢、計分
+assets/js/lib.js        純邏輯：個資遮罩、程式碼體檢、指令健檢、計分、組卷
+assets/js/quiz-bank.js  全課程題庫（單一來源）
 assets/js/git-sim.js    Git 教學模型（單元 4）
 assets/js/modules/      各單元專屬互動
 tests/                  單元測試
