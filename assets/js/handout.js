@@ -173,23 +173,27 @@
     load();
   });
   $('[data-ho-print]').addEventListener('click', () => window.print());
-  // 講師版開關：只有講師看得到（登入的講師，或本機有講師筆記）
+  // 講師版開關：登入的講師都看得到。
+  // 不能只看 isTeacher()：那是「講師教學提示載好了」，而講義頁沒有教學提示欄位，永遠不會載。
   const teacherToggle = $('[data-ho-teacher]');
-  const showToggle = () => { teacherToggle.hidden = !isTeacher(); };
+  const isTeacherNow = () => isTeacher() || window.Members?.profile?.role === 'teacher';
+  const showToggle = () => { teacherToggle.hidden = !isTeacherNow(); };
   document.addEventListener('course:teacher', showToggle);
   showToggle();
   $('[data-ho-answers]').addEventListener('change', (e) => {
-    withAnswers = e.target.checked && isTeacher();
+    withAnswers = e.target.checked && isTeacherNow();
     load();
   });
   // 講師也可以用網址直接開講師版（?answers=1），方便一次存成 PDF；不是講師就忽略
-  document.addEventListener('course:teacher', () => {
-    if (new URLSearchParams(location.search).get('answers') !== '1' || withAnswers) return;
+  const wantAnswers = () => {
+    if (new URLSearchParams(location.search).get('answers') !== '1' || withAnswers || !isTeacherNow()) return;
     withAnswers = true;
     $('[data-ho-answers]').checked = true;
     load();
-  });
-  document.addEventListener('course:auth', load);
+  };
+  document.addEventListener('course:teacher', wantAnswers);
+  // 登入資料讀完才知道是不是講師：這時候再顯示開關、重畫講義
+  document.addEventListener('course:auth', () => { showToggle(); wantAnswers(); load(); });
   load();
 
   window.Tour.register([
