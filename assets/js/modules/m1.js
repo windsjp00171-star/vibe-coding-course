@@ -1,7 +1,7 @@
 /* m1.js — 單元 01：什麼是 Vibe Coding */
 (function () {
   'use strict';
-  const { $, $$, esc, mountQuiz, renderPrintQuiz, mountClassify, getState, update } = window.Course;
+  const { $, $$, esc, MODULES, mountQuiz, renderPrintQuiz, mountClassify, mountMeters } = window.Course;
 
   // ---------- 三種駕駛分類 ----------
   const DRIVERS = [
@@ -65,26 +65,13 @@
   });
   renderWall('all');
 
-  // ---------- 五種能力自評（存在瀏覽器，上完課回來比較） ----------
-  const SKILLS = ['把需求講清楚', '把大事拆成小步驟', '看得出哪裡怪怪的', '管好密碼和資料', '遇到錯誤不慌張'];
-  const saved = getState().selfRating || {};
-  $('[data-meters]').innerHTML = SKILLS.map((s, i) => `
-    <div class="meter-row"><label for="meter-${i}">${esc(s)}</label>
-      <input type="range" id="meter-${i}" min="1" max="5" value="${saved[s] || 2}" data-skill="${esc(s)}">
-      <output>${saved[s] || 2}</output></div>`).join('');
-  function noteFor() {
-    const values = $$('[data-skill]').map((r) => Number(r.value));
-    const low = SKILLS[values.indexOf(Math.min(...values))];
-    $('[data-meter-note]').textContent = `你目前最想加強的是「${low}」。對應的單元會特別注意這一塊。`;
-  }
-  $('[data-meters]').addEventListener('input', (e) => {
-    const r = e.target.closest('[data-skill]');
-    if (!r) return;
-    r.nextElementSibling.textContent = r.value;
-    update({ selfRating: { ...(getState().selfRating || {}), [r.dataset.skill]: Number(r.value) } });
-    noteFor();
+  // ---------- 五種能力自評（上課前的起點，結業單元會拿來比較） ----------
+  mountMeters($('[data-meters]'), 'selfRating', (ratings) => {
+    const low = window.CourseLib.weakestSkill(ratings);
+    const mod = MODULES.find((m) => m.id === low.m);
+    $('[data-meter-note]').innerHTML = `你目前最想加強的是「${esc(low.name)}」。這項能力在這裡學：<br>
+      <a class="btn btn-sm" href="${esc(mod.file.replace('modules/', ''))}" style="margin-top:8px">👉 單元 ${mod.id.slice(1)}：${esc(mod.title)}</a>`;
   });
-  noteFor();
 
   // ---------- 測驗 ----------
   const QUIZ = window.QuizBank.m1;

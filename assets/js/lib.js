@@ -265,7 +265,32 @@
     return hits;
   }
 
-  const api = { maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  // ---- 五種能力自評：單元 1 拉一次當起點，結業單元再拉一次比較 ----
+  // m 是真正在教這項能力的單元，拉完推薦學員先去看
+  const SELF_SKILLS = [
+    { name: '把需求講清楚', m: 'm3' },
+    { name: '把大事拆成小步驟', m: 'm3' },
+    { name: '看得出哪裡怪怪的', m: 'm8' },
+    { name: '管好密碼和資料', m: 'm6' },
+    { name: '遇到錯誤不慌張', m: 'm4' },
+  ];
+  const DEFAULT_RATING = 2;
+
+  function weakestSkill(ratings) {
+    const score = (s) => ratings[s.name] ?? DEFAULT_RATING;
+    return SELF_SKILLS.reduce((low, s) => (score(s) < score(low) ? s : low));
+  }
+
+  function compareRatings(before, after) {
+    const rows = SELF_SKILLS.map((s) => {
+      const b = before[s.name] ?? null;
+      const a = after[s.name] ?? DEFAULT_RATING;
+      return { ...s, before: b, after: a, delta: b === null ? null : a - b };
+    });
+    return { rows, hasBefore: rows.some((r) => r.before !== null) };
+  }
+
+  const api = { SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

@@ -349,6 +349,24 @@
   }
 
   // ---------- 講義用：把測驗題印成紙本選擇題（不附答案） ----------
+  // 五種能力自評的拉桿。stateKey 決定存在哪一格（單元 1 是上課前，結業單元是現在）
+  function mountMeters(host, stateKey, onChange) {
+    const { SELF_SKILLS, DEFAULT_RATING } = window.CourseLib;
+    const saved = getState()[stateKey] || {};
+    host.innerHTML = SELF_SKILLS.map((s, i) => `
+      <div class="meter-row"><label for="${stateKey}-${i}">${esc(s.name)}</label>
+        <input type="range" id="${stateKey}-${i}" min="1" max="5" value="${saved[s.name] ?? DEFAULT_RATING}" data-skill="${esc(s.name)}">
+        <output>${saved[s.name] ?? DEFAULT_RATING}</output></div>`).join('');
+    host.addEventListener('input', (e) => {
+      const r = e.target.closest('[data-skill]');
+      if (!r) return;
+      r.nextElementSibling.textContent = r.value;
+      update({ [stateKey]: { ...(getState()[stateKey] || {}), [r.dataset.skill]: Number(r.value) } });
+      onChange(getState()[stateKey]);
+    });
+    onChange(saved);
+  }
+
   function renderPrintQuiz(host, questions) {
     if (!host) return;
     host.innerHTML = `<h3>✍️ 小測驗（圈出答案）</h3>${questions.map((q, i) => `
@@ -456,7 +474,7 @@
   }
 
   window.Course = {
-    MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz,
+    MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
     mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 
