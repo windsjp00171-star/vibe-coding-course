@@ -5,6 +5,6 @@
  * 這兩個值本來就是設計給網頁公開使用的；絕對不要在這裡放 service_role / secret key。
  */
 window.COURSE_CONFIG = {
-  supabaseUrl: '',
-  supabaseKey: '', // Publishable key（sb_publishable_ 開頭）
+  supabaseUrl: 'https://nrljtmxxrbqgteouwdbc.supabase.co',
+  supabaseKey: 'sb_publishable_zCvNbO4ytHjmmMbiaYzsdQ_-Gjjy92N', // Publishable key（sb_publishable_ 開頭）
 };
