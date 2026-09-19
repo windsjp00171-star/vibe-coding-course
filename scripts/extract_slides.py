@@ -17,7 +17,8 @@ MAX_CARDS = 6
 INTERACTIVE_ATTRS = ("data-sim", "data-quiz", "data-gate", "data-match", "data-order", "data-picker", "data-secretary",
                      "data-matrix", "data-chat", "data-push-toggles", "data-strategies", "data-spot-code", "data-scan-input",
                      "data-prompt-input", "data-meters", "data-wall", "data-glossary", "data-rules", "data-traps",
-                     "data-flow", "data-mask-input", "data-agency", "data-utc", "data-rls", "data-line-pits", "data-pits")
+                     "data-flow", "data-mask-input", "data-agency", "data-utc", "data-rls", "data-line-pits", "data-pits",
+                     "data-meters", "data-meters-after")
 
 
 def text(el) -> str:
