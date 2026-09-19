@@ -101,6 +101,7 @@
       slot.innerHTML = note.html; // 內容來自講師自己的檔案或受權限保護的資料庫，不是使用者輸入
     });
     teacherReady = true;
+    document.dispatchEvent(new CustomEvent('course:teacher'));
     const sw = $('.mode-switch');
     if (sw) sw.hidden = false;
     applyMode(getState().mode);
@@ -474,7 +475,7 @@
   }
 
   window.Course = {
-    MODULES, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
+    MODULES, isTeacher: () => teacherReady, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
     mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 

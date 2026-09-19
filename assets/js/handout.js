@@ -5,7 +5,7 @@
  */
 (function () {
   'use strict';
-  const { MODULES, esc, $, renderPrintQuiz } = window.Course;
+  const { MODULES, esc, $, isTeacher } = window.Course;
   const { firstSentence, unitTerms } = window.CourseLib;
   const GLOSSARY = window.Glossary || [];
   // QR Code 一律指向正式網站：在本機預覽時印出來的講義，學員掃了也打得開
@@ -16,6 +16,7 @@
   const units = MODULES.filter((m) => m.ready);
   const paper = $('[data-ho-paper]');
   const status = $('[data-ho-status]');
+  let withAnswers = false;
   let mod = units.find((m) => m.id === new URLSearchParams(location.search).get('m')) || units[0];
 
   const text = (el) => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
@@ -76,14 +77,23 @@
     return qr.createSvgTag({ cellSize: 3, margin: 0, scalable: true });
   }
 
+  // 小測驗：學員版只有題目；講師版標出正確答案並附解說
+  function quizHtml(questions) {
+    return questions.map((q, i) => `
+      <div class="print-q"><b>${i + 1}. ${esc(q.q)}</b>
+        <ol>${q.options.map((o, j) => `<li class="${withAnswers && j === q.answer ? 'ho-correct' : ''}">${esc(o)}</li>`).join('')}</ol>
+        ${withAnswers ? `<p class="ho-why">解說：${esc(q.why)}</p>` : ''}</div>`).join('');
+  }
+
   function render(d) {
+    const questions = window.QuizBank[mod.id] || [];
     let n = 0;
     const sec = (title, body) => `<section class="ho-sec"><h2 class="ho-h"><span class="ho-num">${CIRCLED[n++]}</span>${esc(title)}</h2>${body}</section>`;
     const url = SITE + mod.file;
     const parts = [
       `<header class="ho-head">
         <div>
-          <p class="ho-eyebrow">Vibe Coding 實戰課．${esc(d.eyebrow)}</p>
+          <p class="ho-eyebrow">Vibe Coding 實戰課．${esc(d.eyebrow)}${withAnswers ? '<span class="ho-teacher-badge">講師版．附答案</span>' : ''}</p>
           <h1>${esc(d.title)}</h1>
           <p class="ho-lead">${esc(d.lead)}</p>
           <p class="ho-fields"><span>姓名 <i></i></span><span>班級 <i></i></span><span>日期 <i></i></span></p>
@@ -97,15 +107,11 @@
       d.practice.length ? sec('課前練習', d.practice.map((h) => `<div class="ho-block">${h}</div>`).join('')) : '',
       d.steps.length ? sec(`課中工作坊：${d.workshopTitle}`, `<table class="ho-steps"><thead><tr><th>時間</th><th>要做的事</th><th>我的筆記</th></tr></thead><tbody>${d.steps.map((s) => `
         <tr><td>${esc(s.time)}</td><td>${s.title ? `<b>${esc(s.title)}</b><br>` : ''}${esc(s.body)}</td><td class="ho-note"></td></tr>`).join('')}</tbody></table>`) : '',
-      (window.QuizBank[mod.id] || []).length ? sec('小測驗', `<div class="ho-quiz" data-ho-quiz></div>`) : '',
+      questions.length ? sec('小測驗', `<div class="ho-quiz">${quizHtml(questions)}</div>`) : '',
       d.homework.length || d.reflect.length ? sec('課後任務', `${d.homework.length ? `<ul class="ho-check">${d.homework.map((h) => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
         ${d.reflect.map((h) => `<div class="ho-block">${h}</div>`).join('')}`) : '',
     ];
     paper.innerHTML = parts.join('');
-    const quizHost = $('[data-ho-quiz]');
-    if (!quizHost) return;
-    renderPrintQuiz(quizHost, window.QuizBank[mod.id]);
-    quizHost.querySelector('h3')?.remove();
   }
 
   // ---------- 會員閘門：和網頁版同一套規則 ----------
@@ -118,7 +124,7 @@
 
   async function load() {
     $('[data-ho-back]').href = mod.file;
-    document.title = `單元 ${mod.id.slice(1)} 講義｜Vibe Coding 實戰課`;
+    document.title = `單元 ${mod.id.slice(1)} 講義${withAnswers ? '（講師版）' : ''}｜Vibe Coding 實戰課`;
     if (locked()) {
       paper.innerHTML = `<section class="ho-gate"><h2>🔒 這個單元的講義需要開通</h2><p>登入並輸入講師給你的加入碼後就能列印。單元 ${units.filter((m) => m.trial).map((m) => m.id.slice(1)).join('、')} 可以免費試用。</p></section>`;
       status.textContent = '';
@@ -145,6 +151,15 @@
     load();
   });
   $('[data-ho-print]').addEventListener('click', () => window.print());
+  // 講師版開關：只有講師看得到（登入的講師，或本機有講師筆記）
+  const teacherToggle = $('[data-ho-teacher]');
+  const showToggle = () => { teacherToggle.hidden = !isTeacher(); };
+  document.addEventListener('course:teacher', showToggle);
+  showToggle();
+  $('[data-ho-answers]').addEventListener('change', (e) => {
+    withAnswers = e.target.checked && isTeacher();
+    load();
+  });
   document.addEventListener('course:auth', load);
   load();
 
