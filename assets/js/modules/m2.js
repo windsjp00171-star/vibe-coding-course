@@ -3,6 +3,13 @@
   'use strict';
   const { $, esc, mountQuiz, renderPrintQuiz, mountClassify, initFlips } = window.Course;
 
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount($('[data-workbench]'), {
+    id: 'm2',
+    missions: ['選資料夾', '說出需求', '允許嗎？', '親手驗收', '需求變了'],
+    run: window.SimM2.run,
+  });
+
   // ---------- 允許嗎？分類 ----------
   mountClassify($('[data-classify-permission]'), [
     { text: 'Claude Code 想「建立 index.html」（在你的專案資料夾裡）。', answer: 'allow', why: '這就是你請它做的事，放心允許。' },
@@ -41,6 +48,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '這是模擬的 Claude Code：跟著林經理的任務，自己打字下指令、判斷允許或拒絕、親手試做出來的網頁。玩壞了按「重來一次」。' },
     { tour: 'tools', title: '三種 AI 工具', text: '先搞懂聊天型、編輯器型、代理型的差別，以及 Claude Code 和 Cursor 怎麼選。' },
     { tour: 'install', title: '安裝步驟', text: '上方選 Windows 或 Mac，每完成一步就打勾。卡住了點「卡住了？」看解法。' },
     { tour: 'permission', title: '允許嗎？', text: 'Claude Code 會先問你才動手。這裡練習判斷什麼可以允許、什麼要拒絕。' },

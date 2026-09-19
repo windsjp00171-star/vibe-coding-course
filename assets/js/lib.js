@@ -265,6 +265,14 @@
     return hits;
   }
 
+  // ---- 沉浸式工作台：學員打的需求有沒有講到重點 ----
+  // needs：[{ id, re }]；回傳講到的 met 與沒講到的 missing（都依 needs 的順序）
+  function matchNeeds(text, needs) {
+    const value = String(text || '');
+    const met = needs.filter((n) => n.re.test(value)).map((n) => n.id);
+    return { met, missing: needs.map((n) => n.id).filter((id) => !met.includes(id)) };
+  }
+
   // ---- 單元開放規則（會員閘門、課程地圖、講義共用）----
   // viewer：null 表示訪客；limits 是學員所在各班級「開放到單元幾」，null 代表那班全部開放
   // 回傳 'open' 可以看／'login' 要登入／'enroll' 要輸入加入碼／'class' 講師還沒開放
@@ -318,7 +326,7 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

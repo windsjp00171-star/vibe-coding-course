@@ -18,7 +18,7 @@ INTERACTIVE_ATTRS = ("data-sim", "data-quiz", "data-gate", "data-match", "data-o
                      "data-matrix", "data-chat", "data-push-toggles", "data-strategies", "data-spot-code", "data-scan-input",
                      "data-prompt-input", "data-meters", "data-wall", "data-glossary", "data-rules", "data-traps",
                      "data-flow", "data-mask-input", "data-agency", "data-utc", "data-rls", "data-line-pits", "data-pits",
-                     "data-meters", "data-meters-after")
+                     "data-meters", "data-meters-after", "data-workbench")
 
 
 def text(el) -> str:

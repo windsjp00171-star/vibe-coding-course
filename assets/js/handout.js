@@ -27,7 +27,8 @@
   // ---------- 從單元網頁擷取各區塊 ----------
   function extract(doc) {
     const hero = doc.querySelector('.module-hero');
-    const all = [...doc.querySelectorAll('main > section.slide')].filter((s) => s !== hero);
+    // 只能在網頁上玩的段落（例如模擬工作台）不放進紙本
+    const all = [...doc.querySelectorAll('main > section.slide')].filter((s) => s !== hero && !s.classList.contains('screen-only'));
     const content = all.filter((s) => !['quiz', 'homework'].includes(s.id));
     const workshopSec = content.find((s) => s.querySelector('.workshop'));
     const homework = all.find((s) => s.id === 'homework');
