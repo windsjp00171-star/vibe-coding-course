@@ -4,7 +4,7 @@
  * 以免版面調整改掉 class 後導覽默默失效。
  *
  * 用法：Tour.register([{ tour: 'mode', title: '…', text: '…' }, …])
- * 首次來訪會自動播放一次；之後按右上角「？ 教學」重看。
+ * 整個網站只有第一次來訪會自動播放；之後的新頁面只讓「？ 教學」按鈕閃幾下，隨時可以按它重看。
  */
 (function () {
   'use strict';
@@ -21,15 +21,25 @@
     { tour: 'print', title: '印出講義', text: '按這裡會印出這個單元的紙本學習單，裡面有填空和練習，也可以存成 PDF。' },
   ];
 
+  // 整個網站只自動播放一次；之後進到新頁面只讓「？ 教學」按鈕閃幾下，不打斷使用者
   function register(pageSteps) {
     steps = [...COMMON, ...pageSteps];
-    const page = document.body.dataset.module || 'home';
+    const page = document.body.dataset.module || location.pathname.split('/').pop() || 'home';
     let seen = {};
     try { seen = JSON.parse(localStorage.getItem(SEEN_KEY)) || {}; } catch { /* 忽略 */ }
-    if (!seen[page]) {
-      try { localStorage.setItem(SEEN_KEY, JSON.stringify({ ...seen, [page]: true })); } catch { /* 忽略 */ }
-      setTimeout(start, 700);
-    }
+    if (seen[page]) return;
+    const firstEver = Object.keys(seen).length === 0;
+    try { localStorage.setItem(SEEN_KEY, JSON.stringify({ ...seen, [page]: true })); } catch { /* 忽略 */ }
+    if (firstEver) setTimeout(start, 700);
+    else setTimeout(hintButton, 900);
+  }
+
+  function hintButton() {
+    const btn = document.querySelector('[data-action="tour"]');
+    if (!btn) return;
+    btn.classList.add('is-hinting');
+    btn.title = '這一頁有導覽，想看的話按這裡';
+    setTimeout(() => btn.classList.remove('is-hinting'), 6000);
   }
 
   function visibleSteps() {

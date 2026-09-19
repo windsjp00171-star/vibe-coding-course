@@ -113,6 +113,8 @@ code, kbd { font-family: var(--mono); font-size: .9em; }
 .btn-sm { padding: 6px 14px; font-size: .85rem; }
 .btn-ghost { background: transparent; }
 .btn-help { border-color: var(--brand); color: var(--brand); }
+.btn-help.is-hinting { animation: hint-pulse 1.2s ease-in-out 4; }
+@keyframes hint-pulse { 50% { background: var(--brand); color: #fff; box-shadow: 0 0 0 6px var(--brand-soft); } }
 
 /* ---------- Hero ---------- */
 .module-hero { padding: var(--space-section) 0 calc(var(--space-section) * .6); position: relative; }
