@@ -40,3 +40,56 @@ test('按鈕還沒修好時，送出不會出現成功訊息（學員才會發�
   assert.ok(sim.buildSite({ diet: true, fixed: false, deadline: false }).includes("'submit-bug'"));
   assert.ok(sim.buildSite({ diet: true, fixed: true, deadline: false }).includes("'submit-ok'"));
 });
+
+// ---- 單元 4：救回改壞的網頁 ----
+const m4 = require('../assets/js/sims/m4-rescue.js');
+
+test('存檔說明要寫出「改了什麼」，只寫「更新」不算', () => {
+  assert.deepEqual(matchNeeds('完成報名表單，加上葷素選項', m4.NEEDS.message).missing, []);
+  assert.deepEqual(matchNeeds('更新', m4.NEEDS.message).met, []);
+});
+
+test('要救回檔案，學員要說得出「回到之前的版本」', () => {
+  for (const t of ['請回到上一個存檔點', '幫我還原剛剛的修改', '退回昨天的版本']) {
+    assert.deepEqual(matchNeeds(t, m4.NEEDS.fix).missing, [], t);
+  }
+  assert.deepEqual(matchNeeds('幫我修好', m4.NEEDS.fix).met, []);
+});
+
+test('存檔點地圖：沒上傳過就不會出現在 GitHub 那一欄', () => {
+  const board = m4.buildBoard({ local: [{ msg: '完成表單', time: '22:05' }], remote: [], broken: false });
+  assert.ok(board.includes('完成表單'));
+  assert.ok(board.includes('還沒上傳過'));
+  assert.ok(!m4.buildBoard({ local: [], remote: [], broken: false }).includes('版面全跑掉'));
+  assert.ok(m4.buildBoard({ local: [], remote: [], broken: true }).includes('版面全跑掉'));
+});
+
+// ---- 單元 6：金鑰外洩 ----
+const m6 = require('../assets/js/sims/m6-leak.js');
+
+test('修法要講到「把金鑰放到程式外面」才算對', () => {
+  for (const t of ['改成從環境變數讀取', '把金鑰放到 .env，不要寫在程式碼裡']) {
+    assert.deepEqual(matchNeeds(t, m6.NEEDS.fix).missing, [], t);
+  }
+  assert.deepEqual(matchNeeds('幫我處理一下', m6.NEEDS.fix).met, []);
+});
+
+test('程式碼畫面：修好之後不能還看得到那串金鑰', () => {
+  assert.ok(m6.buildCode({ fixed: false, picked: 0 }).includes('sk-live'));
+  assert.ok(!m6.buildCode({ fixed: true, picked: 0 }).includes('sk-live'));
+});
+
+// ---- 單元 8：上線前體檢 ----
+const m8 = require('../assets/js/sims/m8-launch.js');
+
+test('體檢報告分得出「會出事」和「可以晚點修」，而且 console.log 不擋上線', () => {
+  const now = m8.FINDINGS.filter((f) => f.now).map((f) => f.id);
+  assert.deepEqual(now, ['key', 'input', 'pkg']);
+  assert.equal(m8.FINDINGS.find((f) => f.id === 'log').now, false);
+});
+
+test('會出事的項目還沒修完，報告就不能顯示可以上線', () => {
+  assert.ok(m8.buildReport({ done: [], tested: false }).includes('還不能上線'));
+  assert.ok(m8.buildReport({ done: ['key', 'input', 'pkg'], tested: false }).includes('你還沒自己測過'));
+  assert.ok(m8.buildReport({ done: ['key', 'input', 'pkg'], tested: true }).includes('可以上線'));
+});

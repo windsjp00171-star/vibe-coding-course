@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz, initFlips, toast } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm8',
+    missions: ['跑體檢', '分輕重', '先修會出事的', '親手驗收'],
+    after: '往下看，這個單元教你怎麼自己跑一次體檢，以及每一種發現代表什麼。',
+    run: window.SimM8.run,
+  });
   const { scanCode, shuffle } = window.CourseLib;
 
   // ---------- 五個坑 ----------
@@ -127,6 +135,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'traps', title: '五個坑', text: 'Vibe Coding 最常掉進去的五個坑，點卡片看後果和解法。' },
     { tour: 'scanner', title: '體檢器', text: '選一段程式或自己修改，按「開始體檢」看找到哪些問題。' },
     { tour: 'owasp', title: 'AI 十大風險', text: '國際資安組織整理的清單，先玩配對遊戲，下面有完整白話說明。' },

@@ -198,7 +198,7 @@
           <p>${mistakes ? `過程中踩了 ${mistakes} 個坑，沒關係，在模擬裡踩總比在真的電腦上踩好。` : '一個坑都沒踩，太強了！'}</p>
           <p><b>你剛剛做的，就是 Vibe Coding：</b></p>
           <ul>${lessons.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>
-          <p class="muted">往下看，把真的 Claude Code 裝起來，實際做一次。</p>`);
+          ${config.after ? `<p class="muted">${esc(config.after)}</p>` : ''}`);
       },
     };
 

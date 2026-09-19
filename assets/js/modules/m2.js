@@ -7,6 +7,7 @@
   window.Workbench.mount($('[data-workbench]'), {
     id: 'm2',
     missions: ['選資料夾', '說出需求', '允許嗎？', '親手驗收', '需求變了'],
+    after: '往下看，把真的 Claude Code 裝起來，實際做一次。',
     run: window.SimM2.run,
   });
 

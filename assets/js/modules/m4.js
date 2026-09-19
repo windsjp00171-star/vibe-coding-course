@@ -3,6 +3,14 @@
   'use strict';
   const { $, $$, esc, toast, mountQuiz, renderPrintQuiz, initFlips } = window.Course;
 
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm4',
+    missions: ['開工先存檔', '寫清楚說明', '救回來', '上傳 GitHub', '同事也改了'],
+    after: '往下看，這個單元會把剛剛用到的存檔、回復、上傳講清楚。',
+    run: window.SimM4.run,
+  });
+
   // ---------- 術語卡 ----------
   const TERMS = [
     { level: 'core', en: 'Repository', zh: '倉庫（repo）', icon: '📁', plain: '一個專案的資料夾，加上它所有的存檔紀錄。', like: '像一本專案筆記本，每一頁的修改歷史都留著。', say: '「我幫你建了一個新的 repo」' },
@@ -169,6 +177,7 @@
 
   // ---------- 導覽 ----------
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'glossary', title: '術語翻牌卡', text: '12 個 Git 術語做成卡片，點一下翻面看白話解釋。上方可以先篩出「一定要會的 6 個」。' },
     { tour: 'sim', title: '存檔點模擬器', text: '照左邊的任務清單按按鈕。完成的任務會自動打勾，左右兩邊會顯示你的電腦和 GitHub 發生了什麼變化。' },
     { tour: 'translate', title: '說人話就好', text: '這張表告訴你，對 Claude Code 說哪句話，它就會幫你做哪個 Git 動作。' },

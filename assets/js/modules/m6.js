@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz, mountClassify, mountOrder } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm6',
+    missions: ['找出問題', '先止血', '改對做法', '善後觀念'],
+    after: '往下看，這個單元會教你怎麼從一開始就不要把祕密寫進程式碼。',
+    run: window.SimM6.run,
+  });
   const { scanCode, maskPII } = window.CourseLib;
 
   // ---------- 打包行李：哪些檔案可以上傳 ----------
@@ -125,6 +133,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'pack', title: '打包行李', text: '判斷哪些檔案可以上傳到 GitHub、哪些要放進禁帶清單。' },
     { tour: 'spot', title: '找出鑰匙', text: '點出程式碼裡把密碼寫死的那一行。上方可以切換三段程式。' },
     { tour: 'leaked', title: '萬一外流', text: '把處理步驟排出正確順序，記住最重要的第一步。' },
