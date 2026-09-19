@@ -230,7 +230,42 @@
     return shuffle([...firsts, ...extra], rng).map(({ unit, q }) => ({ ...shuffleOptions(q, rng), unit }));
   }
 
-  const api = { maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, PASS_PERCENT, GATE_POINTS };
+  // ---- 名詞小辭典：找出一段文字裡「還沒標過」的專業名詞 ----
+  // 英文詞要前後不是英數字（GitHub 裡的 Git 不算）；同位置取最長；每個名詞只標第一次。
+  const WORDISH = /[A-Za-z0-9_]/;
+  function findWord(text, w, from) {
+    const ascii = WORDISH.test(w[0]) || WORDISH.test(w[w.length - 1]);
+    for (let at = text.indexOf(w, from); at >= 0; at = text.indexOf(w, at + 1)) {
+      if (!ascii || (!WORDISH.test(text[at - 1] || '') && !WORDISH.test(text[at + w.length] || ''))) return at;
+    }
+    return -1;
+  }
+
+  function matchTerms(text, patterns, used = new Set()) {
+    const taken = new Set(used);
+    const hits = [];
+    let pos = 0;
+    while (pos < text.length) {
+      let best = null;
+      for (const p of patterns) {
+        if (taken.has(p.id)) continue;
+        for (const w of p.words) {
+          const at = findWord(text, w, pos);
+          if (at < 0) continue;
+          if (!best || at < best.start || (at === best.start && w.length > best.end - best.start)) {
+            best = { start: at, end: at + w.length, id: p.id };
+          }
+        }
+      }
+      if (!best) break;
+      hits.push(best);
+      taken.add(best.id);
+      pos = best.end;
+    }
+    return hits;
+  }
+
+  const api = { maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

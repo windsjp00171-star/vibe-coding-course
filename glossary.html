@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>名詞小辭典｜Vibe Coding 實戰課</title>
+  <meta name="description" content="Vibe Coding 常見專業名詞的白話解釋：Git、部署、API 金鑰、RLS、Webhook、PWA……看不懂的詞，這裡都有生活比喻。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609190955">
+  <style>
+    .gl-tools { display: grid; gap: 12px; margin-bottom: 22px; }
+    .gl-search { font: inherit; width: 100%; padding: 12px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-m); background: var(--card); color: var(--ink); }
+    .gl-search:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 4px var(--brand-soft); }
+    .gl-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+    .gl-card { scroll-margin-top: 100px; }
+    .gl-card h3 { margin-bottom: .3em; }
+    .gl-card p { margin-bottom: .5em; }
+    .gl-card .term-like { color: var(--muted); font-size: .92rem; }
+    .gl-card:target { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-soft), var(--shadow-lift); }
+    .gl-meta { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 700; }
+    .gl-meta a { text-decoration: none; }
+    .gl-empty { padding: 30px; text-align: center; }
+  </style>
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">隨時查</span>
+    <h1>名詞<em>小辭典</em></h1>
+    <p class="lead">上課聽到看不懂的詞，來這裡查。每個詞都用一兩句白話解釋，大多附一個生活比喻。在單元內文裡，有<span style="text-decoration:underline dotted var(--brand) 2px;text-underline-offset:.22em">虛線底線</span>的字也可以直接點開看。</p>
+  </section>
+
+  <section class="slide" data-no-gloss>
+    <div class="gl-tools screen-only" data-tour="gl-search">
+      <input class="gl-search" type="search" placeholder="搜尋名詞或解釋，例如：金鑰、上線、LINE" aria-label="搜尋名詞" data-gl-q>
+      <div class="chip-row" data-gl-cats></div>
+    </div>
+    <div class="gl-grid" data-gl-list></div>
+    <p class="gl-empty muted" data-gl-empty hidden>找不到這個詞。可以換個說法試試，或在課堂上直接問講師。</p>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="index.html">回課程首頁</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
+
+<script src="assets/js/lib.js?v=202609190955"></script>
+<script src="assets/js/config.js?v=202609190955"></script>
+<script src="assets/js/core.js?v=202609190955"></script>
+<script src="assets/js/members.js?v=202609190955"></script>
+<script src="assets/js/tour.js?v=202609190955"></script>
+<script src="assets/js/glossary-data.js?v=202609190955"></script>
+<script>
+  (function () {
+    const { $, esc, MODULES } = window.Course;
+    const list = window.Glossary;
+    const cats = ['全部', ...new Set(list.map((g) => g.cat))];
+    let cat = '全部';
+    const moduleOf = (id) => MODULES.find((m) => m.id === id);
+
+    $('[data-gl-cats]').innerHTML = cats.map((c) => `<button type="button" class="chip" data-cat="${esc(c)}" aria-pressed="${c === cat}">${esc(c)}</button>`).join('');
+
+    function render() {
+      const q = $('[data-gl-q]').value.trim().toLowerCase();
+      const shown = list.filter((g) => (cat === '全部' || g.cat === cat)
+        && (!q || [g.term, g.plain, g.like || '', ...g.words].join(' ').toLowerCase().includes(q)));
+      $('[data-gl-list]').innerHTML = shown.map((g) => {
+        const m = g.m && moduleOf(g.m);
+        return `<article class="card gl-card" id="${g.id}">
+          <div class="gl-meta"><span class="term-cat">${esc(g.cat)}</span>${m ? `<a href="${m.file}">單元 ${m.id.slice(1)} ${esc(m.title)} →</a>` : ''}</div>
+          <h3>${esc(g.term)}</h3>
+          <p>${esc(g.plain)}</p>
+          ${g.like ? `<p class="term-like">💡 ${esc(g.like)}</p>` : ''}
+        </article>`;
+      }).join('');
+      $('[data-gl-empty]').hidden = shown.length > 0;
+    }
+
+    $('[data-gl-cats]').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-cat]');
+      if (!b) return;
+      cat = b.dataset.cat;
+      document.querySelectorAll('[data-cat]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      render();
+    });
+    $('[data-gl-q]').addEventListener('input', render);
+    render();
+    // 從單元裡的「所有名詞」連過來時，捲到那個詞
+    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'center' });
+
+    window.Tour.register([
+      { tour: 'gl-search', title: '查名詞', text: '打關鍵字就會篩選，也可以按分類。單元內文裡有虛線底線的字，點一下也會跳出同樣的解釋。' },
+    ]);
+  })();
+</script>
+</body>
+</html>

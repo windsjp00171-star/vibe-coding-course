@@ -139,6 +139,7 @@
           </div>
           <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">🖥️ 投影</button>
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="印出本單元的學習單">🖨️ 講義</button>' : ''}
+          <a class="btn btn-sm btn-ghost" href="${base}glossary.html" data-tour="glossary" title="看不懂的專業名詞，這裡查">📖 名詞</a>
           <span data-auth-slot data-tour="auth"></span>
           <button type="button" class="btn btn-sm btn-help" data-action="tour">？ 教學</button>
         </div>
