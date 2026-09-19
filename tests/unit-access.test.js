@@ -7,9 +7,16 @@ const { unitAccess } = require('../assets/js/lib.js');
 const u = (n, trial = false) => ({ id: `m${n}`, trial });
 const student = (limits, enrolled = true) => ({ role: 'student', enrolled, limits });
 
-test('試用單元任何人都能看，訪客也可以', () => {
+test('試用單元對還沒加入班級的人開放，訪客也可以', () => {
   assert.equal(unitAccess(u(1, true), null), 'open');
-  assert.equal(unitAccess(u(4, true), student([2])), 'open');
+  assert.equal(unitAccess(u(4, true), student([], false)), 'open');
+  assert.equal(unitAccess(u(4, true), student([])), 'open');
+});
+
+test('加入班級後一律照講師的開課進度，試用單元也不例外，學員才不會提前看完', () => {
+  assert.equal(unitAccess(u(4, true), student([2])), 'class');
+  assert.equal(unitAccess(u(1, true), student([2])), 'open');
+  assert.equal(unitAccess(u(7, true), student([null])), 'open');
 });
 
 test('訪客看非試用單元要先登入；登入但還沒開通要輸入加入碼', () => {

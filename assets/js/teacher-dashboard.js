@@ -134,7 +134,7 @@
     };
     const body = (people || []).map((u) => `<tr><td>${esc(u.display_name || '（未命名）')}</td>${mods.map((m) => cell(u.id, m.id)).join('')}</tr>`).join('');
     const limit = c.open_until ?? null;
-    const closedCol = (m) => (limit !== null && !m.trial && Number(m.id.slice(1)) > limit ? ' class="col-closed"' : '');
+    const closedCol = (m) => (limit !== null && Number(m.id.slice(1)) > limit ? ' class="col-closed"' : '');
     const picker = `<label class="open-until">🔓 學員可以看到
       <select data-open-until="${c.id}" ${needsMigration ? 'disabled' : ''}>
         <option value="">全部單元</option>
@@ -143,7 +143,7 @@
     return `<div class="card" style="margin-bottom:18px">
       <div class="quiz-head"><h3 style="margin:0">${esc(c.name)}</h3><span>加入碼 <span class="code-badge">${esc(c.join_code)}</span></span></div>
       ${picker}
-      <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。${limit !== null ? '灰色欄位是這班還沒開放的單元（試用單元一律開放）。' : ''}</p>
+      <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。${limit !== null ? '灰色欄位是這班還沒開放的單元（試用單元對這班也一樣不開放）。' : ''}</p>
       <div class="table-wrap"><table class="roster"><thead><tr><th>學員</th>${mods.map((m) => `<th title="${esc(m.title)}"${closedCol(m)}>${m.emoji} ${m.id.slice(1)}</th>`).join('')}</tr></thead>
       <tbody>${body || `<tr><td colspan="${mods.length + 1}" class="muted">還沒有學員加入。請學員到課程首頁輸入加入碼。</td></tr>`}</tbody></table></div></div>`;
   }

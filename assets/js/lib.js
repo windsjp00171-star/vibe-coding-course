@@ -276,14 +276,15 @@
   // ---- 單元開放規則（會員閘門、課程地圖、講義共用）----
   // viewer：null 表示訪客；limits 是學員所在各班級「開放到單元幾」，null 代表那班全部開放
   // 回傳 'open' 可以看／'login' 要登入／'enroll' 要輸入加入碼／'class' 講師還沒開放
+  // 已加入班級的學員一律照講師的開課進度（試用單元也一樣）；試用單元只對還沒加入班級的人開放
   function unitAccess(unit, viewer) {
+    if (viewer?.role === 'teacher') return 'open';
+    const limits = viewer?.enrolled ? viewer.limits || [] : [];
+    const paced = limits.length > 0 && !limits.includes(null);
+    if (paced) return Number(unit.id.slice(1)) <= Math.max(...limits) ? 'open' : 'class';
     if (unit.trial) return 'open';
     if (!viewer) return 'login';
-    if (viewer.role === 'teacher') return 'open';
-    if (!viewer.enrolled) return 'enroll';
-    const limits = viewer.limits || [];
-    if (!limits.length || limits.includes(null)) return 'open';
-    return Number(unit.id.slice(1)) <= Math.max(...limits) ? 'open' : 'class';
+    return viewer.enrolled ? 'open' : 'enroll';
   }
 
   // ---- 紙本講義：重點句與名詞速查 ----
