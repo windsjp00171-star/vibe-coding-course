@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609190955">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609190955">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609191002">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609191002">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -68,7 +68,7 @@
 
   <section class="slide" data-tour="showcase">
     <div class="section-head"><span class="section-num">★</span>
-      <div><span class="kicker">真的做得到嗎？</span><h2>講師用這套方法做出來的作品</h2><p>下面都是公開的專案，可以直接點開來玩。每張卡片最下面，是做這個作品用到的技術，在這門課的哪一個單元學得到。</p></div></div>
+      <div><span class="kicker">真的做得到嗎？</span><h2>講師用這套方法做出來的作品</h2><p>下面都是公開的專案，原始碼都看得到，還在線上的可以直接點開來玩。每張卡片最下面，是做這個作品用到的技術，在這門課的哪一個單元學得到。</p></div></div>
     <div class="showcase" data-showcase></div>
     <p class="muted" style="margin-top:14px;font-size:.9rem">還有更多作品，看講師的<a href="https://windsjp00171-star.github.io/CLAUDE-DESIGN/" target="_blank" rel="noopener">作品集 ↗</a></p>
   </section>
@@ -105,14 +105,14 @@
 
 <footer class="site-footer"><div class="wrap"><a href="glossary.html">名詞小辭典</a>．<a href="teacher.html">講師後台</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609190955"></script>
-<script src="assets/js/config.js?v=202609190955"></script>
-<script src="assets/js/core.js?v=202609190955"></script>
-<script src="assets/js/members.js?v=202609190955"></script>
-<script src="assets/js/tour.js?v=202609190955"></script>
-<script src="assets/js/glossary-data.js?v=202609190955"></script>
-<script src="assets/js/glossary.js?v=202609190955"></script>
-<script src="assets/js/home.js?v=202609190955"></script>
+<script src="assets/js/lib.js?v=202609191002"></script>
+<script src="assets/js/config.js?v=202609191002"></script>
+<script src="assets/js/core.js?v=202609191002"></script>
+<script src="assets/js/members.js?v=202609191002"></script>
+<script src="assets/js/tour.js?v=202609191002"></script>
+<script src="assets/js/glossary-data.js?v=202609191002"></script>
+<script src="assets/js/glossary.js?v=202609191002"></script>
+<script src="assets/js/home.js?v=202609191002"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -140,7 +140,10 @@
 
     // 會員功能啟用時才顯示加入班級
     if (window.Members?.enabled) {
-      $('[data-join]').hidden = false;
+      // 加入班級是給學員的；講師是開班的人，不需要看到
+      const showJoin = (profile) => { $('[data-join]').hidden = profile?.role === 'teacher'; };
+      showJoin(window.Members.profile);
+      document.addEventListener('course:auth', (e) => showJoin(e.detail.profile));
       $('[data-join-form]').addEventListener('submit', async (e) => {
         e.preventDefault();
         const msg = $('[data-join-msg]');
@@ -159,7 +162,7 @@
       { tour: 'demo', title: 'Vibe Coding 長這樣', text: '你用一句話說要什麼，Claude Code 動手做、回報每一步。這個視窗只是示意，單元 2 會帶你裝好真的。' },
       { tour: 'flow', title: '翻轉教室', text: '這門課要先在家自學，上課時做工作坊。每個單元都分成課前、課中、課後三段。' },
       { tour: 'roles', title: '你和 AI 怎麼分工', text: '程式交給 AI 寫，你負責說清楚、做決定、驗收。這門課教的就是左邊這些能力。' },
-      { tour: 'showcase', title: '講師的作品', text: '這些都是用同一套方法做出來的，可以點開來玩。卡片下方告訴你用到的技術在哪個單元學。' },
+      { tour: 'showcase', title: '講師的作品', text: '這些都是用同一套方法做出來的，還在線上的可以點開來玩。卡片下方告訴你用到的技術在哪個單元學。' },
       { tour: 'pitfalls', title: '踩坑圖鑑', text: '講師真實踩過的坑，可以玩「看症狀猜原因」。' },
       { tour: 'map', title: '課程地圖', text: 'A 到 C 是必修，D 是進階選修（資料庫、LINE、手機 App）。做完小測驗過關的單元會打勾。' },
     ]);
