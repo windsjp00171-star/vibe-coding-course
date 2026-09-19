@@ -62,6 +62,17 @@
 .ho-quiz li.ho-correct::after { content: "　✔ 答案"; }
 .ho-why { margin: 1mm 0 0; padding-left: 7mm; font-size: 10.5pt; color: #333; }
 .ho-toolbar [data-ho-teacher] { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; color: var(--teacher); }
+/* 整本手冊：封面、目錄，每個單元從新的一頁開始 */
+.ho-unit + .ho-unit, .ho-cover + .ho-unit { break-before: page; margin-top: 16mm; padding-top: 12mm; border-top: 1px dashed #bbb; }
+.ho-cover { position: relative; }
+.ho-cover h1 { font-size: 32pt; line-height: 1.2; margin: 4mm 0 5mm; }
+.ho-cover h1 small { display: block; font-size: 20pt; font-weight: 700; color: #444; }
+.ho-cover .ho-lead { font-size: 13pt; max-width: 32em; }
+.ho-cover .ho-fields { margin: 8mm 0 12mm; }
+.ho-toc { list-style: none; padding: 0; margin: 0; display: grid; gap: 2.5mm; }
+.ho-toc li { display: grid; grid-template-columns: 22mm minmax(0, 1fr); gap: 4mm; align-items: baseline; border-bottom: .75pt dotted #999; padding-bottom: 1.5mm; }
+.ho-toc span { font-size: 10pt; color: #555; }
+.ho-qr-cover { position: absolute; top: 0; right: 0; }
 .ho-gate { text-align: center; padding: 20mm 0; }
 
 @media (max-width: 600px) { .ho-paper { padding: 16px; } .ho-terms { grid-template-columns: 1fr; } .ho-head { grid-template-columns: 1fr; } }
@@ -71,4 +82,5 @@
   body { background: #fff !important; background-image: none !important; }
   .ho-paper { width: auto; margin: 0; padding: 0; box-shadow: none; border-radius: 0; }
   .ho-toolbar { display: none !important; }
+  .ho-unit + .ho-unit, .ho-cover + .ho-unit { margin-top: 0; padding-top: 0; border-top: 0; }
 }
