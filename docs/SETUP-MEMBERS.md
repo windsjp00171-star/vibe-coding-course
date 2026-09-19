@@ -108,6 +108,22 @@ python scripts/seed_teacher_notes.py
 
 4. 重新整理課程網站：右上角出現「學員／講師」切換，就代表成功了。打開 `teacher.html` 可以開班級、看全班進度。
 
+## 6. 新增其他講師（不用寫 SQL）
+
+先在 SQL Editor 執行一次 `supabase/add-teacher-invites.sql`（只需要做一次）。之後：
+
+1. 打開管理後台 `teacher.html` →「👥 會員管理」
+2. 在「✉️ 邀請講師」輸入對方的 Google Email → 設為講師
+   - 對方已經登入過：立刻變成講師
+   - 對方還沒登入過：他第一次用 Google 登入時，自動變成講師
+3. 也可以在會員列表直接按「設為講師」
+
+## 7. 讓學員也能登入（發布 Google 登入）
+
+Google 登入預設是「測試中」，只有你自己和「測試使用者」登得進去。
+Google Cloud → Google Auth Platform →「目標對象」→ 發布應用程式。
+（上傳應用程式標誌會觸發品牌驗證，需要先在 Search Console 驗證網址擁有權；不需要標誌的話就不要上傳。）
+
 ## 常見問題
 
 | 狀況 | 原因與解法 |

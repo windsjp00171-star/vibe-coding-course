@@ -41,9 +41,10 @@
   // ---------- 會員管理 ----------
   async function renderMembers() {
     const db = window.Members.client;
-    const [{ data: people, error }, { data: rows }] = await Promise.all([
+    const [{ data: people, error }, { data: rows }, { data: invites, error: inviteErr }] = await Promise.all([
       db.from('profiles').select('id, display_name, email, role, enrolled, created_at').order('created_at', { ascending: false }),
       db.from('progress').select('user_id, done'),
+      db.from('teacher_invites').select('email, created_at').order('created_at', { ascending: false }),
     ]);
     const body = $('[data-admin-body]');
     if (error) { body.innerHTML = `<div class="card"><p>讀取會員失敗：${esc(error.message)}</p></div>`; return; }
@@ -57,7 +58,18 @@
     const counts = Object.fromEntries(Object.entries(filters).map(([k, f]) => [k, people.filter(f).length]));
     const list = people.filter(filters[memberFilter]);
     const label = { pending: '待開通', enrolled: '已開通', teacher: '講師', all: '全部' };
-    body.innerHTML = `<div class="card">
+    // 邀請講師：資料庫還沒加上邀請功能時（inviteErr），提示要執行 add-teacher-invites.sql
+    const inviteBlock = inviteErr
+      ? '<div class="card" style="margin-bottom:18px"><h3>✉️ 邀請講師</h3><p class="muted">要啟用這個功能，請到 Supabase SQL Editor 執行一次 <code>supabase/add-teacher-invites.sql</code>。</p></div>'
+      : `<div class="card" style="margin-bottom:18px"><h3>✉️ 邀請講師</h3>
+        <form class="split" data-invite style="align-items:end">
+          <label class="form-grid">對方的 Google Email<input type="email" name="email" required placeholder="例如：helper@gmail.com"></label>
+          <div><button type="submit" class="btn btn-primary">設為講師</button></div>
+        </form>
+        <p class="muted" style="margin:8px 0 0">已經登入過的人會立刻變成講師；還沒登入過的人，第一次用 Google 登入時會自動變成講師。</p>
+        ${(invites || []).length ? `<p style="margin:12px 0 4px"><b>等待對方第一次登入：</b></p><ul class="checklist">${invites.map((i) => `
+          <li><span>${esc(i.email)} <button type="button" class="btn btn-sm btn-ghost" data-uninvite="${esc(i.email)}">取消邀請</button></span></li>`).join('')}</ul>` : ''}</div>`;
+    body.innerHTML = `${inviteBlock}<div class="card">
       <div class="chip-row" style="margin-bottom:12px">${Object.keys(filters).map((k) =>
         `<button type="button" class="chip" aria-pressed="${k === memberFilter}" data-member-filter="${k}">${label[k]} ${counts[k]}</button>`).join('')}</div>
       <div class="table-wrap"><table class="roster"><thead><tr><th>會員</th><th>Email</th><th>加入日期</th><th>完成單元</th><th>狀態</th><th>操作</th></tr></thead>
@@ -124,6 +136,15 @@
   }
 
   host.addEventListener('submit', async (e) => {
+    if (e.target.matches('[data-invite]')) {
+      e.preventDefault();
+      const email = new FormData(e.target).get('email').toString().trim();
+      const { data, error } = await window.Members.client.rpc('admin_invite_teacher', { invite_email: email });
+      if (error) { toast(`設定失敗：${error.message}`); return; }
+      toast(data === 'promoted' ? `${email} 已經是講師了` : `已邀請 ${email}，對方第一次登入就會成為講師`);
+      renderMembers();
+      return;
+    }
     if (!e.target.matches('[data-new-class]')) return;
     e.preventDefault();
     const name = new FormData(e.target).get('name').toString().trim();
@@ -141,6 +162,11 @@
     if (f) { memberFilter = f.dataset.memberFilter; renderMembers(); return; }
     const setBtn = e.target.closest('[data-set]');
     if (setBtn) setMember(setBtn);
+    const un = e.target.closest('[data-uninvite]');
+    if (un) {
+      window.Members.client.from('teacher_invites').delete().eq('email', un.dataset.uninvite)
+        .then(({ error }) => { toast(error ? `取消失敗：${error.message}` : '已取消邀請'); renderMembers(); });
+    }
   });
 
   document.addEventListener('course:auth', render);
