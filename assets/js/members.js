@@ -109,8 +109,11 @@
     const slot = document.querySelector('[data-auth-slot]');
     if (!slot) return;
     const { esc } = window.Course;
+    const adminLink = profile?.role === 'teacher'
+      ? `<a class="btn btn-sm btn-ghost" href="${document.body.dataset.base || './'}teacher.html" title="開通會員、邀請講師、開班級、看進度">🛠️ 管理後台</a> `
+      : '';
     slot.innerHTML = user
-      ? `<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
+      ? `${adminLink}<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
       : '<button type="button" class="btn btn-sm btn-ghost" data-auth="in" title="用 Google 登入，換電腦也能接著學">☁️ 登入保存進度</button>';
   }
 
