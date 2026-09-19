@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 到底在做什麼？｜Vibe Coding 實戰課</title>
+  <meta name="description" content="用白話講 AI 的基本常識：它其實在猜下一個字、為什麼會唬爛、Token 和上下文是什麼、模型怎麼選、聊天型和代理型 AI 的差別。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609200742">
+  <style>
+    .nw-sentence { font-size: clamp(1.1rem, 1rem + .8vw, 1.6rem); font-weight: 800; line-height: 1.8; min-height: 2.4em; }
+    .nw-caret { color: var(--brand); animation: nw-blink 1s steps(1) infinite; }
+    @keyframes nw-blink { 50% { opacity: 0; } }
+    .nw-picks { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .nw-pick { display: grid; gap: 4px; justify-items: center; border: 1.5px solid var(--line); border-radius: 12px; padding: 8px 14px; background: var(--card); font: inherit; font-weight: 700; cursor: pointer; }
+    .nw-pick:hover { border-color: var(--brand); }
+    .nw-bar { width: 100%; height: 5px; border-radius: 3px; background: var(--paper-2); overflow: hidden; }
+    .nw-bar i { display: block; height: 100%; background: var(--brand); }
+    .nw-pct { font-size: .75rem; color: var(--muted); font-weight: 700; }
+    .ctx-track { position: relative; height: 34px; border-radius: 10px; background: var(--paper-2); overflow: hidden; border: 1px solid var(--line); }
+    .ctx-fill { height: 100%; background: linear-gradient(90deg, var(--ok), var(--warn) 70%, var(--danger)); transition: width var(--normal) var(--ease); }
+    .ctx-note { margin-top: 10px; font-weight: 700; }
+  </style>
+</head>
+<body data-module="m0" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>00</b> A 起步．AI 常識</span>
+    <h1>AI 不是<em>知道答案</em>，<br>它是在<em>猜下一個字</em></h1>
+    <p class="lead">開始用 AI 寫程式之前，先花 25 分鐘搞懂它到底在做什麼。懂了這件事，你就會知道它什麼時候可靠、什麼時候會唬爛，以及為什麼有時候它會突然「忘記」你剛剛講過的話。完全不用背任何技術名詞。</p>
+    <ul class="goals">
+      <li>用一句話解釋 AI 在做什麼</li>
+      <li>知道它為什麼會一本正經地胡說八道</li>
+      <li>看懂 Token、上下文、模型這些字在講什麼</li>
+      <li>分得出聊天型 AI 和會動手的代理型 AI</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 25 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div data-teacher-slot="m0-1"></div>
+  </section>
+
+  <section class="slide" id="nextword" data-tour="nextword">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先玩一下</span><h2>你就是 AI：一次只能猜一個字</h2>
+        <p>AI 寫文章、寫程式，其實都是同一件事：看著前面的字，猜下一個最可能出現的字，然後不斷重複。下面每一步都給你三個選擇，括號裡是「AI 覺得有多可能」。</p></div></div>
+    <div class="card">
+      <p class="nw-sentence" data-nw-sentence></p>
+      <div class="nw-picks" data-nw-picks></div>
+      <p class="muted" data-nw-note style="margin-top:14px"></p>
+    </div>
+    <div class="analogy">就像手機打字時上面跳出來的選字，只是 AI 的版本讀過非常多文章，所以猜得準很多。它<b>沒有先想好整句話</b>，是一個字一個字接出來的。</div>
+    <div class="callout">
+      <b>這解釋了三件事：</b>
+      <ul>
+        <li>為什麼它回答得很流暢，卻不一定正確——流暢和正確是兩件事。</li>
+        <li>為什麼同一個問題問兩次，答案會不一樣。</li>
+        <li>為什麼你把問題講得越清楚，它猜得越準。</li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單：用一句話解釋</h3>
+      <p>如果同事問你「AI 到底在幹嘛」，你會怎麼講？</p><div class="write-lines"></div>
+    </div>
+    <div data-teacher-slot="m0-2"></div>
+  </section>
+
+  <section class="slide" id="hallucination" data-tour="halluc">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">最重要的一課</span><h2>所以它會唬爛，而且講得很有自信</h2>
+        <p>因為它在「猜最像答案的話」，不是在查資料。當它不知道的時候，也會猜一個「看起來很像真的」的東西出來。這叫<b>幻覺</b>。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🔗 捏造網址</h3><p>給你一個看起來很正常、點進去卻是 404 的連結。</p></div>
+      <div class="card"><h3>📦 捏造套件</h3><p>叫你安裝一個根本不存在的程式套件。壞人會去搶註冊這些名字，裡面放病毒。</p></div>
+      <div class="card"><h3>📜 捏造規定</h3><p>引用一條不存在的法規、期限或官方說法，語氣非常肯定。</p></div>
+    </div>
+    <h3 style="margin-top:22px">練習：哪些一定要查證？</h3>
+    <p class="muted">AI 回你一段話，下面每一項你覺得可以直接相信，還是一定要自己查？</p>
+    <div class="card screen-only" data-classify-trust></div>
+    <div class="callout callout-ok">
+      <b>三個保命習慣：</b>
+      <ul>
+        <li><b>可查的東西一定查</b>：網址點開、套件名到官網搜尋、數字和日期自己核對。</li>
+        <li><b>做出來的東西一定自己試一次</b>：它說「做好了」不等於真的能用。</li>
+        <li><b>問它「你確定嗎？有什麼根據？」</b>：常常它自己就改口了。</li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>AI 一本正經講出不存在的東西，叫做 <span class="blank"></span>。</p>
+      <p>你最近一次發現 AI 講錯，是什麼事？</p><div class="write-lines"></div>
+    </div>
+    <div data-teacher-slot="m0-3"></div>
+  </section>
+
+  <section class="slide" id="context" data-tour="context">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">為什麼它會忘記</span><h2>Token 和上下文：AI 的桌面只有這麼大</h2>
+        <p>AI 一次能「看著」的文字量是有上限的。拉拉看下面的滑桿，看看一段對話變長之後會發生什麼事。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <label class="form-grid" for="ctx">這次對話已經進行的長度
+          <input id="ctx" type="range" min="1" max="10" value="2" data-ctx-range style="accent-color:var(--brand)"></label>
+        <div class="ctx-track"><div class="ctx-fill" data-ctx-fill style="width:20%"></div></div>
+        <p class="ctx-note" data-ctx-note></p>
+      </div>
+      <div>
+        <div class="analogy">把 AI 想成一張桌子：你給它的資料、你們的對話、它寫的程式，全部攤在桌上。桌子就這麼大，放不下的時候，最早的東西會被擠掉——它不是故意忘記的。</div>
+        <p><b>Token（代幣）</b>是算文字量的單位。中文大約一個字算 1～2 個 token，費用和「桌子放不放得下」都用它算。</p>
+      </div>
+    </div>
+    <div class="callout">
+      <b>實用做法：</b>一個任務做完就開新對話；重要的決定寫進檔案（單元 3 會教 CLAUDE.md 和收工紙條），不要指望它記得三小時前講過的話。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>對話變得很長時，AI 會開始 <span class="blank"></span>。這時候應該 <span class="blank"></span>。</p>
+    </div>
+    <div data-teacher-slot="m0-4"></div>
+  </section>
+
+  <section class="slide" id="models" data-tour="models">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">為什麼有好幾個名字</span><h2>模型有大有小，挑合適的就好</h2>
+        <p>同一家公司會出好幾種模型。差別大致是「聰明程度」和「速度、價錢」的取捨。Claude 目前分成三種尺寸：</p></div></div>
+    <div class="card" style="overflow-x:auto">
+      <table class="compare">
+        <thead><tr><th>尺寸</th><th>個性</th><th>什麼時候用</th></tr></thead>
+        <tbody>
+          <tr><th>Opus（大）</th><td>最會想，慢一點、貴一點</td><td>難的問題、架構決定、debug 卡很久的時候</td></tr>
+          <tr><th>Sonnet（中）</th><td>平衡，日常主力</td><td>大部分的寫程式工作</td></tr>
+          <tr><th>Haiku（小）</th><td>很快、很便宜</td><td>簡單重複的小事，例如整理格式、分類</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <b>白話結論：</b>不用糾結。預設用中的那個，覺得它想不出來再換大的。名字和版本號常常改，看官方網站當下的說明就好。
+    </div>
+    <div data-teacher-slot="m0-5"></div>
+  </section>
+
+  <section class="slide" id="kinds" data-tour="kinds">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">這門課的主角</span><h2>會聊天的 AI，和會動手的 AI</h2>
+        <p>同樣叫 AI，能做的事差很多。點卡片看差別。</p></div></div>
+    <div class="grid grid-3">
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>💬 聊天型</h3><p>像顧問</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>你問，它答。它<b>碰不到你的電腦</b>，給你程式碼你要自己複製、自己存檔、自己執行。</p><p class="muted">例如：一般的 AI 聊天視窗。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>📝 編輯器型</h3><p>像副駕駛</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>住在寫程式的軟體裡，在你旁邊建議、補完。主要還是<b>你在開車</b>，適合本來就會寫程式的人。</p><p class="muted">例如：Cursor。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>🛠️ 代理型（Agent）</h3><p>像會動手的助理</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>你交代任務，它<b>自己規劃步驟、開檔案、執行指令、檢查結果</b>，做之前會問你「允許嗎？」。</p><p class="muted">例如：Claude Code，這門課的主角。</p></div>
+      </div></div>
+    </div>
+    <div class="callout">
+      這門課選代理型，因為對不會寫程式的人來說，「我不用自己動手」正是重點。代價是它真的會動你的檔案，所以<b>權限判斷</b>變得很重要——單元 2 和單元 7 會專門練這件事。選修單元 16 會再深入講 Agent、MCP 和 Skill。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單：連連看</h3>
+      <p>聊天型＝<span class="blank"></span>　編輯器型＝<span class="blank"></span>　代理型＝<span class="blank"></span></p>
+      <p class="muted">（提示：顧問／副駕駛／會動手的助理）</p>
+    </div>
+    <div data-teacher-slot="m0-6"></div>
+  </section>
+
+  <section class="slide" id="limits" data-tour="limits">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">先講清楚</span><h2>哪些事不要交給 AI</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🙅 不要貼個資</h3><p>身分證字號、電話、地址、病歷、客戶名單，不要整份貼給 AI。要用的話先把個資換成假的（單元 6 會教）。</p></div>
+      <div class="card"><h3>🙅 不要當專業判斷</h3><p>醫療、法律、財務這種會影響別人的決定，AI 的話只能當參考，最後要有專業的人看過。</p></div>
+      <div class="card"><h3>🙅 不要無條件相信</h3><p>越是「聽起來很專業、很肯定」的回答，越要查。它不會說「我不確定」，除非你問它。</p></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>但這些事它很強：</b>把長文變短、整理雜亂的資料、把想法變成第一版、解釋看不懂的東西、以及——幫你把程式寫出來。
+    </div>
+    <div data-teacher-slot="m0-7"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">課中工作坊</span><h2>抓唬爛大賽</h2><p>兩人一組。每個人用自己最熟的領域出題，看誰先抓到 AI 講錯的地方。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–5 分</span><span class="step-title">想一題你是專家的問題</span>你的工作、你的興趣、你家鄉的事都可以。要有明確的答案。</li>
+        <li><span class="time">5–15 分</span><span class="step-title">問 AI，並抓錯</span>把答案讀一遍，圈出「聽起來對但其實有問題」的地方。至少找出一個。</li>
+        <li><span class="time">15–20 分</span><span class="step-title">追問一次</span>對它說「這一句你確定嗎？根據是什麼？」看看它會不會改口。</li>
+        <li><span class="time">20–25 分</span><span class="step-title">互相分享</span>跟夥伴說：它錯在哪、你怎麼發現的。這個「發現的能力」就是這門課最重要的東西。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m0-8"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m0-home">
+        <li><label><input type="checkbox" value="ask"> 找一件你這週真的要做的小事（寫公告、整理表格、想活動名稱），交給 AI 做一次，然後自己檢查一遍</label></li>
+        <li><label><input type="checkbox" value="catch"> 刻意問它一個你很熟的問題，抓出至少一個錯誤，記下來</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>AI 其實是在 <span class="blank"></span>。</p>
+      <p>今天最有收穫的一件事：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 00　內容以教學為目的簡化，實際功能與費用以官方說明為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609200742"></script>
+<script src="../assets/js/quiz-bank.js?v=202609200742"></script>
+<script src="../assets/js/config.js?v=202609200742"></script>
+<script src="../assets/js/core.js?v=202609200742"></script>
+<script src="../assets/js/members.js?v=202609200742"></script>
+<script src="../assets/js/tour.js?v=202609200742"></script>
+<script src="../assets/js/glossary-data.js?v=202609200742"></script>
+<script src="../assets/js/glossary.js?v=202609200742"></script>
+<script src="../assets/js/modules/m0.js?v=202609200742"></script>
+</body>
+</html>

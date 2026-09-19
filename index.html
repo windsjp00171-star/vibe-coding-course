@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609200734">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609200734">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609200742">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609200742">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -23,7 +23,7 @@
       <h1>不會寫程式，<br>也能做出<br><em class="rotator" data-rotator>自己的網站</em></h1>
       <p class="lead">這門課用 Claude Code 當你的 AI 工程師。從在自己電腦上做出第一個網頁，到放上網路給別人用，再到避開 AI 時代最常見的資安陷阱，每一步都用白話講、動手玩。</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="modules/01-vibe-coding.html" data-tour="start" data-continue>從第 1 單元開始 →</a>
+        <a class="btn btn-primary" href="modules/00-ai-basics.html" data-tour="start" data-continue>從第 0 單元開始 →</a>
         <span class="muted" data-progress-text></span>
       </div>
     </div>
@@ -38,7 +38,7 @@
   </section>
 
   <div class="stat-strip" aria-label="課程數字">
-    <div class="stat"><b data-count="15">15</b><span>個單元（9 必修＋6 選修）</span></div>
+    <div class="stat"><b data-count="17">17</b><span>個單元（10 必修＋7 選修）</span></div>
     <div class="stat"><b data-count="17">17</b><span>個講師真實專案當案例</span></div>
     <div class="stat"><b data-count="27">27</b><span>個真實踩過的坑</span></div>
     <div class="stat"><b>0</b><span>行程式要背</span></div>
@@ -105,14 +105,14 @@
 
 <footer class="site-footer"><div class="wrap"><a href="glossary.html">名詞小辭典</a>．<a href="teacher.html">講師後台</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609200734"></script>
-<script src="assets/js/config.js?v=202609200734"></script>
-<script src="assets/js/core.js?v=202609200734"></script>
-<script src="assets/js/members.js?v=202609200734"></script>
-<script src="assets/js/tour.js?v=202609200734"></script>
-<script src="assets/js/glossary-data.js?v=202609200734"></script>
-<script src="assets/js/glossary.js?v=202609200734"></script>
-<script src="assets/js/home.js?v=202609200734"></script>
+<script src="assets/js/lib.js?v=202609200742"></script>
+<script src="assets/js/config.js?v=202609200742"></script>
+<script src="assets/js/core.js?v=202609200742"></script>
+<script src="assets/js/members.js?v=202609200742"></script>
+<script src="assets/js/tour.js?v=202609200742"></script>
+<script src="assets/js/glossary-data.js?v=202609200742"></script>
+<script src="assets/js/glossary.js?v=202609200742"></script>
+<script src="assets/js/home.js?v=202609200742"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -145,7 +145,7 @@
     document.addEventListener('course:auth', renderMap);
 
     const count = completedCount();
-    $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '必修約 5 小時，可以分次上完';
+    $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '必修約 5.5 小時，可以分次上完';
     const next = MODULES.find((m) => !progress[m.id]?.done && built.has(m.id));
     if (count && next) { const a = $('[data-continue]'); a.href = next.file; a.textContent = `繼續：${next.emoji} ${next.title} →`; }
 
@@ -169,7 +169,7 @@
     }
 
     window.Tour.register([
-      { tour: 'start', title: '從這裡開始', text: '第一次來就從單元 1 開始。之後回來，這個按鈕會變成「繼續上次的進度」。' },
+      { tour: 'start', title: '從這裡開始', text: '第一次來就從單元 0 開始。之後回來，這個按鈕會變成「繼續上次的進度」。' },
       { tour: 'demo', title: 'Vibe Coding 長這樣', text: '你用一句話說要什麼，Claude Code 動手做、回報每一步。這個視窗只是示意，單元 2 會帶你裝好真的。' },
       { tour: 'flow', title: '翻轉教室', text: '這門課要先在家自學，上課時做工作坊。每個單元都分成課前、課中、課後三段。' },
       { tour: 'roles', title: '你和 AI 怎麼分工', text: '程式交給 AI 寫，你負責說清楚、做決定、驗收。這門課教的就是左邊這些能力。' },

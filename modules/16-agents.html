@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent、MCP 與 Skill｜Vibe Coding 實戰課</title>
+  <meta name="description" content="白話講 AI 代理（Agent）怎麼自己動手、MCP 是什麼插座、Skill 技能包怎麼用、子代理和自動化排程，以及各自的資安界線。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609200742">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609200742">
+</head>
+<body data-module="m16" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>16</b> D 進階選修．AI 的工具箱</span>
+    <h1>它為什麼能<em>自己動手</em>？<br>Agent、MCP 和 Skill</h1>
+    <p class="lead">你已經用 Claude Code 做出東西了。這個單元回頭解釋它背後的四個零件：會自己規劃的 Agent、讓它連上外部工具的 MCP、把你的做事方法打包起來的 Skill，以及讓它定時自己跑的排程。懂了這些，你才知道它的能力邊界在哪，也才知道該在哪裡踩煞車。</p>
+    <ul class="goals">
+      <li>說得出 Agent 跟聊天機器人的差別</li>
+      <li>知道 MCP 是什麼、裝之前要注意什麼</li>
+      <li>知道 Skill 是什麼，以及跟 CLAUDE.md 的差別</li>
+      <li>判斷哪些事適合交給自動排程</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m16-1"></div>
+  </section>
+
+  <section class="slide" id="loop" data-tour="loop">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">核心觀念</span><h2>Agent 就是會跑「小迴圈」的 AI</h2>
+        <p>聊天機器人只做一件事：你問，它答。Agent 多了一個迴圈——它會自己看結果、自己決定下一步，直到任務完成或卡住。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <h3>🔁 這個迴圈長這樣</h3>
+        <ol>
+          <li><b>想</b>：把你的任務拆成步驟</li>
+          <li><b>動手</b>：開檔案、改檔案、執行指令、上網查</li>
+          <li><b>看結果</b>：成功了嗎？報錯了嗎？</li>
+          <li><b>修正</b>：錯了就改，再跑一次</li>
+        </ol>
+        <p class="muted">你在 Claude Code 裡看到它「自己跑了好幾步」，就是這個迴圈在轉。</p>
+      </div>
+      <div>
+        <div class="analogy">聊天型像顧問：給你建議，事還是你自己做。Agent 像請了一個助理：你說「幫我把這批報名表整理成統計表」，它自己開檔案、算、存檔，做完跟你回報。</div>
+        <div class="callout">
+          <b>代價是：</b>它真的會動你的東西。所以 Claude Code 動手前會問「允許嗎？」——那個詢問不是囉唆，是你唯一的煞車（單元 2、單元 7 有練習）。
+        </div>
+      </div>
+    </div>
+    <h3 style="margin-top:22px">練習：把 Agent 的一次任務排成正確順序</h3>
+    <div class="card screen-only" data-order-loop></div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>Agent 比聊天機器人多了什麼？<span class="blank"></span></p>
+    </div>
+    <div data-teacher-slot="m16-2"></div>
+  </section>
+
+  <section class="slide" id="tools" data-tour="tools">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">它的手腳</span><h2>它能動手，是因為有「工具」</h2>
+        <p>AI 本身只會產生文字。它之所以能改你的檔案，是因為有人給了它一組工具，並且教它怎麼用。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>📖 讀</h3><p>打開檔案來看、搜尋整個資料夾、上網查資料。風險低。</p></div>
+      <div class="card"><h3>✏️ 寫</h3><p>建立檔案、修改檔案、刪除檔案。動到的是你的電腦，要看清楚再允許。</p></div>
+      <div class="card"><h3>⚡ 執行</h3><p>跑指令、安裝套件、推上 GitHub。風險最高，看不懂就先拒絕。</p></div>
+    </div>
+    <div class="callout callout-warn">
+      <b>一句話記住：</b>AI 的能力＝它拿到的工具。給它的工具越多，它越好用，出事的範圍也越大。這就是「最小權限」在 AI 時代的樣子。
+    </div>
+    <div data-teacher-slot="m16-3"></div>
+  </section>
+
+  <section class="slide" id="mcp" data-tour="mcp">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">外接能力</span><h2>MCP：給 AI 用的萬用轉接頭</h2>
+        <p>MCP（Model Context Protocol）是一個共通規格，讓各種外部服務都能用同一種接法接給 AI 用。接上之後，AI 就多了一組新工具。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🌐 瀏覽器</h3><p>讓它自己打開網頁、填表單、截圖確認畫面對不對。</p></div>
+      <div class="card"><h3>🗄️ 資料庫</h3><p>讓它直接查 Supabase 的資料、建資料表（單元 10）。</p></div>
+      <div class="card"><h3>📅 行事曆／通訊</h3><p>讓它讀行事曆、寄信、發訊息。</p></div>
+    </div>
+    <div class="analogy">沒有 MCP 之前，每接一個服務都要另外寫一套接法。有了 MCP，就像所有電器都改用同一種插頭，插上去就能用。</div>
+    <div class="callout callout-warn">
+      <b>裝之前先想三件事：</b>
+      <ul>
+        <li><b>來源可信嗎？</b>裝一個 MCP 等於讓 AI 多一雙手，來路不明的別裝。</li>
+        <li><b>它會拿到什麼權限？</b>能不能刪資料、能不能花錢、能不能寄信給別人。</li>
+        <li><b>它讀到的內容也可能在騙 AI。</b>網頁和文件裡可以藏指令（單元 7 的提示詞注入），所以權限要給最小的。</li>
+      </ul>
+    </div>
+    <div data-teacher-slot="m16-4"></div>
+  </section>
+
+  <section class="slide" id="skill" data-tour="skill">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">把你的做法打包</span><h2>Skill：寫給 AI 看的工作手冊</h2>
+        <p>Skill（技能包）是一個資料夾，裡面放一份說明文件，告訴 AI「遇到這類工作時，照這個步驟做」，旁邊還可以附範本、腳本、檢查清單。AI 平常不會讀它，遇到相關的工作才打開來看。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <h3>🧰 一個 Skill 裡面有什麼</h3>
+        <ul>
+          <li><b>什麼時候用</b>：例如「要做投影片的時候」</li>
+          <li><b>步驟</b>：先做什麼、再做什麼、做完怎麼檢查</li>
+          <li><b>範本或工具</b>：現成的檔案、可以直接跑的小程式</li>
+          <li><b>禁止事項</b>：這件事不要這樣做</li>
+        </ul>
+        <p class="muted">這門課的簡報就是這樣產生的：把「怎麼把網頁內容變成投影片」寫成固定流程，AI 每次照做，結果才會一致。</p>
+      </div>
+      <div class="card">
+        <h3>🆚 跟 CLAUDE.md 差在哪</h3>
+        <table class="compare">
+          <thead><tr><th></th><th>CLAUDE.md</th><th>Skill</th></tr></thead>
+          <tbody>
+            <tr><th>像什麼</th><td>公司的員工守則</td><td>某項工作的 SOP</td></tr>
+            <tr><th>什麼時候讀</th><td>每次開工都先讀</td><td>遇到這類工作才打開</td></tr>
+            <tr><th>內容</th><td>整個專案的規矩</td><td>單一種工作的步驟和範本</td></tr>
+            <tr><th>適合放</th><td>命名規則、不准做的事、回報格式</td><td>做投影片、寫週報、上線前檢查</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="callout">
+      <b>為什麼要分開？</b>因為 AI 的「桌子」就那麼大（單元 0）。守則每次都讀，所以要短；SOP 平常收起來，需要時才攤開，這樣既不佔空間，又不會漏步驟。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>CLAUDE.md 是 <span class="blank"></span>，Skill 是 <span class="blank"></span>。</p>
+    </div>
+    <div data-teacher-slot="m16-5"></div>
+  </section>
+
+  <section class="slide" id="subagent" data-tour="subagent">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">分身術</span><h2>子代理：一件事分給好幾個 AI 同時做</h2>
+        <p>大的任務可以交給幾個「子代理」同時處理，每個子代理有自己的一張桌子，做完把結論交回來。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>✅ 適合</h3><p>互不相干的事：一個查資安問題、一個查效能、一個整理文件。</p></div>
+      <div class="card"><h3>⚠️ 不適合</h3><p>會互相影響的事：兩個同時改同一個檔案，最後會打架。</p></div>
+      <div class="card"><h3>💸 代價</h3><p>同時跑好幾個，速度快，但用量也是好幾倍。小事不用出動。</p></div>
+    </div>
+    <div class="analogy">像請三個實習生同時查三件不相干的資料，比一個人查三次快。但如果三個人改同一份文件，最後你要花更多時間收拾。</div>
+    <div data-teacher-slot="m16-6"></div>
+  </section>
+
+  <section class="slide" id="auto" data-tour="auto">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">讓它自己跑</span><h2>排程：不用你按開始</h2>
+        <p>可以設定「每天早上八點自動做一件事」。判斷要不要這樣做，用下面兩個問題就夠了。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>✅ 適合自動跑</h3>
+        <ul><li>規則固定、結果可預期（整理資料、產生報表、檢查連結還通不通）</li>
+        <li>出錯了不會造成傷害，頂多重跑一次</li>
+        <li>有地方可以看它做了什麼</li></ul></div>
+      <div class="card"><h3>🚫 不要自動跑</h3>
+        <ul><li>會寄信給別人、會付錢、會刪資料</li>
+        <li>需要有人判斷的事</li>
+        <li>你不會去看結果的事——沒人看的自動化，壞了也沒人知道</li></ul></div>
+    </div>
+    <div class="callout callout-warn">
+      自動排程最常見的坑是<b>時區</b>：平台大多用國際標準時間，台灣快 8 小時，設錯就會在半夜跑、半夜發通知（單元 12、15 都踩過這個坑）。
+    </div>
+    <div data-teacher-slot="m16-7"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">課中工作坊</span><h2>寫一個你自己的 Skill</h2>
+        <p>挑一件你每個月都要重做一次的雜事，把它變成 AI 可以照做的 SOP。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–10 分</span><span class="step-title">挑一件重複的雜事</span>月報、出貨清單、活動公告、會議紀錄整理都可以。條件是：每次流程都差不多。</li>
+        <li><span class="time">10–25 分</span><span class="step-title">寫下四件事</span>什麼時候用、步驟一二三、要附什麼範本、哪些事不准做。用中文寫，不用管格式。</li>
+        <li><span class="time">25–35 分</span><span class="step-title">請 Claude Code 照做一次</span>把你寫的丟給它，請它照著做一次，然後問它：「哪一步我寫得不夠清楚？」再改。</li>
+      </ol>
+    </div>
+    <div class="card screen-only">
+      <h3>🧰 我的 Skill 草稿</h3>
+      <div class="form-grid">
+        <label>這個 Skill 叫什麼？<input type="text" data-skill-name placeholder="例如：每月出貨報表"></label>
+        <label>什麼時候要用它？<input type="text" data-skill-when placeholder="例如：每個月月初要做出貨統計的時候"></label>
+        <label>步驟（一行一步）<textarea rows="4" data-skill-steps placeholder="1. 打開當月的出貨檔案&#10;2. 依客戶分類加總&#10;3. 產生圖表，存成 PDF"></textarea></label>
+        <label>不准做的事<input type="text" data-skill-never placeholder="例如：不要改到原始檔案；金額有疑問先問我"></label>
+      </div>
+      <p><button type="button" class="btn btn-primary" data-skill-make>產生我的 Skill 草稿</button></p>
+      <pre class="gen-out" data-skill-out hidden></pre>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的 Skill 草稿</h3>
+      <p>名稱：<span class="blank"></span>　什麼時候用：<span class="blank"></span></p>
+      <p>步驟：</p><div class="write-lines"></div>
+      <p>不准做的事：</p><div class="write-lines"></div>
+    </div>
+    <div data-teacher-slot="m16-8"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這三件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m16-home">
+        <li><label><input type="checkbox" value="skill"> 把工作坊寫的 Skill 草稿，實際請 Claude Code 照做一次，並依它的提問補清楚</label></li>
+        <li><label><input type="checkbox" value="claudemd"> 檢查你的 CLAUDE.md：有沒有哪幾條其實是「某件工作的步驟」，應該搬去 Skill</label></li>
+        <li><label><input type="checkbox" value="mcp"> 列出一個你想接的 MCP，並寫下它會拿到什麼權限、最壞會發生什麼事</label></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 16　內容以教學為目的簡化，實際功能與設定方式以官方文件為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609200742"></script>
+<script src="../assets/js/quiz-bank.js?v=202609200742"></script>
+<script src="../assets/js/config.js?v=202609200742"></script>
+<script src="../assets/js/core.js?v=202609200742"></script>
+<script src="../assets/js/members.js?v=202609200742"></script>
+<script src="../assets/js/tour.js?v=202609200742"></script>
+<script src="../assets/js/glossary-data.js?v=202609200742"></script>
+<script src="../assets/js/glossary.js?v=202609200742"></script>
+<script src="../assets/js/modules/m16.js?v=202609200742"></script>
+</body>
+</html>

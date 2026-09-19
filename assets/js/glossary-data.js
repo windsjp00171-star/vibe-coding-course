@@ -52,6 +52,12 @@
       plain: '有兩種意思：AI 計算文字量的單位；或服務發給程式的通行證（Access Token），跟密碼一樣要保密。' },
     { id: 'mcp', term: 'MCP', words: ['MCP'], cat: 'AI 工具',
       plain: '讓 AI 連上外部工具（瀏覽器、資料庫、行事曆）的共通插座標準。', like: '萬用轉接頭。' },
+    { id: 'skill', term: 'Skill（技能包）', words: ['Skill', 'skill', '技能包'], cat: 'AI 工具', m: 'm16',
+      plain: '把某一種工作的步驟和範本寫成一份文件給 AI，它遇到那類工作才打開來照做。', like: '某項工作的 SOP；CLAUDE.md 則是全公司的員工守則。' },
+    { id: 'subagent', term: '子代理（Subagent）', words: ['子代理', 'Subagent', 'subagent'], cat: 'AI 工具', m: 'm16',
+      plain: '把大任務分給好幾個 AI 同時做，各自有自己的記憶空間，做完把結論交回來。', like: '請三個實習生同時查三件不相干的資料。' },
+    { id: 'model', term: '模型', words: ['模型'], cat: 'AI 工具', m: 'm0',
+      plain: 'AI 的「腦」。同一家公司會出大中小三種：大的最會想但慢且貴，小的快又便宜。', like: '同一款車有不同排氣量。' },
 
     // ---- Git 與 GitHub ----
     { id: 'git', term: 'Git', words: ['Git'], cat: 'Git 與 GitHub', m: 'm4',

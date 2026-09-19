@@ -7,6 +7,7 @@
   'use strict';
 
   const MODULES = [
+    { id: 'm0', part: 'A 起步', emoji: '🧠', title: 'AI 到底在做什麼？', file: 'modules/00-ai-basics.html', minutes: 25 },
     { id: 'm1', part: 'A 起步', emoji: '🚗', title: '什麼是 Vibe Coding？', file: 'modules/01-vibe-coding.html', minutes: 25 },
     { id: 'm2', part: 'A 起步', emoji: '🧰', title: '安裝你的 AI 工程師', file: 'modules/02-install.html', minutes: 35 },
     { id: 'm3', part: 'A 起步', emoji: '🗣️', title: '怎麼跟 Claude Code 合作', file: 'modules/03-work-with-claude.html', minutes: 40 },
@@ -22,11 +23,12 @@
     { id: 'm13', part: 'D 進階選修', emoji: '💚', title: 'LINE 登入：免記帳號密碼', file: 'modules/13-line-login.html', minutes: 35 },
     { id: 'm14', part: 'D 進階選修', emoji: '📱', title: 'PWA：讓網站變成手機 App', file: 'modules/14-pwa.html', minutes: 30 },
     { id: 'm15', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/15-push.html', minutes: 30 },
+    { id: 'm16', part: 'D 進階選修', emoji: '🧩', title: 'Agent、MCP 與 Skill', file: 'modules/16-agents.html', minutes: 35 },
   ];
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
-  const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15']);
+  const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16']);
   // 會員功能啟用時，訪客可以免費試用的單元（其餘要登入並開通）。會員功能沒啟用時全部開放。
-  const TRIAL = new Set(['m1', 'm4', 'm7']);
+  const TRIAL = new Set(['m0', 'm1', 'm4', 'm7']);
   MODULES.forEach((m) => { m.ready = READY.has(m.id); m.trial = TRIAL.has(m.id); });
 
   const STORE_KEY = 'vibe-course-v1';

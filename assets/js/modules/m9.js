@@ -4,7 +4,7 @@
   const { $, esc, MODULES, getState, update, mountQuiz, mountMeters } = window.Course;
   const { buildExam } = window.CourseLib;
 
-  const CORE_UNITS = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8'];
+  const CORE_UNITS = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8'];
   const EXAM_SIZE = 12;
   const FINAL_PASS_PERCENT = 80;
 
@@ -74,7 +74,7 @@
   mountMeters($('[data-meters-after]'), 'selfRatingAfter', renderGrowth);
 
   window.Tour.register([
-    { tour: 'review', title: '學習紀錄', text: '八個必修單元的小測驗成績。沒過的可以點進去重做。' },
+    { tour: 'review', title: '學習紀錄', text: '九個必修單元的小測驗成績。沒過的可以點進去重做。' },
     { tour: 'exam', title: '總測驗', text: '12 題、80 分過關。每次都會重新抽題、打亂選項。' },
     { tour: 'cert', title: '結業證書', text: '通過總測驗並輸入名字後，就能列印證書或存成 PDF。' },
     { tour: 'growth', title: '上課前 vs 現在', text: '把單元 1 拉過的五種能力再拉一次，右邊會顯示每一項進步了幾分。' },
