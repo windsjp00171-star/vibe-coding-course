@@ -265,6 +265,21 @@
     return hits;
   }
 
+  // ---- 紙本講義：重點句與名詞速查 ----
+  function firstSentence(text, max = 60) {
+    const clean = String(text || '').replace(/\s+/g, ' ').trim();
+    const end = clean.search(/[。？！?!]/);
+    const sentence = end < 0 ? clean : clean.slice(0, end + 1);
+    if (sentence.length <= max) return sentence;
+    const comma = sentence.indexOf('，');
+    const cut = comma > 0 && comma < max ? sentence.slice(0, comma) : sentence.slice(0, max - 1);
+    return `${cut}…`;
+  }
+
+  function unitTerms(text, glossary) {
+    return matchTerms(String(text || ''), glossary).map((h) => h.id);
+  }
+
   // ---- 五種能力自評：單元 1 拉一次當起點，結業單元再拉一次比較 ----
   // m 是真正在教這項能力的單元，拉完推薦學員先去看
   const SELF_SKILLS = [
@@ -290,7 +305,7 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

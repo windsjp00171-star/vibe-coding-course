@@ -509,4 +509,5 @@ body.is-locked [data-module-nav] { display: none; }
   a { color: inherit; text-decoration: none; }
   .term { text-decoration: none; }
   .term-pop { display: none !important; }
+  .tour-backdrop, .tour-spot, .tour-pop { display: none !important; }
 }
