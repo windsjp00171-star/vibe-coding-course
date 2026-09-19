@@ -265,6 +265,19 @@
     return hits;
   }
 
+  // ---- 單元開放規則（會員閘門、課程地圖、講義共用）----
+  // viewer：null 表示訪客；limits 是學員所在各班級「開放到單元幾」，null 代表那班全部開放
+  // 回傳 'open' 可以看／'login' 要登入／'enroll' 要輸入加入碼／'class' 講師還沒開放
+  function unitAccess(unit, viewer) {
+    if (unit.trial) return 'open';
+    if (!viewer) return 'login';
+    if (viewer.role === 'teacher') return 'open';
+    if (!viewer.enrolled) return 'enroll';
+    const limits = viewer.limits || [];
+    if (!limits.length || limits.includes(null)) return 'open';
+    return Number(unit.id.slice(1)) <= Math.max(...limits) ? 'open' : 'class';
+  }
+
   // ---- 紙本講義：重點句與名詞速查 ----
   function firstSentence(text, max = 60) {
     const clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -305,7 +318,7 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

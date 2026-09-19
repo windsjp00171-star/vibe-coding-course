@@ -97,9 +97,13 @@
 
   async function renderClasses() {
     const db = window.Members.client;
-    const { data: classes, error } = await db.from('classes').select('id, name, join_code, created_at').eq('teacher_id', window.Members.user.id).order('created_at', { ascending: false });
+    const query = (cols) => db.from('classes').select(cols).eq('teacher_id', window.Members.user.id).order('created_at', { ascending: false });
+    let { data: classes, error } = await query('id, name, join_code, created_at, open_until');
+    // 還沒執行 supabase/add-class-open-until.sql 時，資料庫沒有 open_until 欄位：先照舊顯示，並提醒要補
+    const needsMigration = Boolean(error && /open_until/.test(error.message));
+    if (needsMigration) ({ data: classes, error } = await query('id, name, join_code, created_at'));
     if (error) { $('[data-admin-body]').innerHTML = `<div class="card"><p>讀取班級失敗：${esc(error.message)}</p></div>`; return; }
-    const blocks = await Promise.all((classes || []).map(renderClass));
+    const blocks = await Promise.all((classes || []).map((c) => renderClass(c, needsMigration)));
     $('[data-admin-body]').innerHTML = `
       <div class="card" style="margin-bottom:18px">
         <h3>開一個新班級</h3>
@@ -108,10 +112,11 @@
           <div><button type="submit" class="btn btn-primary">建立並產生加入碼</button></div>
         </form>
       </div>
+      ${needsMigration ? '<div class="card" style="margin-bottom:18px;border:2px solid var(--warn)"><p><b>⚠️ 開放進度功能還沒啟用</b>：請到 Supabase → SQL Editor 執行 <code>supabase/add-class-open-until.sql</code>，執行後重新整理這一頁。在那之前，所有班級都是全部開放。</p></div>' : ''}
       ${blocks.join('') || '<div class="card"><p class="muted">還沒有班級。建立一個，把加入碼給學員。</p></div>'}`;
   }
 
-  async function renderClass(c) {
+  async function renderClass(c, needsMigration) {
     const db = window.Members.client;
     const { data: members } = await db.from('class_members').select('user_id').eq('class_id', c.id);
     const ids = (members || []).map((m) => m.user_id);
@@ -128,10 +133,18 @@
       return `<td class="${p.done ? 'cell-done' : 'cell-try'}">${p.done ? '✓' : ''}${p.best}</td>`;
     };
     const body = (people || []).map((u) => `<tr><td>${esc(u.display_name || '（未命名）')}</td>${mods.map((m) => cell(u.id, m.id)).join('')}</tr>`).join('');
+    const limit = c.open_until ?? null;
+    const closedCol = (m) => (limit !== null && !m.trial && Number(m.id.slice(1)) > limit ? ' class="col-closed"' : '');
+    const picker = `<label class="open-until">🔓 學員可以看到
+      <select data-open-until="${c.id}" ${needsMigration ? 'disabled' : ''}>
+        <option value="">全部單元</option>
+        ${mods.map((m) => `<option value="${m.id.slice(1)}" ${limit === Number(m.id.slice(1)) ? 'selected' : ''}>到單元 ${m.id.slice(1)}：${esc(m.title)}</option>`).join('')}
+      </select></label>`;
     return `<div class="card" style="margin-bottom:18px">
       <div class="quiz-head"><h3 style="margin:0">${esc(c.name)}</h3><span>加入碼 <span class="code-badge">${esc(c.join_code)}</span></span></div>
-      <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。</p>
-      <div class="table-wrap"><table class="roster"><thead><tr><th>學員</th>${mods.map((m) => `<th title="${esc(m.title)}">${m.emoji} ${m.id.slice(1)}</th>`).join('')}</tr></thead>
+      ${picker}
+      <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。${limit !== null ? '灰色欄位是這班還沒開放的單元（試用單元一律開放）。' : ''}</p>
+      <div class="table-wrap"><table class="roster"><thead><tr><th>學員</th>${mods.map((m) => `<th title="${esc(m.title)}"${closedCol(m)}>${m.emoji} ${m.id.slice(1)}</th>`).join('')}</tr></thead>
       <tbody>${body || `<tr><td colspan="${mods.length + 1}" class="muted">還沒有學員加入。請學員到課程首頁輸入加入碼。</td></tr>`}</tbody></table></div></div>`;
   }
 
@@ -152,6 +165,19 @@
     const { error } = await window.Members.client.from('classes').insert({ name, join_code: newCode(), teacher_id: window.Members.user.id });
     if (error) { toast(`建立失敗：${error.message}`); return; }
     toast('班級建立好了，把加入碼給學員吧');
+    renderClasses();
+  });
+
+  // 班級開放進度：選了就存，學員重新整理頁面就生效
+  host.addEventListener('change', async (e) => {
+    const sel = e.target.closest('[data-open-until]');
+    if (!sel) return;
+    const value = sel.value ? Number(sel.value) : null;
+    sel.disabled = true;
+    const { error } = await window.Members.client.from('classes').update({ open_until: value }).eq('id', sel.dataset.openUntil);
+    sel.disabled = false;
+    if (error) { toast(`設定失敗：${error.message}`); return; }
+    toast(value ? `已開放到單元 ${value}，學員重新整理頁面就會看到` : '已開放全部單元');
     renderClasses();
   });
 

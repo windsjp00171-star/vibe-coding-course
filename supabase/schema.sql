@@ -52,6 +52,7 @@ create table if not exists public.classes (
   name text not null check (char_length(name) between 1 and 60),
   join_code text not null unique check (join_code ~ '^[A-Z0-9]{6}$'),
   teacher_id uuid not null references public.profiles (id) on delete cascade,
+  open_until smallint check (open_until is null or open_until between 1 and 15), -- 開放到單元幾；null = 全部開放
   created_at timestamptz not null default now()
 );
 

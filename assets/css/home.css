@@ -25,6 +25,8 @@
 a.map-item:hover { transform: translateX(4px); border-color: var(--brand); box-shadow: var(--shadow-lift); }
 .map-item.is-done { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
 .map-item.is-soon { opacity: .55; box-shadow: none; border-style: dashed; }
+.map-item.is-closed { opacity: .6; box-shadow: none; }
+.map-item.is-closed .map-state { color: var(--warn); }
 .map-num { font-family: "Inter", sans-serif; font-weight: 900; font-size: 1.3rem; color: transparent; -webkit-text-stroke: 1.2px var(--brand); min-width: 1.5em; text-align: center; }
 .map-emoji { font-size: 1.4rem; }
 .map-title { font-weight: 800; line-height: 1.4; }

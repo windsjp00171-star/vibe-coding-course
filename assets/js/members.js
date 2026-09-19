@@ -12,6 +12,7 @@
   let client = null;
   let user = null;
   let profile = null;
+  let classLimits = []; // 學員所在各班級「開放到單元幾」
   if (enabled) applyGateSoon();
   // 套件載入失敗時解除畫面鎖定：目前的鎖只是畫面限制，寧可讓學員繼續上課
   const ready = enabled
@@ -47,10 +48,12 @@
     if ((next?.id || null) === (user?.id || null) && profile) return;
     user = next;
     profile = null;
+    classLimits = [];
     if (user) {
       const { data, error } = await client.from('profiles').select('display_name, role, enrolled').eq('id', user.id).maybeSingle();
       if (error) console.warn('[會員] 讀取會員資料失敗', error.message);
       profile = data || { display_name: '', role: 'student', enrolled: false };
+      classLimits = await loadClassLimits();
       await syncProgress();
       if (profile.role === 'teacher') await loadTeacherNotes();
     }
@@ -59,26 +62,53 @@
     document.dispatchEvent(new CustomEvent('course:auth', { detail: { user, profile } }));
   }
 
-  // ---------- 試用閘門：非試用單元要登入並開通 ----------
+  // ---------- 試用閘門：非試用單元要登入、開通，而且班級已開放 ----------
   // 注意：這只是畫面上的限制，公開 repo 裡仍有完整內容；正式收費前要把付費內容移到資料庫。
-  function canSeeAll() { return Boolean(profile && (profile.enrolled || profile.role === 'teacher')); }
+  // 班級沒設定開放進度（或還沒執行 add-class-open-until.sql）時一律視為全部開放，不會把學員鎖在門外。
+  async function loadClassLimits() {
+    if (profile.role === 'teacher' || !profile.enrolled) return [];
+    const { data, error } = await client.from('classes').select('open_until');
+    if (error) { console.warn('[會員] 讀取班級開放進度失敗，先全部開放', error.message); return []; }
+    return (data || []).map((c) => c.open_until ?? null);
+  }
+
+  function access(unit) {
+    if (!enabled || !unit) return 'open';
+    const viewer = user ? { role: profile?.role, enrolled: profile?.enrolled, limits: classLimits } : null;
+    return window.CourseLib.unitAccess(unit, viewer);
+  }
+
+  function openUntil() {
+    return classLimits.length && !classLimits.includes(null) ? Math.max(...classLimits) : null;
+  }
+
+  function gateMessage(state) {
+    const home = `${document.body.dataset.base || './'}index.html`;
+    if (state === 'class') {
+      return `<h2>🔒 講師還沒開放這個單元</h2>
+        <p>你的班級目前開放到<b>單元 ${openUntil()}</b>。上到這裡時，講師會再開放，先把前面的單元複習一下吧。</p>
+        <p><a class="btn" href="${home}">回課程地圖</a></p>`;
+    }
+    if (state === 'enroll') {
+      return `<h2>🔒 這個單元需要開通</h2>
+        <p>你已經登入了，還差一步：到<a href="${home}#join">課程首頁</a>輸入講師給你的 6 碼加入碼，就會自動開通。</p>
+        <p class="muted">還沒有加入碼？請聯繫講師。</p>`;
+    }
+    return `<h2>🔒 這是正式課程單元</h2>
+      <p>你正在試用。單元 ${trialList()} 和踩坑圖鑑可以免費看；其他單元請用 Google 登入，並輸入講師給你的加入碼。</p>
+      <button type="button" class="btn btn-primary" data-auth="in">用 Google 登入</button>`;
+  }
 
   function applyGate() {
     const current = window.Course.MODULES.find((m) => m.id === document.body.dataset.module);
-    const locked = Boolean(current && !current.trial && !canSeeAll());
-    document.body.classList.toggle('is-locked', locked);
+    const state = current ? access(current) : 'open';
+    document.body.classList.toggle('is-locked', state !== 'open');
     document.querySelector('[data-gate-card]')?.remove();
-    if (!locked) return;
+    if (state === 'open') return;
     const card = document.createElement('section');
     card.className = 'slide';
     card.dataset.gateCard = '';
-    card.innerHTML = user
-      ? `<div class="card" style="border:2px solid var(--brand)"><h2>🔒 這個單元需要開通</h2>
-          <p>你已經登入了，還差一步：到<a href="${document.body.dataset.base || './'}index.html#join">課程首頁</a>輸入講師給你的 6 碼加入碼，就會自動開通全部單元。</p>
-          <p class="muted">還沒有加入碼？請聯繫講師。</p></div>`
-      : `<div class="card" style="border:2px solid var(--brand)"><h2>🔒 這是正式課程單元</h2>
-          <p>你正在試用。單元 ${trialList()} 和踩坑圖鑑可以免費看；其他單元請用 Google 登入，並輸入講師給你的加入碼。</p>
-          <button type="button" class="btn btn-primary" data-auth="in">用 Google 登入</button></div>`;
+    card.innerHTML = `<div class="card" style="border:2px solid var(--brand)">${gateMessage(state)}</div>`;
     document.querySelector('main .module-hero')?.after(card);
   }
 
@@ -165,6 +195,9 @@
     if (!user) throw new Error('請先登入');
     const { data, error } = await client.rpc('join_class', { code });
     if (error) throw new Error(error.message);
+    // 加入後重新讀一次會員資料：開通狀態和班級開放進度都變了
+    profile = null;
+    await setUser(user);
     return data;
   }
 
@@ -176,6 +209,9 @@
     joinClass,
     get user() { return user; },
     get profile() { return profile; },
+    access,
+    openUntil,
+    gateMessage,
     get client() { return client; },
   };
 

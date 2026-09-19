@@ -114,19 +114,14 @@
     paper.innerHTML = parts.join('');
   }
 
-  // ---------- 會員閘門：和網頁版同一套規則 ----------
-  function locked() {
-    const M = window.Members;
-    if (!M?.enabled || mod.trial) return false;
-    const p = M.profile;
-    return !(p && (p.enrolled || p.role === 'teacher'));
-  }
 
   async function load() {
     $('[data-ho-back]').href = mod.file;
     document.title = `單元 ${mod.id.slice(1)} 講義${withAnswers ? '（講師版）' : ''}｜Vibe Coding 實戰課`;
-    if (locked()) {
-      paper.innerHTML = `<section class="ho-gate"><h2>🔒 這個單元的講義需要開通</h2><p>登入並輸入講師給你的加入碼後就能列印。單元 ${units.filter((m) => m.trial).map((m) => m.id.slice(1)).join('、')} 可以免費試用。</p></section>`;
+    // 會員閘門：和網頁版同一套規則（登入、開通、班級開放進度）
+    const state = window.Members?.access(mod) || 'open';
+    if (state !== 'open') {
+      paper.innerHTML = `<section class="ho-gate">${window.Members.gateMessage(state)}</section>`;
       status.textContent = '';
       return;
     }
