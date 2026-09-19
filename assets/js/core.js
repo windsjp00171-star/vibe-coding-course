@@ -26,7 +26,7 @@
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
   const READY = new Set(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15']);
   // 會員功能啟用時，訪客可以免費試用的單元（其餘要登入並開通）。會員功能沒啟用時全部開放。
-  const TRIAL = new Set(['m1', 'm2', 'm4']);
+  const TRIAL = new Set(['m1', 'm4', 'm7']);
   MODULES.forEach((m) => { m.ready = READY.has(m.id); m.trial = TRIAL.has(m.id); });
 
   const STORE_KEY = 'vibe-course-v1';

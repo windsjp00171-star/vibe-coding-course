@@ -1,0 +1,8 @@
+{
+  "name": "vibe-course-scripts",
+  "private": true,
+  "description": "產生課程簡報的工具（node_modules 不進版控）",
+  "dependencies": {
+    "pptxgenjs": "3.12.0"
+  }
+}
