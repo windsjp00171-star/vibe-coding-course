@@ -15,12 +15,17 @@
 
   const units = MODULES.filter((m) => m.ready);
   const CORE = units.filter((m) => /^[ABC]|結業/.test(m.part));
-  const BOOK = { id: 'book', title: '整本手冊（必修 1～9）' };
+  // 兩種手冊：只印必修，或把 D 段選修也印進來
+  const BOOKS = [
+    { id: 'book', icon: '📘', title: '必修手冊（單元 0～9）', subtitle: '學習手冊．必修篇', of: () => CORE },
+    { id: 'book-all', icon: '📗', title: '完整手冊（含 D 段選修）', subtitle: '學習手冊．完整版', of: () => units },
+  ];
+  const bookOf = (id) => BOOKS.find((b) => b.id === id);
   const paper = $('[data-ho-paper]');
   const status = $('[data-ho-status]');
   let withAnswers = false;
   const wanted = new URLSearchParams(location.search).get('m');
-  let mod = wanted === 'book' ? BOOK : units.find((m) => m.id === wanted) || units[0];
+  let mod = bookOf(wanted) || units.find((m) => m.id === wanted) || units[0];
 
   const text = (el) => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
 
@@ -128,7 +133,7 @@
   function coverHtml(list) {
     return `<section class="ho-cover">
       <p class="ho-eyebrow">給非工程師的 AI 寫程式課${withAnswers ? '<span class="ho-teacher-badge">講師版．附答案</span>' : ''}</p>
-      <h1>Vibe Coding 實戰課<br><small>學習手冊</small></h1>
+      <h1>Vibe Coding 實戰課<br><small>${esc(mod.subtitle || '學習手冊')}</small></h1>
       <p class="ho-lead">從在自己電腦上做出第一個網頁，到放上網路、再到避開 AI 時代的資安陷阱。</p>
       <p class="ho-fields"><span>姓名 <i></i></span><span>班級 <i></i></span></p>
       <h2 class="ho-h">目錄</h2>
@@ -142,11 +147,12 @@
   const accessOf = (unit) => window.Members?.access(unit) || 'open';
 
   async function load() {
-    const isBook = mod === BOOK;
+    const isBook = Boolean(mod.of);
     $('[data-ho-back]').href = isBook ? 'index.html' : mod.file;
-    document.title = `${isBook ? 'Vibe Coding 實戰課 學習手冊' : `單元 ${mod.id.slice(1)} 講義`}${withAnswers ? '（講師版）' : ''}｜Vibe Coding 實戰課`;
-    const list = isBook ? CORE.filter((m) => accessOf(m) === 'open') : [mod];
-    const blocked = isBook ? (list.length ? null : accessOf(CORE.find((m) => !m.trial))) : (accessOf(mod) !== 'open' ? accessOf(mod) : null);
+    document.title = `${isBook ? `Vibe Coding 實戰課 ${mod.title}` : `單元 ${mod.id.slice(1)} 講義`}${withAnswers ? '（講師版）' : ''}｜Vibe Coding 實戰課`;
+    const all = isBook ? mod.of() : [mod];
+    const list = isBook ? all.filter((m) => accessOf(m) === 'open') : all;
+    const blocked = isBook ? (list.length ? null : accessOf(all.find((m) => !m.trial))) : (accessOf(mod) !== 'open' ? accessOf(mod) : null);
     if (blocked) {
       paper.innerHTML = `<section class="ho-gate">${window.Members.gateMessage(blocked)}</section>`;
       status.textContent = '';
@@ -157,7 +163,7 @@
       const data = await Promise.all(list.map(fetchUnit));
       const body = list.map((m, i) => unitHtml(m, data[i])).join('');
       paper.innerHTML = isBook ? coverHtml(list) + body : body;
-      status.textContent = isBook && list.length < CORE.length ? `目前開放 ${list.length} 個單元，其他單元開放後再印` : '';
+      status.textContent = isBook && list.length < all.length ? `目前開放 ${list.length} 個單元，其他單元開放後再印` : '';
     } catch (err) {
       paper.innerHTML = '<section class="ho-gate"><h2>講義載入失敗</h2><p>請重新整理頁面再試一次。</p></section>';
       status.textContent = `（${err.message}）`;
@@ -165,10 +171,10 @@
   }
 
   const select = $('[data-ho-unit]');
-  select.innerHTML = `<option value="book" ${mod === BOOK ? 'selected' : ''}>📘 ${BOOK.title}</option>`
+  select.innerHTML = BOOKS.map((b) => `<option value="${b.id}" ${b === mod ? 'selected' : ''}>${b.icon} ${esc(b.title)}</option>`).join('')
     + units.map((m) => `<option value="${m.id}" ${m === mod ? 'selected' : ''}>${m.id.slice(1)}．${esc(m.title)}</option>`).join('');
   select.addEventListener('change', () => {
-    mod = select.value === 'book' ? BOOK : units.find((m) => m.id === select.value);
+    mod = bookOf(select.value) || units.find((m) => m.id === select.value);
     history.replaceState(null, '', `?m=${mod.id}`);
     load();
   });
