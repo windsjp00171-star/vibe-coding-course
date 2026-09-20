@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609201834">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609201834">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609201840">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609201840">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -44,6 +44,16 @@
     <div class="stat"><b>0</b><span>行程式要背</span></div>
   </div>
 
+  <section class="slide" id="map" data-tour="map">
+    <div class="section-head"><span class="section-num">⌘</span>
+      <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
+    <div class="course-map" data-map></div>
+    <a class="card" href="pitfalls.html" data-tour="pitfalls" style="display:flex;gap:16px;align-items:center;margin-top:20px;text-decoration:none;color:inherit;border:2px dashed var(--warn)">
+      <span style="font-size:2.4rem" aria-hidden="true">🕳️</span>
+      <span><b style="font-size:1.15rem">番外篇：講師踩過的 27 個坑</b><br><span class="muted">時區、LINE、AI 服務下架、備份只備到 17%……看症狀猜原因，別再親自踩一次。</span></span>
+    </a>
+  </section>
+
   <section class="slide" data-tour="flow">
     <div class="section-head"><span class="section-num">↻</span>
       <div><span class="kicker">翻轉教室怎麼上</span><h2>每個單元都分三段</h2></div></div>
@@ -64,16 +74,6 @@
         <ul><li>寫程式碼（大部分都是它寫的）</li><li>找出你沒想到的例外狀況</li><li>查錯、修錯</li><li>寫說明文件和測試</li></ul></div>
     </div>
     <p class="roles-quote">程式碼可以交給 AI，但「做什麼、不做什麼、做得對不對」的判斷，永遠是你的。</p>
-  </section>
-
-  <section class="slide" id="map" data-tour="map">
-    <div class="section-head"><span class="section-num">⌘</span>
-      <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
-    <div class="course-map" data-map></div>
-    <a class="card" href="pitfalls.html" data-tour="pitfalls" style="display:flex;gap:16px;align-items:center;margin-top:20px;text-decoration:none;color:inherit;border:2px dashed var(--warn)">
-      <span style="font-size:2.4rem" aria-hidden="true">🕳️</span>
-      <span><b style="font-size:1.15rem">番外篇：講師踩過的 27 個坑</b><br><span class="muted">時區、LINE、AI 服務下架、備份只備到 17%……看症狀猜原因，別再親自踩一次。</span></span>
-    </a>
   </section>
 
   <section class="slide" id="join" data-join hidden data-tour="join">
@@ -105,14 +105,14 @@
 
 <footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹與報名</a>．<a href="security.html">半日資安課</a>．<a href="me.html">我的學習</a>．<a href="quizshow.html">課堂搶答</a>．<a href="glossary.html">名詞小辭典</a>．<a href="teacher.html">講師後台</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609201834"></script>
-<script src="assets/js/config.js?v=202609201834"></script>
-<script src="assets/js/core.js?v=202609201834"></script>
-<script src="assets/js/members.js?v=202609201834"></script>
-<script src="assets/js/tour.js?v=202609201834"></script>
-<script src="assets/js/glossary-data.js?v=202609201834"></script>
-<script src="assets/js/glossary.js?v=202609201834"></script>
-<script src="assets/js/home.js?v=202609201834"></script>
+<script src="assets/js/lib.js?v=202609201840"></script>
+<script src="assets/js/config.js?v=202609201840"></script>
+<script src="assets/js/core.js?v=202609201840"></script>
+<script src="assets/js/members.js?v=202609201840"></script>
+<script src="assets/js/tour.js?v=202609201840"></script>
+<script src="assets/js/glossary-data.js?v=202609201840"></script>
+<script src="assets/js/glossary.js?v=202609201840"></script>
+<script src="assets/js/home.js?v=202609201840"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;

@@ -143,6 +143,7 @@
             <button type="button" data-mode="student" aria-pressed="true">學員</button>
             <button type="button" data-mode="teacher" aria-pressed="false">講師</button>
           </div>
+          <a class="btn btn-sm btn-ghost" href="${base}learn.html#map" data-tour="map-link" title="所有單元的清單，可以跳著上">🗺️ 課程地圖</a>
           <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">🖥️ 投影</button>
           <a class="btn btn-sm btn-ghost" href="${base}quizshow.html" data-tour="quizshow" title="課堂搶答：投影出來，學員舉手作答">🎯 搶答</a>
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">🖨️ 講義</button>' : ''}
