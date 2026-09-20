@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609201812">
-  <link rel="stylesheet" href="assets/css/landing.css?v=202609201812">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609201834">
+  <link rel="stylesheet" href="assets/css/landing.css?v=202609201834">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -27,7 +27,45 @@
     </div>
   </section>
 
-  <section class="slide" style="border-top:0">
+  <section class="slide lp-teacher" data-teacher-home hidden style="border-top:0">
+    <div class="section-head"><span class="section-num">🛠</span>
+      <div><span class="kicker">講師模式</span><h2>今天要做什麼？</h2>
+        <p>你是以講師身分登入的，下面是你會用到的入口。學員看到的首頁在下面那一段。</p></div></div>
+    <div class="lp-tools">
+      <a class="lp-tool" href="teacher.html">
+        <span class="lp-icon" aria-hidden="true">🛠️</span>
+        <b>管理後台</b>
+        <span>開班級、給加入碼、控制開到第幾單元、看全班卡在哪、下載簡報與題庫</span>
+      </a>
+      <a class="lp-tool" href="quizshow.html">
+        <span class="lp-icon" aria-hidden="true">🎯</span>
+        <b>課堂搶答</b>
+        <span>投影用的搶答頁。選單元、設倒數、幫各組計分，不用 PIN 碼</span>
+      </a>
+      <a class="lp-tool" href="learn.html">
+        <span class="lp-icon" aria-hidden="true">📖</span>
+        <b>課程教材</b>
+        <span>學員看到的內容。上課時按 P 進投影模式，一段一頁帶著走</span>
+      </a>
+      <a class="lp-tool" href="handout.html">
+        <span class="lp-icon" aria-hidden="true">📑</span>
+        <b>紙本講義</b>
+        <span>單元講義與學習手冊，講師版附答案，可直接列印或存 PDF</span>
+      </a>
+      <a class="lp-tool" href="quote.html">
+        <span class="lp-icon" aria-hidden="true">🧾</span>
+        <b>內訓報價單</b>
+        <span>企業詢價時填一填，直接印成 A4 寄出</span>
+      </a>
+      <a class="lp-tool" href="security.html">
+        <span class="lp-icon" aria-hidden="true">🛡️</span>
+        <b>半日資安課</b>
+        <span>對外介紹頁。場次洽詢可以直接把這一頁傳給對方</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="slide" data-public-home style="border-top:0">
     <div class="section-head"><span class="section-num">→</span>
       <div><span class="kicker">你是哪一種</span><h2>選一條路就好</h2></div></div>
     <div class="lp-paths">
@@ -56,7 +94,7 @@
       </a>
     </div>
 
-    <div class="lp-back">
+    <div class="lp-back" data-student-back>
       <div>
         <b>已經報名、要上課了？</b>
         <p>課前自學教材、互動練習、小測驗都在這裡。也可以先免費試看單元 0、1、4、7。</p>
@@ -81,11 +119,26 @@
 
 <footer class="site-footer"><div class="wrap"><a href="enroll.html">課程介紹與報名</a>．<a href="security.html">半日資安課</a>．<a href="learn.html">課程教材</a>．<a href="glossary.html">名詞小辭典</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202609201812"></script>
-<script src="assets/js/config.js?v=202609201812"></script>
-<script src="assets/js/core.js?v=202609201812"></script>
-<script src="assets/js/members.js?v=202609201812"></script>
-<script src="assets/js/tour.js?v=202609201812"></script>
-<script>window.Tour.register([]);</script>
+<script src="assets/js/lib.js?v=202609201834"></script>
+<script src="assets/js/config.js?v=202609201834"></script>
+<script src="assets/js/core.js?v=202609201834"></script>
+<script src="assets/js/members.js?v=202609201834"></script>
+<script src="assets/js/tour.js?v=202609201834"></script>
+<script>
+  (function () {
+    const { $ } = window.Course;
+    // 講師登入後直接看到自己的工具列；學員與訪客看到原本的分流內容
+    const apply = (profile) => {
+      const teacher = profile?.role === 'teacher';
+      $('[data-teacher-home]').hidden = !teacher;
+      $('[data-student-back]').hidden = teacher;
+      const head = $('[data-public-home] .section-head .kicker');
+      if (head) head.textContent = teacher ? '學員與訪客看到的首頁' : '你是哪一種';
+    };
+    apply(window.Members?.profile);
+    document.addEventListener('course:auth', (e) => apply(e.detail.profile));
+    window.Tour.register([]);
+  })();
+</script>
 </body>
 </html>

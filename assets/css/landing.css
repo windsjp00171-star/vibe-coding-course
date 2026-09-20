@@ -48,3 +48,16 @@
 .lp-proof div { padding: 20px; border-radius: var(--radius-m); background: var(--card); border: 1px solid var(--line); }
 .lp-proof b { display: block; font-size: 2rem; letter-spacing: -.02em; color: var(--brand); }
 .lp-proof span { color: var(--muted); font-size: .92rem; }
+
+/* 講師登入後才出現：把「今天要做什麼」的入口放在最前面 */
+.lp-teacher .section-num { background: var(--teacher-soft); color: var(--teacher); }
+.lp-tools { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.lp-tool {
+  display: grid; gap: 4px; padding: 20px 22px; text-decoration: none; color: inherit;
+  border-radius: var(--radius-m); background: var(--card); border: 1.5px solid var(--teacher-soft);
+  box-shadow: var(--shadow); transition: transform var(--fast) var(--ease), border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.lp-tool:hover, .lp-tool:focus-visible { transform: translateY(-2px); border-color: var(--teacher); box-shadow: var(--shadow-lift); }
+.lp-tool .lp-icon { font-size: 1.9rem; line-height: 1; }
+.lp-tool b { font-size: 1.15rem; letter-spacing: -.01em; }
+.lp-tool span:last-child { color: var(--muted); font-size: .92rem; line-height: 1.55; }
