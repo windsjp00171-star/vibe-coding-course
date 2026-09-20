@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup, NavigableString
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "teacher" / "slides" / "content.json"
-MAX_CARDS = 6
+MAX_CARDS = 12  # 簡報一頁放 3 張，超過就分頁，不再丟掉後面的卡片
 # 這些容器由 JavaScript 產生互動內容，簡報上改成「請打開網站操作」
 INTERACTIVE_ATTRS = ("data-sim", "data-quiz", "data-gate", "data-match", "data-order", "data-picker", "data-secretary",
                      "data-matrix", "data-chat", "data-push-toggles", "data-strategies", "data-spot-code", "data-scan-input",

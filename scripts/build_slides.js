@@ -30,6 +30,16 @@ const QUIZ_ON_SLIDES = 3; // 課堂提問放前 3 題，完整測驗在網站與
 
 // ---------- 小工具 ----------
 const clip = (s, n) => (s && s.length > n ? `${s.slice(0, n - 1)}…` : s || '');
+// 內容一律不截斷：放不下就分頁
+const chunk = (list, size) => (list.length ? Array.from({ length: Math.ceil(list.length / size) }, (_, i) => list.slice(i * size, i * size + size)) : [[]]);
+// 表格：用最長的一格反推塞得下的字級
+function fitCell(chars, cellW, cellH, max, min = 9) {
+  for (let size = max; size > min; size -= 1) {
+    const perLine = Math.max(1, Math.floor((cellW * 72) / (size * 1.12)));
+    if (Math.ceil(chars / perLine) * size * 1.45 <= cellH * 72) return size;
+  }
+  return min;
+}
 // 中文字寬約等於字級，用字數估算字級，避免文字超出框
 function fitSize(textValue, boxW, boxH, max, min = 11) {
   for (let size = max; size > min; size -= 1) {
@@ -86,47 +96,61 @@ function goalsSlide(pres, mod) {
   footer(s, mod, '學習目標');
 }
 
+const TABLE_ROWS_PER_SLIDE = 8;
+
+// 表格：內容完整呈現。字級依最長的一格自動縮小；列數太多就換頁，表頭重複。
 function tableSlide(pres, mod, sec) {
-  const s = pres.addSlide(); s.background = { color: C.paper }; header(s, sec);
   const t = sec.table; const cols = Math.max(t.head.length, ...t.rows.map((r) => r.length));
   const head = (t.head.length ? t.head : Array(cols).fill('')).map((h, i) => ({ text: h, options: { bold: true, color: i === 0 ? C.muted : 'FFFFFF', fill: { color: i === 0 ? C.panel : C.brand } } }));
-  const body = t.rows.map((r) => r.map((c, i) => ({ text: clip(c, 60), options: { bold: i === 0, color: C.ink, fill: { color: i === 0 ? C.panel : 'FFFFFF' } } })));
-  const rows = [head, ...body];
-  const fontSize = rows.length > 10 || cols > 4 ? 12 : 15;
-  const rowH = Math.min(0.62, 4.9 / rows.length);
-  s.addTable(rows, { x: M, y: 1.65, w: W - M * 2, rowH, fontFace: FONT, fontSize, border: { type: 'solid', color: C.line, pt: 0.75 }, valign: 'middle', margin: 0.08, autoPage: false });
-  footer(s, mod, sec.title);
-  s.addNotes(notesFor(mod, sec.slots) || sec.analogy || '');
+  chunk(t.rows, TABLE_ROWS_PER_SLIDE).forEach((pageRows, page) => {
+    const s = pres.addSlide(); s.background = { color: C.paper };
+    header(s, page ? { ...sec, title: `${sec.title}（續）` } : sec);
+    const body = pageRows.map((r) => r.map((c, i) => ({ text: c, options: { bold: i === 0, color: C.ink, fill: { color: i === 0 ? C.panel : 'FFFFFF' } } })));
+    const rows = [head, ...body];
+    const colW = (W - M * 2) / cols;
+    const longest = Math.max(...pageRows.flat().map((c) => [...String(c)].length), 1);
+    const rowH = 4.9 / rows.length;
+    const fontSize = fitCell(longest, colW - 0.16, rowH - 0.1, cols > 4 ? 14 : 16);
+    s.addTable(rows, { x: M, y: 1.65, w: W - M * 2, rowH, fontFace: FONT, fontSize, border: { type: 'solid', color: C.line, pt: 0.75 }, valign: 'middle', margin: 0.08, autoPage: false });
+    footer(s, mod, sec.title);
+    s.addNotes(notesFor(mod, sec.slots) || sec.analogy || '');
+  });
 }
 
+const CARDS_PER_SLIDE = 3;
+
+// 卡片：一頁最多 3 張並排，內文完整保留，字級自動縮到塞得下
 function cardsSlide(pres, mod, sec) {
+  chunk(sec.cards, CARDS_PER_SLIDE).forEach((group, page) => {
+    cardsPage(pres, mod, page ? { ...sec, title: `${sec.title}（續）` } : sec, group, page === 0);
+  });
+}
+
+function cardsPage(pres, mod, sec, cards, first) {
   const s = pres.addSlide(); s.background = { color: C.paper }; header(s, sec);
-  const cards = sec.cards; const n = cards.length;
-  const cols = n <= 3 ? n : 3; const rowsN = Math.ceil(n / cols);
-  const gap = 0.3; const top = sec.analogy ? 1.65 : 1.8;
-  const areaH = (sec.analogy ? 4.3 : 5.0); const cw = (W - M * 2 - gap * (cols - 1)) / cols;
-  const maxCh = (areaH - gap * (rowsN - 1)) / rowsN;
-  // 卡片高度跟著內容走：估算標籤＋標題＋內文需要的高度，不再固定撐滿版面
+  const cols = cards.length;
+  const gap = 0.3; const top = sec.analogy && first ? 1.65 : 1.8;
+  const areaH = (sec.analogy && first ? 4.3 : 5.0); const cw = (W - M * 2 - gap * (cols - 1)) / cols;
   const BODY_PT = 17;
   const perLine = Math.floor(((cw - 0.6) * 72) / (BODY_PT * 1.05));
-  const need = Math.max(...cards.map((c) => 0.25 + (c.tag ? 0.35 : 0) + 0.6 + Math.ceil([...clip(c.text, 110)].length / perLine) * BODY_PT * 1.45 / 72 + 0.35));
-  const ch = Math.min(maxCh, Math.max(1.6, need));
+  const need = Math.max(...cards.map((c) => 0.25 + (c.tag ? 0.35 : 0) + 0.6 + Math.ceil([...(c.text || '')].length / perLine) * BODY_PT * 1.45 / 72 + 0.35));
+  const ch = Math.min(areaH, Math.max(1.6, need));
   cards.forEach((c, i) => {
-    const x = M + (i % cols) * (cw + gap); const y = top + Math.floor(i / cols) * (ch + gap);
+    const x = M + i * (cw + gap); const y = top;
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: cw, h: ch, rectRadius: 0.15, fill: { color: C.panel }, line: { color: C.line, width: 0.75 } });
     let ty = y + 0.25;
     if (c.tag) {
-      s.addText(clip(c.tag, 18), { x: x + 0.3, y: ty, w: cw - 0.6, h: 0.3, fontFace: FONT, fontSize: 10, bold: true, color: C.brand, margin: 0, isTextBox: true });
+      s.addText(c.tag, { x: x + 0.3, y: ty, w: cw - 0.6, h: 0.3, fontFace: FONT, fontSize: 10, bold: true, color: C.brand, margin: 0, isTextBox: true });
       ty += 0.35;
     }
     s.addText(c.title, { x: x + 0.3, y: ty, w: cw - 0.6, h: 0.5, fontFace: FONT, fontSize: fitSize(c.title, cw - 0.6, 0.5, 22, 14), bold: true, color: C.ink, margin: 0, isTextBox: true });
     const bodyH = y + ch - (ty + 0.6) - 0.2;
     if (c.text && bodyH > 0.3) {
-      s.addText(clip(c.text, 110), { x: x + 0.3, y: ty + 0.6, w: cw - 0.6, h: bodyH, fontFace: FONT, fontSize: fitSize(clip(c.text, 110), cw - 0.6, bodyH, 17, 11), color: C.muted, margin: 0, valign: 'top', isTextBox: true });
+      s.addText(c.text, { x: x + 0.3, y: ty + 0.6, w: cw - 0.6, h: bodyH, fontFace: FONT, fontSize: fitSize(c.text, cw - 0.6, bodyH, 17, 9), color: C.muted, margin: 0, valign: 'top', isTextBox: true });
     }
   });
-  if (sec.analogy) {
-    s.addText(clip(sec.analogy, 90), { x: M, y: 6.2, w: W - M * 2, h: 0.6, fontFace: FONT, fontSize: 13, italic: true, color: C.brandInk, margin: 0, isTextBox: true });
+  if (sec.analogy && first) {
+    s.addText(sec.analogy, { x: M, y: 6.15, w: W - M * 2, h: 0.75, fontFace: FONT, fontSize: fitSize(sec.analogy, W - M * 2, 0.75, 13, 9), italic: true, color: C.brandInk, margin: 0, valign: 'top', isTextBox: true });
   }
   if (sec.interactive) siteHint(s, mod, sec);
   footer(s, mod, sec.title);
@@ -140,7 +164,7 @@ function quoteSlide(pres, mod, sec) {
   s.addText('“', { x: M + 0.3, y: 1.7, w: 1, h: 1.5, fontFace: 'Arial', fontSize: 80, bold: true, color: C.brand, margin: 0, isTextBox: true });
   s.addText(main, { x: M + 1.2, y: 2.2, w: W - M * 2 - 1.8, h: 3.1, fontFace: FONT, fontSize: fitSize(main, W - M * 2 - 1.8, 3.1, 26, 14), bold: true, color: C.ink, valign: 'middle', margin: 0, isTextBox: true });
   const extra = sec.analogy && sec.callout ? sec.callout : '';
-  if (extra) s.addText(clip(extra, 110), { x: M, y: 5.8, w: W - M * 2, h: 0.9, fontFace: FONT, fontSize: 13, color: C.muted, margin: 0, valign: 'top', isTextBox: true });
+  if (extra) s.addText(extra, { x: M, y: 5.75, w: W - M * 2, h: 1.0, fontFace: FONT, fontSize: fitSize(extra, W - M * 2, 1.0, 13, 9), color: C.muted, margin: 0, valign: 'top', isTextBox: true });
   if (sec.interactive) siteHint(s, mod, sec);
   footer(s, mod, sec.title);
   s.addNotes(notesFor(mod, sec.slots));
@@ -162,17 +186,25 @@ function interactiveSlide(pres, mod, sec) {
   s.addNotes(notesFor(mod, sec.slots) || '按投影模式（快捷鍵 P）直接在網站上帶學員操作。');
 }
 
+const STEPS_PER_SLIDE = 6;
+
 function stepsSlide(pres, mod, sec) {
+  chunk(sec.steps, STEPS_PER_SLIDE).forEach((group, page) => {
+    stepsPage(pres, mod, page ? { ...sec, title: `${sec.title}（續）` } : sec, group);
+  });
+}
+
+function stepsPage(pres, mod, sec, list) {
   const s = pres.addSlide(); s.background = { color: C.paper };
   const accent = sec.workshop ? C.purple : C.brand;
   header(s, sec, accent);
-  const list = sec.steps.slice(0, 6); const rowH = Math.min(0.85, 4.9 / list.length);
+  const rowH = Math.min(0.85, 4.9 / list.length);
   list.forEach((st, i) => {
     const y = 1.75 + i * (rowH + 0.08);
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: M, y, w: 1.9, h: rowH - 0.1, rectRadius: 0.12, fill: { color: sec.workshop ? C.purpleSoft : C.brandSoft }, line: { type: 'none' } });
     s.addText(st.time || `步驟 ${i + 1}`, { x: M, y, w: 1.9, h: rowH - 0.1, fontFace: FONT, fontSize: 13, bold: true, color: accent, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
     const body = [st.title, st.text].filter(Boolean).join('　');
-    s.addText(body, { x: M + 2.15, y, w: W - M * 2 - 2.15, h: rowH - 0.1, fontFace: FONT, fontSize: fitSize(body, W - M * 2 - 2.15, rowH - 0.1, 16, 10), color: C.ink, valign: 'middle', margin: 0, isTextBox: true });
+    s.addText(body, { x: M + 2.15, y, w: W - M * 2 - 2.15, h: rowH - 0.1, fontFace: FONT, fontSize: fitSize(body, W - M * 2 - 2.15, rowH - 0.1, 16, 9), color: C.ink, valign: 'middle', margin: 0, isTextBox: true });
   });
   footer(s, mod, sec.title);
   s.addNotes(notesFor(mod, sec.slots));
