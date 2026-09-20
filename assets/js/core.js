@@ -196,11 +196,42 @@
   let slideIndex = 0;
   function slides() { return $$('.slide'); }
 
+  // 投影時一段一頁。內容比螢幕高就整段等比縮小，否則下面會被切掉看不到。
+  const HEADER_H = 84;
+  const MIN_ZOOM = 0.72; // 再小投影幕後排就看不清楚了，寧可分兩次捲
+  let fitTimer = null;
+
+  function fitSlide(el) {
+    el.style.zoom = '';
+    el.style.minHeight = '';
+    if (!document.documentElement.classList.contains('presenting')) return;
+    if (el.offsetParent === null) return; // 還沒開放或被隱藏的段落，等它出現再量
+    const avail = window.innerHeight - HEADER_H;
+    const zoom = el.scrollHeight > avail ? Math.max(MIN_ZOOM, avail / el.scrollHeight) : 1;
+    if (zoom < 1) el.style.zoom = zoom.toFixed(3);
+    el.style.minHeight = `${Math.round(avail / zoom)}px`;
+  }
+
+  function fitAll() { slides().forEach(fitSlide); }
+
+  function scheduleFit() { clearTimeout(fitTimer); fitTimer = setTimeout(fitAll, 120); }
+
   function togglePresent(force) {
     const on = document.documentElement.classList.toggle('presenting', force);
     toast(on ? '投影模式：← → 或空白鍵換段，Esc 離開' : '已離開投影模式');
+    fitAll();
     if (on) goSlide(currentSlide());
   }
+
+  // 互動練習做到一半會變高（例如模擬器一直長出新訊息），要重新算一次。
+  // 不用 ResizeObserver：改動 zoom 本身會再觸發一次觀察，容易互相追著跑。
+  window.addEventListener('resize', scheduleFit);
+  document.addEventListener('course:resize', scheduleFit);
+  document.addEventListener('click', (e) => {
+    if (!document.documentElement.classList.contains('presenting')) return;
+    const slide = e.target.closest && e.target.closest('.slide');
+    if (slide) setTimeout(() => fitSlide(slide), 260);
+  });
 
   function currentSlide() {
     const list = slides();
@@ -214,6 +245,7 @@
     const list = slides();
     if (!list.length) return;
     slideIndex = Math.max(0, Math.min(list.length - 1, i));
+    fitSlide(list[slideIndex]);
     list[slideIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
     let counter = $('.slide-counter');
     if (!counter) { counter = document.createElement('div'); counter.className = 'slide-counter'; document.body.append(counter); }
@@ -226,7 +258,14 @@
     if (e.key === 'p' || e.key === 'P') { togglePresent(); return; }
     if (!document.documentElement.classList.contains('presenting')) return;
     if (e.key === 'Escape') togglePresent(false);
-    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); goSlide(currentSlide() + 1); }
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) {
+      e.preventDefault();
+      // 縮到最小還是放不下的長段落（例如課程地圖），先把這一段捲完再換頁，不要跳過去
+      const here = slides()[currentSlide()];
+      const bottom = here ? here.getBoundingClientRect().bottom : 0;
+      if (bottom > window.innerHeight + 8) window.scrollBy({ top: window.innerHeight - HEADER_H - 40, behavior: 'smooth' });
+      else goSlide(currentSlide() + 1);
+    }
     if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goSlide(currentSlide() - 1); }
   }
 

@@ -319,8 +319,9 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 .timer.is-done { animation: pulse 900ms infinite; }
 
 /* ---------- Presenter mode（投影）---------- */
-:root.presenting { font-size: 118%; }
-/* 內容放得下就垂直置中；放不下就從最上面開始，才不會上下被切掉 */
+:root.presenting { font-size: 125%; } /* 放不下會自動縮小，所以字可以大一點 */
+/* 一段一頁。實際高度由 core.js 量過之後寫進 style（內容太高會整段縮小），
+   這裡的 min-height 只是 JS 還沒跑到時的保險值。 */
 :root.presenting .slide {
   min-height: calc(100vh - 84px); display: flex; flex-direction: column;
   justify-content: safe center; padding-block: 24px; scroll-margin-top: 76px;
