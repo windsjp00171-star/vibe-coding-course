@@ -1,0 +1,54 @@
+/*
+ * enroll.js — 招生用的課程介紹頁。
+ * 費用、梯次、地點這些只有講師知道的資訊，集中放在下面的 INFO；還沒決定的先留 null，
+ * 頁面會顯示明顯的「待填」提醒，避免不小心印出錯的數字。
+ */
+(function () {
+  'use strict';
+  const { MODULES, esc, $ } = window.Course;
+
+  // ▼▼▼ 開課資訊：改這裡就好 ▼▼▼
+  const INFO = {
+    format: null,        // 例如：'實體課程．台南（教室地點另行通知）' 或 '線上同步（Google Meet）'
+    schedule: null,      // 例如：'2026/11/8（六）、11/15（六）　09:30–17:00'
+    seats: null,         // 例如：'限 12 人，額滿為止'
+    price: null,         // 例如：'NT$ 6,800（早鳥 NT$ 5,800，10/15 前報名）'
+    corporate: null,     // 例如：'企業內訓另行報價，歡迎來信洽詢'
+    contact: 'emmark19890901@gmail.com',
+    formUrl: null,       // 例如：Google 表單網址
+  };
+  // ▲▲▲ 開課資訊 ▲▲▲
+
+  const TODO = (what) => `<span class="en-todo">（待填：${esc(what)}）</span>`;
+
+  // 必修總時數直接從課程資料算，不用手動維護
+  const core = MODULES.filter((m) => m.ready && !/^D/.test(m.part));
+  $('[data-fact="hours"]').textContent = Math.round(core.reduce((n, m) => n + m.minutes, 0) / 60 * 10) / 10;
+
+  // 課程大綱
+  const parts = [...new Set(MODULES.filter((m) => m.ready).map((m) => m.part))];
+  $('[data-en-map]').innerHTML = parts.map((part) => `
+    <div class="en-part">
+      <h3>${esc(part)}</h3>
+      <ol>${MODULES.filter((m) => m.ready && m.part === part).map((m) => `
+        <li><b>${m.id.slice(1)}</b> ${esc(m.title)}<span>${m.minutes} 分</span></li>`).join('')}</ol>
+    </div>`).join('');
+
+  // 費用與報名
+  $('[data-en-signup]').innerHTML = `
+    <dl class="en-info">
+      <div><dt>上課方式</dt><dd>${INFO.format ? esc(INFO.format) : TODO('實體或線上、地點')}</dd></div>
+      <div><dt>梯次時間</dt><dd>${INFO.schedule ? esc(INFO.schedule) : TODO('上課日期與時間')}</dd></div>
+      <div><dt>名額</dt><dd>${INFO.seats ? esc(INFO.seats) : TODO('人數上限')}</dd></div>
+      <div><dt>費用</dt><dd>${INFO.price ? esc(INFO.price) : TODO('學費、早鳥優惠')}</dd></div>
+      <div><dt>企業內訓</dt><dd>${INFO.corporate ? esc(INFO.corporate) : TODO('內訓報價方式')}</dd></div>
+      <div><dt>報名與洽詢</dt><dd>
+        ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : TODO('報名表網址')}
+        來信：<a href="mailto:${esc(INFO.contact)}">${esc(INFO.contact)}</a></dd></div>
+    </dl>
+    <p class="muted">報名前可以先到<a href="index.html">課程網站</a>免費試看單元 0、1、4、7，確認上課方式適合你再決定。</p>`;
+
+  $('[data-en-print]').addEventListener('click', () => window.print());
+
+  window.Tour.register([]);
+})();
