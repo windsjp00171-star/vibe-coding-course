@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, esc, mountQuiz, renderPrintQuiz, mountOrder, initFlips } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm13',
+    missions: ['回呼網址', 'LINE 裡打不開', '跳錯頁', '憑證過期'],
+    after: '往下看，這個單元會把這些坑整理成可以交接給 AI 的文件。',
+    run: window.SimM13.run,
+  });
   const { mountFlow } = window.Electives;
 
   mountFlow($('[data-flow]'), [
@@ -42,6 +50,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'flow', title: '登入流程', text: '用「去櫃台換證」的比喻，一步一步看 LINE 登入怎麼運作。' },
     { tour: 'pits', title: '五個隱形的坑', text: '從講師踩過的十個坑裡精選五個，點卡片看原因和解法。' },
     { tour: 'handoff', title: '交接文件', text: '把踩過的坑寫成文件交給 AI，是這個單元最重要的技巧。' },

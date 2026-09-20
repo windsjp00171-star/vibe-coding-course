@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz, mountOrder, initFlips } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm3',
+    missions: ['模糊的說法', '重講一次', '先規劃', '修不好時', '收工紙條'],
+    after: '往下看，這個單元會把剛剛用到的五個零件、規劃模式和收工紙條講清楚。',
+    run: window.SimM3.run,
+  });
   const { checkPrompt } = window.CourseLib;
 
   // ---------- 指令健檢 ----------
@@ -109,6 +117,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'parts', title: '指令健檢', text: '在左邊輸入你的指令，右邊會即時檢查五個零件齊不齊。' },
     { tour: 'steps', title: '拆成小步驟', text: '用 ↑ ↓ 把步驟排好，再按「檢查順序」。' },
     { tour: 'modes', title: '三種模式', text: '決定 Claude Code 要多自動。新手先用規劃模式和每次詢問。' },

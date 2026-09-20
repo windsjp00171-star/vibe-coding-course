@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz, initChecklists } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm17',
+    missions: ['先遮個資', '下對指令', '核對筆數', '算錢交給公式'],
+    after: '往下看，這個單元會把剛剛的每一步整理成可以重複用的流程。',
+    run: window.SimM17.run,
+  });
   const { maskPII, cleanRows } = window.CourseLib;
 
   // ---------- 個資遮罩（和單元 6 共用同一套規則）----------
@@ -52,6 +60,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'fit', title: '能交／不能交', text: '格式整理和分類交給 AI，算錢交給試算表公式。' },
     { tour: 'mask', title: '個資遮罩', text: '貼資料給 AI 之前，先在這裡把電話、Email 換成代號。' },
     { tour: 'clean', title: '資料清洗', text: '勾選要做的整理，表格會立刻變給你看，綠色是改過的、黃色是 AI 猜的。' },

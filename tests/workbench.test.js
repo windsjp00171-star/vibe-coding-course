@@ -126,3 +126,56 @@ test('聊天畫面：還沒對話時顯示提示，有訊息時分得出誰說�
   const chat = m12.buildChat([{ me: true, text: '開會' }, { me: false, text: '記下了' }]);
   assert.ok(chat.includes('me-b') && chat.includes('class="bot"'));
 });
+
+// ---- 單元 3：同一個需求講兩次 ----
+const m3 = require('../assets/js/sims/m3-brief.js');
+
+test('模糊版和清楚版做出來的東西要看得出差別', () => {
+  const vague = m3.buildResult({ stage: 'vague' });
+  const good = m3.buildResult({ stage: 'good' });
+  assert.ok(vague.includes('它猜了很多你沒講的東西'));
+  assert.ok(good.includes('一個檔案、打開就能用'));
+});
+
+test('五個零件的打勾狀態會顯示在畫面上，學員才知道少講了什麼', () => {
+  const html = m3.buildResult({ stage: 'good', parts: [{ label: '給誰用', ok: false }, { label: '要做什麼', ok: true }] });
+  assert.ok(html.includes('class="no"'));
+  assert.ok(html.includes('class="ok"'));
+});
+
+// ---- 單元 7：你是門神 ----
+const m7 = require('../assets/js/sims/m7-gate.js');
+
+test('信裡藏的指令平常看不見，揭露後才標出來', () => {
+  const plain = m7.buildMail({ revealHidden: false });
+  const shown = m7.buildMail({ revealHidden: true });
+  assert.ok(plain.includes('color:#ffffff'), '平常應該是白色字（看不見）');
+  assert.ok(shown.includes('已把白色隱藏文字標出來'));
+  assert.ok(plain.includes('collect@vendor-example.com'), '內容一直都在，只是看不見');
+});
+
+// ---- 單元 13：LINE 登入 ----
+const m13 = require('../assets/js/sims/m13-login.js');
+
+test('四個坑各有對應的手機畫面，修好後是報名頁而不是首頁', () => {
+  assert.ok(m13.buildPhone({ scene: 'error' }).includes('redirect_uri'));
+  assert.ok(m13.buildPhone({ scene: 'blank' }).includes('一片空白'));
+  assert.ok(m13.buildPhone({ scene: 'home' }).includes('回到首頁'));
+  assert.ok(m13.buildPhone({ scene: 'back' }).includes('你已登入'));
+});
+
+// ---- 單元 17：少掉兩列 ----
+const m17 = require('../assets/js/sims/m17-sheet.js');
+
+test('整理結果少於原始筆數時，畫面要標成紅字警告', () => {
+  const short = m17.buildSheet({ stage: 'table', count: m17.TOTAL_ROWS - m17.MISSING_ROWS });
+  const full = m17.buildSheet({ stage: 'table', count: m17.TOTAL_ROWS });
+  assert.ok(short.includes('count bad'));
+  assert.ok(short.includes(`原始有 ${m17.TOTAL_ROWS} 列`));
+  assert.ok(full.includes('count ok'));
+});
+
+test('指令沒寫「不要自己編」就不算過關', () => {
+  assert.deepEqual(matchNeeds('缺漏的填「待確認」，不要自己編', m17.NEEDS.rule).missing, []);
+  assert.deepEqual(matchNeeds('幫我整理成表格', m17.NEEDS.rule).met, []);
+});

@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm7',
+    missions: ['交代任務', '發現不對', '當門神', '收緊權限'],
+    after: '往下看，這個單元會解釋提示詞注入為什麼防不了，以及權限要怎麼設。',
+    run: window.SimM7.run,
+  });
   const { scoreGate, GATE_POINTS } = window.CourseLib;
 
   // ---------- AI 秘書模擬器（腳本化結果：示範觀念，不是真的呼叫 AI） ----------
@@ -146,6 +154,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'secretary', title: 'AI 秘書模擬器', text: '選一份文件請 AI 摘要。打開螢光筆看藏起來的字，打開防護開關看看差別。' },
     { tour: 'keys', title: '權限滑桿', text: '拉動滑桿，看看給 AI 越大的權限，被騙時損失有多大。' },
     { tour: 'gate', title: '你是門神', text: 'AI 代理人會提出 8 個請求，由你決定放行或退回。' },
