@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 時代的資料整理｜Vibe Coding 實戰課</title>
+  <meta name="description" content="把亂七八糟的 Excel、報名表、問卷交給 AI 整理：哪些能交、哪些不能，個資怎麼先遮罩，以及整理完怎麼驗收。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609200814">
+  <style>
+    .dt-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .dt-table th, .dt-table td { border: 1px solid var(--line); padding: 7px 9px; text-align: left; vertical-align: top; }
+    .dt-table th { background: var(--paper-2); font-size: .8rem; }
+    .dt-table td.changed { background: var(--ok-soft); color: var(--ok); font-weight: 700; }
+    .dt-table td.flag { background: var(--warn-soft); color: var(--warn); font-weight: 700; }
+    .dt-opts { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 14px; font-weight: 700; }
+    .dt-opts label { display: inline-flex; gap: 6px; align-items: center; }
+  </style>
+</head>
+<body data-module="m17" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>17</b> D 進階選修．日常實用</span>
+    <h1>那份<em>亂七八糟的 Excel</em>，<br>交給 AI 整理</h1>
+    <p class="lead">報名表、問卷、出貨清單、簽到單——日期寫法五種、電話有全形、名字前後有空白。這些整理工作每個月吃掉你好幾個小時，而它正好是 AI 最擅長的事。這個單元教你怎麼交、怎麼保護個資、以及整理完要怎麼驗收。</p>
+    <ul class="goals">
+      <li>分得出「可以交給 AI」和「絕對不要交」的資料工作</li>
+      <li>會在貼資料給 AI 之前先把個資遮起來</li>
+      <li>寫得出一段讓 AI 不自己編東西的整理指令</li>
+      <li>知道整理完要抽查哪幾個地方</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 30 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m17-1"></div>
+  </section>
+
+  <section class="slide" id="fit" data-tour="fit">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先分清楚</span><h2>哪些能交給它，哪些不行</h2>
+        <p>同樣是「處理資料」，有些交給 AI 省下半天，有些會讓你踩大坑。差別在於<b>需不需要「算得準」</b>。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>✅ 很適合</h3>
+        <ul>
+          <li>格式統一：日期、電話、全形半形、前後空白</li>
+          <li>分類貼標：把 200 則意見分成「稱讚／抱怨／建議」</li>
+          <li>抽取欄位：從一段文字裡挑出姓名、時間、地點</li>
+          <li>摘要：把 50 份回饋整理成五個重點</li>
+          <li>轉換格式：文字變表格、表格變清單</li>
+        </ul></div>
+      <div class="card"><h3>🚫 不要交給它</h3>
+        <ul>
+          <li><b>大量數字的加總和對帳</b>：它是猜字的，不是計算機，會算錯而且看不出來</li>
+          <li>當成資料庫：一份幾千列的表格丟進去，它記不住也看不完</li>
+          <li>需要「一筆都不能錯」的事：薪資、金額、藥品劑量</li>
+          <li>裡面有個資、而你又沒遮起來的資料</li>
+        </ul></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>聰明的做法：</b>讓 AI 整理格式和分類，<b>算錢交給試算表的公式</b>。它甚至可以幫你寫那個公式——公式是固定的規則，跑幾次結果都一樣，這才可靠。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>AI 適合做資料的 <span class="blank"></span>，不適合做 <span class="blank"></span>。</p>
+    </div>
+    <div data-teacher-slot="m17-2"></div>
+  </section>
+
+  <section class="slide" id="mask" data-tour="mask">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">交出去之前</span><h2>先把個資戴上口罩</h2>
+        <p>要整理的資料常常有電話、Email、身分證字號。貼給 AI 之前先換成假的，整理完再換回來。貼一段看看：</p></div></div>
+    <div class="split">
+      <div class="card">
+        <label class="form-grid" for="mask-in">貼上一段有個資的資料（這裡打的字不會離開你的瀏覽器）
+          <textarea id="mask-in" rows="5" data-mask-input>王小明 0912-345-678 ming@example.com 報名 3/5 場次
+李美美 0922333444 mei@example.com 報名 3/6 場次</textarea></label>
+      </div>
+      <div class="card">
+        <h3>遮好的版本（可以貼給 AI）</h3>
+        <pre class="gen-out" data-mask-out></pre>
+        <p class="muted" data-mask-found></p>
+      </div>
+    </div>
+    <div class="callout">
+      <b>為什麼要遮？</b>不是因為 AI 一定會外洩，而是：你不知道這份對話會被誰看到、會不會被留存。個資一旦送出去就收不回來了。公司有規定的話，一律以公司規定為準（單元 6 有完整說明）。
+    </div>
+    <div data-teacher-slot="m17-3"></div>
+  </section>
+
+  <section class="slide" id="clean" data-tour="clean">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手玩</span><h2>資料清洗：勾一個看一個</h2>
+        <p>下面是一份真的很亂的報名資料。勾選你要 AI 做的整理，右邊會立刻變給你看。</p></div></div>
+    <div class="card">
+      <div class="dt-opts">
+        <label><input type="checkbox" data-clean="trim"> 去掉前後空白</label>
+        <label><input type="checkbox" data-clean="halfwidth"> 全形數字轉半形、電話去掉符號</label>
+        <label><input type="checkbox" data-clean="dates"> 日期統一成 YYYY-MM-DD</label>
+      </div>
+      <div style="overflow-x:auto"><table class="dt-table" data-clean-table></table></div>
+      <p class="muted" data-clean-note style="margin-top:12px"></p>
+    </div>
+    <div class="callout callout-warn">
+      注意最後一欄的<b>金額沒有被動過</b>，而且「3-5」這種缺年份的日期，補完之後標成「猜的」。請 AI 整理時，一定要加一句：<b>不確定的標出來，不要自己編</b>。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>請 AI 整理資料時，一定要加的一句話是：<span class="blank"></span></p>
+    </div>
+    <div data-teacher-slot="m17-4"></div>
+  </section>
+
+  <section class="slide" id="prompt" data-tour="prompt">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">可以直接抄</span><h2>整理資料的指令範本</h2></div></div>
+    <div class="card">
+      <pre class="gen-out">請把下面這份報名資料整理成表格，欄位：姓名、電話、場次日期、金額。
+
+規則：
+1. 日期一律寫成 YYYY-MM-DD。只有月日、沒有年份的，補上今年，並在該列標註「日期為推測」。
+2. 電話去掉空白和符號，全形轉半形。
+3. 金額欄原樣保留，不要幫我加總、不要四捨五入。
+4. 看不懂或缺漏的欄位，填「待確認」，不要自己編。
+5. 最後告訴我：總共幾列、你標了幾個「待確認」。
+
+資料：
+（貼上你遮好個資的資料）</pre>
+      <p><button type="button" class="btn btn-sm" data-copy="#prompt pre">📋 複製範本</button></p>
+    </div>
+    <div class="callout">
+      這段範本裡最重要的是第 4 和第 5 條。<b>「不要自己編」</b>擋掉幻覺，<b>「告訴我總共幾列」</b>讓你一眼就能檢查有沒有漏資料——AI 整理長資料時，最常見的錯誤就是默默少幾列。
+    </div>
+    <div data-teacher-slot="m17-5"></div>
+  </section>
+
+  <section class="slide" id="verify" data-tour="verify">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">最重要的一步</span><h2>整理完，抽查這四個地方</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m17-verify">
+        <li><label><input type="checkbox" value="count"> <b>筆數對不對</b>：原本 137 列，整理完也要 137 列</label></li>
+        <li><label><input type="checkbox" value="first"> <b>抽查頭尾各一筆</b>：第一筆和最後一筆，逐欄對一次</label></li>
+        <li><label><input type="checkbox" value="odd"> <b>抽查最奇怪的那一筆</b>：格式最亂的那一列，AI 最可能在這裡猜錯</label></li>
+        <li><label><input type="checkbox" value="todo"> <b>看「待確認」的項目</b>：這些是它老實說不知道的，由你來補</label></li>
+      </ul>
+    </div>
+    <div class="callout callout-warn">
+      <b>不要跳過這一步。</b>資料整理的錯誤特別可怕，因為它不會報錯——看起來整整齊齊，其實少了三列、或某個日期被猜錯。這和單元 8 的「AI 說做好了，自己要試一次」是同一件事。
+    </div>
+    <div data-teacher-slot="m17-6"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>整理一份你真的要處理的資料</h2><p>帶一份你工作上的資料來（先確認可以帶出公司），現場整理一次。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–5 分</span><span class="step-title">遮個資</span>用第 02 段的工具，把電話、Email、身分證字號換成代號。找不到資料的人，用講師準備的假資料。</li>
+        <li><span class="time">5–15 分</span><span class="step-title">照範本下指令</span>用第 04 段的範本改成你的欄位，請 AI 整理。</li>
+        <li><span class="time">15–25 分</span><span class="step-title">抽查四個地方</span>照第 05 段的清單檢查。抓到錯誤的人舉手分享，這是今天最有價值的部分。</li>
+        <li><span class="time">25–30 分</span><span class="step-title">把範本存起來</span>把你改好的那段指令存進備忘錄，下個月直接重用。這就是單元 16 說的 Skill 雛形。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m17-7"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m17-home">
+        <li><label><input type="checkbox" value="real"> 挑一份你每個月都要整理的資料，用今天的範本做一次，記下省了多少時間</label></li>
+        <li><label><input type="checkbox" value="formula"> 請 AI 幫你寫一條試算表公式來算金額總和，而不是叫它直接算給你</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>算錢要交給 <span class="blank"></span>，不要交給 <span class="blank"></span>。</p>
+      <p>今天最有收穫的一件事：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 17　處理公司資料前，請先確認公司的資料使用規定。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609200814"></script>
+<script src="../assets/js/quiz-bank.js?v=202609200814"></script>
+<script src="../assets/js/config.js?v=202609200814"></script>
+<script src="../assets/js/core.js?v=202609200814"></script>
+<script src="../assets/js/members.js?v=202609200814"></script>
+<script src="../assets/js/tour.js?v=202609200814"></script>
+<script src="../assets/js/glossary-data.js?v=202609200814"></script>
+<script src="../assets/js/glossary.js?v=202609200814"></script>
+<script src="../assets/js/modules/m17.js?v=202609200814"></script>
+</body>
+</html>

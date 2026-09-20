@@ -265,6 +265,53 @@
     return hits;
   }
 
+  // ---- 資料整理（單元 17）----
+  // 只做「格式」的整理：去空白、全形轉半形、日期統一。金額一律不動，算錢交給試算表公式。
+  const FULLWIDTH_OFFSET = 0xfee0;
+
+  function toHalfWidth(text) {
+    return String(text).replace(/[！-～]/g, (c) => String.fromCharCode(c.charCodeAt(0) - FULLWIDTH_OFFSET)).replace(/　/g, ' ');
+  }
+
+  function normalizeDate(text, thisYear) {
+    const value = toHalfWidth(String(text)).trim().replace(/[/.]/g, '-');
+    const full = value.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    const short = value.match(/^(\d{1,2})-(\d{1,2})$/);
+    const pad = (n) => String(n).padStart(2, '0');
+    if (full) return { date: `${full[1]}-${pad(full[2])}-${pad(full[3])}`, guessed: false };
+    if (short) return { date: `${thisYear}-${pad(short[1])}-${pad(short[2])}`, guessed: true };
+    return { date: String(text), guessed: false };
+  }
+
+  function cleanRows(rows, options = {}, thisYear = new Date().getFullYear()) {
+    return rows.map((row) => {
+      const out = { ...row };
+      if (options.trim) Object.keys(out).forEach((k) => { if (typeof out[k] === 'string') out[k] = out[k].trim(); });
+      if (options.halfwidth && typeof out.phone === 'string') out.phone = toHalfWidth(out.phone).replace(/[-\s]/g, '');
+      if (options.dates && out.date) {
+        const r = normalizeDate(out.date, thisYear);
+        out.date = r.date;
+        if (r.guessed) out.guessed = true;
+      }
+      return out;
+    });
+  }
+
+  // ---- 指令升級零件（單元 18）----
+  const PROMPT_UPGRADES = [
+    { id: 'who', label: '說清楚給誰看', line: '讀的人是完全不懂這件事的同事，請用白話寫。' },
+    { id: 'format', label: '限制輸出格式', line: '只輸出最後結果，不要說明你的想法，長度控制在 200 字以內。' },
+    { id: 'example', label: '給一個例子', line: '風格請參考這個例子：「因應系統維護，週五 18:00 起暫停使用，預計 21:00 恢復。」' },
+    { id: 'ask', label: '請它先問問題', line: '動手前，先問我 3 個你需要知道的問題，我回答完你再開始。' },
+    { id: 'unsure', label: '請它標出不確定的地方', line: '你不確定或我沒交代清楚的地方，請標成「待確認」，不要自己編。' },
+  ];
+
+  function upgradePrompt(base, ids) {
+    const picked = PROMPT_UPGRADES.filter((u) => ids.includes(u.id));
+    if (!picked.length) return String(base);
+    return [String(base), ...picked.map((u) => u.line)].join('\n');
+  }
+
   // ---- 沉浸式工作台：學員打的需求有沒有講到重點 ----
   // needs：[{ id, re }]；回傳講到的 met 與沒講到的 missing（都依 needs 的順序）
   function matchNeeds(text, needs) {
@@ -327,7 +374,7 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

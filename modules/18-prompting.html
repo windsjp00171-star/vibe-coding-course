@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>怎麼問出好答案｜Vibe Coding 實戰課</title>
+  <meta name="description" content="提示詞進階：給例子、指定對象、限制輸出格式、請它先問問題、標出不確定的地方，以及什麼時候不要給太多限制。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609200814">
+  <style>
+    .up-opts { display: grid; gap: 8px; margin-bottom: 14px; }
+    .up-opts label { display: flex; gap: 8px; align-items: flex-start; font-weight: 700; }
+    .up-opts small { display: block; font-weight: 500; color: var(--muted); }
+    .up-count { font-weight: 800; color: var(--brand); }
+  </style>
+</head>
+<body data-module="m18" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>18</b> D 進階選修．說話的技術</span>
+    <h1>同一件事，<em>換個說法</em><br>結果差很多</h1>
+    <p class="lead">單元 3 教過好指令的五個零件。這個單元再往上一層：給例子、指定讀的人、限制輸出格式、請它先問問題、請它標出不確定的地方。這些技巧不只用在寫程式，寫公告、整理資料、做簡報都通用。</p>
+    <ul class="goals">
+      <li>會用「給例子」讓 AI 抓到你要的風格</li>
+      <li>會請它先問問題再動手，避免白做一場</li>
+      <li>會限制輸出格式，讓結果可以直接用</li>
+      <li>知道什麼時候<b>不要</b>給太多限制</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 30 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div data-teacher-slot="m18-1"></div>
+  </section>
+
+  <section class="slide" id="why" data-tour="why">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先講原理</span><h2>你不是在下指令，你是在縮小範圍</h2>
+        <p>回到單元 0：AI 在猜下一個字。你講得越模糊，它可以猜的範圍越大，猜出你要的東西的機率就越低。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>😐「幫我寫個公告」</h3>
+        <p class="muted">可能的答案有幾萬種：正式的、活潑的、長的、短的、給客戶的、給同事的。它只能隨便挑一種。</p></div>
+      <div class="card"><h3>🙂「寫一則公告給不懂技術的同事，說明週五 18:00 到 21:00 系統維護，200 字以內，語氣輕鬆」</h3>
+        <p class="muted">範圍一下子縮到很小，它猜中的機率就高了。</p></div>
+    </div>
+    <div class="analogy">像跟計程車司機說「往前開」和「到台北車站東三門」的差別。不是後者比較兇，是後者比較<b>明確</b>。</div>
+    <div data-teacher-slot="m18-2"></div>
+  </section>
+
+  <section class="slide" id="upgrade" data-tour="upgrade">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">動手玩</span><h2>指令改造器</h2>
+        <p>左邊是一句很爛的指令。勾選你想加上的零件，右邊會即時組出改造後的版本。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <label class="form-grid" for="up-base">你原本想說的話
+          <input id="up-base" type="text" data-up-base value="幫我寫公告"></label>
+        <div class="up-opts" data-up-opts></div>
+        <p>目前用了 <span class="up-count" data-up-count>0</span> 個零件。</p>
+      </div>
+      <div class="card">
+        <h3>改造後（可以直接複製）</h3>
+        <pre class="gen-out" data-up-out></pre>
+      </div>
+    </div>
+    <div class="callout">
+      注意：改造後的版本<b>沒有變得比較「專業」，只是比較明確</b>。用你平常講話的方式寫就好，AI 不吃艱深的詞。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單：把這句話改造一次</h3>
+      <p>原句：「幫我整理一下這個月的報名資料」</p>
+      <p>改造後：</p><div class="write-lines"></div>
+    </div>
+    <div data-teacher-slot="m18-3"></div>
+  </section>
+
+  <section class="slide" id="tricks" data-tour="tricks">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">五個進階技巧</span><h2>點卡片看怎麼用</h2></div></div>
+    <div class="grid grid-3">
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>📎 給一個例子</h3><p>最有效的一招</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>與其形容「語氣輕鬆一點」，不如直接貼一則你覺得寫得好的舊公告，說「照這個風格寫」。</p><p class="muted">一個例子勝過三句形容詞。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>🙋 請它先問你</h3><p>避免白做一場</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>加一句：「動手前先問我 3 個你需要知道的問題」。它常常會問到你自己都沒想清楚的地方。</p><p class="muted">大任務一定要加這句。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>📐 限制輸出</h3><p>拿到能直接用的東西</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>「只輸出表格，不要說明」「200 字以內」「用三個項目符號」。不然它會附一堆客套話，你還要自己刪。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>❓ 標出不確定</h3><p>防幻覺</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>「不確定或我沒說清楚的地方，標成『待確認』，不要自己編」。這一句能把幻覺從「看不出來」變成「標在那裡」。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>🪜 分階段</h3><p>大事拆小事</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>「先列出步驟給我看，我同意再動手」。一次做完十件事，錯了你找不到是哪一步；分階段你每一步都能驗收。</p></div>
+      </div></div>
+      <div class="flip" tabindex="0"><div class="flip-inner">
+        <div class="flip-face flip-front"><h3>🔁 不滿意就補一句</h3><p>不用重打</p><span class="flip-hint">點一下</span></div>
+        <div class="flip-face flip-back"><p>結果不對時，不必重寫整段。直接說「太正式了，輕鬆一點」「第二段砍掉」就好，它記得前面的內容。</p></div>
+      </div></div>
+    </div>
+    <div data-teacher-slot="m18-4"></div>
+  </section>
+
+  <section class="slide" id="toomuch" data-tour="toomuch">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">反過來說</span><h2>什麼時候不要給太多限制</h2></div></div>
+    <div class="split">
+      <div class="card"><h3>🎨 你還在找方向的時候</h3>
+        <p>想活動名稱、想切入角度、想版面風格——這時候限制越多，答案越平庸。先說「給我 10 個完全不同方向的版本」，看到喜歡的再收斂。</p></div>
+      <div class="card"><h3>🔧 你不知道怎麼做的時候</h3>
+        <p>與其指定做法（很可能是錯的），不如說清楚<b>你要的結果</b>和<b>限制條件</b>，問它「有哪些做法？各有什麼優缺點？」讓它先給選項。</p></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>一句話分辨：</b>知道要什麼就講清楚；不知道要什麼就請它給選項。最糟的是「不知道要什麼，卻假裝講得很具體」——那會把它帶往錯的方向。
+    </div>
+    <div data-teacher-slot="m18-5"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">課中工作坊</span><h2>做一張自己的指令卡</h2><p>把你最常交代 AI 的那件事，變成一張可以重複用的範本。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–5 分</span><span class="step-title">挑一件你常做的事</span>寫公告、回客訴、整理會議紀錄、想標題都可以。</li>
+        <li><span class="time">5–15 分</span><span class="step-title">用改造器做出第一版</span>至少加上「給誰看」「輸出格式」「標出不確定」三個零件。</li>
+        <li><span class="time">15–25 分</span><span class="step-title">實際跑一次，然後改</span>看結果哪裡不滿意，把「不滿意的地方」補成新的一句話，再跑一次。</li>
+        <li><span class="time">25–30 分</span><span class="step-title">兩人交換</span>把你的指令卡給夥伴用一次。別人用得出來，才算寫得夠清楚。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m18-6"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m18-home">
+        <li><label><input type="checkbox" value="card"> 把工作坊做的指令卡存進備忘錄，這週至少用兩次</label></li>
+        <li><label><input type="checkbox" value="example"> 挑一件你很在意風格的事，貼一個舊的好例子給 AI，比較加了例子和沒加的差別</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的指令卡</h3>
+      <p>這件事是：<span class="blank"></span></p>
+      <div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 18　技巧會隨模型演進調整，原則不變：講得越明確，猜得越準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609200814"></script>
+<script src="../assets/js/quiz-bank.js?v=202609200814"></script>
+<script src="../assets/js/config.js?v=202609200814"></script>
+<script src="../assets/js/core.js?v=202609200814"></script>
+<script src="../assets/js/members.js?v=202609200814"></script>
+<script src="../assets/js/tour.js?v=202609200814"></script>
+<script src="../assets/js/glossary-data.js?v=202609200814"></script>
+<script src="../assets/js/glossary.js?v=202609200814"></script>
+<script src="../assets/js/modules/m18.js?v=202609200814"></script>
+</body>
+</html>
