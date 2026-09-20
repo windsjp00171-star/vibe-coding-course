@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609201242">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201242">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609201242">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609201305">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201305">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609201305">
 </head>
 <body data-module="m12" data-base="../">
 <header data-course-header></header>
@@ -33,7 +33,7 @@
     <div data-teacher-slot="m12-1"></div>
   </section>
 
-  <section class="slide screen-only" id="sim" data-tour="sim">
+  <section class="slide screen-only" id="play" data-tour="sim">
     <div class="section-head"><span class="section-num">▶</span>
       <div><span class="kicker">先玩再學．10 分鐘</span><h2>讓小秘書上工：從設定到測試</h2>
         <p>模擬做一個 LINE 小秘書：訊息怎麼進來、鑰匙放哪、排程時區怎麼換算，最後自己傳一句話測試。大約 10 分鐘。</p></div></div>
@@ -68,18 +68,8 @@
     </div>
   </section>
 
-  <section class="slide" id="split">
-    <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">設計原則</span><h2>AI 做判斷，程式做排程</h2></div></div>
-    <div class="grid grid-2">
-      <div class="card"><span class="pill pill-brand">交給 AI</span><h3>🤖 需要「懂意思」的事</h3><ul><li>這句話是待辦、提醒還是筆記？</li><li>「下週三」是幾月幾號？</li><li>用自然的口氣回一句話</li></ul></div>
-      <div class="card"><span class="pill pill-ok">交給程式</span><h3>⚙️ 規則固定的事</h3><ul><li>每天早上 8 點檢查今天的待辦</li><li>每週五整理一週摘要</li><li>把資料存進資料庫</li></ul></div>
-    </div>
-    <div class="analogy" style="margin-top:16px">這就是講師 CLAUDE.md 守則第 5 條：<strong>能用程式判斷的，就不要問 AI。</strong>程式每次結果都一樣、不花錢；AI 貴又不一定每次一樣，只用在真正需要判斷的地方。</div>
-  </section>
-
   <section class="slide" id="tz" data-tour="tz">
-    <div class="section-head"><span class="section-num">04</span>
+    <div class="section-head"><span class="section-num">03</span>
       <div><span class="kicker">最常見的坑</span><h2>排程的時區陷阱</h2>
         <p>Vercel 這類平台的排程用的是<b>國際標準時間（UTC）</b>，台灣比它快 8 小時。拉拉看：</p></div></div>
     <div class="split">
@@ -96,6 +86,16 @@
         <p class="muted" style="margin-top:8px">這串「0 0 * * *」叫 cron，五個位置依序是：分、時、日、月、星期。看不懂沒關係，請 Claude Code 翻譯就好。</p>
       </div>
     </div>
+  </section>
+
+  <section class="slide" id="split">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">設計原則</span><h2>AI 做判斷，程式做排程</h2></div></div>
+    <div class="grid grid-2">
+      <div class="card"><span class="pill pill-brand">交給 AI</span><h3>🤖 需要「懂意思」的事</h3><ul><li>這句話是待辦、提醒還是筆記？</li><li>「下週三」是幾月幾號？</li><li>用自然的口氣回一句話</li></ul></div>
+      <div class="card"><span class="pill pill-ok">交給程式</span><h3>⚙️ 規則固定的事</h3><ul><li>每天早上 8 點檢查今天的待辦</li><li>每週五整理一週摘要</li><li>把資料存進資料庫</li></ul></div>
+    </div>
+    <div class="analogy" style="margin-top:16px">這就是講師 CLAUDE.md 守則第 5 條：<strong>能用程式判斷的，就不要問 AI。</strong>程式每次結果都一樣、不花錢；AI 貴又不一定每次一樣，只用在真正需要判斷的地方。</div>
   </section>
 
   <section class="slide" id="keys">
@@ -162,18 +162,18 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 12　LINE 平台設定以 LINE Developers 官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609201242"></script>
-<script src="../assets/js/quiz-bank.js?v=202609201242"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609201242"></script>
-<script src="../assets/js/config.js?v=202609201242"></script>
-<script src="../assets/js/core.js?v=202609201242"></script>
-<script src="../assets/js/members.js?v=202609201242"></script>
-<script src="../assets/js/tour.js?v=202609201242"></script>
-<script src="../assets/js/glossary-data.js?v=202609201242"></script>
-<script src="../assets/js/glossary.js?v=202609201242"></script>
-<script src="../assets/js/modules/electives.js?v=202609201242"></script>
-<script src="../assets/js/workbench.js?v=202609201242"></script>
-<script src="../assets/js/sims/m12-bot.js?v=202609201242"></script>
-<script src="../assets/js/modules/m12.js?v=202609201242"></script>
+<script src="../assets/js/lib.js?v=202609201305"></script>
+<script src="../assets/js/quiz-bank.js?v=202609201305"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609201305"></script>
+<script src="../assets/js/config.js?v=202609201305"></script>
+<script src="../assets/js/core.js?v=202609201305"></script>
+<script src="../assets/js/members.js?v=202609201305"></script>
+<script src="../assets/js/tour.js?v=202609201305"></script>
+<script src="../assets/js/glossary-data.js?v=202609201305"></script>
+<script src="../assets/js/glossary.js?v=202609201305"></script>
+<script src="../assets/js/modules/electives.js?v=202609201305"></script>
+<script src="../assets/js/workbench.js?v=202609201305"></script>
+<script src="../assets/js/sims/m12-bot.js?v=202609201305"></script>
+<script src="../assets/js/modules/m12.js?v=202609201305"></script>
 </body>
 </html>
