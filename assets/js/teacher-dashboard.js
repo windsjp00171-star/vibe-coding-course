@@ -32,10 +32,11 @@
         <button type="button" data-admin-tab="overview" aria-pressed="${tab === 'overview'}">📊 總覽</button>
         <button type="button" data-admin-tab="members" aria-pressed="${tab === 'members'}">👥 會員管理</button>
         <button type="button" data-admin-tab="classes" aria-pressed="${tab === 'classes'}">🏫 班級</button>
+        <button type="button" data-admin-tab="signups" aria-pressed="${tab === 'signups'}">📝 報名管理</button>
         <button type="button" data-admin-tab="stuck" aria-pressed="${tab === 'stuck'}">🧭 卡關分析</button>
         <button type="button" data-admin-tab="files" aria-pressed="${tab === 'files'}">📁 教材下載</button>
       </div><div data-admin-body></div>`;
-    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, stuck: renderStuck, files: renderFiles }[tab];
+    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, signups: renderSignups, stuck: renderStuck, files: renderFiles }[tab];
     await render();
   }
 
@@ -169,6 +170,96 @@
       toast(`已上傳 ${ok}／${fileList.length}：${file.name}`);
     }
     renderFiles();
+  }
+
+  // ---------- 報名管理 ----------
+  // 名單含姓名、Email、電話，RLS 只讓講師讀得到；這一頁不做刪除，
+  // 誤刪一筆報名，對方不會知道自己報名不見了——改狀態比較安全。
+  const SIGNUP_STATUS = {
+    registered: { label: '已報名', tone: 'ok' },
+    confirmed: { label: '已確認', tone: 'ok' },
+    waitlisted: { label: '候補中', tone: 'warn' },
+    cancelled: { label: '已取消', tone: 'muted' },
+  };
+
+  async function renderSignups() {
+    const body = $('[data-admin-body]');
+    const client = window.Members.client;
+    const [{ data: cohorts, error: e1 }, { data: rows, error: e2 }] = await Promise.all([
+      client.from('cohorts').select('*').order('sort_order'),
+      client.from('signups').select('*').order('created_at', { ascending: false }),
+    ]);
+    if (e1 || e2) {
+      const msg = (e1 || e2).message;
+      body.innerHTML = /relation|does not exist|schema cache/i.test(msg)
+        ? `<div class="card"><h3>⚠️ 還沒建立報名資料表</h3>
+            <p>到 Supabase → SQL Editor 執行一次 <code>supabase/add-signups.sql</code>，這一頁就會出現梯次與報名名單。</p></div>`
+        : `<div class="card"><h3>讀取失敗</h3><p>${esc(msg)}</p></div>`;
+      return;
+    }
+
+    const list = cohorts || [];
+    const signups = rows || [];
+    body.dataset.signupsCsv = window.CourseLib.toCSV([
+      ['梯次', '姓名', 'Email', '電話', '單位', '身分', '想解決的問題', '從哪知道', '狀態', '報名時間'],
+      ...signups.map((r) => [
+        (list.find((c) => c.id === r.cohort_id) || {}).name || '',
+        r.name, r.email, r.phone || '', r.org || '', r.role || '', r.goal || '', r.source || '',
+        (SIGNUP_STATUS[r.status] || {}).label || r.status,
+        new Date(r.created_at).toLocaleString('zh-TW'),
+      ]),
+    ]);
+
+    const cohortCards = list.length ? list.map((c) => {
+      const mine = signups.filter((r) => r.cohort_id === c.id);
+      const taken = mine.filter((r) => r.status === 'registered' || r.status === 'confirmed').length;
+      const waiting = mine.filter((r) => r.status === 'waitlisted').length;
+      const left = window.CourseLib.seatsLeft(c, taken);
+      return `<div class="card" style="margin-bottom:14px">
+        <div class="quiz-head">
+          <h3 style="margin:0">${esc(c.name)}　${c.is_open ? '<span class="pill pill-ok">開放中</span>' : '<span class="pill">未開放</span>'}</h3>
+          <button type="button" class="btn btn-sm" data-cohort-toggle="${esc(c.id)}" data-open="${c.is_open ? '1' : '0'}">${c.is_open ? '關閉報名' : '開放報名'}</button>
+        </div>
+        <p class="muted">${esc(c.schedule_text || '（時間待填）')}．${esc(c.place || '（地點待填）')}．${c.price === null || c.price === undefined ? '（費用待填）' : `NT$ ${Number(c.price).toLocaleString('zh-TW')}`}</p>
+        <p><b>已報名 ${taken}</b>${c.capacity ? `／${c.capacity} 位（還有 ${left} 位）` : '（不限人數）'}${waiting ? `．候補 ${waiting} 人` : ''}</p>
+      </div>`;
+    }).join('') : `<div class="card" style="margin-bottom:14px"><h3>還沒有梯次</h3>
+        <p>梯次目前直接在 Supabase 的 <code>cohorts</code> 資料表新增（名稱、時間、地點、費用、名額），存檔後按上面的「開放報名」就會出現在招生頁。</p>
+        <p class="muted">刻意不做後台新增：梯次一年只開幾次，在 Supabase 填一次比維護一個表單畫面划算。</p></div>`;
+
+    const rowsHtml = signups.map((r) => {
+      const st = SIGNUP_STATUS[r.status] || { label: r.status, tone: '' };
+      const cohort = list.find((c) => c.id === r.cohort_id);
+      return `<tr>
+        <td>${esc(r.name)}<br><small class="muted">${esc(r.email)}${r.phone ? `<br>${esc(r.phone)}` : ''}</small></td>
+        <td>${esc(cohort ? cohort.name : '—')}</td>
+        <td>${esc(r.org || '—')}${r.role ? `<br><small class="muted">${esc(r.role)}</small>` : ''}</td>
+        <td>${r.goal ? esc(r.goal) : '<span class="muted">—</span>'}</td>
+        <td><span class="pill pill-${st.tone}">${esc(st.label)}</span></td>
+        <td><small class="muted">${new Date(r.created_at).toLocaleDateString('zh-TW')}</small></td>
+        <td>
+          <select data-signup-status="${esc(r.id)}">
+            ${Object.entries(SIGNUP_STATUS).map(([k, v]) => `<option value="${k}" ${r.status === k ? 'selected' : ''}>${esc(v.label)}</option>`).join('')}
+          </select>
+          <button type="button" class="btn btn-sm btn-ghost" data-copy-mail="${esc(r.email)}">📋 Email</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    body.innerHTML = `<div class="card" style="margin-bottom:18px">
+        <h3>📝 報名管理</h3>
+        <p>招生頁的報名會進到這裡。名單含姓名、Email、電話，<b>只有講師讀得到</b>（前台只能寫入）。</p>
+        <p class="muted">額滿時系統會自動把人排成候補；有人取消後，把候補的人改成「已報名」即可遞補，記得寄信通知他。</p>
+      </div>
+      ${cohortCards}
+      <div class="card">
+        <div class="quiz-head"><h3 style="margin:0">報名名單（${signups.length}）</h3>
+          <button type="button" class="btn btn-sm" data-export="signups">⬇️ 匯出 CSV</button></div>
+        ${signups.length ? `<div class="table-wrap"><table class="roster">
+          <thead><tr><th>報名者</th><th>梯次</th><th>單位</th><th>想解決的問題</th><th>狀態</th><th>報名日</th><th>操作</th></tr></thead>
+          <tbody>${rowsHtml}</tbody></table></div>`
+        : '<p class="muted">還沒有人報名。梯次開放後，招生頁就會出現報名表。</p>'}
+      </div>`;
   }
 
   // ---------- 卡關分析 ----------
@@ -389,6 +480,15 @@
     });
   });
 
+  host.addEventListener('change', async (e) => {
+    const sel = e.target.closest('[data-signup-status]');
+    if (!sel) return;
+    const { error } = await window.Members.client.from('signups')
+      .update({ status: sel.value, updated_at: new Date().toISOString() }).eq('id', sel.dataset.signupStatus);
+    toast(error ? `更新失敗：${error.message}` : '已更新報名狀態');
+    if (!error) renderSignups();
+  });
+
   host.addEventListener('click', async (e) => {
     const t = e.target.closest('[data-admin-tab]');
     if (t) { tab = t.dataset.adminTab; render(); return; }
@@ -396,14 +496,29 @@
     if (exp) {
       const body = $('[data-admin-body]');
       const kind = exp.dataset.export;
-      const text = kind === 'members' ? body.dataset.membersCsv : body.dataset.stuckCsv;
-      download(kind === 'members' ? '會員名單.csv' : '各單元作答狀況.csv', text || '');
+      const text = { members: body.dataset.membersCsv, stuck: body.dataset.stuckCsv, signups: body.dataset.signupsCsv }[kind];
+      download({ members: '會員名單.csv', stuck: '各單元作答狀況.csv', signups: '報名名單.csv' }[kind] || '匯出.csv', text || '');
       return;
     }
     const classCsv = e.target.closest('[data-class-csv]');
     if (classCsv) {
       const box = host.querySelector(`[data-csv-for="${classCsv.dataset.classCsv}"]`);
       download('班級進度.csv', box ? box.value : '');
+      return;
+    }
+    const copyMail = e.target.closest('[data-copy-mail]');
+    if (copyMail) {
+      navigator.clipboard.writeText(copyMail.dataset.copyMail).then(() => toast('Email 已複製'), () => toast('複製失敗，請手動選取'));
+      return;
+    }
+    const cohortToggle = e.target.closest('[data-cohort-toggle]');
+    if (cohortToggle) {
+      const open = cohortToggle.dataset.open !== '1';
+      const { error } = await window.Members.client.from('cohorts')
+        .update({ is_open: open }).eq('id', cohortToggle.dataset.cohortToggle);
+      if (error) { toast(`更新失敗：${error.message}`); return; }
+      toast(open ? '這個梯次已開放報名' : '已關閉報名');
+      renderSignups();
       return;
     }
     const copyCode = e.target.closest('[data-copy-code]');

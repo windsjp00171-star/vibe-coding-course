@@ -535,7 +535,49 @@
     return { calls, aiLoad, notices, rows, level };
   }
 
-  const api = { estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  // 「這個人現在按下送出會怎樣」——整站只有這一份實作。
+  // 這套規則移植自教會活動報名系統，那裡學到的教訓是：
+  // 判斷寫在送出的路由裡、頁面自己另外判斷一次，結果就是
+  // 「頁面說可以報、填完按下去才說額滿」——那比一開始就說額滿更糟，因為他已經填完了。
+  const SEAT = { OK: 'ok', WAITLIST: 'waitlist', FULL: 'full', WAITLIST_CLOSED: 'waitlist_closed', CLOSED: 'closed', NOT_YET: 'not_yet', ENDED: 'ended' };
+
+  const SEAT_MESSAGE = {
+    [SEAT.OK]: '還有名額，填完就完成報名',
+    [SEAT.WAITLIST]: '正取已額滿，可以排候補；有人取消會依報名順序遞補',
+    [SEAT.FULL]: '報名人數已達上限',
+    [SEAT.WAITLIST_CLOSED]: '候補名單已截止',
+    [SEAT.CLOSED]: '這個梯次尚未開放報名',
+    [SEAT.NOT_YET]: '報名還沒開始',
+    [SEAT.ENDED]: '報名已截止',
+  };
+
+  function toTime(value) {
+    if (!value) return null;
+    const t = Date.parse(String(value).replace(' ', 'T'));
+    return Number.isNaN(t) ? null : t; // 時間格式壞掉時回 null＝不擋人：設定錯不該變成擋人
+  }
+
+  function seatVerdict(cohort, taken = 0, now = Date.now()) {
+    if (!cohort || cohort.is_open === false) return SEAT.CLOSED;
+    const start = toTime(cohort.reg_start);
+    const end = toTime(cohort.reg_end);
+    if (start !== null && now < start) return SEAT.NOT_YET;
+    if (end !== null && now > end) return SEAT.ENDED;
+    const cap = Number(cohort.capacity) || 0;
+    if (!cap || taken < cap) return SEAT.OK;
+    if (!cohort.waitlist_enabled) return SEAT.FULL;
+    const deadline = toTime(cohort.waitlist_deadline);
+    if (deadline !== null && now > deadline) return SEAT.WAITLIST_CLOSED;
+    return SEAT.WAITLIST;
+  }
+
+  // 還剩幾位。沒設名額就回 null（不顯示數字，而不是顯示 0）
+  function seatsLeft(cohort, taken = 0) {
+    const cap = Number(cohort?.capacity) || 0;
+    return cap ? Math.max(0, cap - taken) : null;
+  }
+
+  const api = { SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;
