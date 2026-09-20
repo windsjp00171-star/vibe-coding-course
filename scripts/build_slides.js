@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const PptxGenJS = require('./node_modules/pptxgenjs');
+const QRCode = require('./node_modules/qrcode');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'teacher', 'slides');
@@ -53,6 +54,25 @@ function notesFor(mod, slots) {
   return slots.map((s) => mod.notes[s]).filter(Boolean).join('\n\n');
 }
 function sectionUrl(mod, sec) { return `${SITE}/${mod.file}${sec && sec.id ? `#${sec.id}` : ''}`; }
+
+
+// 投影幕上的網址學員打不動，旁邊放一個 QR code 讓他們用手機掃。
+// addImage 只吃同步資料，所以整份簡報用到的網址先一次算完存起來。
+const QR = new Map();
+async function prepareQR(urls) {
+  for (const url of urls) {
+    if (QR.has(url)) continue;
+    QR.set(url, await QRCode.toDataURL(url, { margin: 1, width: 360, errorCorrectionLevel: 'M' }));
+  }
+}
+
+function addQR(slide, url, x, y, size, caption = '手機掃這裡') {
+  const data = QR.get(url);
+  if (!data) return;
+  slide.addShape('roundRect', { x: x - 0.12, y: y - 0.12, w: size + 0.24, h: size + 0.62, rectRadius: 0.08, fill: { color: 'FFFFFF' }, line: { type: 'none' } });
+  slide.addImage({ data, x, y, w: size, h: size });
+  slide.addText(caption, { x: x - 0.12, y: y + size + 0.02, w: size + 0.24, h: 0.34, fontFace: FONT, fontSize: 10, bold: true, color: C.muted, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
+}
 
 function header(slide, sec, color = C.brand) {
   slide.addText(sec.num || '', { x: M, y: 0.35, w: 1.4, h: 0.9, fontFace: 'Arial', fontSize: 44, bold: true, color: 'A5B4FC', margin: 0, isTextBox: true });
@@ -181,7 +201,8 @@ function interactiveSlide(pres, mod, sec) {
   s.addText('▶', { x: M + 0.6, y: 2.5, w: 1.6, h: 1.6, fontFace: 'Arial', fontSize: 40, color: 'FFFFFF', align: 'center', valign: 'middle', margin: 0, isTextBox: true });
   s.addText('打開網站，一起動手玩', { x: M + 2.6, y: 2.45, w: 8.5, h: 0.7, fontFace: FONT, fontSize: 26, bold: true, color: C.ink, margin: 0, isTextBox: true });
   s.addText(sec.intro || sec.analogy || '', { x: M + 2.6, y: 3.2, w: 8.5, h: 1.5, fontFace: FONT, fontSize: fitSize(sec.intro || sec.analogy, 8.5, 1.5, 17, 12), color: C.muted, margin: 0, valign: 'top', isTextBox: true });
-  s.addText(sectionUrl(mod, sec), { x: M + 2.6, y: 4.9, w: 9, h: 0.5, fontFace: MONO, fontSize: 13, color: C.brandInk, margin: 0, isTextBox: true, hyperlink: { url: sectionUrl(mod, sec) } });
+  s.addText(sectionUrl(mod, sec), { x: M + 2.6, y: 4.9, w: 7.2, h: 0.5, fontFace: MONO, fontSize: 13, color: C.brandInk, margin: 0, isTextBox: true, hyperlink: { url: sectionUrl(mod, sec) } });
+  addQR(s, sectionUrl(mod, sec), W - M - 1.9, 2.5, 1.7);
   footer(s, mod, sec.title);
   s.addNotes(notesFor(mod, sec.slots) || '按投影模式（快捷鍵 P）直接在網站上帶學員操作。');
 }
@@ -251,7 +272,8 @@ function closingSlide(pres, mod, next) {
   s.addText('下次見！', { x: M, y: 1.6, w: 9, h: 1.2, fontFace: FONT, fontSize: 54, bold: true, color: 'FFFFFF', margin: 0, isTextBox: true });
   s.addText(next ? `下一單元：${courseTitle(next.id)}` : '恭喜完成課程', { x: M, y: 3.0, w: 11, h: 0.7, fontFace: FONT, fontSize: 22, color: C.ice, margin: 0, isTextBox: true });
   s.addText('課前自學網站', { x: M, y: 4.2, w: 11, h: 0.45, fontFace: FONT, fontSize: 16, bold: true, color: C.ice, margin: 0, isTextBox: true });
-  s.addText(`${SITE}/`, { x: M, y: 4.7, w: 11, h: 0.5, fontFace: MONO, fontSize: 16, color: C.amber, margin: 0, isTextBox: true, hyperlink: { url: `${SITE}/` } });
+  s.addText(`${SITE}/`, { x: M, y: 4.7, w: 8.4, h: 0.5, fontFace: MONO, fontSize: 16, color: C.amber, margin: 0, isTextBox: true, hyperlink: { url: `${SITE}/` } });
+  addQR(s, `${SITE}/`, W - M - 2.2, 3.4, 2.0, '掃這裡打開課程網站');
 }
 
 // ---------- 依內容選版型 ----------
@@ -264,7 +286,8 @@ function sectionSlides(pres, mod, sec) {
   if (sec.prompt) promptSlide(pres, mod, sec);
 }
 
-function buildDeck(mod, next) {
+async function buildDeck(mod, next) {
+  await prepareQR([`${SITE}/`, ...mod.sections.filter((sec) => sec.interactive).map((sec) => sectionUrl(mod, sec))]);
   const pres = new PptxGenJS();
   pres.layout = 'LAYOUT_WIDE';
   pres.title = `${mod.eyebrow}｜Vibe Coding 實戰課`;

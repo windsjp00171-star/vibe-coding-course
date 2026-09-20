@@ -127,7 +127,7 @@
     const blocks = FOLDERS.map((f, i) => {
       const files = (lists[i].data || []).filter((x) => x.name && !x.name.startsWith('.'));
       const rows = files.map((x) => `<tr>
-        <td>${esc(x.name)}</td>
+        <td>${esc(window.CourseLib.storageLabel(x.name))}</td>
         <td>${sizeText(x.metadata?.size || 0)}</td>
         <td>${x.updated_at ? new Date(x.updated_at).toLocaleDateString('zh-TW') : ''}</td>
         <td><button type="button" class="btn btn-sm" data-dl="${esc(f.id)}/${esc(x.name)}">⬇️ 下載</button>
@@ -158,7 +158,7 @@
     const store = window.Members.client.storage.from(BUCKET);
     let ok = 0;
     for (const file of fileList) {
-      const { error } = await store.upload(`${folder}/${file.name}`, file, { upsert: true });
+      const { error } = await store.upload(`${folder}/${window.CourseLib.storageKey(file.name)}`, file, { upsert: true });
       if (error) {
         const needSql = /bucket|not found|policy|security|denied|permission/i.test(error.message);
         toast(needSql ? '上傳失敗：請先到 Supabase 執行 supabase/add-teacher-files.sql' : `${file.name} 上傳失敗：${error.message}`);

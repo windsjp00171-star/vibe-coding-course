@@ -383,7 +383,41 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  // Supabase Storage 的檔名只收 ASCII，中文檔名會被擋下來（Invalid key）。
+  // 作法：中文檔名編碼成 u_xxx 當儲存用的名字，畫面上再還原成原本的中文。
+  const SAFE_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+  function b64url(text) {
+    const bytes = new TextEncoder().encode(text);
+    let binary = '';
+    bytes.forEach((b) => { binary += String.fromCharCode(b); });
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function unb64url(text) {
+    const padded = text.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((text.length + 3) % 4);
+    const binary = atob(padded);
+    return new TextDecoder().decode(Uint8Array.from(binary, (c) => c.charCodeAt(0)));
+  }
+
+  function storageKey(name) {
+    if (SAFE_NAME.test(name)) return name;
+    const dot = name.lastIndexOf('.');
+    const ext = dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
+    const safeExt = /^[a-z0-9]{1,8}$/.test(ext) ? `.${ext}` : '';
+    return `u_${b64url(dot > 0 ? name.slice(0, dot) : name)}${safeExt}`;
+  }
+
+  function storageLabel(key) {
+    const name = String(key).split('/').pop();
+    if (!name.startsWith('u_')) return name;
+    const dot = name.lastIndexOf('.');
+    const body = name.slice(2, dot > 2 ? dot : undefined);
+    const ext = dot > 2 ? name.slice(dot) : '';
+    try { return unb64url(body) + ext; } catch { return name; }
+  }
+
+  const api = { storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

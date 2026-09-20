@@ -3,6 +3,7 @@
   "private": true,
   "description": "產生課程簡報的工具（node_modules 不進版控）",
   "dependencies": {
-    "pptxgenjs": "3.12.0"
+    "pptxgenjs": "3.12.0",
+    "qrcode": "^1.5.4"
   }
 }
