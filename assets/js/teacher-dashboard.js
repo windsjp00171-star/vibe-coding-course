@@ -88,7 +88,17 @@
   const BUCKET = 'teacher-files';
   const FOLDERS = [
     { id: 'slides', label: '📊 課程簡報', hint: '每單元一份 .pptx，講者備忘稿含教學提示與測驗答案' },
-    { id: 'kahoot', label: '🎯 Kahoot 題庫', hint: '每單元一份 .xlsx，可匯入 kahoot.com；站內搶答不需要這個' },
+    { id: 'kahoot', label: '🎯 Kahoot 題庫', hint: '每單元一份 .xlsx，含答案。想用線上版 Kahoot 才需要；站內的「🎯 課堂搶答」不用匯入。',
+      steps: `<details class="files-steps"><summary><b>怎麼用？（5 步驟）</b></summary>
+        <ol>
+          <li>在下面按「⬇️ 下載」，取得那一單元的 <code>.xlsx</code>（例如 <code>kahoot-m4.xlsx</code>）。</li>
+          <li>到 <a href="https://kahoot.com" target="_blank" rel="noopener">kahoot.com</a> 登入 → 按 <b>Create</b> → 選 <b>Kahoot</b>。</li>
+          <li>在編輯畫面找 <b>Import spreadsheet</b>（新增題目的選單裡，或右下角）→ 上傳剛剛那個檔案 → 確認題目 → 儲存。</li>
+          <li>上課時按 <b>Start</b> → 選 <b>Live（Classic）</b>，投影幕會出現一組 PIN 碼。</li>
+          <li>學員用手機打開 <b>kahoot.it</b>，輸入 PIN 和暱稱就能搶答。</li>
+        </ol>
+        <p class="muted">匯入失敗的話：在同一個視窗點 <b>Download template</b> 下載官方範本，打開我們的檔案選取 B9 到最後一題，複製貼到範本的第一題位置，再匯入一次。<br>
+        另外，部分 Kahoot 方案不提供「匯入試算表」。你的帳號如果沒有這個選項，直接用站內的「🎯 課堂搶答」就好，不用匯入、不用 PIN 碼。</p></details>` },
     { id: 'handbook', label: '📘 學習手冊', hint: '必修版與完整版 PDF，各有學員版與講師版' },
   ];
   const sizeText = (n) => (n > 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
@@ -118,7 +128,7 @@
         <div class="quiz-head"><h3 style="margin:0">${f.label}</h3>
           <label class="btn btn-sm btn-ghost" style="cursor:pointer">⬆️ 上傳／更新
             <input type="file" multiple hidden data-up="${f.id}"></label></div>
-        <p class="muted">${f.hint}</p>
+        <p class="muted">${f.hint}</p>${f.steps || ''}
         ${files.length ? `<div class="table-wrap"><table class="roster"><thead><tr><th>檔名</th><th>大小</th><th>更新日期</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table></div>`
         : '<p class="muted">這個資料夾還沒有檔案。按右上角「上傳／更新」把電腦上的 teacher 資料夾內容傳上來。</p>'}
       </div>`;
