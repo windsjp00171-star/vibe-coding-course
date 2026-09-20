@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的學習｜Vibe Coding 實戰課</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609200918">
+  <style>
+    .me-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); gap: 20px; align-items: start; }
+    @media (max-width: 760px) { .me-top { grid-template-columns: 1fr; } }
+    .me-ring { display: grid; place-items: center; width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 10px;
+      background: conic-gradient(var(--brand) calc(var(--p) * 1%), var(--paper-2) 0); }
+    .me-ring b { display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%; background: var(--card); font-size: 1.6rem; font-family: "Inter", sans-serif; }
+    .me-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+    .me-row { display: grid; grid-template-columns: auto auto 1fr auto auto; gap: 10px; align-items: center;
+      border: 1.5px solid var(--line); border-radius: var(--radius-m); padding: 9px 12px; background: var(--card); }
+    .me-row.is-done { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
+    .me-row.is-locked { opacity: .55; }
+    .me-num { font-family: "Inter", sans-serif; font-weight: 900; color: transparent; -webkit-text-stroke: 1.2px var(--brand); min-width: 1.6em; text-align: center; }
+    .me-title { font-weight: 700; }
+    .me-score { font-weight: 800; color: var(--ok); font-variant-numeric: tabular-nums; }
+    .me-part { font-size: .8rem; font-weight: 800; color: var(--muted); letter-spacing: .06em; margin: 14px 0 6px; }
+  </style>
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">我的學習</span>
+    <h1 data-me-hello>我的<em>學習紀錄</em></h1>
+    <p class="lead" data-me-sub>這一頁顯示你的暱稱、班級狀態和每個單元的成績。</p>
+  </section>
+
+  <section class="slide" data-me-body>
+    <p class="muted">載入中……</p>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="index.html">回課程首頁</a>．<a href="glossary.html">名詞小辭典</a>．<a href="privacy.html">隱私權政策</a></div></footer>
+
+<script src="assets/js/lib.js?v=202609200918"></script>
+<script src="assets/js/quiz-bank.js?v=202609200918"></script>
+<script src="assets/js/config.js?v=202609200918"></script>
+<script src="assets/js/core.js?v=202609200918"></script>
+<script src="assets/js/members.js?v=202609200918"></script>
+<script src="assets/js/tour.js?v=202609200918"></script>
+<script src="assets/js/me.js?v=202609200918"></script>
+</body>
+</html>

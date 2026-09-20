@@ -8,9 +8,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609200914">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609200918">
   <style>
     .roster { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .admin-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+    .admin-tools .chip-row { flex: 1 1 auto; }
+    .admin-search { font: inherit; font-size: .9rem; padding: 7px 12px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); min-width: 12em; }
+    .admin-search:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+    .grid-4 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
     .roster th.col-closed { opacity: .4; }
     .open-until { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 700; margin: 10px 0 4px; }
     .open-until select { font: inherit; font-weight: 500; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
@@ -38,11 +43,11 @@
 
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．講師後台　所有資料權限由資料庫把關，學員看不到其他人的進度。</div></footer>
 
-<script src="assets/js/lib.js?v=202609200914"></script>
-<script src="assets/js/config.js?v=202609200914"></script>
-<script src="assets/js/core.js?v=202609200914"></script>
-<script src="assets/js/members.js?v=202609200914"></script>
-<script src="assets/js/tour.js?v=202609200914"></script>
-<script src="assets/js/teacher-dashboard.js?v=202609200914"></script>
+<script src="assets/js/lib.js?v=202609200918"></script>
+<script src="assets/js/config.js?v=202609200918"></script>
+<script src="assets/js/core.js?v=202609200918"></script>
+<script src="assets/js/members.js?v=202609200918"></script>
+<script src="assets/js/tour.js?v=202609200918"></script>
+<script src="assets/js/teacher-dashboard.js?v=202609200918"></script>
 </body>
 </html>

@@ -142,8 +142,10 @@
     const adminLink = profile?.role === 'teacher'
       ? `<a class="btn btn-sm btn-ghost" href="${document.body.dataset.base || './'}teacher.html" title="開通會員、邀請講師、開班級、看進度">🛠️ 管理後台</a> `
       : '';
+    const base = document.body.dataset.base || './';
+    const meLink = `<a class="btn btn-sm btn-ghost" href="${base}me.html" title="看自己的進度、改顯示名稱">📈 我的學習</a> `;
     slot.innerHTML = user
-      ? `${adminLink}<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
+      ? `${adminLink}${meLink}<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
       : '<button type="button" class="btn btn-sm btn-ghost" data-auth="in" title="用 Google 登入，換電腦也能接著學">☁️ 登入保存進度</button>';
   }
 

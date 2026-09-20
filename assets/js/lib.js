@@ -265,6 +265,15 @@
     return hits;
   }
 
+  // ---- 匯出 CSV（講師後台）----
+  // 逗號、引號、換行都要跳脫，Excel 打開才不會整份錯位
+  function toCSV(rows) {
+    return rows.map((row) => row.map((cell) => {
+      const value = cell === null || cell === undefined ? '' : String(cell);
+      return /[",\n\r]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
+    }).join(',')).join('\r\n');
+  }
+
   // ---- 資料整理（單元 17）----
   // 只做「格式」的整理：去空白、全形轉半形、日期統一。金額一律不動，算錢交給試算表公式。
   const FULLWIDTH_OFFSET = 0xfee0;
@@ -374,7 +383,7 @@
     return { rows, hasBefore: rows.some((r) => r.before !== null) };
   }
 
-  const api = { cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;
