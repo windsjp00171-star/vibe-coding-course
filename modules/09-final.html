@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609201840">
-  <link rel="stylesheet" href="../assets/css/final.css?v=202609201840">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609201913">
+  <link rel="stylesheet" href="../assets/css/final.css?v=202609201913">
 </head>
 <body data-module="m9" data-base="../">
 <header data-course-header></header>
@@ -40,7 +40,7 @@
 
   <section class="slide" id="certificate" data-tour="cert">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">結業證書</span><h2>你的證書</h2><p>輸入想印在證書上的名字。證書只存在你的電腦，不會上傳到任何地方。</p></div></div>
+      <div><span class="kicker">結業證書</span><h2>你的證書</h2><p>輸入想印在證書上的名字。證書預設只存在你的電腦；登入後可以另外產生一組編號，別人就能自己上網查證真假。</p></div></div>
     <div class="split screen-only" style="margin-bottom:20px">
       <label class="form-grid"><b>證書上的名字</b><input type="text" data-cert-name maxlength="20" placeholder="例如：王小明"></label>
       <div data-cert-status aria-live="polite"></div>
@@ -53,9 +53,14 @@
         <p class="cert-body">已完成「Vibe Coding 實戰課」必修十個單元與總測驗，<br>具備使用 Claude Code 從本機開發、版本管理、部署上線，<br>到辨識 AI 資安風險的基本能力。</p>
         <ul class="cert-skills"><li>AI 基礎常識</li><li>與 AI 協作</li><li>Git ＆ GitHub</li><li>部署上線</li><li>金鑰與個資保護</li><li>AI 攻擊防護</li><li>AI 詐騙辨識</li><li>上線前檢查</li></ul>
         <div class="cert-foot"><span data-cert-date></span><span class="cert-seal" aria-hidden="true">V</span><span data-cert-score></span></div>
+        <p class="cert-verify" data-cert-verify hidden></p>
       </div>
     </div>
-    <p class="screen-only" style="margin-top:14px"><button type="button" class="btn btn-primary" data-cert-print disabled>🖨️ 列印證書（也可以存成 PDF）</button></p>
+    <p class="screen-only" style="margin-top:14px">
+      <button type="button" class="btn btn-primary" data-cert-print disabled>🖨️ 列印證書（也可以存成 PDF）</button>
+      <button type="button" class="btn" data-cert-issue hidden>🔗 產生可驗證的證書編號</button>
+    </p>
+    <div class="screen-only" data-cert-issue-out aria-live="polite"></div>
   </section>
 
   <section class="slide" id="growth" data-tour="growth">
@@ -107,14 +112,14 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 09</div></footer>
 
-<script src="../assets/js/lib.js?v=202609201840"></script>
-<script src="../assets/js/quiz-bank.js?v=202609201840"></script>
-<script src="../assets/js/config.js?v=202609201840"></script>
-<script src="../assets/js/core.js?v=202609201840"></script>
-<script src="../assets/js/members.js?v=202609201840"></script>
-<script src="../assets/js/tour.js?v=202609201840"></script>
-<script src="../assets/js/glossary-data.js?v=202609201840"></script>
-<script src="../assets/js/glossary.js?v=202609201840"></script>
-<script src="../assets/js/modules/m9.js?v=202609201840"></script>
+<script src="../assets/js/lib.js?v=202609201913"></script>
+<script src="../assets/js/quiz-bank.js?v=202609201913"></script>
+<script src="../assets/js/config.js?v=202609201913"></script>
+<script src="../assets/js/core.js?v=202609201913"></script>
+<script src="../assets/js/members.js?v=202609201913"></script>
+<script src="../assets/js/tour.js?v=202609201913"></script>
+<script src="../assets/js/glossary-data.js?v=202609201913"></script>
+<script src="../assets/js/glossary.js?v=202609201913"></script>
+<script src="../assets/js/modules/m9.js?v=202609201913"></script>
 </body>
 </html>

@@ -417,7 +417,32 @@
     try { return unb64url(body) + ext; } catch { return name; }
   }
 
-  const api = { storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  // 結業證書編號。別人要驗證真假，只能用完整編號查，所以編號要夠長、
+  // 而且不能有 0/O、1/I 這種抄錯的字。顯示時每 4 碼加一個連字號比較好念。
+  const CERT_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const CERT_LENGTH = 10;
+
+  function certCode(bytes) {
+    let out = 'VC';
+    for (let i = 0; i < CERT_LENGTH; i += 1) out += CERT_CHARS[bytes[i] % CERT_CHARS.length];
+    return out;
+  }
+
+  function normalizeCertCode(input) {
+    return String(input || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  }
+
+  function formatCertCode(code) {
+    return normalizeCertCode(code).replace(/(.{4})(?=.)/g, '$1-');
+  }
+
+  function isCertCode(input) {
+    const code = normalizeCertCode(input);
+    if (!code.startsWith('VC') || code.length !== CERT_LENGTH + 2) return false;
+    return [...code.slice(2)].every((ch) => CERT_CHARS.includes(ch));
+  }
+
+  const api = { certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

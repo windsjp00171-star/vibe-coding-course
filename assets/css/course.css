@@ -529,3 +529,6 @@ body.is-locked [data-module-nav] { display: none; }
   .term-pop { display: none !important; }
   .tour-backdrop, .tour-spot, .tour-pop { display: none !important; }
 }
+
+/* 證書上的驗證編號 */
+.cert-verify { margin: 10px 0 0; font-size: .78rem; letter-spacing: .04em; color: #6b6880; text-align: center; }

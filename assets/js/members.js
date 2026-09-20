@@ -203,12 +203,55 @@
     return data;
   }
 
+  // ---------- 結業證書 ----------
+  // 證書本身是列印出來的紙，光靠紙沒辦法證明真假；
+  // 所以發證時在雲端留一筆，證書上印編號，任何人都能用 verify.html 查。
+  async function issueCertificate(displayName, score) {
+    await ready;
+    if (!user) throw new Error('請先登入');
+    const existing = await myCertificate();
+    if (existing) {
+      // 重考更高分或改名字時更新同一張，不再發新編號
+      if (existing.display_name === displayName && existing.score >= score) return existing;
+      const { data, error } = await client.from('certificates')
+        .update({ display_name: displayName, score: Math.max(score, existing.score) })
+        .eq('user_id', user.id).select().maybeSingle();
+      if (error) throw new Error(error.message);
+      return data;
+    }
+    const bytes = crypto.getRandomValues(new Uint8Array(window.CourseLib.CERT_LENGTH));
+    const code = window.CourseLib.certCode(bytes);
+    const { data, error } = await client.from('certificates')
+      .insert({ user_id: user.id, code, display_name: displayName, score }).select().maybeSingle();
+    if (error) throw new Error(error.message);
+    return data;
+  }
+
+  async function myCertificate() {
+    await ready;
+    if (!user) return null;
+    const { data, error } = await client.from('certificates').select('code, display_name, score, issued_at')
+      .eq('user_id', user.id).maybeSingle();
+    if (error) return null;
+    return data;
+  }
+
+  async function verifyCertificate(code) {
+    await ready;
+    const { data, error } = await client.rpc('verify_certificate', { cert_code: code });
+    if (error) throw new Error(error.message);
+    return (data && data[0]) || null;
+  }
+
   window.Members = {
     enabled,
     ready,
     signIn,
     signOut,
     joinClass,
+    issueCertificate,
+    myCertificate,
+    verifyCertificate,
     get user() { return user; },
     get profile() { return profile; },
     access,

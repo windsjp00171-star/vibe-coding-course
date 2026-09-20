@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>證書查證｜Vibe Coding 實戰課</title>
+  <meta name="description" content="輸入結業證書編號，確認這張 Vibe Coding 實戰課證書是否由本課程核發。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609201913">
+  <link rel="stylesheet" href="assets/css/works.css?v=202609201913">
+  <style>
+    .vf-wrap { max-width: 640px; margin-inline: auto; }
+    .vf-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .vf-form input { flex: 1 1 260px; font: inherit; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; padding: 12px 16px; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+    .vf-result { margin-top: 22px; padding: 22px 24px; border-radius: var(--radius-l); border: 1.5px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
+    .vf-result b { font-size: 1.15rem; }
+    .vf-result p { margin: 8px 0 0; color: var(--muted); }
+    .vf-ok { border-color: var(--ok); background: var(--ok-soft); }
+    .vf-bad { border-color: var(--danger); background: var(--danger-soft); }
+    .vf-warn { border-color: var(--warn); background: var(--warn-soft); }
+    .vf-fields { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 16px 0 0; }
+    .vf-fields dt { font-weight: 800; color: var(--muted); font-size: .9rem; }
+    .vf-fields dd { margin: 0; font-weight: 700; }
+  </style>
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap vf-wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">公開查證</span>
+    <h1>這張<em>結業證書</em>是真的嗎？</h1>
+    <p class="lead">輸入證書上的編號（VC 開頭、12 碼），就能確認是不是由本課程核發。查證不需要登入。</p>
+    <form class="vf-form" data-vf-form>
+      <input type="text" data-vf-input maxlength="16" placeholder="VCH7-K2M9-QX4T" aria-label="證書編號" autocomplete="off">
+      <button type="submit" class="btn btn-primary">查證</button>
+    </form>
+    <div data-vf-out></div>
+  </section>
+
+  <section class="slide">
+    <div class="card">
+      <h3>關於這個查證服務</h3>
+      <ul>
+        <li>只能用<b>完整編號</b>查，不提供學員名單查詢。</li>
+        <li>查到的結果只有姓名、總測驗分數與結業日期，沒有聯絡方式或其他個資。</li>
+        <li>查不到不代表對方造假，也可能是編號抄錯一個字——建議請對方再確認一次。</li>
+        <li>對結果有疑問，可以直接聯絡課程講師。</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
+
+<script src="assets/js/lib.js?v=202609201913"></script>
+<script src="assets/js/config.js?v=202609201913"></script>
+<script src="assets/js/core.js?v=202609201913"></script>
+<script src="assets/js/members.js?v=202609201913"></script>
+<script src="assets/js/tour.js?v=202609201913"></script>
+<script src="assets/js/verify.js?v=202609201913"></script>
+</body>
+</html>

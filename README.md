@@ -46,6 +46,8 @@ node --test tests/*.test.js
 ```
 index.html              對外首頁（分流：想學做東西／要辦資安宣導／已是學員）
 learn.html              學員的課程首頁與課程地圖
+works.html              學員作品牆（開課前為講師示範＋保留席次）
+verify.html             結業證書公開查證（需先執行 supabase/add-certificates.sql）
 modules/                各單元頁面
 assets/css/course.css   共用樣式（設計 token、講師模式、投影、列印）
 assets/js/core.js       共用骨架：頁首、模式、進度、測驗引擎、計時器

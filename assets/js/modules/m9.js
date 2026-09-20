@@ -50,6 +50,51 @@
       : `<div class="callout callout-warn">總測驗 ${FINAL_PASS_PERCENT} 分以上才能列印證書。</div>`;
   }
 
+  // ---------- 可驗證的證書編號 ----------
+  // 紙本證書沒辦法自證真假，所以另外在雲端留一筆，證書上印編號給對方查。
+  const VERIFY_BASE = `${location.origin}${location.pathname.replace(/modules\/[^/]+$/, '')}verify.html`;
+
+  function showCode(cert) {
+    const code = window.CourseLib.formatCertCode(cert.code);
+    const link = `${VERIFY_BASE}?c=${cert.code}`;
+    $('[data-cert-verify]').hidden = false;
+    $('[data-cert-verify]').innerHTML = `證書編號 ${esc(code)}　｜　查證網址 ${esc(VERIFY_BASE.replace(/^https?:\/\//, ''))}`;
+    $('[data-cert-issue-out]').innerHTML = `<div class="feedback ok" style="margin-top:12px">
+      <b>證書編號：${esc(code)}</b><br>
+      把這個連結給對方，他就能查到你的姓名、分數與結業日期（不會看到其他資料）：<br>
+      <a href="${esc(link)}" target="_blank" rel="noopener">${esc(link)}</a></div>`;
+    $('[data-cert-issue]').textContent = '🔄 更新證書上的名字或分數';
+  }
+
+  async function loadCode() {
+    const btn = $('[data-cert-issue]');
+    if (!window.Members?.enabled) { btn.hidden = true; return; }
+    btn.hidden = false;
+    const cert = await window.Members.myCertificate();
+    if (cert) showCode(cert);
+  }
+
+  $('[data-cert-issue]').addEventListener('click', async () => {
+    const btn = $('[data-cert-issue]');
+    const state = getState();
+    if (!state.finalScore || !state.name) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先通過總測驗並填上名字。</div>'; return; }
+    btn.disabled = true;
+    try {
+      const cert = await window.Members.issueCertificate(state.name, state.finalScore);
+      showCode(cert);
+    } catch (err) {
+      const needSql = /relation|does not exist|function|schema cache/i.test(err.message);
+      $('[data-cert-issue-out]').innerHTML = `<div class="feedback bad" style="margin-top:12px">${needSql
+        ? '還沒建立證書資料表：請講師到 Supabase 執行一次 supabase/add-certificates.sql。'
+        : err.message === '請先登入' ? '請先按右上角「登入保存進度」，才能產生可驗證的編號。' : esc(err.message)}</div>`;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  loadCode();
+  document.addEventListener('course:auth', loadCode);
+
   $('[data-cert-name]').addEventListener('input', (e) => { update({ name: e.target.value.trim().slice(0, 20) }); renderCert(); });
   $('[data-cert-print]').addEventListener('click', () => {
     document.documentElement.classList.add('print-cert');

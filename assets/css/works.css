@@ -1,0 +1,37 @@
+/* works.css — 學員作品牆。保留席次刻意做成虛線空位，看得出來是「還沒有人」而不是「沒東西」。 */
+
+.wk-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.wk-count { font-weight: 800; color: var(--brand); font-size: .95rem; }
+
+.wk-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+
+.wk-card {
+  display: grid; gap: 10px; align-content: start; padding: 22px 24px;
+  border-radius: var(--radius-l); background: var(--card); border: 1.5px solid var(--line);
+  box-shadow: var(--shadow); transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.wk-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+.wk-top { display: flex; gap: 12px; align-items: center; }
+.wk-glyph { font-size: 2.2rem; line-height: 1; }
+.wk-who { display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; color: var(--muted); }
+.wk-card h3 { margin: 2px 0 0; font-size: 1.2rem; letter-spacing: -.01em; }
+.wk-card p { margin: 0; color: var(--muted); line-height: 1.65; }
+.wk-made { font-size: .85rem; color: var(--brand-ink); font-weight: 700; }
+.wk-links { display: flex; flex-wrap: wrap; gap: 14px; font-weight: 700; font-size: .9rem; }
+.wk-links a { color: var(--brand); }
+
+.wk-card--demo { background: linear-gradient(180deg, #fff, var(--brand-soft)); border-color: #dcdefb; }
+
+.wk-seat {
+  position: relative; place-content: center; text-align: center; min-height: 190px;
+  background: transparent; border: 2px dashed var(--line); box-shadow: none;
+}
+.wk-seat:hover { transform: none; box-shadow: none; border-color: var(--brand); }
+.wk-seat-num {
+  font-size: 2.2rem; font-weight: 900; color: var(--line); line-height: 1;
+}
+.wk-seat h3 { color: var(--muted); }
+.wk-seat p { font-size: .9rem; }
+
+.wk-submit ul { margin: 10px 0 16px; padding-left: 1.2em; display: grid; gap: 6px; color: var(--muted); }
+.wk-todo { display: inline-block; padding: 8px 14px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); font-weight: 700; font-size: .9rem; }
