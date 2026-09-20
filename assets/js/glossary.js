@@ -62,7 +62,7 @@
       <h4>${esc(g.term)}</h4>
       <p>${esc(g.plain)}</p>
       ${g.like ? `<p class="term-like">💡 ${esc(g.like)}</p>` : ''}
-      <footer>${g.m ? moduleLink(g.m) : ''}<a href="${document.body.dataset.base || './'}glossary.html#${g.id}">所有名詞</a></footer>`;
+      <footer>${g.m ? moduleLink(g.m) : ''}<a href="${document.body.dataset.base || './'}glossary.html?from=${document.body.dataset.module || ''}#${g.id}">所有名詞</a></footer>`;
     document.body.append(pop);
     current = btn;
     btn.setAttribute('aria-expanded', 'true');

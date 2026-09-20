@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609200922">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609200923">
   <style>
     .gl-tools { display: grid; gap: 12px; margin-bottom: 22px; }
     .gl-search { font: inherit; width: 100%; padding: 12px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-m); background: var(--card); color: var(--ink); }
@@ -22,12 +22,15 @@
     .gl-meta { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 700; }
     .gl-meta a { text-decoration: none; }
     .gl-empty { padding: 30px; text-align: center; }
+    .gl-back { margin: 18px 0 -10px; }
   </style>
 </head>
 <body data-base="./">
 <header data-course-header></header>
 
 <main class="wrap">
+  <p class="gl-back screen-only" data-gl-back hidden></p>
+
   <section class="module-hero slide">
     <span class="eyebrow">隨時查</span>
     <h1>名詞<em>小辭典</em></h1>
@@ -46,12 +49,12 @@
 
 <footer class="site-footer"><div class="wrap"><a href="index.html">回課程首頁</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202609200922"></script>
-<script src="assets/js/config.js?v=202609200922"></script>
-<script src="assets/js/core.js?v=202609200922"></script>
-<script src="assets/js/members.js?v=202609200922"></script>
-<script src="assets/js/tour.js?v=202609200922"></script>
-<script src="assets/js/glossary-data.js?v=202609200922"></script>
+<script src="assets/js/lib.js?v=202609200923"></script>
+<script src="assets/js/config.js?v=202609200923"></script>
+<script src="assets/js/core.js?v=202609200923"></script>
+<script src="assets/js/members.js?v=202609200923"></script>
+<script src="assets/js/tour.js?v=202609200923"></script>
+<script src="assets/js/glossary-data.js?v=202609200923"></script>
 <script>
   (function () {
     const { $, esc, MODULES } = window.Course;
@@ -87,6 +90,16 @@
     });
     $('[data-gl-q]').addEventListener('input', render);
     render();
+
+    // 從單元點「📖 名詞」過來時，提供一個回得去的按鈕（網址沒帶的話，看瀏覽器的來源頁）
+    const fromId = new URLSearchParams(location.search).get('from');
+    const referrerFile = document.referrer.includes('/modules/') ? document.referrer.split('/').pop().split('#')[0].split('?')[0] : '';
+    const back = MODULES.find((m) => m.id === fromId) || MODULES.find((m) => referrerFile && m.file.endsWith(referrerFile));
+    if (back) {
+      const el = $('[data-gl-back]');
+      el.hidden = false;
+      el.innerHTML = `<a class="btn btn-sm" href="${back.file}">← 回到單元 ${back.id.slice(1)}：${esc(back.title)}</a>`;
+    }
     // 從單元裡的「所有名詞」連過來時，捲到那個詞
     if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'center' });
 
