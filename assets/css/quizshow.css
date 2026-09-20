@@ -1,0 +1,43 @@
+/* quizshow.css — 課堂搶答投影頁。字要夠大，最後一排看得到。 */
+
+.qs-opts { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; font-weight: 700; }
+.qs-opts select { font: inherit; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+.qs-opts label { display: inline-flex; gap: 8px; align-items: center; }
+
+.qs-stage { position: fixed; inset: 0; z-index: 200; background: var(--paper); display: flex; flex-direction: column; }
+.qs-bar { display: flex; gap: 14px; align-items: center; padding: 10px 18px; border-bottom: 1px solid var(--line); background: var(--paper-2); }
+.qs-progress { font-weight: 900; color: var(--brand); font-family: "Inter", sans-serif; }
+.qs-unit { color: var(--muted); font-size: .9rem; }
+.qs-tools { margin-left: auto; display: flex; gap: 8px; }
+
+.qs-main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; padding: clamp(16px, 3vw, 40px); overflow: auto; }
+@media (max-width: 800px) { .qs-main { grid-template-columns: 1fr; } }
+.qs-question { position: relative; display: flex; flex-direction: column; justify-content: center; max-width: 1100px; margin: 0 auto; width: 100%; }
+.qs-question h2 { font-size: clamp(1.6rem, 1rem + 2.6vw, 3rem); line-height: 1.35; margin: 0 0 clamp(18px, 3vw, 34px); }
+
+.qs-options { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(10px, 1.4vw, 16px); }
+.qs-opt { display: flex; gap: 16px; align-items: center; background: var(--card); border: 2px solid var(--line); border-radius: var(--radius-l);
+  padding: clamp(12px, 1.6vw, 20px) clamp(14px, 2vw, 24px); font-size: clamp(1.1rem, .9rem + 1vw, 1.7rem); font-weight: 700;
+  transition: transform var(--fast) var(--ease), border-color var(--fast), background var(--fast); }
+.qs-letter { flex: none; display: grid; place-items: center; width: 1.8em; height: 1.8em; border-radius: 50%;
+  background: var(--brand-soft); color: var(--brand); font-family: "Inter", sans-serif; font-weight: 900; }
+.qs-opt.is-right { border-color: var(--ok); background: var(--ok-soft); transform: scale(1.02); }
+.qs-opt.is-right .qs-letter { background: var(--ok); color: #fff; }
+.qs-opt.is-wrong { opacity: .45; }
+.qs-opt.is-final { border-color: var(--brand); }
+
+.qs-why { margin: clamp(16px, 2vw, 26px) 0 0; background: var(--brand-soft); color: var(--brand-ink); border-radius: var(--radius-m);
+  padding: 14px 18px; font-size: clamp(1rem, .9rem + .5vw, 1.25rem); font-weight: 700; }
+.qs-hint { margin: 18px 0 0; color: var(--muted); font-size: .95rem; }
+.qs-hint kbd { background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; }
+
+.qs-timer { position: absolute; top: -10px; right: 0; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand-ink); font-family: "Inter", sans-serif; font-size: 2rem; font-weight: 900; }
+.qs-timer.is-up { background: var(--danger-soft); color: var(--danger); animation: pulse 1s ease-in-out infinite; }
+
+.qs-scores { width: min(260px, 32vw); background: var(--paper-2); border-radius: var(--radius-l); padding: 16px; align-self: start; }
+@media (max-width: 800px) { .qs-scores { width: auto; } }
+.qs-scores h3 { margin: 0 0 10px; font-size: 1rem; color: var(--muted); }
+.qs-team { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; gap: 6px; align-items: center; margin-bottom: 10px; }
+.qs-team input { font: inherit; font-weight: 700; width: 100%; border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 8px; background: var(--card); color: var(--ink); }
+.qs-team b { font-family: "Inter", sans-serif; font-size: 1.3rem; color: var(--brand); min-width: 1.6em; text-align: center; }

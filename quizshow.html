@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>課堂搶答｜Vibe Coding 實戰課</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609200922">
+  <link rel="stylesheet" href="assets/css/quizshow.css?v=202609200922">
+</head>
+<body data-base="./">
+<header data-course-header class="screen-only"></header>
+
+<main class="wrap" data-qs-setup>
+  <section class="module-hero slide">
+    <span class="eyebrow">課堂用．不用登入、不用 PIN 碼</span>
+    <h1>課堂<em>搶答</em></h1>
+    <p class="lead">投影出來，題目一題一題出，學員舉手或用 A／B／C 答案卡回答。按空白鍵揭曉答案，右邊可以幫各組計分。想用線上版的話，講師資料夾裡有 Kahoot 匯入檔。</p>
+  </section>
+
+  <section class="slide">
+    <div class="card">
+      <h3>1. 選題目</h3>
+      <div class="chip-row" data-qs-units></div>
+      <p class="muted" style="margin:10px 0 0" data-qs-count></p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>2. 設定</h3>
+      <div class="qs-opts">
+        <label>每題倒數
+          <select data-qs-timer>
+            <option value="0">不計時</option>
+            <option value="15">15 秒</option>
+            <option value="20" selected>20 秒</option>
+            <option value="30">30 秒</option>
+          </select></label>
+        <label><input type="checkbox" data-qs-shuffle checked> 打亂題目順序</label>
+        <label>分組數
+          <select data-qs-teams>
+            <option value="0">不計分</option>
+            <option value="2" selected>2 組</option>
+            <option value="3">3 組</option>
+            <option value="4">4 組</option>
+          </select></label>
+      </div>
+      <p style="margin-top:16px"><button type="button" class="btn btn-primary" data-qs-start disabled>▶ 開始搶答</button></p>
+      <p class="muted" style="margin:6px 0 0">操作：<kbd>空白鍵</kbd> 揭曉答案／下一題　<kbd>←</kbd> <kbd>→</kbd> 換題　<kbd>F</kbd> 全螢幕　<kbd>Esc</kbd> 結束</p>
+    </div>
+  </section>
+</main>
+
+<div class="qs-stage" data-qs-stage hidden>
+  <div class="qs-bar">
+    <span class="qs-progress" data-qs-progress></span>
+    <span class="qs-unit" data-qs-title></span>
+    <span class="qs-tools">
+      <button type="button" class="btn btn-sm btn-ghost" data-qs-full>⛶ 全螢幕</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-qs-quit>結束</button>
+    </span>
+  </div>
+  <div class="qs-main">
+    <div class="qs-question">
+      <div class="qs-timer" data-qs-timer-box hidden><span data-qs-seconds>20</span></div>
+      <h2 data-qs-q></h2>
+      <ol class="qs-options" data-qs-options></ol>
+      <p class="qs-why" data-qs-why hidden></p>
+      <p class="qs-hint" data-qs-hint>按 <kbd>空白鍵</kbd> 揭曉答案</p>
+    </div>
+    <aside class="qs-scores" data-qs-scores hidden></aside>
+  </div>
+</div>
+
+<script src="assets/js/lib.js?v=202609200922"></script>
+<script src="assets/js/quiz-bank.js?v=202609200922"></script>
+<script src="assets/js/config.js?v=202609200922"></script>
+<script src="assets/js/core.js?v=202609200922"></script>
+<script src="assets/js/members.js?v=202609200922"></script>
+<script src="assets/js/tour.js?v=202609200922"></script>
+<script src="assets/js/quizshow.js?v=202609200922"></script>
+</body>
+</html>
