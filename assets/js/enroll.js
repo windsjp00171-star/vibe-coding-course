@@ -55,6 +55,47 @@
     </dl>
     <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7，確認上課方式適合你再決定。</p>`;
 
+  // 主題式套裝：同一批單元，換不同的組合賣給不同的人。
+  // 時數由單元的課中時間自動加總，改單元就會跟著變，不用手動維護。
+  const PACKS = [
+    { id: 'security', icon: '🛡️', name: 'AI 資安意識包', who: '全體同仁．不用電腦',
+      units: ['m0', 'm7', 'm19', 'm6'],
+      value: '結訓帶走一條可以公告的匯款查核規則',
+      note: '最親民的入門場，半天就能跑完。' },
+    { id: 'build', icon: '🚀', name: '做出第一個工具包', who: '想自己動手做東西的人',
+      units: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm8', 'm9'],
+      value: '每個人結業時有一個真的在線上的作品',
+      note: '這就是必修主線，建議排三個半天。' },
+    { id: 'ops', icon: '🗄️', name: '維運與治理包', who: '已經有人在用 AI 做東西的單位',
+      units: ['m20', 'm21', 'm22'],
+      value: '一份交接包、一頁 AI 使用守則、一張成本與退場評估',
+      note: '解決「做出來之後沒人維護、沒人負責」的問題。' },
+    { id: 'daily', icon: '📊', name: '日常效率包', who: '不寫程式也天天用 AI 的人',
+      units: ['m18', 'm17', 'm16'],
+      value: '一套自己的提示詞範本與資料整理流程',
+      note: '不碰程式碼，適合行政、企劃、業務。' },
+  ];
+
+  function renderPacks() {
+    const host = $('[data-en-packs]');
+    if (!host) return;
+    host.innerHTML = PACKS.map((pack) => {
+      const list = pack.units.map((id) => MODULES.find((m) => m.id === id)).filter((m) => m && m.ready);
+      const h = hours(list, 'inClass');
+      const half = Math.max(1, Math.ceil(h / 3.5));
+      return `<article class="en-pack">
+        <div class="en-pack-top"><span class="en-pack-icon" aria-hidden="true">${pack.icon}</span>
+          <div><span class="en-pack-who">${esc(pack.who)}</span><h3>${esc(pack.name)}</h3></div></div>
+        <p class="en-pack-time"><b>課中約 ${h} 小時</b>（約 ${half} 個半天）．${list.length} 個單元</p>
+        <ul class="en-pack-units">${list.map((m) => `<li>${m.emoji} ${esc(m.title)}</li>`).join('')}</ul>
+        <p class="en-pack-value">🎁 ${esc(pack.value)}</p>
+        <p class="muted">${esc(pack.note)}</p>
+      </article>`;
+    }).join('');
+  }
+
+  renderPacks();
+
   $('[data-en-print]').addEventListener('click', () => window.print());
 
   window.Tour.register([]);
