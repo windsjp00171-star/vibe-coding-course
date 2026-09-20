@@ -33,8 +33,9 @@
         <button type="button" data-admin-tab="members" aria-pressed="${tab === 'members'}">👥 會員管理</button>
         <button type="button" data-admin-tab="classes" aria-pressed="${tab === 'classes'}">🏫 班級</button>
         <button type="button" data-admin-tab="stuck" aria-pressed="${tab === 'stuck'}">🧭 卡關分析</button>
+        <button type="button" data-admin-tab="files" aria-pressed="${tab === 'files'}">📁 教材下載</button>
       </div><div data-admin-body></div>`;
-    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, stuck: renderStuck }[tab];
+    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, stuck: renderStuck, files: renderFiles }[tab];
     await render();
   }
 
@@ -81,6 +82,75 @@
         : '<p class="muted">還沒有班級。到「🏫 班級」分頁建立一個。</p>'}
         <p class="muted" style="margin:12px 0 0">數字每次進入這一頁重新計算。學員的進度要登入後才會同步上來。</p>
       </div>`;
+  }
+
+  // ---------- 教材下載（Supabase 私人儲存空間；公開網站與 GitHub 都沒有這些檔案）----------
+  const BUCKET = 'teacher-files';
+  const FOLDERS = [
+    { id: 'slides', label: '📊 課程簡報', hint: '每單元一份 .pptx，講者備忘稿含教學提示與測驗答案' },
+    { id: 'kahoot', label: '🎯 Kahoot 題庫', hint: '每單元一份 .xlsx，可匯入 kahoot.com；站內搶答不需要這個' },
+    { id: 'handbook', label: '📘 學習手冊', hint: '必修版與完整版 PDF，各有學員版與講師版' },
+  ];
+  const sizeText = (n) => (n > 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
+
+  async function renderFiles() {
+    const body = $('[data-admin-body]');
+    const store = window.Members.client.storage.from(BUCKET);
+    const lists = await Promise.all(FOLDERS.map((f) => store.list(f.id, { limit: 100, sortBy: { column: 'name', order: 'asc' } })));
+    // 注意：bucket 不存在時 Supabase 會回「空清單」而不是錯誤，所以用「全空」當作還沒設定的提示
+    const empty = lists.every((r) => !(r.data || []).length);
+    const setupCard = `<div class="card" data-files-setup style="margin-bottom:18px;border:2px solid var(--warn)">
+      <h3>⚠️ 第一次使用要先做兩件事</h3>
+      <ol>
+        <li>到 Supabase → SQL Editor 執行一次 <code>supabase/add-teacher-files.sql</code>（開一個只有講師看得到的私人空間）</li>
+        <li>回到這一頁，用各區塊右上角的「⬆️ 上傳／更新」把電腦上 <code>course/teacher/</code> 裡的 slides、kahoot、handbook 傳上來</li>
+      </ol>
+      <p class="muted">上傳後這張提醒就會消失。檔案不會出現在公開網站或 GitHub 上。</p></div>`;
+    const blocks = FOLDERS.map((f, i) => {
+      const files = (lists[i].data || []).filter((x) => x.name && !x.name.startsWith('.'));
+      const rows = files.map((x) => `<tr>
+        <td>${esc(x.name)}</td>
+        <td>${sizeText(x.metadata?.size || 0)}</td>
+        <td>${x.updated_at ? new Date(x.updated_at).toLocaleDateString('zh-TW') : ''}</td>
+        <td><button type="button" class="btn btn-sm" data-dl="${esc(f.id)}/${esc(x.name)}">⬇️ 下載</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-rm="${esc(f.id)}/${esc(x.name)}">刪除</button></td></tr>`).join('');
+      return `<div class="card" style="margin-bottom:18px">
+        <div class="quiz-head"><h3 style="margin:0">${f.label}</h3>
+          <label class="btn btn-sm btn-ghost" style="cursor:pointer">⬆️ 上傳／更新
+            <input type="file" multiple hidden data-up="${f.id}"></label></div>
+        <p class="muted">${f.hint}</p>
+        ${files.length ? `<div class="table-wrap"><table class="roster"><thead><tr><th>檔名</th><th>大小</th><th>更新日期</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table></div>`
+        : '<p class="muted">這個資料夾還沒有檔案。按右上角「上傳／更新」把電腦上的 teacher 資料夾內容傳上來。</p>'}
+      </div>`;
+    }).join('');
+    body.innerHTML = `${empty ? setupCard : ''}<div class="card" style="margin-bottom:18px">
+        <h3>📁 教材下載</h3>
+        <p>這些檔案存在只有講師看得到的私人空間，<b>公開網站和 GitHub 上都沒有</b>。下載連結每次產生、5 分鐘後失效，不要轉貼給學員。</p>
+        <p class="muted">第一次使用請先上傳：電腦上的 <code>course/teacher/</code> 裡有 slides、kahoot、handbook 三個資料夾。</p>
+      </div>${blocks}`;
+  }
+
+  async function downloadFile(path) {
+    const { data, error } = await window.Members.client.storage.from(BUCKET).createSignedUrl(path, 300, { download: true });
+    if (error) { toast(`取得下載連結失敗：${error.message}`); return; }
+    window.open(data.signedUrl, '_blank', 'noopener');
+  }
+
+  async function uploadFiles(folder, fileList) {
+    const store = window.Members.client.storage.from(BUCKET);
+    let ok = 0;
+    for (const file of fileList) {
+      const { error } = await store.upload(`${folder}/${file.name}`, file, { upsert: true });
+      if (error) {
+        const needSql = /bucket|not found|policy|security|denied|permission/i.test(error.message);
+        toast(needSql ? '上傳失敗：請先到 Supabase 執行 supabase/add-teacher-files.sql' : `${file.name} 上傳失敗：${error.message}`);
+        if (needSql) return;
+        continue;
+      }
+      ok += 1;
+      toast(`已上傳 ${ok}／${fileList.length}：${file.name}`);
+    }
+    renderFiles();
   }
 
   // ---------- 卡關分析 ----------
@@ -283,6 +353,13 @@
     renderClasses();
   });
 
+  host.addEventListener('change', (e) => {
+    const up = e.target.closest('[data-up]');
+    if (!up || !up.files?.length) return;
+    toast(`開始上傳 ${up.files.length} 個檔案……`);
+    uploadFiles(up.dataset.up, [...up.files]);
+  });
+
   host.addEventListener('input', (e) => {
     const box = e.target.closest('[data-member-search]');
     if (!box) return;
@@ -314,6 +391,17 @@
     const copyCode = e.target.closest('[data-copy-code]');
     if (copyCode) {
       navigator.clipboard.writeText(copyCode.dataset.copyCode).then(() => toast('加入碼已複製'), () => toast('複製失敗，請手動選取'));
+      return;
+    }
+    const dl = e.target.closest('[data-dl]');
+    if (dl) { downloadFile(dl.dataset.dl); return; }
+    const rm = e.target.closest('[data-rm]');
+    if (rm) {
+      if (!window.confirm(`確定刪除「${rm.dataset.rm}」嗎？之後可以再上傳一次。`)) return;
+      const { error } = await window.Members.client.storage.from(BUCKET).remove([rm.dataset.rm]);
+      if (error) { toast(`刪除失敗：${error.message}`); return; }
+      toast('已刪除');
+      renderFiles();
       return;
     }
     const drop = e.target.closest('[data-drop]');

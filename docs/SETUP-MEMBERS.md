@@ -144,6 +144,23 @@ Google Cloud → Google Auth Platform →「目標對象」→ 發布應用程�
 移出只會把人從這個班級名單拿掉，**不會動到**他的開通狀態、學習進度或帳號。
 沒執行這段 SQL 也不影響其他功能，只是按「移出」會顯示提示。
 
+## 10. 把教材放進後台（簡報、Kahoot、手冊）
+
+檔案放在 Supabase 的私人儲存空間，只有講師下載得到；公開網站和 GitHub 上都不會有。
+
+1. Supabase → **SQL Editor**，貼上 `supabase/add-teacher-files.sql` 執行一次。
+2. 打開「🛠️ 管理後台 → 📁 教材下載」。
+3. 每個區塊右上角按「⬆️ 上傳／更新」，選電腦上 `course/teacher/` 裡的檔案：
+   - `slides/`（每單元一份 .pptx）→ 上傳到「課程簡報」
+   - `kahoot/`（每單元一份 .xlsx）→ 上傳到「Kahoot 題庫」
+   - `handbook/`（4 份 PDF）→ 上傳到「學習手冊」
+4. 之後在任何電腦登入講師帳號，都能從這裡下載。
+
+注意事項：
+- 下載連結是臨時產生的，**5 分鐘後失效**，不要轉貼給學員。
+- 網頁內容改過後要重新產生簡報（`python scripts/extract_slides.py` 再 `node scripts/build_slides.js`），然後重新上傳覆蓋。
+- 免費方案的儲存空間有上限；目前這些檔案約 21 MB。
+
 ## 常見問題
 
 | 狀況 | 原因與解法 |
