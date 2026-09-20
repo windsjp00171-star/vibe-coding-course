@@ -21,9 +21,16 @@
 
   const TODO = (what) => `<span class="en-todo">（待填：${esc(what)}）</span>`;
 
-  // 必修總時數直接從課程資料算，不用手動維護
+  // 時數直接從課程資料算，不用手動維護。分開呈現：課中實作（實體上課時數）與課前自學
+  const hours = (list, key) => Math.round(list.reduce((n, m) => n + (m[key] || 0), 0) / 6) / 10;
   const core = MODULES.filter((m) => m.ready && !/^D/.test(m.part));
-  $('[data-fact="hours"]').textContent = Math.round(core.reduce((n, m) => n + m.minutes, 0) / 60 * 10) / 10;
+  const elective = MODULES.filter((m) => m.ready && /^D/.test(m.part));
+  // 同一個數字可能在頁面出現多次（例如課中時數），全部都要填
+  const fact = (key, value) => document.querySelectorAll(`[data-fact="${key}"]`).forEach((el) => { el.textContent = value; });
+  fact('inclass', hours(core, 'inClass'));
+  fact('pre', hours(core, 'minutes'));
+  fact('total', hours(core, 'minutes') + hours(core, 'inClass') + hours(core, 'post'));
+  fact('elective', hours(elective, 'minutes') + hours(elective, 'inClass') + hours(elective, 'post'));
 
   // 課程大綱
   const parts = [...new Set(MODULES.filter((m) => m.ready).map((m) => m.part))];
@@ -31,7 +38,7 @@
     <div class="en-part">
       <h3>${esc(part)}</h3>
       <ol>${MODULES.filter((m) => m.ready && m.part === part).map((m) => `
-        <li><b>${m.id.slice(1)}</b> ${esc(m.title)}<span>${m.minutes} 分</span></li>`).join('')}</ol>
+        <li><b>${m.id.slice(1)}</b> ${esc(m.title)}<span>課前 ${m.minutes}′／課中 ${m.inClass}′</span></li>`).join('')}</ol>
     </div>`).join('');
 
   // 費用與報名
