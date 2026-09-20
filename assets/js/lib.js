@@ -442,7 +442,100 @@
     return [...code.slice(2)].every((ch) => CERT_CHARS.includes(ch));
   }
 
-  const api = { certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  // 備份體檢：把「我有備份」拆成看得見的幾層，再對照各種災難。
+  // 重點不是層數多，而是「還原演練」做過沒有——沒演練過的備份不算數。
+  const BACKUP_LAYERS = [
+    { id: 'github', name: '程式碼放在 GitHub', hint: '不是只存在自己電腦的資料夾' },
+    { id: 'dbexport', name: '資料有定期匯出', hint: '資料庫或名單每個月匯出一份' },
+    { id: 'offsite', name: '匯出檔不在同一台電腦', hint: '雲端硬碟、外接硬碟都算' },
+    { id: 'secrets', name: '金鑰與環境變數另外記錄', hint: '記在密碼管理器或紙上，不是只在腦裡' },
+    { id: 'drill', name: '做過一次還原演練', hint: '從零把它救回來，而且真的跑得動' },
+  ];
+
+  const DISASTERS = [
+    { name: '電腦壞掉或被偷', need: ['github', 'secrets'] },
+    { name: '不小心刪掉整個資料夾', need: ['github'] },
+    { name: '資料被誤刪或改壞', need: ['dbexport', 'offsite'] },
+    { name: '服務下架、帳號被停用', need: ['github', 'dbexport', 'offsite'] },
+    { name: '「以為有備份，其實沒有」', need: ['drill'] },
+  ];
+
+  function backupCoverage(selected) {
+    const has = new Set(selected || []);
+    const rows = DISASTERS.map((d) => ({
+      name: d.name,
+      ok: d.need.every((id) => has.has(id)),
+      missing: d.need.filter((id) => !has.has(id)),
+    }));
+    const covered = rows.filter((r) => r.ok).length;
+    // 沒演練過，其他層都只能算「大概可以」，不能算數
+    const level = !has.has('drill') ? (covered ? 1 : 0) : covered === rows.length ? 2 : 1;
+    return { rows, covered, total: rows.length, level };
+  }
+
+  // 部門 AI 使用守則產生器：勾選條款 → 產出可以直接公告的文字。
+  // 每一條都寫「為什麼」，因為沒有理由的規定，同事只會偷偷繞過去。
+  const POLICY_CLAUSES = [
+    { id: 'secret', group: '資料', text: '不得將客戶名單、合約、報價、員工個資、病歷或學生資料貼進任何 AI 服務。',
+      why: '貼進去等於交給一家外部公司保管。' },
+    { id: 'mask', group: '資料', text: '確實需要 AI 協助處理含個資的檔案時，須先將姓名、電話、Email、身分證字號等欄位遮罩或代號化。',
+      why: '遮罩後 AI 一樣做得了格式整理與分類。' },
+    { id: 'code', group: '資料', text: '不得貼上含有金鑰、密碼、連線字串的程式碼或設定檔。',
+      why: '這類字串一旦外流，等於把門打開。' },
+    { id: 'verify', group: '產出', text: 'AI 產出的數字、法規、報價與對外文字，須由承辦人查證後才可使用。',
+      why: 'AI 會用流暢的語氣講出不存在的東西。' },
+    { id: 'license', group: '產出', text: '對外發布或商業使用的圖片、文案、程式碼，須先確認來源與授權。',
+      why: '像不像由權利人主張，跟「是 AI 做的」無關。' },
+    { id: 'decide', group: '產出', text: '涉及人事、金額、醫療與法律判斷的決定，不得由 AI 單獨決定。',
+      why: '責任在人身上，工具不會替你扛。' },
+    { id: 'tools', group: '流程', text: '僅使用單位核准的 AI 服務；要導入新服務前須先報備。',
+      why: '不同服務的資料保存政策差很多。' },
+    { id: 'exception', group: '流程', text: '確有例外需求時，向主管說明用途與資料範圍後，可個案核准並留紀錄。',
+      why: '留一條正大光明的路，才不會有人偷偷繞過去。' },
+    { id: 'report', group: '流程', text: '發現資料誤貼或疑似外流時，應於當日回報，不追究通報者。',
+      why: '罰通報的人，下次就沒有人敢講。' },
+  ];
+
+  function buildPolicy(ids, unit) {
+    const picked = POLICY_CLAUSES.filter((c) => ids.includes(c.id));
+    if (!picked.length) return '（請先勾選至少一項條款）';
+    const name = (unit || '本單位').trim() || '本單位';
+    const groups = [...new Set(picked.map((c) => c.group))];
+    const lines = [`${name} AI 使用守則`, ''];
+    groups.forEach((g) => {
+      lines.push(`【${g}】`);
+      picked.filter((c) => c.group === g).forEach((c, i) => {
+        lines.push(`  ${i + 1}. ${c.text}`);
+        lines.push(`     （原因：${c.why}）`);
+      });
+      lines.push('');
+    });
+    lines.push('本守則為內部作業規範，如有個案疑義請洽法務單位。');
+    return lines.join('\n');
+  }
+
+  // 小工具的每月成本估算。目的是回答「要不要擔心」，不是報價，
+  // 所以只算量級：呼叫次數、AI 用量、通知則數各落在哪一個區間。
+  const FREE_LIMITS = { aiCalls: 1000, notices: 200 };
+
+  function estimateCost({ users = 0, uses = 0, ai = 0, notify = 0 } = {}) {
+    const calls = Math.max(0, Math.round(users * uses));
+    const aiCalls = ai > 0 ? calls : 0;
+    const aiWeight = ai === 2 ? 4 : ai === 1 ? 1 : 0; // 長文件大約是短問答的數倍
+    const aiLoad = aiCalls * aiWeight;
+    const notices = notify > 0 ? calls : 0;
+    const rows = [
+      { name: '放網站（GitHub Pages）', note: '小工具不會超過', over: false },
+      { name: '資料庫（Supabase）', note: calls > 20000 ? '資料量偏大，要注意' : '免費範圍內', over: calls > 20000 },
+      { name: 'AI 呼叫', note: aiLoad === 0 ? '沒有用到 AI' : aiLoad > FREE_LIMITS.aiCalls ? '很可能要付費' : '用量不大', over: aiLoad > FREE_LIMITS.aiCalls },
+      { name: '通知訊息', note: notices === 0 ? '沒有發通知' : notices > FREE_LIMITS.notices ? '可能超過免費則數' : '免費則數內', over: notices > FREE_LIMITS.notices },
+    ];
+    const overs = rows.filter((r) => r.over);
+    const level = overs.length === 0 ? 'free' : overs.length === 1 ? 'watch' : 'paid';
+    return { calls, aiLoad, notices, rows, level };
+  }
+
+  const api = { estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

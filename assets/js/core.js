@@ -17,6 +17,7 @@
     { id: 'm7', part: 'C 資安', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 20, inClass: 35, post: 10 },
     { id: 'm19', part: 'C 資安', emoji: '🎭', title: 'AI 詐騙：變臉與變聲', file: 'modules/19-deepfake.html', minutes: 25, inClass: 30, post: 15 },
     { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 25, inClass: 35, post: 15 },
+    { id: 'm20', part: 'C 資安', emoji: '🗄️', title: '三個月後還救得回來嗎', file: 'modules/20-handover.html', minutes: 20, inClass: 35, post: 15 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '總測驗與結業證書', file: 'modules/09-final.html', minutes: 15, inClass: 60, post: 0 },
     { id: 'm10', part: 'D 進階選修', emoji: '🗄️', title: 'Supabase：雲端資料庫', file: 'modules/10-supabase.html', minutes: 20, inClass: 35, post: 15 },
     { id: 'm11', part: 'D 進階選修', emoji: '🪪', title: '會員系統：註冊、登入、權限', file: 'modules/11-members.html', minutes: 20, inClass: 40, post: 15 },
@@ -27,9 +28,11 @@
     { id: 'm16', part: 'D 進階選修', emoji: '🧩', title: 'Agent、MCP 與 Skill', file: 'modules/16-agents.html', minutes: 25, inClass: 35, post: 15 },
     { id: 'm17', part: 'D 進階選修', emoji: '📊', title: 'AI 時代的資料整理', file: 'modules/17-data.html', minutes: 25, inClass: 30, post: 15 },
     { id: 'm18', part: 'D 進階選修', emoji: '💬', title: '怎麼問出好答案', file: 'modules/18-prompting.html', minutes: 25, inClass: 30, post: 10 },
+    { id: 'm21', part: 'D 進階選修', emoji: '⚖️', title: '這東西能不能用？', file: 'modules/21-compliance.html', minutes: 25, inClass: 35, post: 15 },
+    { id: 'm22', part: 'D 進階選修', emoji: '💸', title: 'AI 要花多少錢', file: 'modules/22-cost.html', minutes: 20, inClass: 30, post: 10 },
   ];
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
-  const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18', 'm19']);
+  const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18', 'm19', 'm20', 'm21', 'm22']);
   // 會員功能啟用時，訪客可以免費試用的單元（其餘要登入並開通）。會員功能沒啟用時全部開放。
   const TRIAL = new Set(['m0', 'm1', 'm4', 'm7']);
   MODULES.forEach((m) => { m.ready = READY.has(m.id); m.trial = TRIAL.has(m.id); });

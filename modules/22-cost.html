@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 要花多少錢｜Vibe Coding 實戰課</title>
+  <meta name="description" content="訂閱制、用量制、免費額度差在哪？做一個小工具一個月要花多少？免費方案收掉時怎麼搬家？用白話算給你看。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609202203">
+  <style>
+    .cs-form { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+    .cs-form label { font-weight: 700; display: grid; gap: 6px; }
+    .cs-form input, .cs-form select { font: inherit; padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+    .cs-out { margin-top: 18px; padding: 20px 22px; border-radius: var(--radius-m); background: var(--brand-soft); }
+    .cs-big { font-size: 2rem; font-weight: 900; letter-spacing: -.02em; color: var(--brand-ink); }
+    .cs-rows { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .cs-rows li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed #cdd0f4; padding-bottom: 5px; }
+    .cs-note { margin-top: 12px; font-size: .88rem; color: var(--muted); }
+  </style>
+</head>
+<body data-module="m22" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>22</b> D 進階選修．職場實務</span>
+    <h1>這樣一直做下去，<br><em>要花多少錢</em>？</h1>
+    <p class="lead">「我做一個報名網站，是不是要一直付錢？」這是非技術者最常問、而多數課程沒有正面回答的問題。這個單元把費用講清楚，也教你怎麼不被任何一家服務綁死。</p>
+    <ul class="goals">
+      <li>分得清楚訂閱制、用量制與免費額度</li>
+      <li>估得出一個小工具一個月大約要花多少</li>
+      <li>知道免費額度用完會發生什麼事，以及怎麼設上限</li>
+      <li>挑服務時會先問「我搬得走什麼」</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 30 分</span>
+      <span class="phase phase-post">課後任務 約 10 分</span>
+    </div>
+    <div data-teacher-slot="m22-1"></div>
+  </section>
+
+  <section class="slide" id="models" data-tour="models">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先分清楚</span><h2>三種收費方式，踩雷的機率完全不同</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>📅 訂閱制</h3><p>每個月固定金額，用多用少都一樣。</p><p class="muted">例：Claude 的 Pro 方案。<b>最好預算</b>，因為金額固定。</p></div>
+      <div class="card"><h3>📊 用量制</h3><p>用多少算多少，按次數或資料量計費。</p><p class="muted">常見於 API 與雲端服務。<b>最容易爆</b>，因為寫錯一個迴圈就會一直呼叫。</p></div>
+      <div class="card"><h3>🎁 免費額度</h3><p>一定範圍內免費，超過才收費（或直接停掉）。</p><p class="muted">這門課用到的服務多半屬於這類。<b>要搞清楚超過會怎樣</b>。</p></div>
+    </div>
+    <div class="callout callout-warn">
+      <b>最重要的一句話：</b>免費額度用完時，有的服務是「停掉」，有的是「自動開始收費」。這兩種差很多——<b>去設定裡找有沒有用量上限或預算警示，第一天就設好。</b>
+    </div>
+    <div data-teacher-slot="m22-2"></div>
+  </section>
+
+  <section class="slide" id="stack" data-tour="stack">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">這門課會用到的</span><h2>各服務大致的免費範圍</h2>
+        <p>金額與額度會變動，這裡只給「量級感」，實際數字請以各服務官網為準。</p></div></div>
+    <div class="card" style="overflow-x:auto">
+      <table class="compare">
+        <thead><tr><th>用途</th><th>服務</th><th>免費範圍的量級</th><th>超過會怎樣</th></tr></thead>
+        <tbody>
+          <tr><th>AI 協作</th><td>Claude（Pro 以上）</td><td>訂閱制，有使用頻率限制</td><td>暫時用不了，等一段時間恢復</td></tr>
+          <tr><th>放網站</th><td>GitHub Pages</td><td>個人小網站綽綽有餘</td><td>一般小工具很難超過</td></tr>
+          <tr><th>資料庫</th><td>Supabase</td><td>小型專案夠用；太久沒用會被暫停</td><td>先暫停，不會直接收費</td></tr>
+          <tr><th>放有後端的網站</th><td>Vercel</td><td>個人非商業用途有免費方案</td><td>商業用途要升級</td></tr>
+          <tr><th>LINE 官方帳號</th><td>LINE</td><td>每月有免費訊息則數</td><td>超過要買訊息或升級方案</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <b>白話結論：</b>一個部門內部用的小工具，多半<b>可以完全免費</b>。真的開始花錢的情況是：使用人數變多、發大量通知、或把 AI 接進產品裡自動跑。
+    </div>
+    <div data-teacher-slot="m22-3"></div>
+  </section>
+
+  <section class="slide screen-only" id="calc" data-tour="calc">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手算</span><h2>你的小工具，一個月大概多少錢</h2>
+        <p>填三個數字就好。這是<b>量級估算</b>，用來判斷「要不要擔心」，不是報價。</p></div></div>
+    <div class="card">
+      <div class="cs-form">
+        <label>大概多少人會用<input type="number" data-cs="users" min="0" value="30"></label>
+        <label>每人每月用幾次<input type="number" data-cs="uses" min="0" value="4"></label>
+        <label>每次會不會叫 AI
+          <select data-cs="ai">
+            <option value="0">不會（純表單、純網頁）</option>
+            <option value="1">會，短短一段</option>
+            <option value="2">會，而且很長（整理長文件）</option>
+          </select>
+        </label>
+        <label>會不會發通知
+          <select data-cs="notify">
+            <option value="0">不會</option>
+            <option value="1">會，每次用完發一則</option>
+          </select>
+        </label>
+      </div>
+      <div class="cs-out" data-cs-out></div>
+    </div>
+    <div data-teacher-slot="m22-4"></div>
+  </section>
+
+  <section class="slide" id="lockin" data-tour="lockin">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">比費用更重要</span><h2>不要被綁死</h2>
+        <p>真正的風險不是「這個月多付幾百塊」，而是「想走卻走不了」。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>🔒 什麼叫被綁死</h3>
+        <ul>
+          <li>資料匯不出來，或匯出來是打不開的格式</li>
+          <li>流程全部畫在對方平台上，搬家等於重做</li>
+          <li>帳號綁在某個人身上，那個人離職就沒人進得去</li>
+          <li>免費方案取消時，你只有兩個選擇：付錢或全部重做</li>
+        </ul></div>
+      <div class="card"><h3>🔓 平常就能做的四件事</h3>
+        <ul>
+          <li><b>選之前先問</b>：「我能不能把資料整包匯出來？」</li>
+          <li><b>用標準格式</b>：CSV、JSON，到哪都讀得懂</li>
+          <li><b>程式碼放自己的 GitHub</b>，不要只存在平台裡</li>
+          <li><b>帳號用公務信箱</b>，不要用個人帳號綁公司的東西</li>
+        </ul></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>跟單元 20 的關係：</b>那邊教你「救得回來」，這邊教你「走得掉」。兩個加起來，你的作品才算真的屬於你。
+    </div>
+    <div data-teacher-slot="m22-5"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">課中工作坊</span><h2>幫你的作品做一份成本與退場評估</h2></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>個人做，最後全班快速輪流講一句</p>
+      <p><b>🎒 要準備</b>你自己的作品，以及它用到的服務清單</p>
+      <p><b>🎁 做完要交出</b>一張紙：每月大約多少錢、超額會怎樣、搬家要幾天</p>
+      <p class="muted">如果你的答案是「全部免費、搬家一天」，那很好——把它寫下來，主管問的時候你答得出來。</p>
+    </div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–8 分</span><span class="step-title">列出用到的服務</span>連 GitHub、Google 表單都算。列不出來就表示你不知道自己依賴什麼。</li>
+        <li><span class="time">8–16 分</span><span class="step-title">用第 03 段估一次</span>把人數和次數換成你自己的。</li>
+        <li><span class="time">16–25 分</span><span class="step-title">每個服務問三句</span>免費到哪裡？超過會停還是收費？資料匯得出來嗎？</li>
+        <li><span class="time">25–30 分</span><span class="step-title">設一個上限</span>能設預算警示的，現場設好。設不了的，在行事曆上設一個每月檢查提醒。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m22-6"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m22-home">
+        <li><label><input type="checkbox" value="limit"> 去你用的服務設定裡，找一次有沒有「用量上限」或「預算警示」，有就設起來</label></li>
+        <li><label><input type="checkbox" value="export"> 試著把其中一個服務的資料匯出一次，確認你真的匯得出來</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>真正的風險不是多付幾百塊，而是 <span class="blank"></span>。</p>
+      <p>我的作品每月大約花費與退場方式：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 22　各服務的方案與價格會變動，實際費用請以官網為準。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609202203"></script>
+<script src="../assets/js/quiz-bank.js?v=202609202203"></script>
+<script src="../assets/js/config.js?v=202609202203"></script>
+<script src="../assets/js/core.js?v=202609202203"></script>
+<script src="../assets/js/members.js?v=202609202203"></script>
+<script src="../assets/js/tour.js?v=202609202203"></script>
+<script src="../assets/js/glossary-data.js?v=202609202203"></script>
+<script src="../assets/js/glossary.js?v=202609202203"></script>
+<script src="../assets/js/modules/m22.js?v=202609202203"></script>
+</body>
+</html>

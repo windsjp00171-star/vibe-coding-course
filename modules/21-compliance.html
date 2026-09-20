@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>這東西能不能用？AI 的界線與責任｜Vibe Coding 實戰課</title>
+  <meta name="description" content="公司資料能不能丟給 AI、AI 生成的東西算誰的、出事誰負責。用白話講清楚，並當場產出一頁可以公告的部門 AI 使用守則。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609202203">
+  <style>
+    .cp-opts { display: grid; gap: 10px; margin-bottom: 16px; }
+    .cp-opts label { display: flex; gap: 10px; align-items: flex-start; font-weight: 700; }
+    .cp-opts input { margin-top: 4px; width: 18px; height: 18px; }
+    .cp-opts small { display: block; font-weight: 400; color: var(--muted); }
+    .cp-out { white-space: pre-wrap; font-family: var(--mono); font-size: .86rem; line-height: 1.75; background: var(--paper-2); border-radius: var(--radius-m); padding: 16px 18px; border: 1px solid var(--line); }
+    .cp-sort { display: grid; gap: 10px; }
+    .cp-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 16px; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--card); }
+    .cp-row .btns { display: flex; gap: 6px; }
+    .cp-row.is-right { border-color: var(--ok); background: var(--ok-soft); }
+    .cp-row.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+    .cp-why { grid-column: 1 / -1; font-size: .88rem; color: var(--muted); font-weight: 400; }
+  </style>
+</head>
+<body data-module="m21" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>21</b> D 進階選修．職場實務</span>
+    <h1>這東西<em>能不能用</em>？</h1>
+    <p class="lead">做得出來是一回事，能不能拿去用是另一回事。公司的資料可以丟給 AI 嗎？AI 寫出來的東西算誰的？出事誰扛？這個單元不談技術，談你在公司裡會被問到的那幾個問題，並且當場寫出一頁可以公告的守則。</p>
+    <ul class="goals">
+      <li>分得出哪些資料可以貼給 AI、哪些絕對不行</li>
+      <li>講得出 AI 產出的內容在著作權上的基本處境</li>
+      <li>知道個資法在「我只是做個小工具」的情境下管到哪裡</li>
+      <li>寫得出一頁部門可以直接公告的 AI 使用守則</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div class="callout callout-warn">
+      <b>先講清楚：</b>這個單元是<b>實務常識，不是法律意見</b>。真的遇到爭議、或要簽對外合約，請找法務或律師。這裡教你的是「什麼時候該去問人」。
+    </div>
+    <div data-teacher-slot="m21-1"></div>
+  </section>
+
+  <section class="slide" id="three" data-tour="three">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">三個問題</span><h2>每次用 AI 做東西，先問自己這三句</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>📤 我丟進去的，能丟嗎</h3><p>貼給 AI 就等於<b>交給一家外部公司</b>。名單、合約、原始碼、還沒公開的資料，都要先想清楚。</p></div>
+      <div class="card"><h3>📄 它吐出來的，是誰的</h3><p>可能跟別人的東西很像，也可能不受著作權保護。拿去對外用之前要多看一眼。</p></div>
+      <div class="card"><h3>🙋 出事的時候，誰負責</h3><p>「AI 寫的」不是免責理由。對外的責任在<b>你和你的公司</b>，不在工具。</p></div>
+    </div>
+    <div data-teacher-slot="m21-2"></div>
+  </section>
+
+  <section class="slide screen-only" id="sort" data-tour="sort">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">動手玩</span><h2>這些東西，可以貼給 AI 嗎？</h2>
+        <p>一題一題判斷。做完你會發現：界線不在「機不機密」，而在「外流會不會害到別人」。</p></div></div>
+    <div class="card">
+      <div class="cp-sort" data-cp-sort></div>
+      <p class="muted" data-cp-score style="margin-top:14px"></p>
+    </div>
+    <div data-teacher-slot="m21-3"></div>
+  </section>
+
+  <section class="slide" id="copyright" data-tour="copyright">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">誰的東西</span><h2>AI 生成的內容，著作權怎麼看</h2>
+        <p>這題各國仍在吵，但有幾件事目前相對明確，實務上照這樣做比較安全。</p></div></div>
+    <div class="card" style="overflow-x:auto">
+      <table class="compare">
+        <thead><tr><th>情況</th><th>實務上怎麼看</th><th>你該怎麼做</th></tr></thead>
+        <tbody>
+          <tr><th>完全由 AI 生成</th><td>多數國家認為「沒有人的創作」很難受著作權保護，也就是別人可能可以照用</td><td>要當品牌資產的東西（Logo、主視覺），別完全靠 AI</td></tr>
+          <tr><th>你大量修改過</th><td>你修改的部分通常仍是你的創作</td><td>留下修改過程，例如 commit 紀錄</td></tr>
+          <tr><th>AI 產出跟別人的作品很像</th><td>像不像由對方主張，跟「AI 做的」無關</td><td>對外用的圖片、文案，先反向搜尋一下</td></tr>
+          <tr><th>程式碼</th><td>可能重現了某個開源專案的片段，而那個專案有授權條件</td><td>用到整段現成程式碼時，問 AI「這段的授權是什麼」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <b>最常見的誤會：</b>「開源 = 可以隨便用」。開源也有條件，有的要求你標示來源，有的要求你的專案也要開源。自己內部用通常沒事，<b>對外發布或賣錢之前要確認</b>。
+    </div>
+    <div data-teacher-slot="m21-4"></div>
+  </section>
+
+  <section class="slide" id="privacy" data-tour="privacy">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">個資法白話版</span><h2>做個小工具，也會碰到個資法</h2>
+        <p>只要你的工具會收集、儲存「可以指認到特定人」的資料，就進入個資法的範圍了——報名表就算。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>1️⃣ 說清楚要幹嘛</h3><p>收集前要讓人知道：為什麼收、怎麼用、放多久。報名表上加一段話就是在做這件事。</p></div>
+      <div class="card"><h3>2️⃣ 只收真正需要的</h3><p>辦聚餐要身分證字號嗎？不用就不要收。<b>沒收的資料，永遠不會外洩。</b></p></div>
+      <div class="card"><h3>3️⃣ 人家要查、要刪，要做得到</h3><p>當事人可以要求看、改、刪自己的資料。設計工具時要想「怎麼刪掉一個人」。</p></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>跟單元 6、17 怎麼接：</b>單元 6 教你金鑰別外流（技術面），單元 17 教你貼資料前先遮罩（操作面），這裡是<b>規則面</b>——哪些本來就不該收。三個一起做才完整。
+    </div>
+    <div data-teacher-slot="m21-5"></div>
+  </section>
+
+  <section class="slide screen-only" id="policy" data-tour="policy">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">帶得走的產出</span><h2>一頁部門 AI 使用守則</h2>
+        <p>勾選適合你們單位的條款，下面會生成一段可以直接貼進公告的文字。</p></div></div>
+    <div class="card">
+      <div class="cp-opts" data-cp-opts></div>
+      <div class="cp-out" data-cp-out></div>
+      <p style="margin-top:12px"><button type="button" class="btn btn-sm" data-cp-copy>📋 複製守則</button> <span class="muted" data-cp-msg></span></p>
+    </div>
+    <p class="muted">這份守則的用處不是管人，是<b>讓同事有話可以講</b>——「我們部門的規定不能貼客戶名單」比「我覺得不太好」容易說出口。</p>
+    <div data-teacher-slot="m21-6"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>寫出你們單位真的能用的守則</h2></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>同單位的坐一起，3～5 人一組</p>
+      <p><b>🎒 要準備</b>想一想你們部門平常會處理哪些資料</p>
+      <p><b>🎁 做完要交出</b>一頁守則，以及「哪一條我們單位做不到」的說明</p>
+      <p class="muted">做不到的條款要講出來，比全部照抄有價值。抄一份沒人遵守的規定，比沒有規定更糟。</p>
+    </div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–10 分</span><span class="step-title">列出你們碰得到的資料</span>名單、報價、合約、病歷、學生資料……先列出來，再標紅黃綠。</li>
+        <li><span class="time">10–20 分</span><span class="step-title">用第 05 段產生草稿</span>勾選條款，產出一段文字，再改成你們的用語。</li>
+        <li><span class="time">20–30 分</span><span class="step-title">互相挑漏洞</span>換一組看：哪一條做不到？哪一條會被主管打回票？</li>
+        <li><span class="time">30–35 分</span><span class="step-title">決定要不要加一條「例外怎麼申請」</span>規定太死，同事會偷偷繞過去。留一個正大光明的申請路徑。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m21-7"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m21-home">
+        <li><label><input type="checkbox" value="ask"> 問一次你公司有沒有 AI 使用規定；沒有的話，把你的守則寄給主管</label></li>
+        <li><label><input type="checkbox" value="form"> 檢查你做過的表單，有沒有收了用不到的個資，刪掉那一欄</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>沒有收的資料，永遠不會 <span class="blank"></span>。</p>
+      <p>我們單位最該先立的一條規定是：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 21　本單元為實務常識整理，非法律意見；個案請洽法務或律師。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609202203"></script>
+<script src="../assets/js/quiz-bank.js?v=202609202203"></script>
+<script src="../assets/js/config.js?v=202609202203"></script>
+<script src="../assets/js/core.js?v=202609202203"></script>
+<script src="../assets/js/members.js?v=202609202203"></script>
+<script src="../assets/js/tour.js?v=202609202203"></script>
+<script src="../assets/js/glossary-data.js?v=202609202203"></script>
+<script src="../assets/js/glossary.js?v=202609202203"></script>
+<script src="../assets/js/modules/m21.js?v=202609202203"></script>
+</body>
+</html>

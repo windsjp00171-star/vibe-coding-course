@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三個月後還救得回來嗎｜Vibe Coding 實戰課</title>
+  <meta name="description" content="Vibe Coding 做出來的東西，三個月後自己看不懂、電腦壞了、服務下架怎麼辦？交接包、三層備份、還原演練，一次講清楚。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609202203">
+  <style>
+    .hv-layers { display: grid; gap: 12px; }
+    .hv-layer { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 14px 18px; border-radius: var(--radius-m); border: 1.5px solid var(--line); background: var(--card); }
+    .hv-layer.is-on { border-color: var(--ok); background: var(--ok-soft); }
+    .hv-layer b { display: block; }
+    .hv-layer small { color: var(--muted); }
+    .hv-layer input { width: 20px; height: 20px; }
+    .hv-verdict { margin-top: 16px; padding: 18px 20px; border-radius: var(--radius-m); font-weight: 700; }
+    .hv-v0 { background: var(--danger-soft); color: #8c2f26; }
+    .hv-v1 { background: var(--warn-soft); color: #7a5510; }
+    .hv-v2 { background: var(--ok-soft); color: var(--ok); }
+    .hv-verdict ul { margin: 8px 0 0; padding-left: 1.2em; font-weight: 400; }
+  </style>
+</head>
+<body data-module="m20" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>20</b> C 資安．維運</span>
+    <h1>三個月後，<br>你還<em>救得回來</em>嗎？</h1>
+    <p class="lead">做出來、放上線，只是開始。真正會讓人放棄的，是三個月後打開自己的專案看不懂、電腦壞掉才發現備份是空的、或是某個免費服務突然收攤。這個單元把這三件事一次處理掉。</p>
+    <ul class="goals">
+      <li>做得出一份「三個月後的自己看得懂」的交接包</li>
+      <li>分得清楚「有備份」和「救得回來」不是同一件事</li>
+      <li>做過一次還原演練，知道自己真的救得回來</li>
+      <li>知道服務下架或漲價時，怎麼把東西搬走</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 20 分</span>
+      <span class="phase phase-in">課中工作坊 約 35 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m20-1"></div>
+  </section>
+
+  <section class="slide" id="future" data-tour="future">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先承認一件事</span><h2>三個月後打開專案，你會忘光</h2>
+        <p>這不是你記性不好。用 AI 協作的時候，很多決定是「當下講一講就過了」，沒有留下痕跡——所以忘掉是必然的，不是意外。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🤔 這個檔案在幹嘛</h3><p>當初 AI 建了七個檔案，你只記得其中兩個。剩下五個不敢刪，也不敢改。</p></div>
+      <div class="card"><h3>🧩 為什麼這樣做</h3><p>「這裡不要用 X，因為會壞」——當時講過，現在只剩結果，理由不見了，於是三個月後又踩一次。</p></div>
+      <div class="card"><h3>🔌 這要怎麼跑起來</h3><p>要先裝什麼、密碼放哪、改完怎麼上線。換一台電腦就卡在第一步。</p></div>
+    </div>
+    <div class="callout">
+      <b>解法很土，但有效：</b>把「三個月後會問的問題」在還記得的時候寫下來。下一段的三份檔案，就是在回答這三個問題。
+    </div>
+    <div data-teacher-slot="m20-2"></div>
+  </section>
+
+  <section class="slide" id="pack" data-tour="pack">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">交接包</span><h2>三份檔案，救未來的你</h2>
+        <p>不用寫得漂亮，寫得誠實就好。而且這三份都可以請 AI 幫你起草——它讀得到你的專案。</p></div></div>
+    <div class="card" style="overflow-x:auto">
+      <table class="compare">
+        <thead><tr><th>檔案</th><th>回答什麼問題</th><th>最少要寫什麼</th></tr></thead>
+        <tbody>
+          <tr><th>README.md</th><td>這是什麼、給誰用、怎麼跑起來</td><td>一句話介紹、安裝步驟、上線步驟、聯絡人</td></tr>
+          <tr><th>CLAUDE.md</th><td>下次叫 AI 改的時候，要注意什麼</td><td>專案慣例、不能動的東西、踩過的坑</td></tr>
+          <tr><th>commit 訊息</th><td>為什麼改成這樣</td><td>改了什麼＋為什麼（單元 4 練過）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-ok">
+      <b>可以這樣請 AI 起草：</b>「請讀完這個專案，幫我寫一份 README，假設讀的人是三個月後的我，已經忘記所有細節。要包含：這是什麼、怎麼在新電腦上跑起來、哪些檔案不能動、以及我們之前決定不做的功能。寫完先列給我看，不要直接建立檔案。」
+    </div>
+    <p class="muted">為什麼要「先列給我看」：README 是給人看的，AI 會有寫得太漂亮、把沒做的事寫成做了的傾向。你要當那個說「這句不對」的人。</p>
+    <div data-teacher-slot="m20-3"></div>
+  </section>
+
+  <section class="slide screen-only" id="backup" data-tour="backup">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">動手玩</span><h2>你現在能承受哪一種災難？</h2>
+        <p>勾選你「現在真的有」的備份層，下面會告訴你哪些狀況救得回來、哪些救不回來。</p></div></div>
+    <div class="card">
+      <div class="hv-layers" data-hv-layers></div>
+      <div class="hv-verdict" data-hv-verdict></div>
+    </div>
+    <div class="callout callout-warn">
+      <b>講師真的踩過：</b>設定了自動備份，也看到「備份成功」，半年後要還原才發現——只備到 17%。因為備份工具遇到大檔案就默默跳過，而成功訊息照樣跳出來。<b>沒有還原過的備份，只是一個讓你安心的假象。</b>
+    </div>
+    <div data-teacher-slot="m20-4"></div>
+  </section>
+
+  <section class="slide" id="drill" data-tour="drill">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">最重要的一段</span><h2>還原演練：假裝電腦壞了</h2>
+        <p>挑一個不忙的下午，花 30 分鐘做一次。做過一次，你對自己的作品才真的有底氣。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">步驟 1</span><span class="step-title">開一個新資料夾</span>不要用原本的專案資料夾。假裝這是一台新電腦。</li>
+        <li><span class="time">步驟 2</span><span class="step-title">只用 GitHub 上的東西把它拉下來</span>不准從舊資料夾複製任何檔案。拉不下來的東西，就是你其實沒有備份的東西。</li>
+        <li><span class="time">步驟 3</span><span class="step-title">照 README 一步一步跑</span>卡住的地方，就是 README 漏寫的地方——當場補進去。</li>
+        <li><span class="time">步驟 4</span><span class="step-title">補上不在 GitHub 的東西</span>金鑰、環境變數、資料庫內容。這些本來就不該進 GitHub（單元 6），所以要另外記「它們放在哪、怎麼拿」。</li>
+        <li><span class="time">步驟 5</span><span class="step-title">打開來確認真的會動</span>跟正式版對一次。會動，才算演練成功。</li>
+      </ol>
+    </div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m20-drill">
+        <li><label><input type="checkbox" value="clone"> 我從 GitHub 拉下來，沒有複製任何舊檔案</label></li>
+        <li><label><input type="checkbox" value="readme"> 我照 README 跑，並把卡住的地方補進 README</label></li>
+        <li><label><input type="checkbox" value="secret"> 我知道金鑰和環境變數要去哪裡拿</label></li>
+        <li><label><input type="checkbox" value="data"> 我試過把資料庫的匯出檔倒回去</label></li>
+        <li><label><input type="checkbox" value="run"> 新資料夾的版本真的跑起來了</label></li>
+      </ul>
+    </div>
+    <div data-teacher-slot="m20-5"></div>
+  </section>
+
+  <section class="slide" id="vendor" data-tour="vendor">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">另一種災難</span><h2>你依賴的服務，有一天會消失</h2>
+        <p>不是嚇你。講師的作品裡就有好幾個「線上版已下線」——有的是免費方案收掉，有的是服務整個關門。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>⚠️ 會發生的事</h3>
+        <ul>
+          <li>免費方案取消，變成要付費</li>
+          <li>免費額度調降，你突然超量</li>
+          <li>服務整個關閉，給你 30 天搬家</li>
+          <li>帳號因為太久沒用被停用</li>
+        </ul></div>
+      <div class="card"><h3>✅ 平常就能做的準備</h3>
+        <ul>
+          <li><b>資料能匯出</b>：選服務時先確認「我能不能把資料整包拿走」</li>
+          <li><b>定期匯出一次</b>：資料庫每月匯出一份放自己電腦</li>
+          <li><b>用標準格式</b>：CSV、JSON 這種到哪都讀得懂的格式</li>
+          <li><b>別把邏輯全寫在別人的平台裡</b>：程式碼留在自己的 GitHub</li>
+        </ul></div>
+    </div>
+    <div class="callout">
+      <b>挑服務時多問一句：</b>「如果三年後我要搬走，我拿得走什麼？」拿不走的，就不要放重要的東西進去。
+    </div>
+    <div data-teacher-slot="m20-6"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>做一次真的還原演練</h2><p>用你自己上線的那個作品，當場演練一次。</p></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>兩人一組，互相當對方的「三個月後的自己」</p>
+      <p><b>🎒 要準備</b>你上線的作品、你的 GitHub 帳號、一個空資料夾</p>
+      <p><b>🎁 做完要交出</b>補好的 README，以及一份「我還救不回來的東西」清單</p>
+      <p class="muted">重點不是演練成功，是<b>找出你救不回來的東西</b>。找到越多，這堂課越值得。</p>
+    </div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–10 分</span><span class="step-title">請 AI 起草交接包</span>用第 02 段的那段話，請 Claude Code 讀完專案寫 README 草稿，你逐句確認。</li>
+        <li><span class="time">10–25 分</span><span class="step-title">交換演練</span>把 GitHub 網址給隊友，讓<b>他</b>照你的 README 跑跑看。他卡住的地方，就是你漏寫的地方。</li>
+        <li><span class="time">25–32 分</span><span class="step-title">列出救不回來的東西</span>金鑰、資料庫內容、某個只存在你電腦裡的檔案——全部寫下來。</li>
+        <li><span class="time">32–35 分</span><span class="step-title">各組分享一項</span>說一個「我以為有備份，其實沒有」的東西。</li>
+      </ol>
+    </div>
+    <div data-teacher-slot="m20-7"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這兩件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m20-home">
+        <li><label><input type="checkbox" value="drill"> 在自己的電腦上，完整做一次第 04 段的還原演練</label></li>
+        <li><label><input type="checkbox" value="export"> 把你的資料庫或名單匯出一份，存到不是同一台電腦的地方</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>沒有 <span class="blank"></span> 過的備份，只是一個讓你安心的假象。</p>
+      <p>我現在救不回來的東西是：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 20　備份與還原牽涉公司資料時，請先確認公司的相關規定。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609202203"></script>
+<script src="../assets/js/quiz-bank.js?v=202609202203"></script>
+<script src="../assets/js/config.js?v=202609202203"></script>
+<script src="../assets/js/core.js?v=202609202203"></script>
+<script src="../assets/js/members.js?v=202609202203"></script>
+<script src="../assets/js/tour.js?v=202609202203"></script>
+<script src="../assets/js/glossary-data.js?v=202609202203"></script>
+<script src="../assets/js/glossary.js?v=202609202203"></script>
+<script src="../assets/js/modules/m20.js?v=202609202203"></script>
+</body>
+</html>
