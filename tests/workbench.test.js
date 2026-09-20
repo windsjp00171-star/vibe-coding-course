@@ -93,3 +93,36 @@ test('會出事的項目還沒修完，報告就不能顯示可以上線', () =>
   assert.ok(m8.buildReport({ done: ['key', 'input', 'pkg'], tested: false }).includes('你還沒自己測過'));
   assert.ok(m8.buildReport({ done: ['key', 'input', 'pkg'], tested: true }).includes('可以上線'));
 });
+
+// ---- 單元 5：上線 ----
+const m5 = require('../assets/js/sims/m5-ship.js');
+
+test('瀏覽器畫面會照著上線狀態變：本機、部署中、404、已上線', () => {
+  const states = ['local', 'building', '404', 'live'];
+  const seen = states.map((state) => m5.buildBrowser({ url: 'x', state, title: '報名' }));
+  assert.ok(seen[0].includes('只有你看得到'));
+  assert.ok(seen[1].includes('部署中'));
+  assert.ok(seen[2].includes('404'));
+  assert.ok(seen[3].includes('全世界都打得開'));
+});
+
+test('改標題要說得出改什麼，只說「改一下」不算', () => {
+  assert.deepEqual(matchNeeds('請把標題改成 12 月部門聚餐報名', m5.NEEDS.edit).missing, []);
+  assert.deepEqual(matchNeeds('幫我改一下', m5.NEEDS.edit).met, []);
+});
+
+// ---- 單元 12：LINE Bot ----
+const m12 = require('../assets/js/sims/m12-bot.js');
+
+test('排程選項只有一個是對的：台灣早上 8 點＝UTC 午夜', () => {
+  const right = m12.CRONS.filter((c) => c.ok);
+  assert.equal(right.length, 1);
+  assert.equal(right[0].value, '0 0 * * 1');
+  assert.equal(right[0].taiwan, '早上 8 點');
+});
+
+test('聊天畫面：還沒對話時顯示提示，有訊息時分得出誰說的', () => {
+  assert.ok(m12.buildChat([]).includes('還沒有訊息'));
+  const chat = m12.buildChat([{ me: true, text: '開會' }, { me: false, text: '記下了' }]);
+  assert.ok(chat.includes('me-b') && chat.includes('class="bot"'));
+});

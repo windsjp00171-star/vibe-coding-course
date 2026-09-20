@@ -2,6 +2,14 @@
 (function () {
   'use strict';
   const { $, esc, mountQuiz, renderPrintQuiz } = window.Course;
+
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm12',
+    missions: ['訊息怎麼進來', '鑰匙放哪', '排程時區', '自己測一次'],
+    after: '往下看，這個單元會拆解小秘書的每一個零件。',
+    run: window.SimM12.run,
+  });
   const { classifyNote, utcToTaiwan } = window.CourseLib;
   const { mountFlow } = window.Electives;
 
@@ -63,6 +71,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'flow', title: '訊息的旅程', text: '按「下一步」或「從頭播放」，看一則訊息經過哪些地方。' },
     { tour: 'sim', title: '小秘書模擬器', text: '輸入或點選例句，看它被分類成什麼，以及程式收到的資料格式。' },
     { tour: 'tz', title: '時區陷阱', text: '拉動滑桿，看排程時間換算成台灣時間是幾點。' },

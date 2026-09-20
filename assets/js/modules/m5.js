@@ -3,6 +3,14 @@
   'use strict';
   const { $, esc, mountQuiz, renderPrintQuiz, mountClassify, mountOrder } = window.Course;
 
+  // ---------- 沉浸式任務：模擬 Claude Code 工作台 ----------
+  window.Workbench.mount(window.Course.$('[data-workbench]'), {
+    id: 'm5',
+    missions: ['怎麼給人看', '選對平台', '第一次上線', '改一行', '看到舊的'],
+    after: '往下看，這個單元會把剛剛做的每一步講清楚。',
+    run: window.SimM5.run,
+  });
+
   // ---------- 靜態／動態分類 ----------
   mountClassify($('[data-classify-static]'), [
     { text: '個人作品集：放履歷、作品照片、聯絡方式。', answer: 'static', why: '每個人看到的都一樣，不用存任何東西。' },
@@ -61,6 +69,7 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'static', title: '靜態還是動態', text: '這是選平台前最重要的判斷，玩一下分類遊戲。' },
     { tour: 'picker', title: '平台選擇器', text: '回答兩三個問題，推薦你適合的上線平台。' },
     { tour: 'pages', title: 'GitHub Pages', text: '最簡單的上線方式。可以請 Claude Code 幫你做，也可以自己點。' },
