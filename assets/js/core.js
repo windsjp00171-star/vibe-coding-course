@@ -15,6 +15,7 @@
     { id: 'm5', part: 'B 上線', emoji: '🚀', title: '把作品放上網路', file: 'modules/05-deploy.html', minutes: 35 },
     { id: 'm6', part: 'C 資安', emoji: '🔑', title: '鑰匙與機密別外流', file: 'modules/06-secrets.html', minutes: 30 },
     { id: 'm7', part: 'C 資安', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 35 },
+    { id: 'm19', part: 'C 資安', emoji: '🎭', title: 'AI 詐騙：變臉與變聲', file: 'modules/19-deepfake.html', minutes: 25 },
     { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 35 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '總測驗與結業證書', file: 'modules/09-final.html', minutes: 25 },
     { id: 'm10', part: 'D 進階選修', emoji: '🗄️', title: 'Supabase：雲端資料庫', file: 'modules/10-supabase.html', minutes: 35 },
@@ -28,7 +29,7 @@
     { id: 'm18', part: 'D 進階選修', emoji: '💬', title: '怎麼問出好答案', file: 'modules/18-prompting.html', minutes: 25 },
   ];
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
-  const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18']);
+  const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18', 'm19']);
   // 會員功能啟用時，訪客可以免費試用的單元（其餘要登入並開通）。會員功能沒啟用時全部開放。
   const TRIAL = new Set(['m0', 'm1', 'm4', 'm7']);
   MODULES.forEach((m) => { m.ready = READY.has(m.id); m.trial = TRIAL.has(m.id); });

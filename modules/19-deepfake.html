@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 詐騙：變臉、變聲與假影片｜Vibe Coding 實戰課</title>
+  <meta name="description" content="深偽（deepfake）變臉變聲詐騙怎麼運作、為什麼「看到本人、聽到聲音」不再是證據，以及個人與公司可以立刻做的防線。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609200914">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609200914">
+  <style>
+    .df-meter { display: grid; gap: 10px; }
+    .df-row { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+    .df-bar { height: 12px; border-radius: 999px; background: var(--paper-2); overflow: hidden; border: 1px solid var(--line); }
+    .df-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--ok), var(--warn) 60%, var(--danger)); transition: width var(--normal) var(--ease); }
+    .df-val { font-weight: 800; color: var(--brand); font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body data-module="m19" data-base="../">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow"><b>19</b> C 資安．AI 詐騙</span>
+    <h1>那通視訊裡的人，<br><em>可能不是本人</em></h1>
+    <p class="lead">同一套「讓 AI 幫你做事」的技術，壞人拿來做的是：複製你老闆的臉、你家人的聲音、你公司的官網。這個單元不教你怎麼做假影片，而是教你<b>怎麼不被騙</b>，以及在公司裡怎麼訂一條擋得住的規矩。</p>
+    <ul class="goals">
+      <li>說得出深偽（deepfake）詐騙的三種常見手法</li>
+      <li>知道為什麼「我看到他的臉、聽到他的聲音」已經不算證據</li>
+      <li>會用「回撥驗證」和「暗號」兩道防線</li>
+      <li>幫自己的單位寫出一條可執行的匯款查核規則</li>
+    </ul>
+    <div class="meta-row">
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 30 分</span>
+      <span class="phase phase-post">課後任務 約 15 分</span>
+    </div>
+    <div data-teacher-slot="m19-1"></div>
+  </section>
+
+  <section class="slide screen-only" id="sim" data-tour="sim">
+    <div class="section-head"><span class="section-num">▶</span>
+      <div><span class="kicker">先玩再學．10 分鐘</span><h2>週五下午，老闆在視訊裡叫你匯款</h2>
+        <p>模擬一次真實的變臉詐騙：你會在視訊裡看到「老闆」，收到 LINE 訊息，然後要決定每一步怎麼做。大約 10 分鐘。</p></div></div>
+    <div data-workbench data-no-gloss></div>
+  </section>
+
+  <section class="slide" id="how" data-tour="how">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">它怎麼做到的</span><h2>三種手法，難度都比你想的低</h2>
+        <p>這些工具原本是給影視、配音、客服用的。壞人只是拿同一套東西換個用途。</p></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>🎭 換臉視訊</h3><p>用公開的照片和影片訓練，即時把另一個人的臉套在通話畫面上。畫面小、網路卡的時候特別難分辨。</p></div>
+      <div class="card"><h3>🎙️ 複製聲音</h3><p>只要一段你講話的錄音，就能合成出語氣相近的聲音。來源可能是你的語音訊息、直播、公司影片。</p></div>
+      <div class="card"><h3>🪪 偽造文件與網站</h3><p>假的公文、假的發票、跟官網幾乎一樣的釣魚網站，現在幾分鐘就能做出來，錯字也不再是破綻。</p></div>
+    </div>
+    <div class="callout callout-warn">
+      <b>最重要的觀念：</b>以前我們靠「像不像本人」來判斷真假。現在<b>像不像已經不是證據</b>——要靠「用另一個管道確認」。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>以前靠 <span class="blank"></span> 判斷真假，現在要靠 <span class="blank"></span>。</p>
+    </div>
+    <div data-teacher-slot="m19-2"></div>
+  </section>
+
+  <section class="slide" id="pattern" data-tour="pattern">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">共同的套路</span><h2>所有詐騙都在做同一件事：讓你來不及想</h2>
+        <p>手法會一直變，但套路幾十年沒變。下面五個訊號，出現越多越可疑。</p></div></div>
+    <div class="card df-meter" data-df-signals></div>
+    <p class="muted" data-df-note style="margin-top:12px"></p>
+    <div class="callout">
+      <b>一句話記住：</b>真正的緊急狀況，不會怕你花三分鐘打個電話確認。<b>會阻止你確認的，就是詐騙。</b>
+    </div>
+    <div data-teacher-slot="m19-3"></div>
+  </section>
+
+  <section class="slide" id="defense" data-tour="defense">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">兩道防線</span><h2>不用會辨識假影片，也擋得住</h2>
+        <p>不要把力氣花在「訓練肉眼分辨深偽」——那會越來越難。把力氣花在流程上。</p></div></div>
+    <div class="split">
+      <div class="card"><h3>☎️ 第一道：回撥驗證</h3>
+        <p>用<b>你自己通訊錄裡原本的號碼</b>打回去確認，不要用對方給你的號碼、也不要在原本那個視窗回覆。</p>
+        <p class="muted">重點是「換一個你本來就信任的管道」。對方能偽造畫面和聲音，但偽造不了你手機裡那組舊號碼的另一端。</p></div>
+      <div class="card"><h3>🔑 第二道：家庭／團隊暗號</h3>
+        <p>事先約好一個只有你們知道的詞或問題，例如「我們上次一起吃的那家店叫什麼？」。</p>
+        <p class="muted">AI 可以複製聲音和長相，但不知道你們家去年冬天在哪裡吃飯。暗號不要放在網路上。</p></div>
+    </div>
+    <div class="callout callout-ok">
+      <b>給公司用的版本：</b>凡是<b>匯款、改帳號、給密碼、給驗證碼</b>這四件事，一律要「換管道確認 ＋ 第二個人核可」。把它寫成白紙黑字的規定，員工才敢拒絕老闆。
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 學習單</h3>
+      <p>兩道防線：① <span class="blank"></span>　② <span class="blank"></span></p>
+      <p>我要跟家人約定的暗號類型（不要寫內容）：</p><div class="write-lines"></div>
+    </div>
+    <div data-teacher-slot="m19-4"></div>
+  </section>
+
+  <section class="slide" id="ifhit" data-tour="ifhit">
+    <div class="section-head"><span class="section-num">04</span>
+      <div><span class="kicker">萬一中了</span><h2>先止血，再處理面子</h2>
+        <p>和單元 6 的金鑰外洩一樣：出事的第一步永遠是「讓損害停止擴大」。</p></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m19-steps">
+        <li><label><input type="checkbox" value="bank"> <b>立刻打銀行客服辦圈存／止付</b>，越快越有機會攔下來</label></li>
+        <li><label><input type="checkbox" value="165"> <b>撥 165 反詐騙專線</b>報案並取得受理紀錄</label></li>
+        <li><label><input type="checkbox" value="keep"> <b>保留證據</b>：對話紀錄、通話時間、匯款單、對方帳號，不要刪</label></li>
+        <li><label><input type="checkbox" value="tell"> <b>通知同事和家人</b>：同一批人常常會用同樣手法再打給你身邊的人</label></li>
+        <li><label><input type="checkbox" value="pwd"> <b>換掉相關密碼</b>並檢查有沒有被設定轉寄規則或新增裝置</label></li>
+      </ul>
+    </div>
+    <div class="callout callout-warn">
+      被騙不是笨。這類詐騙專挑「配合度高、做事積極」的人下手，而且愈是資深、愈習慣快速決斷的人愈容易中。<b>越早說出來，越有機會把錢追回來。</b>
+    </div>
+    <div data-teacher-slot="m19-5"></div>
+  </section>
+
+  <section class="slide" id="builder" data-tour="builder">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">帶回去用</span><h2>產生你單位的查核規則</h2>
+        <p>填三個欄位，產生一段可以直接貼進群組或員工手冊的規定。</p></div></div>
+    <div class="card">
+      <div class="form-grid">
+        <label>單位名稱<input type="text" data-rule-org placeholder="例如：行政部"></label>
+        <label>需要雙重確認的金額（新台幣）<input type="text" data-rule-amount placeholder="例如：10000" inputmode="numeric"></label>
+        <label>第二位核可人的職稱<input type="text" data-rule-who placeholder="例如：會計主管"></label>
+      </div>
+      <p><button type="button" class="btn btn-primary" data-rule-make>產生規則</button></p>
+      <pre class="gen-out" data-rule-out hidden></pre>
+    </div>
+    <div data-teacher-slot="m19-6"></div>
+  </section>
+
+  <section class="slide" id="workshop" data-tour="workshop">
+    <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">課中工作坊</span><h2>詐騙劇本大會</h2><p>三人一組。最好的防詐訓練，是自己先當一次壞人。</p></div></div>
+    <div class="workshop">
+      <ol>
+        <li><span class="time">0–10 分</span><span class="step-title">寫一個騙得到你自己的劇本</span>想想：誰打來你會相信？什麼理由你會照做？只寫情境和說詞，不要真的去做任何工具操作。</li>
+        <li><span class="time">10–20 分</span><span class="step-title">交換劇本，找出破口</span>拿到別組的劇本，標出「哪一步如果換管道確認就擋下來了」。</li>
+        <li><span class="time">20–30 分</span><span class="step-title">寫成一條規定</span>用第 05 段的產生器做出你單位的查核規則，念出來給大家聽，看別人挑不挑得出漏洞。</li>
+      </ol>
+    </div>
+    <div class="callout">
+      <b>課堂原則：</b>這堂課只討論<b>怎麼防</b>。不示範、不提供任何換臉或變聲工具的操作方式。
+    </div>
+    <div data-teacher-slot="m19-7"></div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+    <div class="card screen-only" data-quiz></div>
+    <div class="print-only card" data-quiz-print></div>
+  </section>
+
+  <section class="slide" id="homework">
+    <div class="section-head"><span class="section-num">08</span>
+      <div><span class="phase phase-post">課後任務</span><h2>回家做這三件事</h2></div></div>
+    <div class="card">
+      <ul class="checklist" data-checklist="m19-home">
+        <li><label><input type="checkbox" value="family"> 跟家人約一個暗號，並說明「以後視訊借錢一定要對暗號」</label></li>
+        <li><label><input type="checkbox" value="rule"> 把產生的查核規則貼到你部門的群組，至少讓一個主管看過</label></li>
+        <li><label><input type="checkbox" value="165"> 把 165 和你的銀行客服電話存進手機聯絡人</label></li>
+      </ul>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 用自己的話寫下來</h3>
+      <p>接到緊急要求匯款的電話或視訊，我一定會先 <span class="blank"></span>。</p>
+      <p>今天最有收穫的一件事：</p><div class="write-lines"></div>
+    </div>
+  </section>
+</main>
+
+<nav data-module-nav></nav>
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 19　本單元只談防護，不示範任何偽造技術。反詐騙專線 165。</div></footer>
+
+<script src="../assets/js/lib.js?v=202609200914"></script>
+<script src="../assets/js/quiz-bank.js?v=202609200914"></script>
+<script src="../assets/js/config.js?v=202609200914"></script>
+<script src="../assets/js/core.js?v=202609200914"></script>
+<script src="../assets/js/members.js?v=202609200914"></script>
+<script src="../assets/js/tour.js?v=202609200914"></script>
+<script src="../assets/js/glossary-data.js?v=202609200914"></script>
+<script src="../assets/js/glossary.js?v=202609200914"></script>
+<script src="../assets/js/workbench.js?v=202609200914"></script>
+<script src="../assets/js/sims/m19-deepfake.js?v=202609200914"></script>
+<script src="../assets/js/modules/m19.js?v=202609200914"></script>
+</body>
+</html>
