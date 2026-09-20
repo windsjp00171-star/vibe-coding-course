@@ -83,7 +83,7 @@
   }
 
   function gateMessage(state) {
-    const home = `${document.body.dataset.base || './'}index.html`;
+    const home = `${document.body.dataset.base || './'}learn.html`;
     if (state === 'class') {
       return `<h2>🔒 講師還沒開放這個單元</h2>
         <p>你的班級目前開放到<b>單元 ${openUntil()}</b>。上到這裡時，講師會再開放，先把前面的單元複習一下吧。</p>

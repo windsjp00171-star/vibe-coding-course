@@ -44,7 +44,8 @@ node --test tests/*.test.js
 ## 檔案結構
 
 ```
-index.html              課程首頁與課程地圖
+index.html              對外首頁（分流：想學做東西／要辦資安宣導／已是學員）
+learn.html              學員的課程首頁與課程地圖
 modules/                各單元頁面
 assets/css/course.css   共用樣式（設計 token、講師模式、投影、列印）
 assets/js/core.js       共用骨架：頁首、模式、進度、測驗引擎、計時器

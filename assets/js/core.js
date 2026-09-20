@@ -134,7 +134,7 @@
     host.innerHTML = `
       <div class="teacher-banner" hidden>講師模式：紫色虛線框是教學提示、討論題和時間建議，學員看不到。按 <kbd>P</kbd> 進入投影模式</div>
       <div class="wrap">
-        <a class="brand" href="${base}index.html" data-tour="home">
+        <a class="brand" href="${base}learn.html" data-tour="home">
           <span class="brand-mark" aria-hidden="true">V</span>
           <span>Vibe Coding 實戰課<small>${esc(where)}</small></span>
         </a>
@@ -188,8 +188,8 @@
     const next = MODULES[index + 1];
     host.className = 'wrap module-nav';
     host.innerHTML = `
-      ${prev ? `<a class="btn" href="${base}${prev.file}">← ${prev.emoji} ${esc(prev.title)}</a>` : `<a class="btn" href="${base}index.html">← 回課程首頁</a>`}
-      ${next ? `<a class="btn btn-primary" href="${base}${next.file}" data-tour="next">下一單元：${next.emoji} ${esc(next.title)} →</a>` : `<a class="btn btn-primary" href="${base}index.html">回課程首頁</a>`}`;
+      ${prev ? `<a class="btn" href="${base}${prev.file}">← ${prev.emoji} ${esc(prev.title)}</a>` : `<a class="btn" href="${base}learn.html">← 回課程首頁</a>`}
+      ${next ? `<a class="btn btn-primary" href="${base}${next.file}" data-tour="next">下一單元：${next.emoji} ${esc(next.title)} →</a>` : `<a class="btn btn-primary" href="${base}learn.html">回課程首頁</a>`}`;
   }
 
   // ---------- 投影模式：一段一頁，方向鍵換頁 ----------

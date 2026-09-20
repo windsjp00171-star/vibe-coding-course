@@ -1,0 +1,50 @@
+/* landing.css — 對外分流首頁。陌生人第一次看到的那一頁：先知道這是什麼，再選自己要走哪條路。 */
+
+.lp-hero {
+  position: relative; overflow: hidden;
+  margin: 18px 0 0; padding: clamp(32px, 4vw, 56px) clamp(24px, 4vw, 52px);
+  border-radius: var(--radius-l); background: #1e1b4b; color: #fff;
+}
+.lp-hero::after {
+  content: ''; position: absolute; inset: auto -120px -220px auto; width: 460px; height: 460px;
+  border-radius: 50%; background: radial-gradient(circle, rgb(129 140 248 / 45%), transparent 68%);
+}
+.lp-hero > * { position: relative; z-index: 1; }
+.lp-hero .eyebrow { color: #fbbf24; }
+.lp-hero h1 { font-size: var(--text-hero); line-height: 1.12; letter-spacing: -.02em; margin: 10px 0 16px; max-width: 16ch; }
+.lp-hero h1 em { font-style: normal; color: #c7d2fe; }
+.lp-hero p { max-width: 54ch; color: #dbe0ff; font-size: clamp(1rem, .95rem + .3vw, 1.2rem); margin: 0; }
+.lp-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.lp-badges span {
+  padding: 7px 14px; border-radius: 999px; font-size: .88rem; font-weight: 700;
+  background: rgb(255 255 255 / 12%); color: #eef0ff;
+}
+
+.lp-paths { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+.lp-path {
+  display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: inherit;
+  padding: clamp(24px, 2.6vw, 34px); border-radius: var(--radius-l); background: var(--card);
+  border: 1.5px solid var(--line); box-shadow: var(--shadow); transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.lp-path:hover, .lp-path:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lift); border-color: var(--brand); }
+.lp-path .lp-icon { font-size: 2.6rem; line-height: 1; }
+.lp-path h2 { margin: 0; font-size: clamp(1.35rem, 1.1rem + .7vw, 1.75rem); letter-spacing: -.01em; }
+.lp-path .lp-who { font-weight: 700; color: var(--brand-ink); font-size: .95rem; }
+.lp-path ul { margin: 0; padding-left: 1.1em; color: var(--muted); display: grid; gap: 5px; }
+.lp-path .lp-go { margin-top: auto; font-weight: 800; color: var(--brand); }
+.lp-path--security { background: linear-gradient(180deg, #fff, var(--warn-soft)); }
+.lp-path--security .lp-who, .lp-path--security .lp-go { color: #8c5208; }
+.lp-path--security:hover { border-color: var(--warn); }
+
+.lp-back {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+  margin-top: 22px; padding: 18px 22px; border-radius: var(--radius-m);
+  background: var(--brand-soft); border: 1px solid #d8dbfb;
+}
+.lp-back b { display: block; }
+.lp-back p { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+
+.lp-proof { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.lp-proof div { padding: 20px; border-radius: var(--radius-m); background: var(--card); border: 1px solid var(--line); }
+.lp-proof b { display: block; font-size: 2rem; letter-spacing: -.02em; color: var(--brand); }
+.lp-proof span { color: var(--muted); font-size: .92rem; }

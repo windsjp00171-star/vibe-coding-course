@@ -148,7 +148,7 @@
 
   async function load() {
     const isBook = Boolean(mod.of);
-    $('[data-ho-back]').href = isBook ? 'index.html' : mod.file;
+    $('[data-ho-back]').href = isBook ? 'learn.html' : mod.file;
     document.title = `${isBook ? `Vibe Coding 實戰課 ${mod.title}` : `單元 ${mod.id.slice(1)} 講義`}${withAnswers ? '（講師版）' : ''}｜Vibe Coding 實戰課`;
     const all = isBook ? mod.of() : [mod];
     const list = isBook ? all.filter((m) => accessOf(m) === 'open') : all;

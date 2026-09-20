@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>課程教材｜Vibe Coding 實戰課</title>
+  <meta name="description" content="給非軟體背景上班族的 Vibe Coding 課程：安裝 Claude Code、Git 與 GitHub、部署上線、AI 資安，翻轉教室互動教材。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609201803">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609201803">
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <section class="home-hero slide">
+    <div>
+      <span class="eyebrow">給非工程師的 AI 寫程式課</span>
+      <h1>不會寫程式，<br>也能做出<br><em class="rotator" data-rotator>自己的網站</em></h1>
+      <p class="lead">這門課用 Claude Code 當你的 AI 工程師。從在自己電腦上做出第一個網頁，到放上網路給別人用，再到避開 AI 時代最常見的資安陷阱，每一步都用白話講、動手玩。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="modules/00-ai-basics.html" data-tour="start" data-continue>從第 0 單元開始 →</a>
+        <a class="btn btn-ghost" href="enroll.html">課程介紹與報名</a>
+        <span class="muted" data-progress-text></span>
+      </div>
+    </div>
+    <figure class="ai-window" data-no-gloss aria-label="示意：用一句話請 Claude Code 做東西" data-tour="demo" style="margin:0">
+      <div class="ai-bar"><i></i><i></i><i></i><span>Claude Code — 我的專案</span></div>
+      <div class="ai-body" aria-live="off">
+        <div class="ai-you"><b>你說</b><span data-ai-prompt></span></div>
+        <ul class="ai-lines" data-ai-lines></ul>
+        <div data-ai-done></div>
+      </div>
+    </figure>
+  </section>
+
+  <div class="stat-strip" aria-label="課程數字">
+    <div class="stat"><b data-count="20">20</b><span>個單元（11 必修＋9 選修）</span></div>
+    <div class="stat"><b data-count="17">17</b><span>個講師真實專案當案例</span></div>
+    <div class="stat"><b data-count="27">27</b><span>個真實踩過的坑</span></div>
+    <div class="stat"><b>0</b><span>行程式要背</span></div>
+  </div>
+
+  <section class="slide" data-tour="flow">
+    <div class="section-head"><span class="section-num">↻</span>
+      <div><span class="kicker">翻轉教室怎麼上</span><h2>每個單元都分三段</h2></div></div>
+    <div class="grid grid-3 flow">
+      <div class="card"><span class="phase phase-pre">① 課前．在家</span><h3>先看、先玩</h3><p>打開這個網站讀單元內容、玩互動練習、做小測驗。不懂的地方記下來。</p></div>
+      <div class="card"><span class="phase phase-in">② 課中．教室</span><h3>一起動手</h3><p>上課不再聽講師念投影片，而是分組做工作坊、實際操作 Claude Code，把問題當場解決。</p></div>
+      <div class="card"><span class="phase phase-post">③ 課後．回家</span><h3>做一件真的事</h3><p>每單元都有一個小任務，做完打勾。必修單元做完，你會有一個真的上線的作品。</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-tour="roles">
+    <div class="section-head"><span class="section-num">⇄</span>
+      <div><span class="kicker">這門課要教你的角色</span><h2>你當老闆，AI 當工程師</h2><p>Vibe Coding 不是「全部丟給 AI」。講師 17 個專案都是這樣分工完成的：</p></div></div>
+    <div class="roles">
+      <div class="role role-you"><span class="tag">你負責（這門課教的）</span><h3>🧭 想清楚、說清楚、驗收</h3>
+        <ul><li>要做什麼、給誰用、做到哪裡就好</li><li>決定「這個功能不做」</li><li>親手試用，確認真的能用</li><li>守住資安和個資的底線</li></ul></div>
+      <div class="role role-ai"><span class="tag">AI 負責</span><h3>🛠️ 動手做、找問題</h3>
+        <ul><li>寫程式碼（大部分都是它寫的）</li><li>找出你沒想到的例外狀況</li><li>查錯、修錯</li><li>寫說明文件和測試</li></ul></div>
+    </div>
+    <p class="roles-quote">程式碼可以交給 AI，但「做什麼、不做什麼、做得對不對」的判斷，永遠是你的。</p>
+  </section>
+
+  <section class="slide" id="map" data-tour="map">
+    <div class="section-head"><span class="section-num">⌘</span>
+      <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
+    <div class="course-map" data-map></div>
+    <a class="card" href="pitfalls.html" data-tour="pitfalls" style="display:flex;gap:16px;align-items:center;margin-top:20px;text-decoration:none;color:inherit;border:2px dashed var(--warn)">
+      <span style="font-size:2.4rem" aria-hidden="true">🕳️</span>
+      <span><b style="font-size:1.15rem">番外篇：講師踩過的 27 個坑</b><br><span class="muted">時區、LINE、AI 服務下架、備份只備到 17%……看症狀猜原因，別再親自踩一次。</span></span>
+    </a>
+  </section>
+
+  <section class="slide" id="join" data-join hidden data-tour="join">
+    <div class="section-head"><span class="section-num">+</span>
+      <div><span class="kicker">上課的班級</span><h2>加入你的班級</h2><p>輸入講師給你的 6 碼加入碼，講師就能看到你的學習進度，幫你找出卡住的地方。</p></div></div>
+    <form class="card split" data-join-form style="align-items:end">
+      <label class="form-grid">加入碼<input type="text" name="code" maxlength="6" required placeholder="例如：K7QM2P" style="text-transform:uppercase;letter-spacing:.2em"></label>
+      <div><button type="submit" class="btn btn-primary">加入班級</button> <span data-join-msg aria-live="polite"></span></div>
+    </form>
+  </section>
+
+  <section class="slide">
+    <div class="section-head"><span class="section-num">?</span>
+      <div><span class="kicker">上課前</span><h2>你需要準備什麼？</h2></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>💻 一台電腦</h3><p>Windows 或 Mac 都可以。平板和手機不行，因為要安裝軟體。</p></div>
+      <div class="card"><h3>💳 Claude 付費方案</h3><p>Claude Code 需要 Pro 以上的方案。單元 2 會說明怎麼選。</p></div>
+      <div class="card"><h3>🙋 一個想解決的小問題</h3><p>例如：社團報名表、家庭記帳、公司內部的常見問答頁。有自己的題目，學起來最快。</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-tour="showcase">
+    <div class="section-head"><span class="section-num">★</span>
+      <div><span class="kicker">真的做得到嗎？</span><h2>講師用這套方法做出來的作品</h2><p>下面都是公開的專案，原始碼都看得到，還在線上的可以直接點開來玩。每張卡片最下面，是做這個作品用到的技術，在這門課的哪一個單元學得到。</p></div></div>
+    <div class="showcase" data-showcase></div>
+    <p class="muted" style="margin-top:14px;font-size:.9rem">還有更多作品，看講師的<a href="https://windsjp00171-star.github.io/CLAUDE-DESIGN/" target="_blank" rel="noopener">作品集 ↗</a></p>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹與報名</a>．<a href="security.html">半日資安課</a>．<a href="me.html">我的學習</a>．<a href="quizshow.html">課堂搶答</a>．<a href="glossary.html">名詞小辭典</a>．<a href="teacher.html">講師後台</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
+
+<script src="assets/js/lib.js?v=202609201803"></script>
+<script src="assets/js/config.js?v=202609201803"></script>
+<script src="assets/js/core.js?v=202609201803"></script>
+<script src="assets/js/members.js?v=202609201803"></script>
+<script src="assets/js/tour.js?v=202609201803"></script>
+<script src="assets/js/glossary-data.js?v=202609201803"></script>
+<script src="assets/js/glossary.js?v=202609201803"></script>
+<script src="assets/js/home.js?v=202609201803"></script>
+<script>
+  (function () {
+    const { MODULES, getState, esc, $, completedCount } = window.Course;
+    const { progress } = getState();
+    const parts = [...new Set(MODULES.map((m) => m.part))];
+    const built = new Set(MODULES.filter((m) => m.ready).map((m) => m.id));
+    // 單元右邊的狀態：完成打勾；班級還沒開放的上鎖；試用單元標出來
+    const stateOf = (m, done, ready) => {
+      if (done) return '✅';
+      if (!ready) return '製作中';
+      if (!window.Members?.enabled) return '→';
+      if (window.Members.access(m) === 'class') return '🔒 尚未開放';
+      return m.trial && !window.Members.profile?.enrolled ? '免費試用' : '→';
+    };
+    const renderMap = () => { $('[data-map]').innerHTML = parts.map((part) => `
+      <div class="map-part">
+        <h3 class="map-part-title">${esc(part)}</h3>
+        <ol class="map-list">${MODULES.filter((m) => m.part === part).map((m) => {
+          const done = progress[m.id]?.done;
+          const ready = built.has(m.id);
+          const inner = `<span class="map-num">${m.id.slice(1)}</span>
+            <span class="map-emoji" aria-hidden="true">${m.emoji}</span>
+            <span class="map-title">${esc(m.title)}<small>課前 ${m.minutes} 分${done ? `．最佳 ${progress[m.id].best} 分` : ''}</small></span>
+            <span class="map-state">${stateOf(m, done, ready)}</span>`;
+          const closed = ready && !done && window.Members?.enabled && window.Members.access(m) === 'class';
+          return `<li>${ready ? `<a class="map-item ${done ? 'is-done' : ''} ${closed ? 'is-closed' : ''}" href="${m.file}">${inner}</a>` : `<div class="map-item is-soon">${inner}</div>`}</li>`;
+        }).join('')}</ol>
+      </div>`).join(''); };
+    renderMap();
+    document.addEventListener('course:auth', renderMap);
+
+    const count = completedCount();
+    $('[data-progress-text]').textContent = count ? `已完成 ${count}／${MODULES.length} 個單元` : '必修約 6 小時，可以分次上完';
+    const next = MODULES.find((m) => !progress[m.id]?.done && built.has(m.id));
+    if (count && next) { const a = $('[data-continue]'); a.href = next.file; a.textContent = `繼續：${next.emoji} ${next.title} →`; }
+
+    // 會員功能啟用時才顯示加入班級
+    if (window.Members?.enabled) {
+      // 加入班級是給學員的；講師是開班的人，不需要看到
+      const showJoin = (profile) => { $('[data-join]').hidden = profile?.role === 'teacher'; };
+      showJoin(window.Members.profile);
+      document.addEventListener('course:auth', (e) => showJoin(e.detail.profile));
+      $('[data-join-form]').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = $('[data-join-msg]');
+        const code = new FormData(e.target).get('code').toString().trim().toUpperCase();
+        try {
+          const name = await window.Members.joinClass(code);
+          msg.textContent = `✅ 已加入「${name}」`;
+        } catch (err) {
+          msg.textContent = err.message === '請先登入' ? '請先按右上角「登入保存進度」' : `❌ ${err.message}`;
+        }
+      });
+    }
+
+    window.Tour.register([
+      { tour: 'start', title: '從這裡開始', text: '第一次來就從單元 0 開始。之後回來，這個按鈕會變成「繼續上次的進度」。' },
+      { tour: 'demo', title: 'Vibe Coding 長這樣', text: '你用一句話說要什麼，Claude Code 動手做、回報每一步。這個視窗只是示意，單元 2 會帶你裝好真的。' },
+      { tour: 'flow', title: '翻轉教室', text: '這門課要先在家自學，上課時做工作坊。每個單元都分成課前、課中、課後三段。' },
+      { tour: 'roles', title: '你和 AI 怎麼分工', text: '程式交給 AI 寫，你負責說清楚、做決定、驗收。這門課教的就是左邊這些能力。' },
+      { tour: 'pitfalls', title: '踩坑圖鑑', text: '講師真實踩過的坑，可以玩「看症狀猜原因」。' },
+      { tour: 'map', title: '課程地圖', text: 'A 到 C 是必修，D 是進階選修（資料庫、LINE、手機 App）。做完小測驗過關的單元會打勾。' },
+      { tour: 'showcase', title: '講師的作品', text: '這些都是用同一套方法做出來的，還在線上的可以點開來玩。卡片下方告訴你用到的技術在哪個單元學。' },
+    ]);
+  })();
+</script>
+</body>
+</html>
