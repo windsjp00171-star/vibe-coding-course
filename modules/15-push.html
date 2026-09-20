@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609201234">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609201234">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609201242">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609201242">
 </head>
 <body data-module="m15" data-base="../">
 <header data-course-header></header>
@@ -52,7 +52,12 @@
       <div><span class="kicker">動手玩</span><h2>推播設計模擬器</h2>
         <p>情境：每週要提醒小組長交回報，系統每 15 分鐘檢查一次。打開或關掉下面四個設計，看小明這一週會收到什麼。</p></div></div>
     <div class="split">
-      <div class="card"><div class="toggle-list" data-push-toggles></div></div>
+      <div class="card">
+        <p class="kicker">① 打開或關掉這四個設計</p>
+        <div class="toggle-list" data-push-toggles></div>
+        <p class="muted" style="margin-top:10px">情境：小明是小組長，每週要交回報。系統每 15 分鐘檢查一次「誰還沒交」。他週一到週三都沒交，週四才交。<br>
+        右邊會顯示：這樣的設計下，小明這一週會收到幾則推播、第一則幾點送到。<b>四個全關</b>和<b>四個全開</b>各試一次，差別最有感。</p>
+      </div>
       <div class="card">
         <p class="kicker">小明這一週收到的推播</p>
         <div class="push-week" data-push-week></div>
@@ -90,7 +95,7 @@
         <li>收到推播卻沒顯示，瀏覽器會悄悄取消這個網站的推播權限</li></ul></div>
       <div class="card"><span class="pill pill-warn">收得到，但吵到人</span><ul>
         <li>一進站就問權限</li>
-        <li>沒有去重：資料庫裡 77 筆通知，有 64 筆是重複的，同一件事最多發了 9 次</li>
+        <li>同一件事重複發：資料庫裡 77 筆通知，有 64 筆是重複的——「你的回報還沒交」這一句，同一個人最多收到 9 次</li>
         <li>沒有時段限制：提醒在半夜 00:07 送達</li>
         <li>通知沒有標籤，重試時同一件事出現兩三則</li></ul></div>
       <div class="card"><span class="pill pill-brand">看起來正常，其實壞了</span><ul>
@@ -103,11 +108,17 @@
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">05</span>
       <div><span class="kicker">課中工作坊</span><h2>設計一個不吵人的提醒</h2></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>兩人一組</p>
+      <p><b>🎒 要準備</b>紙筆</p>
+      <p><b>🎁 做完要交出</b>一張推播設計卡：時段、同一件事隔多久再提醒、什麼時候問允許</p>
+      <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
+    </div>
     <div class="workshop">
       <p><span class="phase phase-in">課中．約 30 分</span>　3 人一組，用自己的題目。</p>
       <ol>
         <li><span class="time">0–10 分</span>你的系統需要提醒誰、提醒什麼？一週最多幾次才不會煩？</li>
-        <li><span class="time">10–20 分</span>填學習單的「推播設計卡」：時段、去重的單位（每天？每週？）、第一次詢問的時機、站內通知放哪。</li>
+        <li><span class="time">10–20 分</span>填學習單的「推播設計卡」：可以打擾的時段、同一件事隔多久才能再提醒一次（每天？每週？）、第一次詢問「允許通知」的時機、站內通知要放在哪一頁。</li>
         <li><span class="time">20–30 分</span>把設計卡交給 Claude Code：「請依照這張設計卡規劃推播功能，先給我看計畫，並說明你會怎麼避免重複發送」。</li>
       </ol>
       <div data-teacher-slot="m15-2"></div>
@@ -142,16 +153,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 15　各瀏覽器的推播規則會隨版本調整。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609201234"></script>
-<script src="../assets/js/quiz-bank.js?v=202609201234"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609201234"></script>
-<script src="../assets/js/config.js?v=202609201234"></script>
-<script src="../assets/js/core.js?v=202609201234"></script>
-<script src="../assets/js/members.js?v=202609201234"></script>
-<script src="../assets/js/tour.js?v=202609201234"></script>
-<script src="../assets/js/glossary-data.js?v=202609201234"></script>
-<script src="../assets/js/glossary.js?v=202609201234"></script>
-<script src="../assets/js/modules/electives.js?v=202609201234"></script>
-<script src="../assets/js/modules/m15.js?v=202609201234"></script>
+<script src="../assets/js/lib.js?v=202609201242"></script>
+<script src="../assets/js/quiz-bank.js?v=202609201242"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609201242"></script>
+<script src="../assets/js/config.js?v=202609201242"></script>
+<script src="../assets/js/core.js?v=202609201242"></script>
+<script src="../assets/js/members.js?v=202609201242"></script>
+<script src="../assets/js/tour.js?v=202609201242"></script>
+<script src="../assets/js/glossary-data.js?v=202609201242"></script>
+<script src="../assets/js/glossary.js?v=202609201242"></script>
+<script src="../assets/js/modules/electives.js?v=202609201242"></script>
+<script src="../assets/js/modules/m15.js?v=202609201242"></script>
 </body>
 </html>

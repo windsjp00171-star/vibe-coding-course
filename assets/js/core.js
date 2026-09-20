@@ -163,6 +163,16 @@
     refreshProgressBar();
   }
 
+  // 單元開頭那排方塊就是「這個單元的目標」，補上標題免得看不懂
+  function labelGoals() {
+    const list = document.querySelector('.module-hero .goals');
+    if (!list || list.previousElementSibling?.classList.contains('goals-label')) return;
+    const label = document.createElement('p');
+    label.className = 'goals-label';
+    label.textContent = '🎯 這個單元的目標';
+    list.before(label);
+  }
+
   function refreshProgressBar() {
     const bar = $('.progress-bar span');
     if (bar) bar.style.width = `${(completedCount() / MODULES.length) * 100}%`;
@@ -247,8 +257,21 @@
 
   // ---------- 測驗引擎 ----------
   // questions: [{ q, options: [...], answer: 索引, why: '解說' }]
+  // 測驗區加一顆課堂搶答入口：講師在這一課就能直接開投影版
+  function addQuizShowLink(host, moduleId) {
+    if (!host || !moduleId || host.parentElement.querySelector('[data-quizshow-link]')) return;
+    const base = document.body.dataset.base || './';
+    const p = document.createElement('p');
+    p.className = 'screen-only quizshow-link';
+    p.dataset.quizshowLink = '';
+    p.innerHTML = `<a class="btn btn-sm" href="${base}quizshow.html?units=${moduleId}&go=1" target="_blank" rel="noopener">🎯 用這一課的題目玩課堂搶答</a>
+      <span class="muted">投影出來，學員舉手搶答（講師用）</span>`;
+    host.after(p);
+  }
+
   function mountQuiz(host, questions, { moduleId, title = '隨堂小測驗', onFinish, onRetry, passPercent = window.CourseLib.PASS_PERCENT } = {}) {
     if (!host) return;
+    addQuizShowLink(host, moduleId);
     const answers = [];
     let i = 0;
 
@@ -364,12 +387,17 @@
       <div class="meter-row"><label for="${stateKey}-${i}">${esc(s.name)}</label>
         <input type="range" id="${stateKey}-${i}" min="1" max="5" value="${saved[s.name] ?? DEFAULT_RATING}" data-skill="${esc(s.name)}">
         <output>${saved[s.name] ?? DEFAULT_RATING}</output></div>`).join('');
+    // 拖曳時每動一格都會觸發：畫面先更新，寫入 localStorage 延後合併，避免卡頓
+    const values = { ...saved };
+    let pending = null;
     host.addEventListener('input', (e) => {
       const r = e.target.closest('[data-skill]');
       if (!r) return;
       r.nextElementSibling.textContent = r.value;
-      update({ [stateKey]: { ...(getState()[stateKey] || {}), [r.dataset.skill]: Number(r.value) } });
-      onChange(getState()[stateKey]);
+      values[r.dataset.skill] = Number(r.value);
+      onChange(values);
+      clearTimeout(pending);
+      pending = setTimeout(() => update({ [stateKey]: { ...(getState()[stateKey] || {}), ...values } }), 200);
     });
     onChange(saved);
   }
@@ -472,6 +500,7 @@
     renderModuleNav();
     renderTimer();
     applyMode(getState().mode);
+    labelGoals();
     loadLocalTeacherNotes();
     initFlips();
     initTabs();

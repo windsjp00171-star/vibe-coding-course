@@ -19,7 +19,7 @@
     host.innerHTML = `
       <div class="wb-top">
         <ol class="wb-missions">${config.missions.map((m, i) => `<li data-m="${i}"><span>${i + 1}</span>${esc(m)}</li>`).join('')}</ol>
-        <button type="button" class="btn btn-sm btn-ghost" data-wb-reset>↺ 重來一次</button>
+        <button type="button" class="btn btn-sm" data-wb-reset title="回到第一關重新玩一次">↺ 重來一次</button>
       </div>
       <div class="wb-main">
         <section class="wb-chat" aria-label="Claude Code 對話（模擬）">

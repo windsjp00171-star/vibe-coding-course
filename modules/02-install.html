@@ -8,8 +8,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609201234">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201234">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609201242">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201242">
+  <style>
+    .term-demo { margin: 0; border-radius: var(--radius-m); overflow: hidden; box-shadow: var(--shadow-lift); }
+    .term-bar { display: flex; align-items: center; gap: 7px; background: #33313d; padding: 8px 12px; font-size: .78rem; color: #b9b5c6; }
+    .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-left: 6px; }
+    .term-body { background: #16151c; color: #e6e3f0; font-family: var(--mono); font-size: .84rem; line-height: 1.9; padding: 12px 14px; }
+    .term-body p { margin: 0; }
+    .term-prompt { color: #6ee7a8; }
+    .term-cmd { color: #ffd9a8; }
+    .term-out { color: #a5a1b8; }
+    .term-caret { animation: nw-caret 1s steps(1) infinite; }
+    @keyframes nw-caret { 50% { opacity: 0; } }
+    .term-demo figcaption { font-size: .78rem; color: var(--muted); background: var(--paper-2); padding: 6px 10px; }
+  </style>
 </head>
 <body data-module="m2" data-base="../">
 <header data-course-header></header>
@@ -160,6 +176,25 @@
     <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker">進階．可以先跳過</span><h2>終端機：電腦的「文字遙控器」</h2>
         <p>你偶爾會看到 Claude Code 在執行像 <code>git status</code> 這樣的文字指令。那就是終端機的語言。你不用自己打，但認得的話會安心很多。</p></div></div>
+    <div class="split" style="margin-bottom:18px">
+      <div>
+        <p><b>它長這樣：</b>一個黑底白字的視窗，只能打字。上面那行（<code>C:\Users\你\聚餐報名&gt;</code> 或 <code>~/聚餐報名 $</code>）叫「提示字元」，意思是「我在這個資料夾，等你下指令」。</p>
+        <p>右邊是一個模擬畫面，讓你先認得它的樣子。<b>Windows 叫「命令提示字元」或「PowerShell」，Mac 叫「終端機（Terminal）」</b>，功能一樣。</p>
+        <p class="muted">用桌面版 Claude Code 的話，這些它會自己處理，你只要在旁邊看得懂它在做什麼就好。</p>
+      </div>
+      <figure class="term-demo" aria-label="終端機畫面示意">
+        <div class="term-bar"><i></i><i></i><i></i><span>終端機 — 聚餐報名</span></div>
+        <div class="term-body">
+          <p><span class="term-prompt">~/聚餐報名 $</span> <span class="term-cmd">ls</span></p>
+          <p class="term-out">index.html　README.md</p>
+          <p><span class="term-prompt">~/聚餐報名 $</span> <span class="term-cmd">git status</span></p>
+          <p class="term-out">有 1 個檔案被修改：index.html</p>
+          <p><span class="term-prompt">~/聚餐報名 $</span> <span class="term-cmd">claude</span></p>
+          <p class="term-out">✻ Claude Code 已啟動，請問今天要做什麼？<span class="term-caret">▌</span></p>
+        </div>
+        <figcaption>這是示意畫面，不是真的可以打字的終端機。</figcaption>
+      </figure>
+    </div>
     <div class="grid grid-3" data-terms></div>
     <details class="card" style="margin-top:16px">
       <summary><b>想用終端機版 Claude Code？（進階）</b></summary>
@@ -176,6 +211,12 @@
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">07</span>
       <div><span class="kicker">課中工作坊</span><h2>安裝派對</h2><p>兩人一組當「安裝夥伴」，一起完成、一起做出第一個網頁。</p></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>兩人一組，一人操作一人念步驟</p>
+      <p><b>🎒 要準備</b>自己的筆電、Claude 付費方案帳號</p>
+      <p><b>🎁 做完要交出</b>兩台電腦都裝好 Claude Code，而且各自做出一個自我介紹網頁</p>
+      <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
+    </div>
     <div class="workshop">
       <p><span class="phase phase-in">課中．約 40 分</span>　準備：每人紅、綠便利貼各一張。</p>
       <ol>
@@ -215,16 +256,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 02　安裝步驟與價格以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609201234"></script>
-<script src="../assets/js/quiz-bank.js?v=202609201234"></script>
-<script src="../assets/js/config.js?v=202609201234"></script>
-<script src="../assets/js/core.js?v=202609201234"></script>
-<script src="../assets/js/members.js?v=202609201234"></script>
-<script src="../assets/js/tour.js?v=202609201234"></script>
-<script src="../assets/js/glossary-data.js?v=202609201234"></script>
-<script src="../assets/js/glossary.js?v=202609201234"></script>
-<script src="../assets/js/workbench.js?v=202609201234"></script>
-<script src="../assets/js/sims/m2-party.js?v=202609201234"></script>
-<script src="../assets/js/modules/m2.js?v=202609201234"></script>
+<script src="../assets/js/lib.js?v=202609201242"></script>
+<script src="../assets/js/quiz-bank.js?v=202609201242"></script>
+<script src="../assets/js/config.js?v=202609201242"></script>
+<script src="../assets/js/core.js?v=202609201242"></script>
+<script src="../assets/js/members.js?v=202609201242"></script>
+<script src="../assets/js/tour.js?v=202609201242"></script>
+<script src="../assets/js/glossary-data.js?v=202609201242"></script>
+<script src="../assets/js/glossary.js?v=202609201242"></script>
+<script src="../assets/js/workbench.js?v=202609201242"></script>
+<script src="../assets/js/sims/m2-party.js?v=202609201242"></script>
+<script src="../assets/js/modules/m2.js?v=202609201242"></script>
 </body>
 </html>

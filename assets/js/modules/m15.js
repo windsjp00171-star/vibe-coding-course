@@ -7,7 +7,7 @@
   const TOGGLES = [
     { id: 'askOnClick', label: '使用者自己按「開啟提醒」後，才問「允許通知嗎？」' },
     { id: 'window', label: '只在白天 09:00–20:00 發送' },
-    { id: 'dedupe', label: '去重：同一件事、同一週只發一次' },
+    { id: 'dedupe', label: '同一件事只提醒一次（這週提醒過，就不再重複發）' },
     { id: 'siteFirst', label: '先在網站上留一份通知，再發推播' },
   ];
   const DAYS = ['一', '二', '三', '四', '五', '六', '日'];

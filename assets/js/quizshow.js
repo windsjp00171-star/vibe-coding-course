@@ -51,6 +51,15 @@
   });
   refreshCount();
 
+  // 從單元頁帶過來：?units=m4 先幫你選好，?go=1 直接開始
+  const params = new URLSearchParams(location.search);
+  const wanted = (params.get('units') || '').split(',').filter(Boolean);
+  if (wanted.length) {
+    wanted.forEach((id) => { if (units.some((m) => m.id === id) || id === 'all') picked.add(id); });
+    $$('[data-unit]').forEach((x) => x.setAttribute('aria-pressed', String(picked.has(x.dataset.unit))));
+    refreshCount();
+  }
+
   // ---------- 開始 ----------
   $('[data-qs-start]').addEventListener('click', () => {
     deck = deckFrom();
@@ -189,6 +198,8 @@
     if (e.target instanceof Element && e.target.closest('button, input')) return;
     if (revealed) next(); else reveal();
   });
+
+  if (picked.size && params.get('go') === '1') $('[data-qs-start]').click();
 
   window.Tour.register([]);
 })();

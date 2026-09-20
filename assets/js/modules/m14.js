@@ -6,9 +6,9 @@
 
   // 三種策略對「新版上線後，使用者第 N 次打開看到哪一版」的行為（教學簡化）
   const STRATEGIES = [
-    { id: 'forever', label: '永遠用手機上存的檔案，不檢查更新', note: '開得最快，但除非使用者刪掉 App 重裝，否則永遠停在舊版。這就是講師遇過的「修好的 bug，有些人說還在」。', seesNew: () => false },
-    { id: 'version', label: '檔案加上版本號，每次發布都換號碼', note: '這個課程網站用的就是這招：每次發布都換版本號，瀏覽器看到新號碼就會重新下載。缺點是要記得換號碼，講師就發生過「版本號忘了改」的事故。', seesNew: (n) => n >= 1 },
-    { id: 'swr', label: '先顯示存著的版本，同時在背景下載新版（stale-while-revalidate）', note: '第一次打開還是舊版（但很快），背景已經偷偷換好，第二次打開就是新版。講師的小組共讀工具後來改用這招，不用再靠人記得換號碼。', seesNew: (n) => n >= 2 },
+    { id: 'forever', label: '①永遠用手機上存好的檔案，不去檢查有沒有新版', note: '開得最快，但除非使用者刪掉 App 重裝，否則永遠停在舊版。這就是講師遇過的「修好的 bug，有些人說還在」。', seesNew: () => false },
+    { id: 'version', label: '②檔案名稱加版本號，每次發布都換一個號碼', note: '這個課程網站用的就是這招：每次發布都換版本號，瀏覽器看到新號碼就會重新下載。缺點是要記得換號碼，講師就發生過「版本號忘了改」的事故。', seesNew: (n) => n >= 1 },
+    { id: 'swr', label: '③先顯示存好的舊版（開得快），同時在背景偷偷下載新版，下次打開就是新的', note: '第一次打開還是舊版（但很快），背景已經偷偷換好，第二次打開就是新版。講師的小組共讀工具後來改用這招，不用再靠人記得換號碼。', seesNew: (n) => n >= 2 },
   ];
   let strategy = 'forever';
   let released = false;
@@ -21,7 +21,7 @@
       <label><input type="radio" name="cache-strategy" value="${x.id}" ${x.id === strategy ? 'checked' : ''}><span>${esc(x.label)}</span></label>`).join('');
     const latest = log[log.length - 1];
     $('[data-cache-view]').innerHTML = `
-      <p class="kicker">使用者的手機</p>
+      <p class="kicker">使用者手機上看到的版本</p>
       <div class="score-big" style="font-size:3rem;color:${latest === 'v2' ? 'var(--ok)' : 'var(--ink)'}">${latest || 'v1'}</div>
       <p>網站目前的最新版：<b>${released ? 'v2' : 'v1'}</b></p>
       <ol class="muted" style="padding-left:1.2em">${log.map((v, i) => `<li>第 ${i + 1} 次打開：看到 ${v}${released && v === 'v1' ? '（舊版！）' : ''}</li>`).join('')}</ol>

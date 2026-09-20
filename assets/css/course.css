@@ -319,8 +319,17 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 .timer.is-done { animation: pulse 900ms infinite; }
 
 /* ---------- Presenter mode（投影）---------- */
-:root.presenting { font-size: 125%; }
-:root.presenting .slide { min-height: calc(100vh - 64px); display: flex; flex-direction: column; justify-content: center; }
+:root.presenting { font-size: 118%; }
+/* 內容放得下就垂直置中；放不下就從最上面開始，才不會上下被切掉 */
+:root.presenting .slide {
+  min-height: calc(100vh - 84px); display: flex; flex-direction: column;
+  justify-content: safe center; padding-block: 24px; scroll-margin-top: 76px;
+}
+@supports not (justify-content: safe center) {
+  :root.presenting .slide { justify-content: flex-start; }
+}
+:root.presenting .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+:root.presenting .wb, :root.presenting .workshop { font-size: .88em; }
 .slide-counter {
   position: fixed; left: 16px; bottom: 16px; z-index: 60; background: var(--ink); color: var(--paper);
   border-radius: 999px; padding: 4px 12px; font-size: .8rem; font-weight: 700; display: none;
@@ -341,6 +350,9 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 .tour-pop h4 { margin: 0 0 6px; font-size: 1.05rem; }
 .tour-pop p { margin: 0 0 12px; font-size: .95rem; color: var(--muted); }
 .tour-pop footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+.goals-label { font-size: .85rem; font-weight: 800; letter-spacing: .06em; color: var(--brand); margin: 0 0 .4em; }
+.quizshow-link { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; font-size: .88rem; }
 
 /* ---------- 名詞小辭典（glossary.js） ---------- */
 .term {
@@ -473,6 +485,11 @@ body.is-locked [data-module-nav] { display: none; }
 .phase-pre { background: var(--brand-soft); color: var(--brand); }
 .phase-in { background: var(--teacher-soft); color: var(--teacher); }
 .phase-post { background: var(--ok-soft); color: var(--ok); }
+.ws-how { border-left: 5px solid var(--teacher); margin-bottom: 14px; display: grid; gap: 4px; }
+.ws-how p { margin: 0; }
+.ws-how b { display: inline-block; min-width: 7.5em; color: var(--teacher); }
+.ws-how .muted { margin-top: 6px; font-size: .88rem; }
+
 .workshop {
   border: 2px solid var(--teacher); border-radius: var(--radius-l); padding: clamp(18px, 3vw, 28px); background: var(--card);
 }

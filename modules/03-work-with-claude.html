@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609201234">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201234">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609201242">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609201242">
 </head>
 <body data-module="m3" data-base="../">
 <header data-course-header></header>
@@ -91,6 +91,29 @@
       <div><span class="kicker">給 AI 的員工手冊</span><h2>CLAUDE.md：寫一次，每次都照做</h2>
         <p>每次開新對話，Claude Code 都會先讀專案資料夾裡的 <code>CLAUDE.md</code>。把你的規矩寫進去，就不用每次重講。</p></div></div>
     <div class="analogy"><strong>就像新同事報到第一天拿到的員工手冊：</strong>公司的習慣、不能碰的東西、做完要怎麼回報，寫清楚，大家都省事。</div>
+    <div class="split" style="margin-top:20px">
+      <div class="card">
+        <h3>📍 這個檔案要放在哪裡？</h3>
+        <ul>
+          <li><b>檔名就是 <code>CLAUDE.md</code></b>（全部大寫，副檔名 .md）</li>
+          <li>放在<b>專案資料夾的最外層</b>——就是你在 Claude Code 裡選的那個資料夾，跟 <code>index.html</code> 放在一起</li>
+          <li>不用自己開檔案總管：最簡單的方式是把內容貼給 Claude Code，說「<b>請把下面的內容存成這個專案的 CLAUDE.md</b>」，它會自己建好</li>
+          <li>要確認它讀到了，就開一個新對話問：「<b>你讀到哪些規矩？</b>」</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🌍 兩種範圍，可以同時用</h3>
+        <table class="compare">
+          <thead><tr><th></th><th>專案版</th><th>全域版（進階）</th></tr></thead>
+          <tbody>
+            <tr><th>放哪裡</th><td>專案資料夾最外層</td><td>你的個人資料夾 <code>~/.claude/CLAUDE.md</code></td></tr>
+            <tr><th>套用範圍</th><td>只有這個專案</td><td>你電腦上的每一個專案</td></tr>
+            <tr><th>適合寫</th><td>這個專案的規矩、給誰用、用什麼技術</td><td>你個人的習慣：回報格式、commit 訊息寫法</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="margin-top:10px">先做專案版就好。全域版等你有好幾個專案、發現自己一直重複交代同樣的事，再來寫。</p>
+      </div>
+    </div>
     <h3 style="margin-top:24px">講師自己的 CLAUDE.md 守則（白話版）</h3>
     <p class="muted">這是講師所有專案共用的規矩，每一條都是踩過坑換來的。點卡片看原因。</p>
     <div class="grid grid-3" data-rules></div>
@@ -109,7 +132,7 @@
       <div>
         <pre class="gen-out" id="claude-md-out" data-gen-out></pre>
         <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#claude-md-out">📋 複製 CLAUDE.md 內容</button></p>
-        <p class="muted">貼給 Claude Code 時可以說：「請把下面的內容存成這個專案的 CLAUDE.md」。</p>
+        <p class="muted">貼給 Claude Code 時就說：「<b>請把下面的內容存成這個專案的 CLAUDE.md</b>」，它會建在專案資料夾最外層。存好之後開一個新對話問它「你讀到哪些規矩？」，確認真的生效。</p>
       </div>
     </div>
   </section>
@@ -141,6 +164,12 @@
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">08</span>
       <div><span class="kicker">課中工作坊</span><h2>A／B 指令對決</h2><p>同一個題目、兩種說法，看看 Claude Code 交出來的東西差多少。</p></div></div>
+    <div class="ws-how card">
+      <p><b>👥 怎麼分組</b>兩人一組</p>
+      <p><b>🎒 要準備</b>裝好的 Claude Code、一個練習用資料夾</p>
+      <p><b>🎁 做完要交出</b>一份放進專案的 CLAUDE.md，以及一張收工紙條</p>
+      <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
+    </div>
     <div class="workshop">
       <p><span class="phase phase-in">課中．約 45 分</span>　用單元 1 選定的題目。</p>
       <ol>
@@ -181,16 +210,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 03</div></footer>
 
-<script src="../assets/js/lib.js?v=202609201234"></script>
-<script src="../assets/js/quiz-bank.js?v=202609201234"></script>
-<script src="../assets/js/config.js?v=202609201234"></script>
-<script src="../assets/js/core.js?v=202609201234"></script>
-<script src="../assets/js/members.js?v=202609201234"></script>
-<script src="../assets/js/tour.js?v=202609201234"></script>
-<script src="../assets/js/glossary-data.js?v=202609201234"></script>
-<script src="../assets/js/glossary.js?v=202609201234"></script>
-<script src="../assets/js/workbench.js?v=202609201234"></script>
-<script src="../assets/js/sims/m3-brief.js?v=202609201234"></script>
-<script src="../assets/js/modules/m3.js?v=202609201234"></script>
+<script src="../assets/js/lib.js?v=202609201242"></script>
+<script src="../assets/js/quiz-bank.js?v=202609201242"></script>
+<script src="../assets/js/config.js?v=202609201242"></script>
+<script src="../assets/js/core.js?v=202609201242"></script>
+<script src="../assets/js/members.js?v=202609201242"></script>
+<script src="../assets/js/tour.js?v=202609201242"></script>
+<script src="../assets/js/glossary-data.js?v=202609201242"></script>
+<script src="../assets/js/glossary.js?v=202609201242"></script>
+<script src="../assets/js/workbench.js?v=202609201242"></script>
+<script src="../assets/js/sims/m3-brief.js?v=202609201242"></script>
+<script src="../assets/js/modules/m3.js?v=202609201242"></script>
 </body>
 </html>
