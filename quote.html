@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>報價單｜Vibe Coding 實戰課</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609201341">
+  <link rel="stylesheet" href="assets/css/quote.css?v=202609201341">
+</head>
+<body data-base="./">
+<header data-course-header class="screen-only"></header>
+
+<div class="wrap screen-only">
+  <section class="module-hero slide">
+    <span class="eyebrow">講師工具．不會出現在搜尋結果</span>
+    <h1>內訓<em>報價單</em></h1>
+    <p class="lead">填好左邊，右邊會即時排好版，按「列印／存成 PDF」就能寄出。金額不會存在任何地方，只留在這台電腦的瀏覽器裡。</p>
+  </section>
+
+  <section class="slide qt-editor">
+    <div class="card">
+      <h3>客戶與場次</h3>
+      <div class="form-grid">
+        <label>單位名稱<input type="text" data-q="client" placeholder="例如：○○股份有限公司"></label>
+        <label>聯絡人<input type="text" data-q="contact" placeholder="例如：王小姐"></label>
+        <label>課程<select data-q="course">
+          <option value="security">AI 資安意識（半日，不用電腦）</option>
+          <option value="core">Vibe Coding 實戰課（必修，三個半天）</option>
+          <option value="core2">Vibe Coding 實戰課（精簡，兩個半天）</option>
+          <option value="custom">自訂</option>
+        </select></label>
+        <label>自訂課程名稱（選「自訂」時才用）<input type="text" data-q="customName" placeholder="例如：AI 資安意識＋實作入門"></label>
+        <label>場次日期<input type="text" data-q="date" placeholder="例如：2026/11/14（五）下午"></label>
+        <label>地點<input type="text" data-q="place" placeholder="例如：貴單位會議室／線上 Google Meet"></label>
+        <label>預計人數<input type="text" data-q="people" placeholder="例如：40"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>費用項目</h3>
+      <p class="muted">不需要的項目金額留空就不會出現在報價單上。</p>
+      <div class="qt-lines" data-q-lines></div>
+      <div class="form-grid" style="margin-top:12px">
+        <label>折扣說明（選填）<input type="text" data-q="discountNote" placeholder="例如：首場合作價"></label>
+        <label>折扣金額（選填，填正數）<input type="text" data-q="discount" inputmode="numeric" placeholder="例如：5000"></label>
+        <label>報價有效期<input type="text" data-q="valid" value="本報價單自開立日起 30 天內有效"></label>
+        <label>付款方式<input type="text" data-q="pay" value="課程結束後 30 天內匯款，可開立收據"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>你的資料</h3>
+      <div class="form-grid">
+        <label>講師姓名<input type="text" data-q="teacher" placeholder="例如：黃○○"></label>
+        <label>聯絡方式<input type="text" data-q="myContact" value="emmark19890901@gmail.com"></label>
+        <label>備註（選填）<textarea rows="3" data-q="note" placeholder="例如：需投影設備與網路；講義由講師提供電子檔"></textarea></label>
+      </div>
+      <p style="margin-top:14px">
+        <button type="button" class="btn btn-primary" data-q-print>🖨️ 列印／存成 PDF</button>
+        <button type="button" class="btn btn-ghost" data-q-reset>清空重填</button>
+      </p>
+    </div>
+  </section>
+</div>
+
+<main class="qt-paper" data-q-paper></main>
+
+<script src="assets/js/lib.js?v=202609201341"></script>
+<script src="assets/js/config.js?v=202609201341"></script>
+<script src="assets/js/core.js?v=202609201341"></script>
+<script src="assets/js/members.js?v=202609201341"></script>
+<script src="assets/js/tour.js?v=202609201341"></script>
+<script src="assets/js/quote.js?v=202609201341"></script>
+</body>
+</html>

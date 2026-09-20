@@ -76,6 +76,14 @@
         ${stat(avg.toFixed(1), '平均完成單元', `全部共 ${ready} 個`)}
         ${stat(finished, '完成全部單元', '可以發證書了')}
       </div>
+      <div class="card" style="margin-bottom:18px">
+        <h3>🧰 講師工具</h3>
+        <p><a class="btn btn-sm" href="quote.html">🧾 內訓報價單</a>
+          <a class="btn btn-sm btn-ghost" href="enroll.html">📄 課程介紹頁</a>
+          <a class="btn btn-sm btn-ghost" href="security.html">🛡️ 半日資安課介紹</a>
+          <a class="btn btn-sm btn-ghost" href="quizshow.html">🎯 課堂搶答</a></p>
+        <p class="muted">報價單填的內容只存在你這台電腦，不會上傳。</p>
+      </div>
       <div class="card">
         <h3>🏫 我的班級</h3>
         ${(classes || []).length ? `<ul class="checklist">${classes.map((c) => `<li><span>${esc(c.name)}　<span class="muted">${c.open_until ? `開放到單元 ${c.open_until}` : '全部開放'}</span></span></li>`).join('')}</ul>`
