@@ -9,21 +9,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609210818">
-  <link rel="stylesheet" href="assets/css/landing.css?v=202609210818">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609210825">
+  <link rel="stylesheet" href="assets/css/landing.css?v=202609210825">
+  <link rel="stylesheet" href="assets/css/marketing.css?v=202609210825">
 </head>
-<body data-base="./">
+<body class="mk" data-base="./">
 <header data-course-header></header>
 
 <main class="wrap">
   <section class="lp-hero">
+    <div class="lp-hero-text">
     <span class="eyebrow">給沒有技術背景的上班族</span>
-    <h1>AI 已經在你的工作裡了，<br><em>兩件事現在學還來得及</em></h1>
+    <h1>AI 已經在你的工作裡了<br><em>兩件事現在學還來得及</em></h1>
     <p>一件是<b>用它做事</b>：不會寫程式，也能做出真的能用、真的上線的小工具。另一件是<b>不被它騙</b>：變臉視訊、複製聲音、假公文，已經便宜到每個人都會遇到。</p>
     <div class="lp-badges">
       <span>講師 17 個真實上線專案</span>
       <span>27 個親自踩過的坑</span>
       <span>全程白話，不用背指令</span>
+    </div>
+    </div>
+
+    <div class="lp-visual" aria-hidden="true">
+      <div class="mk-window">
+        <div class="mk-bar"><i></i><i></i><i></i><span>你做的報名頁</span></div>
+        <div class="mk-body">
+          <p class="mk-title">🍱 週五部門聚餐報名</p>
+          <div class="mk-field"><span>姓名</span></div>
+          <div class="mk-field"><span>葷食 / 素食</span></div>
+          <div class="mk-btn">送出報名</div>
+          <p class="mk-note">上線中．同事打開網址就能用</p>
+        </div>
+      </div>
+      <div class="mk-chat">
+        <span class="mk-flag">可疑</span>
+        <b>「老闆」</b>
+        <p>我現在在開會不方便講電話，<br>這筆款很急，<b>先別跟其他人講</b></p>
+      </div>
     </div>
   </section>
 
@@ -78,7 +99,7 @@
           <li>翻轉教室：課前在網站上自學，課中全程動手</li>
           <li>結業時，你手上有一個真的在線上的作品</li>
         </ul>
-        <span class="lp-go">看課程介紹與費用 →</span>
+        <span class="lp-go">看課程介紹與費用</span>
       </a>
 
       <a class="lp-path lp-path--security" href="security.html">
@@ -90,7 +111,7 @@
           <li>不談技術，只談「遇到的時候怎麼辦」</li>
           <li>結訓帶走一條可以直接公告的匯款查核規則</li>
         </ul>
-        <span class="lp-go">看半日課內容 →</span>
+        <span class="lp-go">看半日課內容</span>
       </a>
     </div>
 
@@ -119,11 +140,11 @@
 
 <footer class="site-footer"><div class="wrap"><a href="enroll.html">課程介紹與報名</a>．<a href="security.html">半日資安課</a>．<a href="learn.html">課程教材</a>．<a href="works.html">學員作品牆</a>．<a href="verify.html">證書查證</a>．<a href="glossary.html">名詞小辭典</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202609210818"></script>
-<script src="assets/js/config.js?v=202609210818"></script>
-<script src="assets/js/core.js?v=202609210818"></script>
-<script src="assets/js/members.js?v=202609210818"></script>
-<script src="assets/js/tour.js?v=202609210818"></script>
+<script src="assets/js/lib.js?v=202609210825"></script>
+<script src="assets/js/config.js?v=202609210825"></script>
+<script src="assets/js/core.js?v=202609210825"></script>
+<script src="assets/js/members.js?v=202609210825"></script>
+<script src="assets/js/tour.js?v=202609210825"></script>
 <script>
   (function () {
     const { $ } = window.Course;
@@ -140,5 +161,6 @@
     window.Tour.register([]);
   })();
 </script>
+<script src="assets/js/marketing.js?v=202609210825"></script>
 </body>
 </html>
