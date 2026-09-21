@@ -196,6 +196,15 @@
       ${next ? `<a class="btn btn-primary" href="${base}${next.file}" data-tour="next">下一單元：${next.emoji} ${esc(next.title)} →</a>` : `<a class="btn btn-primary" href="${base}learn.html">回課程首頁</a>`}`;
   }
 
+  // 只給講師看的連結（例如頁尾的後台入口）。預設藏著，確定是講師才顯示——
+  // 學員點進去只會看到「這個帳號不是講師」，那是沒有意義的死路。
+  function syncTeacherOnly(profile) {
+    const on = profile?.role === 'teacher';
+    $$('[data-teacher-only]').forEach((el) => { el.hidden = !on; });
+  }
+  syncTeacherOnly(window.Members?.profile);
+  document.addEventListener('course:auth', (e) => syncTeacherOnly(e.detail.profile));
+
   // ---------- 投影模式：一段一頁，方向鍵換頁 ----------
   let slideIndex = 0;
   function slides() { return $$('.slide'); }
