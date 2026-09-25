@@ -542,6 +542,10 @@ $$;
 revoke all on function public.verify_certificate(text) from public;
 grant execute on function public.verify_certificate(text) to anon, authenticated;
 
+-- 4) 表權限（同上：RLS 之外還要 GRANT）
+grant usage on schema public to authenticated;
+grant select, insert, update on public.certificates to authenticated;
+
 
 -- ============================================================
 -- 【7／7】add-signups.sql
@@ -651,4 +655,12 @@ $$;
 
 revoke all on function public.cohort_taken() from public;
 grant execute on function public.cohort_taken() to anon, authenticated;
+
+-- 6) 表權限：這個資料庫是「預設全部拒絕、逐表授權」（見 schema.sql）。
+--    RLS 決定看得到哪幾列，GRANT 決定有沒有資格碰這張表——兩個都要寫。
+grant usage on schema public to anon, authenticated;
+grant select on public.cohorts to anon, authenticated;
+grant insert, update, delete on public.cohorts to authenticated;
+grant insert on public.signups to anon, authenticated;
+grant select, update, delete on public.signups to authenticated;
 

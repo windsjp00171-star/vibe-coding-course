@@ -47,3 +47,7 @@ $$;
 
 revoke all on function public.verify_certificate(text) from public;
 grant execute on function public.verify_certificate(text) to anon, authenticated;
+
+-- 4) 表權限（同上：RLS 之外還要 GRANT）
+grant usage on schema public to authenticated;
+grant select, insert, update on public.certificates to authenticated;
