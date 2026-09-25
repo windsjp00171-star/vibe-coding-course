@@ -17,7 +17,9 @@
 .mk .lp-hero {
   /* 掙脫 .wrap 的寬度限制，讓深色帶貼到畫面兩側——比圓角卡片有份量 */
   margin-inline: calc(50% - 50vw);
-  padding-inline: max(24px, calc(50vw - 560px));
+  /* 寬螢幕時把內容置中在 1120；筆電寬度（約 1100–1400）時 50vw-560 只剩 40px，
+     圖卡會貼到畫面邊緣，所以下限拉到 6vw */
+  padding-inline: max(24px, min(6vw, 72px), calc(50vw - 560px));
   padding-block: clamp(56px, 8vw, 104px);
   border-radius: 0;
   background:
@@ -110,7 +112,7 @@
 @media (min-width: 980px) { .mk .lp-hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); } }
 @media (max-width: 979px) { .mk .lp-visual { display: none; } }
 
-.mk .lp-visual { position: relative; padding: 10px 0 78px; }
+.mk .lp-visual { position: relative; padding: 10px 0 78px; max-width: 430px; margin-left: auto; }
 .mk .mk-window {
   border-radius: 16px; overflow: hidden; background: #fbfaf7; color: #1c1b29;
   box-shadow: 0 30px 70px -28px rgb(0 0 0 / 65%), 0 0 0 1px rgb(255 255 255 / 10%);
@@ -127,7 +129,7 @@
 .mk .mk-window { margin-bottom: 34px; }
 
 .mk .mk-chat {
-  position: absolute; right: -6px; bottom: 0; width: min(290px, 84%);
+  position: absolute; right: 0; bottom: 0; width: min(280px, 88%);
   background: #221f52; color: #e8e9ff; border-radius: 14px; padding: 14px 16px;
   box-shadow: 0 24px 50px -20px rgb(0 0 0 / 70%), 0 0 0 1px rgb(255 255 255 / 12%);
   transform: rotate(1.6deg);
