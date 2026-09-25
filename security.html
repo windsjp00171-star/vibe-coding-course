@@ -8,13 +8,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609250921">
-  <link rel="stylesheet" href="assets/css/enroll.css?v=202609250921">
-  <link rel="stylesheet" href="assets/css/workbench.css?v=202609250921">
-  <link rel="stylesheet" href="assets/css/marketing.css?v=202609250921">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609250924">
+  <link rel="stylesheet" href="assets/css/enroll.css?v=202609250924">
+  <link rel="stylesheet" href="assets/css/workbench.css?v=202609250924">
+  <link rel="stylesheet" href="assets/css/marketing.css?v=202609250924">
 </head>
 <body class="mk" data-base="./">
 <header data-course-header class="screen-only"></header>
+<nav data-pagenav class="screen-only" hidden></nav>
 
 <main class="wrap">
   <section class="en-hero slide">
@@ -25,6 +26,7 @@
       <div class="en-cta">
         <a class="btn btn-primary" href="#book">我要洽詢 →</a>
         <a class="btn btn-ghost" href="#demo">先玩一次模擬演練</a>
+        <a class="btn btn-ghost" href="#church">⛪ 教會／協會版（90 分鐘）</a>
         <button type="button" class="btn btn-ghost screen-only" data-en-print>🖨️ 印成 PDF</button>
       </div>
     </div>
@@ -36,7 +38,7 @@
     </aside>
   </section>
 
-  <section class="slide" id="why">
+  <section class="slide" id="why" data-nav="為什麼是現在">
     <div class="section-head"><span class="section-num">01</span>
       <div><span class="kicker">為什麼是現在</span><h2>以前靠「聽起來像本人」判斷，現在不行了</h2></div></div>
     <div class="grid grid-3">
@@ -49,7 +51,7 @@
     </div>
   </section>
 
-  <section class="slide" id="demo">
+  <section class="slide" id="demo" data-nav="模擬演練">
     <div class="section-head"><span class="section-num">02</span>
       <div><span class="kicker">現場就能試</span><h2>模擬演練：週五下午，老闆在視訊裡叫你匯款</h2>
         <p>這就是課堂上會一起玩的模擬。你會接到視訊和 LINE 訊息，每一步都要自己決定怎麼做——選錯了，畫面會告訴你錢是怎麼匯出去的。大約 10 分鐘。</p></div></div>
@@ -57,7 +59,7 @@
     <p class="muted" style="margin-top:12px">課堂版由講師帶著全場一起決策，並在每個決策點停下來討論「你那個部門會怎麼做」。</p>
   </section>
 
-  <section class="slide">
+  <section id="flow" class="slide" data-nav="課程流程">
     <div class="section-head"><span class="section-num">03</span>
       <div><span class="kicker">課程流程</span><h2>三小時怎麼安排</h2></div></div>
     <div class="card" style="overflow-x:auto">
@@ -77,7 +79,7 @@
     <p class="muted" style="margin-top:12px">可依時間調整：2 小時版省略工作坊；4 小時版加入「員工版 AI 使用守則」草擬。</p>
   </section>
 
-  <section class="slide">
+  <section id="take" class="slide" data-nav="帶得走什麼">
     <div class="section-head"><span class="section-num">04</span>
       <div><span class="kicker">結訓帶走</span><h2>不是聽完就算了</h2></div></div>
     <div class="grid grid-3">
@@ -88,7 +90,7 @@
     <div class="callout callout-ok"><b>事後：</b>可提供一份電子講義給全體同仁，沒來上課的人也看得懂。</div>
   </section>
 
-  <section class="slide">
+  <section id="who" class="slide" data-nav="適合誰">
     <div class="section-head"><span class="section-num">05</span>
       <div><span class="kicker">適合誰</span><h2>這一場為誰而開</h2></div></div>
     <div class="split">
@@ -97,7 +99,7 @@
           <li>會經手匯款、改收款帳號的財務與行政同仁</li>
           <li>公司全員教育訓練、年度資安宣導</li>
           <li>學校教職員、家長日講座</li>
-          <li>教會、協會、社區等志工型組織</li>
+          <li>教會、協會、社區等志工型組織（<a href="#church">看 90 分鐘的版本</a>）</li>
         </ul></div>
       <div class="card"><h3>💡 常見的搭配</h3>
         <ul>
@@ -108,8 +110,49 @@
     </div>
   </section>
 
-  <section class="slide">
+  <section id="church" class="slide" data-nav="教會與協會">
     <div class="section-head"><span class="section-num">06</span>
+      <div><span class="kicker">教會、協會與學校</span><h2>90 分鐘的版本：主日聚會後就能跑完</h2>
+        <p>志工型組織的狀況和公司不一樣：錢和名冊經手的人多、彼此信任度高、又不好意思質疑長輩或牧者——這正是這類詐騙最好下手的地方。</p></div></div>
+
+    <div class="grid grid-2">
+      <div class="card"><h3>⛪ 教會裡最常遇到的四種</h3>
+        <ul>
+          <li><b>冒充牧者或同工借錢</b>：「方便先幫我代墊嗎？」頭貼和名字都一樣</li>
+          <li><b>通知奉獻帳號換了</b>：假冒財務同工或廠商，金額通常不大才不易起疑</li>
+          <li><b>名冊外流後逐一打給長輩</b>：「我是教會的○○」</li>
+          <li><b>假的奉獻連結或活動報名頁</b>：做得跟真的一樣，只有網址不同</li>
+        </ul>
+        <p class="muted">四種的處理方式都一樣：<b>換一個管道確認，再決定。</b></p>
+      </div>
+      <div class="card"><h3>⏱️ 90 分鐘怎麼安排</h3>
+        <table class="compare">
+          <tbody>
+            <tr><th>0:00–0:25</th><td>開場＋模擬演練：全場一起決定要不要匯</td></tr>
+            <tr><th>0:25–0:55</th><td>五個警訊、兩道防線（回撥驗證、約定暗號）</td></tr>
+            <tr><th>0:55–1:15</th><td>教會四種情況；萬一已經匯出去的止血四步</td></tr>
+            <tr><th>1:15–1:30</th><td><b>同工留下</b>：訂出我們自己的查核規則</td></tr>
+          </tbody>
+        </table>
+        <p class="muted">會友在 1:15 可以先離開；鼓勵留下來聽，因為家裡也用得到。</p>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:16px">
+      <div class="card"><h3>🪪 會友帶回家</h3><p>一張 A4 自保卡：五個警訊、兩道防線、萬一中了先做哪四件事。可以貼在電話旁邊。</p></div>
+      <div class="card"><h3>📋 同工帶回去</h3><p>一條可以公告的查核規則：哪些事要雙重確認、多少金額要第二個人核可、收到「很急、先別說」統一怎麼回應。</p></div>
+      <div class="card"><h3>🙋 不用電腦</h3><p>全程講述與討論，投影演練由講師操作。長輩場也跑得動，人數不限。</p></div>
+    </div>
+
+    <div class="callout callout-ok">
+      <b>為什麼找我講：</b>講師自己長期在教會服事，也親手做過教會在用的報名、財務與名冊系統——課堂上講的漏洞，多半是自己修過的。
+    </div>
+
+    <p class="muted" style="margin-top:14px">時間可配合主日或小組時段調整；需要 3 小時完整版的話，內容與上面的企業場相同。</p>
+  </section>
+
+  <section id="teacher" class="slide" data-nav="講師">
+    <div class="section-head"><span class="section-num">07</span>
       <div><span class="kicker">講師</span><h2>案例都是真的踩過的</h2></div></div>
     <div class="card en-teacher">
       <p>講師用 AI 協作做過十多個真正上線的系統：活動報名、小組週報、LINE 機器人、線上閱讀器。課程裡的資安案例，來自這些系統真實修正過的紀錄——包含金鑰外洩、權限開太大、以及半夜把所有人吵醒的推播。</p>
@@ -118,14 +161,14 @@
     </div>
   </section>
 
-  <section class="slide" id="book">
-    <div class="section-head"><span class="section-num">07</span>
+  <section class="slide" id="book" data-nav="洽詢">
+    <div class="section-head"><span class="section-num">08</span>
       <div><span class="kicker">洽詢</span><h2>場次與費用</h2></div></div>
     <div class="card" data-sec-book></div>
   </section>
 
-  <section class="slide">
-    <div class="section-head"><span class="section-num">08</span>
+  <section id="faq" class="slide" data-nav="常見問題">
+    <div class="section-head"><span class="section-num">09</span>
       <div><span class="kicker">常見問題</span><h2>主管會問的幾件事</h2></div></div>
     <div class="en-faq">
       <details class="card"><summary><b>同仁完全不懂電腦，聽得懂嗎？</b></summary>
@@ -144,14 +187,14 @@
 
 <footer class="site-footer"><div class="wrap"><a href="enroll.html">實戰課</a>．<a href="learn.html">課程網站</a>．<a href="privacy.html">隱私權政策</a>．反詐騙專線 165</div></footer>
 
-<script src="assets/js/lib.js?v=202609250921"></script>
-<script src="assets/js/config.js?v=202609250921"></script>
-<script src="assets/js/core.js?v=202609250921"></script>
-<script src="assets/js/members.js?v=202609250921"></script>
-<script src="assets/js/tour.js?v=202609250921"></script>
-<script src="assets/js/workbench.js?v=202609250921"></script>
-<script src="assets/js/sims/m19-deepfake.js?v=202609250921"></script>
-<script src="assets/js/security.js?v=202609250921"></script>
-<script src="assets/js/marketing.js?v=202609250921"></script>
+<script src="assets/js/lib.js?v=202609250924"></script>
+<script src="assets/js/config.js?v=202609250924"></script>
+<script src="assets/js/core.js?v=202609250924"></script>
+<script src="assets/js/members.js?v=202609250924"></script>
+<script src="assets/js/tour.js?v=202609250924"></script>
+<script src="assets/js/workbench.js?v=202609250924"></script>
+<script src="assets/js/sims/m19-deepfake.js?v=202609250924"></script>
+<script src="assets/js/security.js?v=202609250924"></script>
+<script src="assets/js/marketing.js?v=202609250924"></script>
 </body>
 </html>
