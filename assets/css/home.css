@@ -105,3 +105,14 @@ body { position: relative; isolation: isolate; }
 .show-learn a:hover { border-color: var(--brand); color: var(--brand); }
 .show-links { display: flex; gap: 12px; font-size: .88rem; font-weight: 700; }
 .show-links a { text-decoration: none; }
+
+/* 課程地圖的段落跳躍鈕：23 個單元太長，要能直接跳到想看的那一段 */
+.map-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.map-jump a {
+  display: inline-flex; align-items: baseline; gap: 7px; padding: 8px 15px; border-radius: 999px;
+  background: var(--card); border: 1.5px solid var(--line); text-decoration: none;
+  color: var(--ink); font-weight: 800; font-size: .9rem; transition: all var(--fast) var(--ease);
+}
+.map-jump a:hover { border-color: var(--brand); color: var(--brand); transform: translateY(-1px); }
+.map-jump small { color: var(--muted); font-weight: 600; font-size: .78rem; }
+.map-part { scroll-margin-top: 130px; }

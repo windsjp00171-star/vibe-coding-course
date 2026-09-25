@@ -8,11 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609250915">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609250915">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609250921">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609250921">
 </head>
 <body data-base="./">
 <header data-course-header></header>
+<nav data-pagenav hidden></nav>
 
 <main class="wrap">
   <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -20,7 +21,7 @@
     <div>
       <span class="eyebrow">給非工程師的 AI 寫程式課</span>
       <h1>不會寫程式，<br>也能做出<br><em class="rotator" data-rotator>自己的網站</em></h1>
-      <p class="lead">這門課用 Claude Code 當你的 AI 工程師。從在自己電腦上做出第一個網頁，到放上網路給別人用，再到避開 AI 時代最常見的資安陷阱，每一步都用白話講、動手玩。</p>
+      <p class="lead"><b>這裡是上課的地方</b>：課前自學的單元、互動練習、小測驗都在下面的課程地圖裡。想知道上課方式、時數與費用，請看<a href="enroll.html">課程介紹</a>。</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="modules/00-ai-basics.html" data-tour="start" data-continue>從第 0 單元開始 →</a>
         <a class="btn btn-ghost" href="enroll.html">課程介紹與報名</a>
@@ -44,9 +45,10 @@
     <div class="stat"><b>0</b><span>行程式要背</span></div>
   </div>
 
-  <section class="slide" id="map" data-tour="map">
+  <section class="slide" id="map" data-nav="課程地圖" data-tour="map">
     <div class="section-head"><span class="section-num">⌘</span>
       <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
+    <div class="map-jump" data-map-jump></div>
     <div class="course-map" data-map></div>
     <a class="card" href="pitfalls.html" data-tour="pitfalls" style="display:flex;gap:16px;align-items:center;margin-top:20px;text-decoration:none;color:inherit;border:2px dashed var(--warn)">
       <span style="font-size:2.4rem" aria-hidden="true">🕳️</span>
@@ -54,29 +56,7 @@
     </a>
   </section>
 
-  <section class="slide" data-tour="flow">
-    <div class="section-head"><span class="section-num">↻</span>
-      <div><span class="kicker">翻轉教室怎麼上</span><h2>每個單元都分三段</h2></div></div>
-    <div class="grid grid-3 flow">
-      <div class="card"><span class="phase phase-pre">① 課前．在家</span><h3>先看、先玩</h3><p>打開這個網站讀單元內容、玩互動練習、做小測驗。不懂的地方記下來。</p></div>
-      <div class="card"><span class="phase phase-in">② 課中．教室</span><h3>一起動手</h3><p>上課不再聽講師念投影片，而是分組做工作坊、實際操作 Claude Code，把問題當場解決。</p></div>
-      <div class="card"><span class="phase phase-post">③ 課後．回家</span><h3>做一件真的事</h3><p>每單元都有一個小任務，做完打勾。必修單元做完，你會有一個真的上線的作品。</p></div>
-    </div>
-  </section>
-
-  <section class="slide" data-tour="roles">
-    <div class="section-head"><span class="section-num">⇄</span>
-      <div><span class="kicker">這門課要教你的角色</span><h2>你當老闆，AI 當工程師</h2><p>Vibe Coding 不是「全部丟給 AI」。講師 17 個專案都是這樣分工完成的：</p></div></div>
-    <div class="roles">
-      <div class="role role-you"><span class="tag">你負責（這門課教的）</span><h3>🧭 想清楚、說清楚、驗收</h3>
-        <ul><li>要做什麼、給誰用、做到哪裡就好</li><li>決定「這個功能不做」</li><li>親手試用，確認真的能用</li><li>守住資安和個資的底線</li></ul></div>
-      <div class="role role-ai"><span class="tag">AI 負責</span><h3>🛠️ 動手做、找問題</h3>
-        <ul><li>寫程式碼（大部分都是它寫的）</li><li>找出你沒想到的例外狀況</li><li>查錯、修錯</li><li>寫說明文件和測試</li></ul></div>
-    </div>
-    <p class="roles-quote">程式碼可以交給 AI，但「做什麼、不做什麼、做得對不對」的判斷，永遠是你的。</p>
-  </section>
-
-  <section class="slide" id="join" data-join hidden data-tour="join">
+  <section class="slide" id="join" data-nav="加入班級" data-join hidden data-tour="join">
     <div class="section-head"><span class="section-num">+</span>
       <div><span class="kicker">上課的班級</span><h2>加入你的班級</h2><p>輸入講師給你的 6 碼加入碼，講師就能看到你的學習進度，幫你找出卡住的地方。</p></div></div>
     <form class="card split" data-join-form style="align-items:end">
@@ -85,7 +65,7 @@
     </form>
   </section>
 
-  <section class="slide">
+  <section class="slide" id="prep" data-nav="上課前準備">
     <div class="section-head"><span class="section-num">?</span>
       <div><span class="kicker">上課前</span><h2>你需要準備什麼？</h2></div></div>
     <div class="grid grid-3">
@@ -95,24 +75,31 @@
     </div>
   </section>
 
-  <section class="slide" id="showcase" data-tour="showcase">
-    <div class="section-head"><span class="section-num">★</span>
-      <div><span class="kicker">真的做得到嗎？</span><h2>講師用這套方法做出來的作品</h2><p>下面都是公開的專案，原始碼都看得到，還在線上的可以直接點開來玩。每張卡片最下面，是做這個作品用到的技術，在這門課的哪一個單元學得到。</p></div></div>
-    <div class="showcase" data-showcase></div>
-    <p class="muted" style="margin-top:14px;font-size:.9rem">還有更多作品，看講師的<a href="https://windsjp00171-star.github.io/CLAUDE-DESIGN/" target="_blank" rel="noopener">作品集 ↗</a>　｜　學員結業做了什麼：<a href="works.html">🏆 學員作品牆</a></p>
+  <section class="slide" id="more" data-nav="延伸">
+    <div class="section-head"><span class="section-num">↗</span>
+      <div><span class="kicker">看更多</span><h2>還想知道什麼</h2></div></div>
+    <div class="grid grid-3">
+      <a class="card" href="enroll.html" style="text-decoration:none;color:inherit">
+        <h3>📋 課程介紹與報名</h3><p>上課方式、時數、費用、梯次、常見問題，以及講師做過的專案。要推薦給別人看的就是這一頁。</p></a>
+      <a class="card" href="works.html" style="text-decoration:none;color:inherit">
+        <h3>🏆 學員作品牆</h3><p>結業時大家做出什麼。第一屆還沒開課，先放講師的示範作品。</p></a>
+      <a class="card" href="pitfalls.html" style="text-decoration:none;color:inherit">
+        <h3>🕳️ 踩坑圖鑑</h3><p>講師真實踩過的 27 個坑，可以玩「看症狀猜原因」。</p></a>
+    </div>
   </section>
+
 </main>
 
 <footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹與報名</a>．<a href="works.html">學員作品牆</a>．<a href="verify.html">證書查證</a>．<a href="security.html">半日資安課</a>．<a href="me.html">我的學習</a>．<a href="quizshow.html">課堂搶答</a>．<a href="glossary.html">名詞小辭典</a>．<a href="teacher.html" data-teacher-only hidden>講師後台</a><a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609250915"></script>
-<script src="assets/js/config.js?v=202609250915"></script>
-<script src="assets/js/core.js?v=202609250915"></script>
-<script src="assets/js/members.js?v=202609250915"></script>
-<script src="assets/js/tour.js?v=202609250915"></script>
-<script src="assets/js/glossary-data.js?v=202609250915"></script>
-<script src="assets/js/glossary.js?v=202609250915"></script>
-<script src="assets/js/home.js?v=202609250915"></script>
+<script src="assets/js/lib.js?v=202609250921"></script>
+<script src="assets/js/config.js?v=202609250921"></script>
+<script src="assets/js/core.js?v=202609250921"></script>
+<script src="assets/js/members.js?v=202609250921"></script>
+<script src="assets/js/tour.js?v=202609250921"></script>
+<script src="assets/js/glossary-data.js?v=202609250921"></script>
+<script src="assets/js/glossary.js?v=202609250921"></script>
+<script src="assets/js/home.js?v=202609250921"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -128,7 +115,7 @@
       return m.trial && !window.Members.profile?.enrolled ? '免費試用' : '→';
     };
     const renderMap = () => { $('[data-map]').innerHTML = parts.map((part) => `
-      <div class="map-part">
+      <div class="map-part" id="part-${parts.indexOf(part)}">
         <h3 class="map-part-title">${esc(part)}</h3>
         <ol class="map-list">${MODULES.filter((m) => m.part === part).map((m) => {
           const done = progress[m.id]?.done;
@@ -141,6 +128,10 @@
           return `<li>${ready ? `<a class="map-item ${done ? 'is-done' : ''} ${closed ? 'is-closed' : ''}" href="${m.file}">${inner}</a>` : `<div class="map-item is-soon">${inner}</div>`}</li>`;
         }).join('')}</ol>
       </div>`).join(''); };
+    $('[data-map-jump]').innerHTML = parts.map((part, i) => {
+      const n = MODULES.filter((m) => m.part === part && built.has(m.id)).length;
+      return `<a href="#part-${i}">${esc(part)}<small>${n} 單元</small></a>`;
+    }).join('');
     renderMap();
     document.addEventListener('course:auth', renderMap);
 

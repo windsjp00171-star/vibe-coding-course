@@ -8,12 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609250915">
-  <link rel="stylesheet" href="assets/css/enroll.css?v=202609250915">
-  <link rel="stylesheet" href="assets/css/marketing.css?v=202609250915">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609250921">
+  <link rel="stylesheet" href="assets/css/enroll.css?v=202609250921">
+  <link rel="stylesheet" href="assets/css/marketing.css?v=202609250921">
 </head>
 <body class="mk" data-base="./">
 <header data-course-header class="screen-only"></header>
+<nav data-pagenav class="screen-only" hidden></nav>
 
 <main class="wrap">
   <section class="en-hero slide">
@@ -35,7 +36,7 @@
     </aside>
   </section>
 
-  <section class="slide">
+  <section id="fit" class="slide" data-nav="適合誰">
     <div class="section-head"><span class="section-num">01</span>
       <div><span class="kicker">先說清楚</span><h2>這堂課適合誰、不適合誰</h2></div></div>
     <div class="split">
@@ -56,7 +57,7 @@
     <div class="callout"><b>需要什麼：</b>一台 Windows 或 Mac 筆電、一個 Claude 付費方案（單元 2 會教怎麼選）、以及一個你自己想解決的小問題。</div>
   </section>
 
-  <section class="slide">
+  <section id="outcome" class="slide" data-nav="帶得走什麼">
     <div class="section-head"><span class="section-num">02</span>
       <div><span class="kicker">帶得走的東西</span><h2>結業時你會有三樣東西</h2></div></div>
     <div class="grid grid-3">
@@ -66,7 +67,7 @@
     </div>
   </section>
 
-  <section class="slide">
+  <section id="how" class="slide" data-nav="上課方式">
     <div class="section-head"><span class="section-num">03</span>
       <div><span class="kicker">怎麼上</span><h2>翻轉教室：不在教室裡聽講</h2></div></div>
     <div class="grid grid-3">
@@ -77,9 +78,9 @@
     <div class="callout callout-ok"><b>為什麼這樣安排：</b>寫程式這件事，聽懂和做得出來差很遠。把「聽」放在家裡，把老師留給「你卡住的那一刻」。</div>
   </section>
 
-  <section class="slide">
+  <section id="outline" class="slide" data-nav="課程大綱">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">課程大綱</span><h2>從零到上線，再到進階</h2></div></div>
+      <div><span class="kicker">課程大綱</span><h2>三個階段，23 個單元</h2></div></div>
     <div class="en-map" data-en-map></div>
     <h3 style="margin-top:26px">建議的上課安排：三個半天</h3>
     <div class="card" style="overflow-x:auto;margin-bottom:14px">
@@ -97,7 +98,7 @@
       必修合計約 <b data-fact="total">—</b> 小時，其中課中實作約 <b data-fact="inclass">—</b> 小時，通常安排成三個半天。D 段選修可依班級需求挑選。</p>
   </section>
 
-  <section class="slide">
+  <section id="why" class="slide" data-nav="為什麼是這堂">
     <div class="section-head"><span class="section-num">05</span>
       <div><span class="kicker">為什麼是這堂</span><h2>和其他 AI 課程的差別</h2></div></div>
     <div class="grid grid-3">
@@ -110,7 +111,7 @@
     </div>
   </section>
 
-  <section class="slide">
+  <section id="teacher" class="slide" data-nav="講師">
     <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker">講師</span><h2>做過的，才拿出來教</h2></div></div>
     <div class="card en-teacher">
@@ -120,7 +121,7 @@
     </div>
   </section>
 
-  <section class="slide">
+  <section id="corp" class="slide" data-nav="企業內訓">
     <div class="section-head"><span class="section-num">07</span>
       <div><span class="kicker">企業與機構</span><h2>內訓與半日場</h2></div></div>
     <div class="split">
@@ -134,7 +135,7 @@
     </div>
   </section>
 
-  <section class="slide" id="packs">
+  <section class="slide" id="packs" data-nav="主題式套裝">
     <div class="section-head"><span class="section-num">08</span>
       <div><span class="kicker">主題式套裝</span><h2>不一定要整套上完</h2>
         <p>同一批單元可以依主題重組，挑你們現在最需要的。下面的時數由各單元的課中時間自動加總。</p></div></div>
@@ -142,14 +143,14 @@
     <p class="muted" style="margin-top:14px">也可以混搭，例如「資安意識包（半日，全員）＋ 做出第一個工具包（三個半天，種子成員）」。</p>
   </section>
 
-  <section class="slide" id="signup">
+  <section class="slide" id="signup" data-nav="費用與報名">
     <div class="section-head"><span class="section-num">09</span>
       <div><span class="kicker">費用與報名</span><h2>梯次與報名方式</h2></div></div>
     <div class="card en-signup" data-en-signup></div>
     <div class="card" style="margin-top:18px" data-signup></div>
   </section>
 
-  <section class="slide">
+  <section id="faq" class="slide" data-nav="常見問題">
     <div class="section-head"><span class="section-num">10</span>
       <div><span class="kicker">常見問題</span><h2>你可能會想問</h2></div></div>
     <div class="en-faq">
@@ -171,13 +172,13 @@
 
 <footer class="site-footer"><div class="wrap"><a href="learn.html">課程網站</a>．<a href="glossary.html">名詞小辭典</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202609250915"></script>
-<script src="assets/js/config.js?v=202609250915"></script>
-<script src="assets/js/core.js?v=202609250915"></script>
-<script src="assets/js/members.js?v=202609250915"></script>
-<script src="assets/js/tour.js?v=202609250915"></script>
-<script src="assets/js/signup.js?v=202609250915"></script>
-<script src="assets/js/enroll.js?v=202609250915"></script>
-<script src="assets/js/marketing.js?v=202609250915"></script>
+<script src="assets/js/lib.js?v=202609250921"></script>
+<script src="assets/js/config.js?v=202609250921"></script>
+<script src="assets/js/core.js?v=202609250921"></script>
+<script src="assets/js/members.js?v=202609250921"></script>
+<script src="assets/js/tour.js?v=202609250921"></script>
+<script src="assets/js/signup.js?v=202609250921"></script>
+<script src="assets/js/enroll.js?v=202609250921"></script>
+<script src="assets/js/marketing.js?v=202609250921"></script>
 </body>
 </html>

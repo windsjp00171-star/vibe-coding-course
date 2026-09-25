@@ -532,3 +532,28 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* 證書上的驗證編號 */
 .cert-verify { margin: 10px 0 0; font-size: .78rem; letter-spacing: .04em; color: #6b6880; text-align: center; }
+
+/* ---------- 區段目錄（長頁面的錨點）---------- */
+/* 貼在頁首下方，捲到哪一段就標哪一項，讓人隨時知道「我在哪、還有什麼」 */
+.page-nav {
+  position: sticky; top: 64px; z-index: 40;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+}
+.page-nav .wrap { overflow-x: auto; scrollbar-width: none; }
+.page-nav .wrap::-webkit-scrollbar { display: none; }
+.page-nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 7px 0; white-space: nowrap; }
+.page-nav a {
+  display: block; padding: 6px 13px; border-radius: 999px; text-decoration: none;
+  color: var(--muted); font-size: .88rem; font-weight: 700; transition: all var(--fast) var(--ease);
+}
+.page-nav a:hover { color: var(--ink); background: var(--paper-2); }
+.page-nav a.is-here { background: var(--brand); color: #fff; }
+.page-nav[hidden] { display: none; }
+@media print { .page-nav { display: none; } }
+
+/* 目前所在的頁面，導覽列上要看得出來 */
+.header-tools .is-here { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
+
+/* 有目錄時，錨點跳轉不要被兩條固定列蓋住 */
+body:has(.page-nav:not([hidden])) .slide[id] { scroll-margin-top: 118px; }

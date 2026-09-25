@@ -132,7 +132,15 @@
     if (!host) return;
     const base = document.body.dataset.base || './';
     const current = MODULES.find((m) => m.id === document.body.dataset.module);
-    const where = current ? `單元 ${current.id.slice(1)}／${MODULES.length}` : '課程首頁';
+    // 每一頁都要說得出自己是誰。原本每一頁都寫「課程首頁」，
+    // 逛起來會分不出「介紹頁」和「教材頁」的差別。
+    const PAGE_NAMES = {
+      index: '首頁', learn: '課程教材', enroll: '課程介紹與報名', security: '半日資安課',
+      works: '學員作品牆', verify: '證書查證', me: '我的學習', glossary: '名詞小辭典',
+      pitfalls: '踩坑圖鑑', quizshow: '課堂搶答', handout: '紙本講義', teacher: '管理後台', quote: '內訓報價單',
+    };
+    const pageKey = (location.pathname.split('/').pop() || 'index').replace('.html', '') || 'index';
+    const where = current ? `單元 ${current.id.slice(1)}／${MODULES.length}` : (PAGE_NAMES[pageKey] || '課程網站');
     host.className = 'site-header';
     host.innerHTML = `
       <div class="teacher-banner" hidden>講師模式：紫色虛線框是教學提示、討論題和時間建議，學員看不到。按 <kbd>P</kbd> 進入投影模式</div>
@@ -146,9 +154,9 @@
             <button type="button" data-mode="student" aria-pressed="true">學員</button>
             <button type="button" data-mode="teacher" aria-pressed="false">講師</button>
           </div>
-          <a class="btn btn-sm btn-ghost" href="${base}learn.html#map" data-tour="map-link" title="所有單元的清單，可以跳著上">🗺️ 課程地圖</a>
+          <a class="btn btn-sm btn-ghost${pageKey === 'learn' ? ' is-here' : ''}" href="${base}learn.html#map" data-tour="map-link"${pageKey === 'learn' ? ' aria-current="page"' : ''} title="所有單元的清單，可以跳著上">🗺️ 課程地圖</a>
           <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">🖥️ 投影</button>
-          <a class="btn btn-sm btn-ghost" href="${base}quizshow.html" data-tour="quizshow" title="課堂搶答：投影出來，學員舉手作答">🎯 搶答</a>
+          <a class="btn btn-sm btn-ghost${pageKey === 'quizshow' ? ' is-here' : ''}" href="${base}quizshow.html" data-tour="quizshow"${pageKey === 'quizshow' ? ' aria-current="page"' : ''} title="課堂搶答：投影出來，學員舉手作答">🎯 搶答</a>
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">🖨️ 講義</button>' : ''}
           <a class="btn btn-sm btn-ghost" href="${base}glossary.html${current ? `?from=${current.id}` : ''}" data-tour="glossary" title="看不懂的專業名詞，這裡查">📖 名詞</a>
           <span data-auth-slot data-tour="auth"></span>
@@ -165,6 +173,7 @@
       if (action === 'tour' && window.Tour) window.Tour.start();
     });
     refreshProgressBar();
+    renderPageNav();
   }
 
   // 單元開頭那排方塊就是「這個單元的目標」，補上標題免得看不懂
@@ -204,6 +213,36 @@
   }
   syncTeacherOnly(window.Members?.profile);
   document.addEventListener('course:auth', (e) => syncTeacherOnly(e.detail.profile));
+
+  // ---------- 區段目錄 ----------
+  // 長頁面（教材首頁、招生頁）捲到一半會不知道自己在哪、還有什麼。
+  // 在 <nav data-pagenav> 放一條貼齊頁首的目錄，項目直接從頁面上有 id 的段落產生，
+  // 不用另外維護一份清單——新增段落就自動出現。
+  function renderPageNav() {
+    const host = $('[data-pagenav]');
+    if (!host) return;
+    const items = $$('main .slide[id]')
+      .filter((sec) => !sec.hidden && sec.dataset.navSkip === undefined)
+      .map((sec) => ({ id: sec.id, label: sec.dataset.nav || $('h2', sec)?.textContent.trim() || sec.id }))
+      .filter((item) => item.label);
+    if (items.length < 3) { host.hidden = true; return; }
+    host.className = 'page-nav';
+    host.hidden = false; // 標記是 hidden 起手，確定有東西可放才顯示
+    host.innerHTML = `<div class="wrap"><ul>${items.map((item) =>
+      `<li><a href="#${esc(item.id)}">${esc(item.label)}</a></li>`).join('')}</ul></div>`;
+
+    // 捲到哪一段，目錄就標哪一項
+    const links = new Map($$('a', host).map((a) => [a.getAttribute('href').slice(1), a]));
+    const mark = (id) => links.forEach((a, key) => a.classList.toggle('is-here', key === id));
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        const seen = entries.filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (seen) mark(seen.target.id);
+      }, { rootMargin: '-96px 0px -60% 0px' });
+      items.forEach((item) => { const el = document.getElementById(item.id); if (el) io.observe(el); });
+    }
+  }
 
   // ---------- 投影模式：一段一頁，方向鍵換頁 ----------
   let slideIndex = 0;
