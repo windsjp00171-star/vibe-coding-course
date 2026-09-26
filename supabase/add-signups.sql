@@ -52,8 +52,13 @@ alter table public.cohorts enable row level security;
 alter table public.signups enable row level security;
 
 -- 3) 梯次：所有人都看得到「已開放」的梯次（這是公開資訊）
+-- 拆成兩條：訪客沒有 is_teacher() 的執行權限，規則裡一呼叫就會被擋（42501）
 drop policy if exists "公開的梯次大家都看得到" on public.cohorts;
-create policy "公開的梯次大家都看得到" on public.cohorts for select to anon, authenticated
+drop policy if exists "訪客看得到已開放的梯次" on public.cohorts;
+create policy "訪客看得到已開放的梯次" on public.cohorts for select to anon
+  using (is_open);
+drop policy if exists "登入者看得到已開放的梯次，講師看得到全部" on public.cohorts;
+create policy "登入者看得到已開放的梯次，講師看得到全部" on public.cohorts for select to authenticated
   using (is_open or public.is_teacher());
 
 drop policy if exists "只有講師能開梯次" on public.cohorts;

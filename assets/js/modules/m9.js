@@ -83,10 +83,18 @@
       const cert = await window.Members.issueCertificate(state.name, state.finalScore);
       showCode(cert);
     } catch (err) {
-      const needSql = /relation|does not exist|function|schema cache/i.test(err.message);
-      $('[data-cert-issue-out]').innerHTML = `<div class="feedback bad" style="margin-top:12px">${needSql
-        ? '還沒建立證書資料表：請講師到 Supabase 執行一次 supabase/add-certificates.sql。'
-        : err.message === '請先登入' ? '請先按右上角「登入保存進度」，才能產生可驗證的編號。' : esc(err.message)}</div>`;
+      // 學員看到的要是白話；資料庫原文只留給講師看的括號裡
+      const msg = err.message || '';
+      const needTable = /relation|does not exist|schema cache/i.test(msg);
+      const needGrant = /permission denied|42501/i.test(msg);
+      const text = err.message === '請先登入'
+        ? '請先按右上角「登入保存進度」，才能產生可驗證的編號。'
+        : needTable
+          ? '證書功能還沒啟用，請通知講師。<br><span class="muted">（講師：請到 Supabase 執行 supabase/add-certificates.sql）</span>'
+          : needGrant
+            ? '證書功能的權限還沒設定好，請通知講師。你的總測驗成績已經保存，之後再按一次就好。<br><span class="muted">（講師：請到 Supabase 執行 supabase/fix-grants.sql）</span>'
+            : `產生編號時出了點問題，請稍後再試一次。<br><span class="muted">（${esc(msg)}）</span>`;
+      $('[data-cert-issue-out]').innerHTML = `<div class="feedback bad" style="margin-top:12px">${text}</div>`;
     } finally {
       btn.disabled = false;
     }
@@ -110,9 +118,15 @@
   function renderGrowth(after) {
     const { rows, hasBefore } = window.CourseLib.compareRatings(getState().selfRating || {}, after);
     const sign = (d) => (d > 0 ? `<b style="color:var(--ok)">▲ ${d}</b>` : d < 0 ? `<b style="color:var(--warn)">▼ ${-d}</b>` : '<span class="muted">持平</span>');
+    const { ratingLevel } = window.CourseLib;
+    // 用和拉桿一樣的圖示：🐣 → 🦅 比「2 → 4」直覺；滑過去看得到文字說明
+    const stage = (v) => (v === null || v === undefined ? '<span class="muted">—</span>'
+      : `<span class="growth-stage" title="${esc(ratingLevel(v).label)}">${ratingLevel(v).emoji}</span>`);
+    const grew = rows.filter((r) => r.delta > 0).length;
     $('[data-growth]').innerHTML = hasBefore
-      ? `<h3>你的變化</h3><table class="compare"><thead><tr><th>能力</th><th>上課前</th><th>現在</th><th></th></tr></thead><tbody>${rows.map((r) => `
-          <tr><td>${esc(r.name)}</td><td>${r.before ?? '—'}</td><td>${r.after}</td><td>${r.delta === null ? '<span class="muted">單元 1 沒拉</span>' : sign(r.delta)}</td></tr>`).join('')}</tbody></table>
+      ? `<h3>你的變化${grew ? `：${grew} 項長大了 🎉` : ''}</h3>
+        <div class="table-wrap"><table class="compare growth-table"><thead><tr><th>能力</th><th>上課前</th><th></th><th>現在</th><th>變化</th></tr></thead><tbody>${rows.map((r) => `
+          <tr><td>${esc(r.name)}</td><td>${stage(r.before)}</td><td class="muted" aria-hidden="true">→</td><td>${stage(r.after)}</td><td>${r.delta === null ? '<span class="muted">單元 1 沒拉</span>' : sign(r.delta)}</td></tr>`).join('')}</tbody></table></div>
         <p class="muted" style="margin-top:10px">分數變低也很正常：知道得越多，越清楚自己還不會什麼。</p>`
       : '<h3>還沒有起點</h3><p>你在單元 1 沒有拉過這五項，所以這次拉的分數就是你的紀錄。可以回單元 1 補拉「上課前」的感覺，再回來比較。</p>';
   }

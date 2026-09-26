@@ -472,19 +472,35 @@
   // ---------- 講義用：把測驗題印成紙本選擇題（不附答案） ----------
   // 五種能力自評的拉桿。stateKey 決定存在哪一格（單元 1 是上課前，結業單元是現在）
   function mountMeters(host, stateKey, onChange) {
-    const { SELF_SKILLS, DEFAULT_RATING } = window.CourseLib;
+    const { SELF_SKILLS, DEFAULT_RATING, ratingLevel } = window.CourseLib;
     const saved = getState()[stateKey] || {};
-    host.innerHTML = SELF_SKILLS.map((s, i) => `
-      <div class="meter-row"><label for="${stateKey}-${i}">${esc(s.name)}</label>
-        <input type="range" id="${stateKey}-${i}" min="1" max="5" value="${saved[s.name] ?? DEFAULT_RATING}" data-skill="${esc(s.name)}">
-        <output>${saved[s.name] ?? DEFAULT_RATING}</output></div>`).join('');
+    // 拉桿本身仍是原生 range：鍵盤、螢幕報讀都照常可用；
+    // 旁邊改顯示「這一格代表什麼程度」，而不是一個沒有意義的數字
+    const pct = (v) => `${((Number(v) - 1) / 4) * 100}%`;
+    const outHtml = (v) => { const lv = ratingLevel(v); return `<span class="meter-emoji" aria-hidden="true">${lv.emoji}</span><span class="meter-label">${esc(lv.label)}</span>`; };
+    host.classList.add('meters');
+    host.innerHTML = `<div class="meter-scale" aria-hidden="true">${window.CourseLib.RATING_LEVELS.map((lv) => `<span>${lv.emoji}</span>`).join('')}</div>`
+      + SELF_SKILLS.map((s, i) => {
+        const v = saved[s.name] ?? DEFAULT_RATING;
+        return `<div class="meter-row"><label for="${stateKey}-${i}">${esc(s.name)}</label>
+        <input type="range" id="${stateKey}-${i}" min="1" max="5" step="1" value="${v}" data-skill="${esc(s.name)}"
+          style="--pct:${pct(v)}" aria-valuetext="${esc(ratingLevel(v).label)}">
+        <output class="meter-out" for="${stateKey}-${i}">${outHtml(v)}</output></div>`;
+      }).join('');
     // 拖曳時每動一格都會觸發：畫面先更新，寫入 localStorage 延後合併，避免卡頓
     const values = { ...saved };
     let pending = null;
     host.addEventListener('input', (e) => {
       const r = e.target.closest('[data-skill]');
       if (!r) return;
-      r.nextElementSibling.textContent = r.value;
+      const out = r.nextElementSibling;
+      const changed = Number(out.dataset.v || 0) !== Number(r.value);
+      r.style.setProperty('--pct', pct(r.value));
+      r.setAttribute('aria-valuetext', ratingLevel(r.value).label);
+      out.innerHTML = outHtml(r.value);
+      out.dataset.v = r.value;
+      // 換到新的一格才彈一下，拖曳時同一格不要一直閃
+      if (changed) { out.classList.remove('is-pop'); void out.offsetWidth; out.classList.add('is-pop'); }
       values[r.dataset.skill] = Number(r.value);
       onChange(values);
       clearTimeout(pending);

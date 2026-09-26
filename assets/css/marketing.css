@@ -16,10 +16,13 @@
 /* ---------- 主視覺：滿版深色帶 + 兩層光暈 + 細顆粒 ---------- */
 .mk .lp-hero {
   /* 掙脫 .wrap 的寬度限制，讓深色帶貼到畫面兩側——比圓角卡片有份量 */
-  margin-inline: calc(50% - 50vw);
+  /* 主視覺放在滿版的 <main class="lp-main"> 裡，本身就是滿版。
+     不能用 calc(50% - 50vw) 負邊距硬撐：50vw 含捲軸寬度，會多出 8px 變成可以左右滑，
+     而 main 會裁掉超出的部分——之前就是這樣被裁回 1120px、看起來左右被切掉。 */
+  margin: 0;
   /* 寬螢幕時把內容置中在 1120；筆電寬度（約 1100–1400）時 50vw-560 只剩 40px，
      圖卡會貼到畫面邊緣，所以下限拉到 6vw */
-  padding-inline: max(24px, min(6vw, 72px), calc(50vw - 560px));
+  padding-inline: max(24px, min(6vw, 72px), calc(50% - 560px));
   padding-block: clamp(56px, 8vw, 104px);
   border-radius: 0;
   background:

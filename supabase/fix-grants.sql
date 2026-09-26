@@ -1,29 +1,41 @@
--- 修正：報名與證書的資料表少了 GRANT（2026-09-25）
+-- 修正：報名與證書的權限（2026-09-26 第二版，可重複執行）
 --
--- 症狀：招生頁一直顯示「目前沒有開放報名的梯次」，即使 cohorts 裡已經有 is_open = true 的梯次。
--- 原因：這個資料庫是「預設全部拒絕、逐表授權」的寫法（schema.sql 第 175 行 revoke 之後逐一 grant）。
---       add-signups.sql 與 add-certificates.sql 只寫了 RLS 政策，沒有寫 GRANT。
---       RLS 決定「看得到哪幾列」，GRANT 決定「有沒有資格碰這張表」——少了後者，前者再怎麼開都沒用。
---       實際錯誤：42501 permission denied for table cohorts。
+-- 第一版補了 GRANT 之後，訪客讀梯次換成另一個錯誤：
+--   42501 permission denied for function is_teacher
+-- 原因：梯次的讀取規則是「已開放 或 是講師」，判斷「是講師」要呼叫 is_teacher()，
+--       但這個函式只開放給登入的人執行（schema.sql 第 220 行起）。訪客一碰到這條規則就被擋。
+-- 做法：把規則拆成兩條——訪客只看「已開放」，登入的人才多判斷「是不是講師」。
+--       這樣不用把 is_teacher() 開放給訪客。
 --
--- 用法：Supabase（課程專案，不是教會專案）→ SQL Editor → 整份貼上 → Run。可以重複執行。
+-- 用法：Supabase（課程專案，不是教會專案）→ SQL Editor → 整份貼上 → Run。
 
 grant usage on schema public to anon, authenticated;
 
--- 梯次：任何人都要看得到「已開放」的梯次（RLS 仍然只讓 is_open 的列出現）
+-- ---------- 梯次 ----------
 grant select on public.cohorts to anon, authenticated;
--- 開關梯次、改名額由後台做；RLS 限定只有講師能寫
 grant insert, update, delete on public.cohorts to authenticated;
 
--- 報名：沒登入的人也要能送出報名；名單的讀取與修改由 RLS 限定講師
+drop policy if exists "公開的梯次大家都看得到" on public.cohorts;
+drop policy if exists "訪客看得到已開放的梯次" on public.cohorts;
+create policy "訪客看得到已開放的梯次" on public.cohorts for select to anon
+  using (is_open);
+
+drop policy if exists "登入者看得到已開放的梯次，講師看得到全部" on public.cohorts;
+create policy "登入者看得到已開放的梯次，講師看得到全部" on public.cohorts for select to authenticated
+  using (is_open or public.is_teacher());
+
+-- ---------- 報名 ----------
 grant insert on public.signups to anon, authenticated;
 grant select, update, delete on public.signups to authenticated;
 
--- 結業證書：學員發給自己、講師看得到；公開查證走 verify_certificate()，不需要表權限
+-- ---------- 結業證書 ----------
 grant select, insert, update on public.certificates to authenticated;
 
--- 檢查用（跑完可以單獨執行這段，應該看到 anon 對 cohorts 有 SELECT、對 signups 有 INSERT）
--- select grantee, table_name, privilege_type
+-- ---------- 檢查（可以單獨執行這段，把結果截圖給我）----------
+-- 預期：anon 對 cohorts 有 SELECT、對 signups 有 INSERT；authenticated 對 certificates 有 INSERT/SELECT/UPDATE
+-- select grantee, table_name, string_agg(privilege_type, ', ' order by privilege_type) as privileges
 --   from information_schema.role_table_grants
 --  where table_schema = 'public' and table_name in ('cohorts', 'signups', 'certificates')
---  order by table_name, grantee, privilege_type;
+--    and grantee in ('anon', 'authenticated')
+--  group by grantee, table_name
+--  order by table_name, grantee;

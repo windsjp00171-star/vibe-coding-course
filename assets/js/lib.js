@@ -375,6 +375,24 @@
   ];
   const DEFAULT_RATING = 2;
 
+  // 自評拉桿的五個等級。用「長大」的比喻，讓每一格都有看得懂的意思，
+  // 不然每個人心中的 3 分都不一樣，上課前後也沒辦法比。
+  const RATING_LEVELS = [
+    { value: 1, emoji: '🥚', label: '完全沒概念' },
+    { value: 2, emoji: '🐣', label: '聽過，不會做' },
+    { value: 3, emoji: '🐥', label: '跟著做可以' },
+    { value: 4, emoji: '🦅', label: '自己做得出來' },
+    { value: 5, emoji: '🚀', label: '可以教別人' },
+  ];
+
+  function ratingLevel(n) {
+    const num = Number(n);
+    const v = Number.isFinite(num) && n !== undefined && n !== null && n !== ''
+      ? Math.min(5, Math.max(1, Math.round(num)))
+      : DEFAULT_RATING;
+    return RATING_LEVELS[v - 1];
+  }
+
   function weakestSkill(ratings) {
     const score = (s) => ratings[s.name] ?? DEFAULT_RATING;
     return SELF_SKILLS.reduce((low, s) => (score(s) < score(low) ? s : low));
@@ -583,7 +601,7 @@
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;
