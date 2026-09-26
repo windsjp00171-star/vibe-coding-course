@@ -61,3 +61,24 @@
 .lp-tool .lp-icon { font-size: 1.9rem; line-height: 1; }
 .lp-tool b { font-size: 1.15rem; letter-spacing: -.01em; }
 .lp-tool span:last-child { color: var(--muted); font-size: .92rem; line-height: 1.55; }
+
+/* 公益講座入口：和付費的兩條路分開，一眼看得出「這個免費、誰都可以看」 */
+.lp-free {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: center;
+  margin-top: 18px; padding: 22px 24px; border-radius: var(--radius-l); text-decoration: none; color: inherit;
+  background: linear-gradient(120deg, var(--ok-soft), #fff 70%); border: 1.5px solid #b7e2cd;
+  transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.lp-free:hover, .lp-free:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: var(--ok); }
+.lp-free-tag {
+  position: absolute; top: -11px; left: 22px; background: var(--ok); color: #fff;
+  font-size: .72rem; font-weight: 800; letter-spacing: .06em; padding: 4px 12px; border-radius: 999px;
+}
+.lp-free-icon { font-size: 2.4rem; line-height: 1; }
+.lp-free-text b { display: block; font-size: 1.15rem; margin-bottom: 4px; }
+.lp-free-text span { color: var(--muted); font-size: .94rem; line-height: 1.6; }
+.lp-free-go { font-weight: 800; color: var(--ok); white-space: nowrap; }
+@media (max-width: 640px) {
+  .lp-free { grid-template-columns: auto minmax(0, 1fr); }
+  .lp-free-go { grid-column: 1 / -1; }
+}
