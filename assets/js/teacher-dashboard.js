@@ -109,6 +109,7 @@
         <p class="muted">匯入失敗的話：在同一個視窗點 <b>Download template</b> 下載官方範本，打開我們的檔案選取 B9 到最後一題，複製貼到範本的第一題位置，再匯入一次。<br>
         另外，部分 Kahoot 方案不提供「匯入試算表」。你的帳號如果沒有這個選項，直接用站內的「🎯 課堂搶答」就好，不用匯入、不用 PIN 碼。</p></details>` },
     { id: 'handbook', label: '📘 學習手冊', hint: '必修版與完整版 PDF，各有學員版與講師版' },
+    { id: 'talks', label: '🎤 講座', hint: '單場講座用的教材，例如教會場「AI 資安意識 90 分鐘」：簡報（含講者備忘）、逐段流程表、給會友帶回家的 A4 自保卡。電腦上的位置是 course/teacher/talks/' },
   ];
   const sizeText = (n) => (n > 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
 
@@ -122,7 +123,7 @@
       <h3>⚠️ 第一次使用要先做兩件事</h3>
       <ol>
         <li>到 Supabase → SQL Editor 執行一次 <code>supabase/add-teacher-files.sql</code>（開一個只有講師看得到的私人空間）</li>
-        <li>回到這一頁，用各區塊右上角的「⬆️ 上傳／更新」把電腦上 <code>course/teacher/</code> 裡的 slides、kahoot、handbook 傳上來</li>
+        <li>回到這一頁，用各區塊右上角的「⬆️ 上傳／更新」把電腦上 <code>course/teacher/</code> 裡的 slides、kahoot、handbook、talks 傳上來</li>
       </ol>
       <p class="muted">上傳後這張提醒就會消失。檔案不會出現在公開網站或 GitHub 上。</p></div>`;
     const blocks = FOLDERS.map((f, i) => {
@@ -145,7 +146,7 @@
     body.innerHTML = `${empty ? setupCard : ''}<div class="card" style="margin-bottom:18px">
         <h3>📁 教材下載</h3>
         <p>這些檔案存在只有講師看得到的私人空間，<b>公開網站和 GitHub 上都沒有</b>。下載連結每次產生、5 分鐘後失效，不要轉貼給學員。</p>
-        <p class="muted">第一次使用請先上傳：電腦上的 <code>course/teacher/</code> 裡有 slides、kahoot、handbook 三個資料夾。</p>
+        <p class="muted">第一次使用請先上傳：電腦上的 <code>course/teacher/</code> 裡有 slides、kahoot、handbook、talks 四個資料夾。</p>
       </div>${blocks}`;
   }
 
