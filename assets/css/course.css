@@ -557,3 +557,21 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* 有目錄時，錨點跳轉不要被兩條固定列蓋住 */
 body:has(.page-nav:not([hidden])) .slide[id] { scroll-margin-top: 118px; }
+
+/* ---------- 手機：頁首不要一直蓋著內容 ---------- */
+/* 實測 375px 寬時，頁首按鈕折成兩排（134px）再加區段目錄（52px），
+   畫面有 23% 被固定列蓋住，學員課前多半用手機讀，這個代價太高。
+   手機上頁首改成一排、可以左右滑，而且不跟著捲；只留細的區段目錄貼在最上面。 */
+@media (max-width: 720px) {
+  .site-header { position: static; }
+  .site-header .wrap { flex-wrap: nowrap; min-height: 56px; gap: 10px; }
+  .brand > span:last-child { white-space: nowrap; font-size: .92rem; }
+  .header-tools {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: 0;
+    padding-block: 6px; mask-image: linear-gradient(90deg, #000 88%, transparent);
+  }
+  .header-tools::-webkit-scrollbar { display: none; }
+  .header-tools > * { flex: 0 0 auto; }
+  .page-nav { top: 0; }
+  body:has(.page-nav:not([hidden])) .slide[id] { scroll-margin-top: 64px; }
+}

@@ -84,3 +84,6 @@
   .ho-toolbar { display: none !important; }
   .ho-unit + .ho-unit, .ho-cover + .ho-unit { margin-top: 0; padding-top: 0; border-top: 0; }
 }
+
+/* 部分單元的手冊：封面上要印出來，不能只有螢幕上看得到 */
+.ho-partial { margin-top: 10mm; padding: 4mm 5mm; border: 1.2pt solid #b86e0b; border-radius: 3mm; color: #7a5510; font-weight: 700; font-size: 11pt; }

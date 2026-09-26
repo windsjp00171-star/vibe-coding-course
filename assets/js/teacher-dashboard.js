@@ -411,7 +411,10 @@
       })]),
     ]);
     const limit = c.open_until ?? null;
-    const closedCol = (m) => (limit !== null && Number(m.id.slice(1)) > limit ? ' class="col-closed"' : '');
+    // 和學員那邊同一條規則：依課程順序，不依單元編號（19、20 排在 9 前面）
+    const closedCol = (m) => (limit !== null
+      && window.CourseLib.unitAccess(m, { role: 'student', enrolled: true, limits: [limit] }, MODULES.map((x) => x.id)) === 'class'
+      ? ' class="col-closed"' : '');
     const picker = `<label class="open-until">🔓 學員可以看到
       <select data-open-until="${c.id}" ${needsMigration ? 'disabled' : ''}>
         <option value="">全部單元</option>

@@ -75,7 +75,9 @@
   function access(unit) {
     if (!enabled || !unit) return 'open';
     const viewer = user ? { role: profile?.role, enrolled: profile?.enrolled, limits: classLimits } : null;
-    return window.CourseLib.unitAccess(unit, viewer);
+    // 依課程實際順序判斷開放進度（單元編號不等於順序，見 lib.js unitAccess）
+    const order = (window.Course?.MODULES || []).map((m) => m.id);
+    return window.CourseLib.unitAccess(unit, viewer, order);
   }
 
   function openUntil() {
@@ -92,11 +94,13 @@
     if (state === 'enroll') {
       return `<h2>🔒 這個單元需要開通</h2>
         <p>你已經登入了，還差一步：到<a href="${home}#join">課程首頁</a>輸入講師給你的 6 碼加入碼，就會自動開通。</p>
-        <p class="muted">還沒有加入碼？請聯繫講師。</p>`;
+        <p class="muted">還沒有加入碼？如果你已經報名，請聯繫講師；還沒報名的話，<a href="${home.replace('learn.html', 'enroll.html')}#signup">看課程介紹與報名</a>。</p>`;
     }
     return `<h2>🔒 這是正式課程單元</h2>
       <p>你正在試用。單元 ${trialList()} 和踩坑圖鑑可以免費看；其他單元請用 Google 登入，並輸入講師給你的加入碼。</p>
-      <button type="button" class="btn btn-primary" data-auth="in">用 Google 登入</button>`;
+      <p><button type="button" class="btn btn-primary" data-auth="in">已經報名：用 Google 登入</button>
+        <a class="btn" href="${home.replace('learn.html', 'enroll.html')}#signup">還沒報名：看課程介紹與報名</a></p>
+      <p class="muted">加入碼是報名後講師給你的 6 碼，登入後在課程首頁輸入。</p>`;
   }
 
   function applyGate() {

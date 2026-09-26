@@ -17,8 +17,8 @@
   const CORE = units.filter((m) => /^[ABC]|結業/.test(m.part));
   // 兩種手冊：只印必修，或把 D 段選修也印進來
   const BOOKS = [
-    { id: 'book', icon: '📘', title: '必修手冊（單元 0～9）', subtitle: '學習手冊．必修篇', of: () => CORE },
-    { id: 'book-all', icon: '📗', title: '完整手冊（含 D 段選修）', subtitle: '學習手冊．完整版', of: () => units },
+    { id: 'book', icon: '📘', title: `必修手冊（${CORE.length} 個單元）`, subtitle: '學習手冊．必修篇', of: () => CORE },
+    { id: 'book-all', icon: '📗', title: `完整手冊（含選修，${units.length} 個單元）`, subtitle: '學習手冊．完整版', of: () => units },
   ];
   const bookOf = (id) => BOOKS.find((b) => b.id === id);
   const paper = $('[data-ho-paper]');
@@ -144,7 +144,8 @@
 
 
   // 會員閘門：和網頁版同一套規則（登入、開通、班級開放進度）
-  const accessOf = (unit) => window.Members?.access(unit) || 'open';
+  function isTeacherNow() { return isTeacher() || window.Members?.profile?.role === 'teacher'; }
+  const accessOf = (unit) => (isTeacherNow() ? 'open' : (window.Members?.access(unit) || 'open'));
 
   async function load() {
     const isBook = Boolean(mod.of);
@@ -162,7 +163,10 @@
     try {
       const data = await Promise.all(list.map(fetchUnit));
       const body = list.map((m, i) => unitHtml(m, data[i])).join('');
-      paper.innerHTML = isBook ? coverHtml(list) + body : body;
+      const partial = isBook && list.length < all.length
+        ? `<p class="ho-partial">⚠️ 本冊只含目前開放的 ${list.length} 個單元（全部共 ${all.length} 個），其餘單元開放後請重新列印。</p>`
+        : '';
+      paper.innerHTML = isBook ? coverHtml(list).replace('</section>', `${partial}</section>`) + body : body;
       status.textContent = isBook && list.length < all.length ? `目前開放 ${list.length} 個單元，其他單元開放後再印` : '';
     } catch (err) {
       paper.innerHTML = '<section class="ho-gate"><h2>講義載入失敗</h2><p>請重新整理頁面再試一次。</p></section>';
@@ -182,7 +186,6 @@
   // 講師版開關：登入的講師都看得到。
   // 不能只看 isTeacher()：那是「講師教學提示載好了」，而講義頁沒有教學提示欄位，永遠不會載。
   const teacherToggle = $('[data-ho-teacher]');
-  const isTeacherNow = () => isTeacher() || window.Members?.profile?.role === 'teacher';
   const showToggle = () => { teacherToggle.hidden = !isTeacherNow(); };
   document.addEventListener('course:teacher', showToggle);
   showToggle();
