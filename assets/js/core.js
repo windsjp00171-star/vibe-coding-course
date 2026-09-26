@@ -411,46 +411,118 @@
     host.after(p);
   }
 
+  // ---------- 互動元件共用的小效果 ----------
+  const calmMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 彩帶：過關、完成時灑一下。設定「減少動態」時不放。
+  function confetti(host, count = 42) {
+    if (!host || calmMotion()) return;
+    const colors = ['#818cf8', '#f472b6', '#fbbf24', '#34d399', '#60a5fa', '#f97316'];
+    const layer = document.createElement('div');
+    layer.className = 'fx-confetti';
+    layer.innerHTML = Array.from({ length: count }, (_, k) => {
+      const x = Math.round(Math.random() * 100);
+      const d = (0.7 + Math.random() * 0.9).toFixed(2);
+      return `<i style="left:${x}%;background:${colors[k % colors.length]};animation-duration:${d}s;animation-delay:${(Math.random() * 0.25).toFixed(2)}s;--r:${Math.round(Math.random() * 540)}deg"></i>`;
+    }).join('');
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    host.append(layer);
+    setTimeout(() => layer.remove(), 2400);
+  }
+
+  // 分數圓環：數字從 0 跑上來，圓環跟著畫滿
+  function scoreRing(percent, { passed, label = '分', value = percent } = {}) {
+    const r = 54; const c = 2 * Math.PI * r;
+    return `<div class="fx-ring ${passed ? 'is-pass' : 'is-miss'}" style="--c:${c.toFixed(1)};--off:${(c * (1 - percent / 100)).toFixed(1)}">
+      <svg viewBox="0 0 128 128" aria-hidden="true"><circle class="fx-ring-bg" cx="64" cy="64" r="${r}"/><circle class="fx-ring-fg" cx="64" cy="64" r="${r}"/></svg>
+      <div class="fx-ring-num"><b data-countup="${value}">${calmMotion() ? value : 0}</b><small>${esc(label)}</small></div></div>`;
+  }
+
+  function runCountUp(root) {
+    $$('[data-countup]', root).forEach((el) => {
+      const to = Number(el.dataset.countup);
+      if (calmMotion()) { el.textContent = to; return; }
+      const t0 = performance.now();
+      const step = (t) => {
+        const p = Math.min(1, (t - t0) / 900);
+        el.textContent = Math.round(to * (1 - (1 - p) ** 3));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      // 分頁在背景時瀏覽器會暫停動畫影格，保險起見時間到了直接填上最後的數字
+      setTimeout(() => { el.textContent = to; }, 1000);
+    });
+  }
+
+  // 選項用鍵盤作答：A–D 或 1–4 選、Enter 下一題。焦點在元件裡才生效，不會干擾頁面其他地方
+  function keyToIndex(e) {
+    const k = e.key.toUpperCase();
+    if ('ABCD'.includes(k) && k.length === 1) return 'ABCD'.indexOf(k);
+    if (/^[1-4]$/.test(e.key)) return Number(e.key) - 1;
+    return -1;
+  }
+
   function mountQuiz(host, questions, { moduleId, title = '隨堂小測驗', onFinish, onRetry, passPercent = window.CourseLib.PASS_PERCENT } = {}) {
     if (!host) return;
     addQuizShowLink(host, moduleId);
+    host.classList.add('fx-quiz');
     const answers = [];
     let i = 0;
+    let streak = 0;
+    let interacted = false; // 第一次互動之前不要自動搶焦點，免得頁面一打開就跳到測驗
+
+    function progressBar() {
+      return `<div class="qz-bar" role="img" aria-label="第 ${i + 1} 題，共 ${questions.length} 題">${questions.map((_, k) => {
+        let cls = '';
+        if (k === i && answers[k] === undefined) cls = 'now';
+        else if (answers[k] !== undefined) cls = answers[k] === questions[k].answer ? 'ok' : 'bad';
+        return `<i class="${cls}"></i>`;
+      }).join('')}</div>`;
+    }
 
     function renderQuestion() {
       const item = questions[i];
-      const dots = questions.map((_, k) => {
-        let cls = '';
-        if (k === i) cls = 'now';
-        else if (k < i) cls = answers[k] === questions[k].answer ? 'ok' : 'bad';
-        return `<i class="${cls}"></i>`;
-      }).join('');
       host.innerHTML = `
-        <div class="quiz-head"><span class="kicker">${esc(title)}．第 ${i + 1} 題／共 ${questions.length} 題</span><span class="quiz-dots">${dots}</span></div>
-        <p class="quiz-q">${esc(item.q)}</p>
-        <div class="options">${item.options.map((o, k) => `
-          <button type="button" class="option" data-k="${k}"><span class="key">${'ABCD'[k]}</span><span>${esc(o)}</span></button>`).join('')}
+        <div class="quiz-head"><span class="kicker">${esc(title)}．第 ${i + 1} 題／共 ${questions.length} 題</span>
+          <span class="qz-streak ${streak >= 2 ? 'is-hot' : ''}" aria-live="polite">${streak >= 2 ? `🔥 連對 ${streak}` : ''}</span></div>
+        ${progressBar()}
+        <div class="qz-card">
+          <p class="quiz-q">${esc(item.q)}</p>
+          <div class="options">${item.options.map((o, k) => `
+            <button type="button" class="option" data-k="${k}"><span class="key">${'ABCD'[k]}</span><span class="opt-text">${esc(o)}</span></button>`).join('')}
+          </div>
+          <p class="qz-keys muted">可以直接按鍵盤 ${item.options.map((_, k) => 'ABCD'[k]).join('／')} 作答</p>
         </div>
         <div class="quiz-after"></div>`;
       $$('.option', host).forEach((btn) => btn.addEventListener('click', () => choose(Number(btn.dataset.k))));
+      if (interacted) $('.option', host)?.focus({ preventScroll: true });
     }
 
     function choose(k) {
       const item = questions[i];
+      if (answers[i] !== undefined || !item.options[k]) return;
+      interacted = true;
       answers[i] = k;
+      const ok = k === item.answer;
+      streak = ok ? streak + 1 : 0;
       $$('.option', host).forEach((btn) => {
         btn.disabled = true;
         const n = Number(btn.dataset.k);
         if (n === item.answer) btn.classList.add('is-right');
         else if (n === k) btn.classList.add('is-wrong');
+        else btn.classList.add('is-dim');
       });
-      const ok = k === item.answer;
+      $('.qz-bar', host).outerHTML = progressBar();
+      const streakEl = $('.qz-streak', host);
+      streakEl.className = `qz-streak ${streak >= 2 ? 'is-hot is-pop' : ''}`;
+      streakEl.textContent = streak >= 2 ? `🔥 連對 ${streak}` : '';
       const last = i === questions.length - 1;
       $('.quiz-after', host).innerHTML = `
-        <div class="feedback ${ok ? 'ok' : 'bad'}"><b>${ok ? '✅ 答對了！' : '❌ 差一點'}</b> ${esc(item.why)}</div>
-        <p style="margin-top:14px"><button type="button" class="btn btn-primary" data-next>${last ? '看成績' : '下一題 →'}</button></p>`;
+        <div class="feedback qz-feedback ${ok ? 'ok' : 'bad'}"><span class="qz-fb-icon" aria-hidden="true">${ok ? '🎯' : '💡'}</span>
+          <div><b>${ok ? (streak >= 3 ? `答對了！已經連對 ${streak} 題` : '答對了！') : '差一點'}</b><p>${esc(item.why)}</p></div></div>
+        <p class="qz-next"><button type="button" class="btn btn-primary" data-next>${last ? '看成績 🏁' : '下一題 →'}</button><span class="muted">或按 Enter</span></p>`;
       $('[data-next]', host).addEventListener('click', () => { if (last) finish(); else { i += 1; renderQuestion(); } });
-      $('[data-next]', host).focus();
+      $('[data-next]', host).focus({ preventScroll: true });
     }
 
     function finish() {
@@ -460,19 +532,29 @@
         ? '這個單元過關了！進度已經幫你記下來。'
         : `還差一點，${passPercent} 分就過關。回頭看一下答錯的地方再試一次吧。`;
       host.innerHTML = `
-        <div class="reveal" style="text-align:center">
+        <div class="qz-result">
           <p class="kicker">${esc(title)}成績</p>
-          <div class="score-big">${result.percent}<small style="font-size:.35em">分</small></div>
+          ${scoreRing(result.percent, { passed: result.passed })}
+          <p class="qz-verdict ${result.passed ? 'ok' : 'bad'}">${result.passed ? '✅ 過關' : '再試一次'}</p>
           <p>答對 ${result.correct}／${result.total} 題．${esc(message)}</p>
+          <div class="qz-recap">${questions.map((q, k) => `<span class="${answers[k] === q.answer ? 'ok' : 'bad'}" title="${esc(q.q)}">${k + 1}</span>`).join('')}</div>
           <button type="button" class="btn" data-retry>再做一次</button>
         </div>`;
+      runCountUp(host);
+      if (result.passed) confetti(host);
       // onRetry：讓呼叫者決定重做的方式（例如總測驗要重新抽題）
       $('[data-retry]', host).addEventListener('click', () => {
         if (onRetry) { onRetry(); return; }
-        answers.length = 0; i = 0; renderQuestion();
+        answers.length = 0; i = 0; streak = 0; renderQuestion();
       });
       if (onFinish) onFinish(result);
     }
+
+    host.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const idx = keyToIndex(e);
+      if (idx >= 0 && answers[i] === undefined && $('.option', host)) { e.preventDefault(); choose(idx); }
+    });
 
     renderQuestion();
   }
@@ -570,42 +652,77 @@
   // items: [{ text, answer: 類別 key, why }]；categories: [{ key, label }]
   function mountClassify(host, items, categories, { title = '分類挑戰', onFinish } = {}) {
     if (!host) return;
-    let i = 0; let right = 0;
+    host.classList.add('fx-classify');
+    let i = 0; let right = 0; let answered = false; let interacted = false;
+    const cats = categories.slice(0, 4);
+
     function render() {
       const item = items[i];
+      answered = false;
+      const left = items.length - i;
       host.innerHTML = `
-        <div class="quiz-head"><span class="kicker">${esc(title)}．${i + 1}／${items.length}</span><span class="pill pill-ok">答對 ${right}</span></div>
-        <div class="classify-card reveal">${esc(item.text)}</div>
-        <div class="classify-choices">${categories.map((c) =>
-          `<button type="button" class="btn" data-cat="${esc(c.key)}">${esc(c.label)}</button>`).join('')}</div>
+        <div class="quiz-head"><span class="kicker">${esc(title)}．${i + 1}／${items.length}</span>
+          <span class="cl-score" aria-live="polite">答對 <b>${right}</b></span></div>
+        <div class="cl-stage">
+          <div class="cl-stack" data-left="${Math.min(left, 3)}">
+            <div class="classify-card cl-card"><span class="cl-no">#${i + 1}</span>${esc(item.text)}</div>
+          </div>
+        </div>
+        <div class="classify-choices cl-choices cl-n${cats.length}">${cats.map((c, k) =>
+          `<button type="button" class="cl-choice" data-cat="${esc(c.key)}"><span class="cl-key">${k + 1}</span><span>${esc(c.label)}</span></button>`).join('')}</div>
+        <p class="qz-keys muted">可以直接按鍵盤 ${cats.map((_, k) => k + 1).join('／')} 分類</p>
         <div class="classify-after"></div>`;
       $$('[data-cat]', host).forEach((b) => b.addEventListener('click', () => choose(b.dataset.cat)));
+      if (interacted) $('.cl-choice', host)?.focus({ preventScroll: true });
     }
+
     function choose(key) {
+      if (answered) return;
+      answered = true; interacted = true;
       const item = items[i];
       const ok = key === item.answer;
       if (ok) right += 1;
+      const picked = $$('[data-cat]', host).findIndex((b) => b.dataset.cat === key);
       $$('[data-cat]', host).forEach((b) => {
         b.disabled = true;
-        if (b.dataset.cat === item.answer) b.classList.add('btn-ok');
-        else if (b.dataset.cat === key) b.classList.add('btn-danger');
+        if (b.dataset.cat === item.answer) b.classList.add('is-right');
+        else if (b.dataset.cat === key) b.classList.add('is-wrong');
+        else b.classList.add('is-dim');
       });
+      // 卡片往你選的那一格飛過去：選左邊的往左、右邊的往右
+      const card = $('.cl-card', host);
+      const dir = cats.length <= 1 ? 0 : (picked / (cats.length - 1)) * 2 - 1;
+      card.style.setProperty('--fly', `${Math.round(dir * 26)}px`);
+      card.classList.add(ok ? 'is-right' : 'is-wrong', 'is-flying');
+      const score = $('.cl-score', host);
+      score.innerHTML = `答對 <b>${right}</b>`;
+      if (ok) { score.classList.remove('is-pop'); void score.offsetWidth; score.classList.add('is-pop'); }
       const last = i === items.length - 1;
       const label = categories.find((c) => c.key === item.answer).label;
       $('.classify-after', host).innerHTML = `
-        <div class="feedback ${ok ? 'ok' : 'bad'}"><b>${ok ? '✅ 沒錯' : `❌ 答案是「${esc(label)}」`}</b>　${esc(item.why)}</div>
-        <p style="margin-top:12px"><button type="button" class="btn btn-primary" data-next>${last ? '看結果' : '下一張 →'}</button></p>`;
+        <div class="feedback qz-feedback ${ok ? 'ok' : 'bad'}"><span class="qz-fb-icon" aria-hidden="true">${ok ? '🎯' : '💡'}</span>
+          <div><b>${ok ? '沒錯！' : `答案是「${esc(label)}」`}</b><p>${esc(item.why)}</p></div></div>
+        <p class="qz-next"><button type="button" class="btn btn-primary" data-next>${last ? '看結果 🏁' : '下一張 →'}</button><span class="muted">或按 Enter</span></p>`;
       $('[data-next]', host).addEventListener('click', () => {
         if (!last) { i += 1; render(); return; }
-        host.innerHTML = `<div class="reveal" style="text-align:center"><p class="kicker">${esc(title)}</p>
-          <div class="score-big">${right}<small style="font-size:.35em">／${items.length}</small></div>
+        const percent = Math.round((right / items.length) * 100);
+        host.innerHTML = `<div class="qz-result"><p class="kicker">${esc(title)}</p>
+          ${scoreRing(percent, { passed: right === items.length, value: right, label: `／${items.length} 張` })}
+          <p class="qz-verdict ${right === items.length ? 'ok' : 'bad'}">${right === items.length ? '🎉 全對' : `答對 ${right} 張`}</p>
           <p>${right === items.length ? '全對！你已經很有概念了。' : '錯的那幾張，上課時我們會拿出來討論。'}</p>
           <button type="button" class="btn" data-again>再玩一次</button></div>`;
+        runCountUp(host);
+        if (right === items.length) confetti(host);
         $('[data-again]', host).addEventListener('click', () => { i = 0; right = 0; render(); });
         if (onFinish) onFinish(right);
       });
-      $('[data-next]', host).focus();
+      $('[data-next]', host).focus({ preventScroll: true });
     }
+
+    host.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || answered) return;
+      if (/^[1-4]$/.test(e.key) && cats[Number(e.key) - 1]) { e.preventDefault(); choose(cats[Number(e.key) - 1].key); }
+    });
     render();
   }
 
@@ -670,7 +787,7 @@
 
   window.Course = {
     MODULES, isTeacher: () => teacherReady, slides, currentSlide, isPresenterWindow, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
-    mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
+    mountClassify, mountOrder, confetti, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

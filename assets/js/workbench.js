@@ -73,20 +73,8 @@
     }
 
     // 完成時的彩帶：純裝飾，設定「減少動態」時不放
-    function confetti() {
-      if (calm) return;
-      const colors = ['#818cf8', '#f472b6', '#fbbf24', '#34d399', '#60a5fa', '#f97316'];
-      const layer = document.createElement('div');
-      layer.className = 'wb-confetti';
-      layer.innerHTML = Array.from({ length: 42 }, (_, i) => {
-        const x = Math.round(Math.random() * 100);
-        const d = (0.6 + Math.random() * 0.9).toFixed(2);
-        const r = Math.round(Math.random() * 360);
-        return `<i style="left:${x}%;background:${colors[i % colors.length]};animation-duration:${d}s;animation-delay:${(Math.random() * 0.25).toFixed(2)}s;--r:${r}deg"></i>`;
-      }).join('');
-      host.append(layer);
-      setTimeout(() => layer.remove(), 2200);
-    }
+    // 彩帶和測驗、分類卡共用同一份（core.js 的 Course.confetti）
+    function confetti() { window.Course.confetti?.(host); }
 
     // 等使用者點其中一顆按鈕，回傳它的 value
     function buttons(el, selector) {

@@ -225,12 +225,7 @@
 .wb-stars { background: linear-gradient(90deg, #fde68a, #fbbf24, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; animation: wb-stars .8s cubic-bezier(.2, .9, .3, 1.4) both; }
 @keyframes wb-stars { from { transform: scale(.4); opacity: 0; } }
 
-.wb-confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 10; }
-.wb-confetti i {
-  position: absolute; top: -12px; width: 8px; height: 14px; border-radius: 2px;
-  animation-name: wb-fall; animation-timing-function: cubic-bezier(.3, .6, .5, 1); animation-fill-mode: forwards;
-}
-@keyframes wb-fall { to { transform: translateY(620px) rotate(var(--r, 360deg)); opacity: 0; } }
+/* 彩帶已移到 course.css 的 .fx-confetti，測驗、分類卡、工作台共用 */
 
 /* ---------- 輸入框：輪到你時整圈發光 ---------- */
 .wb-input { background: rgb(255 255 255 / 3%); }
@@ -249,5 +244,4 @@
 @media (prefers-reduced-motion: reduce) {
   .wb-msg, .msg-notify, .wb-stars, .msg-perm, .wb-missions li.is-now, .msg-typing .wb-av,
   .wb-input.is-your-turn textarea, .wb-bar b::before, .msg-tool::after, .wb.is-hit .wb-chat::after { animation: none !important; }
-  .wb-confetti { display: none; }
 }
