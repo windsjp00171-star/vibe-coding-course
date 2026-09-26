@@ -34,7 +34,7 @@
   // 已經做好、可以點進去的單元（其餘在課程地圖上顯示「製作中」）
   const READY = new Set(['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18', 'm19', 'm20', 'm21', 'm22']);
   // 會員功能啟用時，訪客可以免費試用的單元（其餘要登入並開通）。會員功能沒啟用時全部開放。
-  const TRIAL = new Set(['m0', 'm1', 'm4', 'm7']);
+  const TRIAL = new Set(['m0', 'm1', 'm4', 'm7', 'm19']); // 19 防詐騙：公益性質，講座後會友回家複習不用登入
   MODULES.forEach((m) => { m.ready = READY.has(m.id); m.trial = TRIAL.has(m.id); });
 
   const STORE_KEY = 'vibe-course-v1';
@@ -135,7 +135,7 @@
     // 每一頁都要說得出自己是誰。原本每一頁都寫「課程首頁」，
     // 逛起來會分不出「介紹頁」和「教材頁」的差別。
     const PAGE_NAMES = {
-      index: '首頁', learn: '課程教材', enroll: '課程介紹與報名', security: '半日資安課',
+      index: '首頁', learn: '課程教材', enroll: '課程介紹與報名', security: '半日資安課', church: 'AI 資安講座',
       works: '學員作品牆', verify: '證書查證', me: '我的學習', glossary: '名詞小辭典',
       pitfalls: '踩坑圖鑑', quizshow: '課堂搶答', handout: '紙本講義', teacher: '管理後台', quote: '內訓報價單',
     };

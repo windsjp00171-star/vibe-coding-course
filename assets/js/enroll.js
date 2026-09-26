@@ -53,7 +53,7 @@
         ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : TODO('報名表網址')}
         來信：<a href="mailto:${esc(INFO.contact)}">${esc(INFO.contact)}</a></dd></div>
     </dl>
-    <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7，確認上課方式適合你再決定。</p>`;
+    <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7、19，確認上課方式適合你再決定。</p>`;
 
   // 主題式套裝：同一批單元，換不同的組合賣給不同的人。
   // 時數由單元的課中時間自動加總，改單元就會跟著變，不用手動維護。

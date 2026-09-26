@@ -28,7 +28,7 @@ function fit(text, boxW, boxH, max, min = 12) {
   return min;
 }
 
-const DEMO_URL = 'https://windsjp00171-star.github.io/vibe-coding-course/security.html';
+const DEMO_URL = 'https://windsjp00171-star.github.io/vibe-coding-course/church.html';
 const SITE_URL = 'https://windsjp00171-star.github.io/vibe-coding-course/';
 
 // 投影幕上的網址現場打不動，旁邊放 QR code 讓大家用手機掃
@@ -123,8 +123,8 @@ function foot(s, label) {
   s.addText('全場一起決定每一步', { x: M + 2.9, y: 2.7, w: 8.5, h: 0.6, fontFace: FONT, fontSize: 26, bold: true, color: C.ink, margin: 0, isTextBox: true });
   s.addText('接到視訊 → 收到「先別跟別人講」的訊息 → 要不要匯？\n選錯了，畫面會告訴我們錢是怎麼出去的。',
     { x: M + 2.9, y: 3.4, w: 8.5, h: 1.2, fontFace: FONT, fontSize: 17, color: C.muted, margin: 0, valign: 'top', isTextBox: true });
-  s.addText('windsjp00171-star.github.io/vibe-coding-course/security.html', { x: M + 2.9, y: 4.6, w: 6.6, h: 0.5, fontFace: 'Consolas', fontSize: 14, color: '3730A3', margin: 0, isTextBox: true });
-  addQR(s, DEMO_URL, W - M - 2.1, 2.7, 1.9, '自己想玩一次就掃這裡');
+  s.addText('windsjp00171-star.github.io/vibe-coding-course/church.html', { x: M + 2.9, y: 4.6, w: 6.6, h: 0.5, fontFace: 'Consolas', fontSize: 14, color: '3730A3', margin: 0, isTextBox: true });
+  addQR(s, DEMO_URL, W - M - 2.1, 2.7, 1.9, '掃這裡：講座網頁與自保卡');
   foot(s, '模擬演練');
   s.addNotes('操作：打開上面的網址，投影出來，全場舉手表決每一個選項再點。\n每個決策點停下來問：「如果這是我們教會，你會怎麼做？」\n重點台詞：第一關選「先不承諾」就對了——不用當場拆穿對方，只要不當場答應。');
 }
