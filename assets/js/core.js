@@ -120,7 +120,9 @@
     const local = ['localhost', '127.0.0.1', ''].includes(location.hostname);
     if (!local) return;
     const script = document.createElement('script');
-    script.src = `${document.body.dataset.base || './'}teacher/notes.js`;
+    // 帶上和 core.js 一樣的版本號：沒有版本號時，瀏覽器會一直拿快取裡的舊提示
+    const ver = document.querySelector('script[src*="core.js"]')?.src.split('v=')[1] || Date.now();
+    script.src = `${document.body.dataset.base || './'}teacher/notes.js?v=${ver}`;
     script.onload = () => enableTeacher(window.TEACHER_NOTES);
     script.onerror = () => {}; // 學員自己在本機開也沒有這個檔案，安靜略過
     document.head.append(script);
@@ -156,6 +158,7 @@
           </div>
           <a class="btn btn-sm btn-ghost${pageKey === 'learn' ? ' is-here' : ''}" href="${base}learn.html#map" data-tour="map-link"${pageKey === 'learn' ? ' aria-current="page"' : ''} title="所有單元的清單，可以跳著上">🗺️ 課程地圖</a>
           <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">🖥️ 投影</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-action="presenter" data-teacher-only hidden title="開一個只有你看得到的提詞視窗：講師提示、下一段、計時（快捷鍵 S）">🎤 提詞</button>
           <a class="btn btn-sm btn-ghost${pageKey === 'quizshow' ? ' is-here' : ''}" href="${base}quizshow.html" data-tour="quizshow"${pageKey === 'quizshow' ? ' aria-current="page"' : ''} title="課堂搶答：投影出來，學員舉手作答">🎯 搶答</a>
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">🖨️ 講義</button>' : ''}
           <a class="btn btn-sm btn-ghost" href="${base}glossary.html${current ? `?from=${current.id}` : ''}" data-tour="glossary" title="看不懂的專業名詞，這裡查">📖 名詞</a>
@@ -169,6 +172,7 @@
       if (modeBtn) setMode(modeBtn.dataset.mode);
       const action = e.target.closest('[data-action]')?.dataset.action;
       if (action === 'present') togglePresent();
+      if (action === 'presenter') openPresenter();
       if (action === 'print') window.open(`${base}handout.html?m=${current.id}`, '_blank', 'noopener');
       if (action === 'tour' && window.Tour) window.Tour.start();
     });
@@ -208,11 +212,14 @@
   // 只給講師看的連結（例如頁尾的後台入口）。預設藏著，確定是講師才顯示——
   // 學員點進去只會看到「這個帳號不是講師」，那是沒有意義的死路。
   function syncTeacherOnly(profile) {
-    const on = profile?.role === 'teacher';
+    // 本機帶著 teacher/ 資料夾的講師（teacherReady）也算講師
+    const on = profile?.role === 'teacher' || teacherReady;
     $$('[data-teacher-only]').forEach((el) => { el.hidden = !on; });
   }
   syncTeacherOnly(window.Members?.profile);
   document.addEventListener('course:auth', (e) => syncTeacherOnly(e.detail.profile));
+  // 本機講師提示載好、以及頁首畫好之後，也要再對一次（頁首的「🎤 提詞」是頁首畫出來才有的）
+  document.addEventListener('course:teacher', () => syncTeacherOnly(window.Members?.profile));
 
   // ---------- 區段目錄 ----------
   // 長頁面（教材首頁、招生頁）捲到一半會不知道自己在哪、還有什麼。
@@ -246,7 +253,9 @@
 
   // ---------- 投影模式：一段一頁，方向鍵換頁 ----------
   let slideIndex = 0;
-  function slides() { return $$('.slide'); }
+  // 只算畫面上真的有的段落：還沒開放、只給講師看的段落不該佔一頁，
+  // 否則「3 / 9」會數錯，換頁也會停在看不見的地方。
+  function slides() { return $$('.slide').filter((s) => s.getClientRects().length > 0); }
 
   // 投影時一段一頁。內容比螢幕高就整段等比縮小，否則下面會被切掉看不到。
   const HEADER_H = 84;
@@ -302,12 +311,54 @@
     let counter = $('.slide-counter');
     if (!counter) { counter = document.createElement('div'); counter.className = 'slide-counter'; document.body.append(counter); }
     counter.textContent = `${slideIndex + 1} / ${list.length}`;
+    document.dispatchEvent(new CustomEvent('course:slide', { detail: { index: slideIndex } }));
+  }
+
+  // ---------- 講師提詞：投影機一個視窗、講師筆電一個視窗，兩邊同步 ----------
+  // 投影機顯示學員畫面，講師的筆電開同一頁加上 ?presenter=1，看得到講師提示與下一段。
+  // 用 BroadcastChannel：同一台電腦的兩個視窗互傳訊息，不需要伺服器。
+  const isPresenterWindow = new URLSearchParams(location.search).get('presenter') === '1';
+  const presenterChannel = 'BroadcastChannel' in window ? new BroadcastChannel('course-presenter') : null;
+
+  function openPresenter() {
+    const url = `${location.pathname}?presenter=1`;
+    const win = window.open(url, 'course-presenter', 'width=980,height=720');
+    if (!win) { toast('瀏覽器擋掉了彈出視窗：請允許這個網站開新視窗'); return; }
+    if (!document.documentElement.classList.contains('presenting')) togglePresent(true);
+    toast('提詞視窗已開：把它拖到你的筆電螢幕，這個視窗留在投影機');
+  }
+
+  if (presenterChannel && !isPresenterWindow) {
+    const report = () => presenterChannel.postMessage({ type: 'at', page: location.pathname, index: slideIndex });
+    presenterChannel.onmessage = (e) => {
+      const msg = e.data || {};
+      if (msg.page !== location.pathname) return;
+      if (msg.type === 'hello') {
+        // 投影機這一邊一律用學員畫面，講師提示只出現在提詞視窗
+        applyMode('student');
+        report();
+      }
+      if (msg.type === 'go') {
+        if (!document.documentElement.classList.contains('presenting')) togglePresent(true);
+        goSlide(msg.index);
+      }
+    };
+    document.addEventListener('course:slide', report);
+  }
+
+  if (isPresenterWindow) {
+    const base = document.body.dataset.base || './';
+    const script = document.createElement('script');
+    script.src = `${base}assets/js/presenter.js?v=${(document.querySelector('script[src*="core.js"]')?.src.split('v=')[1]) || ''}`;
+    document.head.append(script);
   }
 
   function onKey(e) {
     const typing = /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.target.isContentEditable;
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'p' || e.key === 'P') { togglePresent(); return; }
+    if ((e.key === 's' || e.key === 'S') && !isPresenterWindow
+      && (teacherReady || window.Members?.profile?.role === 'teacher')) { openPresenter(); return; }
     if (!document.documentElement.classList.contains('presenting')) return;
     if (e.key === 'Escape') togglePresent(false);
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) {
@@ -604,6 +655,7 @@
   // ---------- 啟動 ----------
   function boot() {
     renderHeader();
+    syncTeacherOnly(window.Members?.profile); // 頁首畫好了，講師專用按鈕才有東西可以開關
     renderModuleNav();
     renderTimer();
     applyMode(getState().mode);
@@ -617,7 +669,7 @@
   }
 
   window.Course = {
-    MODULES, isTeacher: () => teacherReady, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
+    MODULES, isTeacher: () => teacherReady, slides, currentSlide, isPresenterWindow, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
     mountClassify, mountOrder, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 

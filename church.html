@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609261413">
-  <link rel="stylesheet" href="assets/css/enroll.css?v=202609261413">
-  <link rel="stylesheet" href="assets/css/workbench.css?v=202609261413">
-  <link rel="stylesheet" href="assets/css/marketing.css?v=202609261413">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609261421">
+  <link rel="stylesheet" href="assets/css/enroll.css?v=202609261421">
+  <link rel="stylesheet" href="assets/css/workbench.css?v=202609261421">
+  <link rel="stylesheet" href="assets/css/marketing.css?v=202609261421">
   <style>
     .ch-signs { display: grid; gap: 10px; counter-reset: sign; }
     .ch-sign { display: grid; grid-template-columns: 2.2em 1fr; gap: 14px; align-items: start; padding: 14px 18px; border-radius: var(--radius-m); background: var(--card); border: 1.5px solid var(--line); }
@@ -34,7 +34,7 @@
 <nav data-pagenav class="screen-only" hidden></nav>
 
 <main class="wrap">
-  <section class="en-hero slide">
+  <section id="hero" class="en-hero slide" data-nav="開場" data-plan="0:00–0:05">
     <div>
       <span class="eyebrow">AI 資安講座．教會與協會版</span>
       <h1>那通電話裡的人，<br><em>可能不是本人</em></h1>
@@ -50,9 +50,10 @@
       <div><b>4</b><span>件事，萬一匯出去了先做</span></div>
       <div><b>165</b><span>反詐騙專線</span></div>
     </aside>
+    <div data-teacher-slot="church-hero"></div>
   </section>
 
-  <section id="why" class="slide" data-nav="為什麼現在">
+  <section id="why" class="slide" data-nav="為什麼現在" data-plan="0:00–0:05">
     <div class="section-head"><span class="section-num">01</span>
       <div><span class="kicker">為什麼今年不一樣</span><h2>以前靠「聽起來像本人」，現在不行了</h2></div></div>
     <div class="grid grid-3">
@@ -61,16 +62,18 @@
       <div class="card"><h3>🪪 偽造文件</h3><p>假公文、假收據、跟官網幾乎一樣的假網頁，幾分鐘就做得出來，錯字不再是破綻。</p></div>
     </div>
     <div class="callout callout-warn"><b>共同點：</b>這些手法不是攻擊電腦，是攻擊「人會相信眼睛和耳朵」這件事。所以防線不在電腦，在每一個會經手金錢與名單的人身上。</div>
+    <div data-teacher-slot="church-why"></div>
   </section>
 
-  <section id="demo" class="slide screen-only" data-nav="模擬演練">
+  <section id="demo" class="slide screen-only" data-nav="模擬演練" data-plan="0:05–0:25">
     <div class="section-head"><span class="section-num">02</span>
       <div><span class="kicker">自己再玩一次</span><h2>週五下午，主管在視訊裡叫你匯款</h2>
         <p>講座上全場一起玩過的那一段。回家可以自己再做一次決定，選錯了畫面會告訴你錢是怎麼出去的。大約 10 分鐘。</p></div></div>
     <div data-workbench data-no-gloss></div>
+    <div data-teacher-slot="church-demo"></div>
   </section>
 
-  <section id="signs" class="slide" data-nav="五個警訊">
+  <section id="signs" class="slide" data-nav="五個警訊" data-plan="0:25–0:40">
     <div class="section-head"><span class="section-num">03</span>
       <div><span class="kicker">怎麼判斷</span><h2>五個警訊，出現越多越可疑</h2></div></div>
     <div class="ch-signs">
@@ -80,9 +83,10 @@
       <div class="ch-sign"><div><b>要匯款、改帳號、給密碼或驗證碼</b><span>這四件事永遠要換管道確認。</span></div></div>
       <div class="ch-sign"><div><b>搬出職位或身分壓你</b><span>「我是誰誰誰」不是證據。</span></div></div>
     </div>
+    <div data-teacher-slot="church-signs"></div>
   </section>
 
-  <section id="defense" class="slide" data-nav="兩道防線">
+  <section id="defense" class="slide" data-nav="兩道防線" data-plan="0:40–0:55">
     <div class="section-head"><span class="section-num">04</span>
       <div><span class="kicker">不用會分辨假影片，也擋得住</span><h2>兩道防線</h2></div></div>
     <div class="grid grid-2">
@@ -94,9 +98,10 @@
         <p class="muted">AI 複製得了聲音和長相，複製不了共同的記憶。暗號不要放到網路上，也不要用查得到的事（生日、地址、學校）。</p></div>
     </div>
     <div class="ch-now">📱 今天就做一件事：傳訊息給家人，約一個暗號。<small>現在就傳，回家就會忘。</small></div>
+    <div data-teacher-slot="church-defense"></div>
   </section>
 
-  <section id="church" class="slide" data-nav="教會常見情況">
+  <section id="church" class="slide" data-nav="教會常見情況" data-plan="0:55–1:05">
     <div class="section-head"><span class="section-num">05</span>
       <div><span class="kicker">我們身邊</span><h2>教會裡最常遇到的四種情況</h2></div></div>
     <div class="grid grid-2">
@@ -106,9 +111,10 @@
       <div class="card"><h3>🔗 假的奉獻連結或活動報名</h3><p>網頁做得跟真的一樣，只有網址不同。</p></div>
     </div>
     <div class="callout callout-ok"><b>四種的處理方式都一樣：</b>換一個管道確認，再決定。</div>
+    <div data-teacher-slot="church-church"></div>
   </section>
 
-  <section id="ifhit" class="slide" data-nav="萬一匯出去了">
+  <section id="ifhit" class="slide" data-nav="萬一匯出去了" data-plan="1:05–1:15">
     <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker">萬一已經匯出去了</span><h2>先止血，其他之後再說</h2></div></div>
     <div class="ch-steps">
@@ -118,9 +124,10 @@
       <div class="ch-step"><b>4</b><strong>告訴身邊的人</strong><span>同一批人常會用同樣手法再打給你認識的人。</span></div>
     </div>
     <div class="callout"><b>被騙不是笨。</b>這類詐騙專挑配合度高、做事積極的人下手。越早說出來，越有機會追回來——如果你想到自己好像遇過，散會後來找講師，我們一起處理。</div>
+    <div data-teacher-slot="church-ifhit"></div>
   </section>
 
-  <section id="staff" class="slide" data-nav="給同工">
+  <section id="staff" class="slide" data-nav="給同工" data-plan="1:15–1:30（同工留下）">
     <div class="section-head"><span class="section-num">07</span>
       <div><span class="kicker">給同工</span><h2>訂出我們自己的查核規則</h2>
         <p>講座最後 15 分鐘同工留下來討論的五件事。討論完可以用單元 19 的產生器，直接產出一段能公告的規則文字。</p></div></div>
@@ -135,9 +142,10 @@
       <p style="margin-top:14px"><a class="btn btn-primary" href="modules/19-deepfake.html#builder">打開查核規則產生器 →</a></p>
     </div>
     <div class="callout callout-warn"><b>一定要寫進規則的一句話：</b>延遲造成的損失由規則承擔，不追究承辦人。沒有這句，同工不敢拒絕牧者或長輩。</div>
+    <div data-teacher-slot="church-staff"></div>
   </section>
 
-  <section id="home" class="slide" data-nav="帶回家">
+  <section id="home" class="slide" data-nav="帶回家" data-plan="散會前 3 分鐘">
     <div class="section-head"><span class="section-num">08</span>
       <div><span class="kicker">帶回家</span><h2>自保卡與回家複習</h2></div></div>
     <div class="grid grid-2">
@@ -150,18 +158,19 @@
     </div>
     <p class="muted" style="margin-top:16px">想在自己的教會、協會或公司辦一場？<a href="security.html#church">看講座介紹與洽詢方式</a>。</p>
     <p class="muted">這場講座是「Vibe Coding 實戰課」的其中一個單元。如果你好奇不會寫程式的人，怎麼用 AI 做出自己的報名表、小工具，<a href="enroll.html">可以看看完整課程</a>。</p>
+    <div data-teacher-slot="church-home"></div>
   </section>
 </main>
 
 <footer class="site-footer"><div class="wrap"><a href="security.html">半日資安課</a>．<a href="modules/19-deepfake.html">單元 19 AI 詐騙</a>．<a href="index.html">課程首頁</a>．<a href="privacy.html">隱私權政策</a>．反詐騙專線 165</div></footer>
 
-<script src="assets/js/lib.js?v=202609261413"></script>
-<script src="assets/js/config.js?v=202609261413"></script>
-<script src="assets/js/core.js?v=202609261413"></script>
-<script src="assets/js/members.js?v=202609261413"></script>
-<script src="assets/js/tour.js?v=202609261413"></script>
-<script src="assets/js/workbench.js?v=202609261413"></script>
-<script src="assets/js/sims/m19-deepfake.js?v=202609261413"></script>
+<script src="assets/js/lib.js?v=202609261421"></script>
+<script src="assets/js/config.js?v=202609261421"></script>
+<script src="assets/js/core.js?v=202609261421"></script>
+<script src="assets/js/members.js?v=202609261421"></script>
+<script src="assets/js/tour.js?v=202609261421"></script>
+<script src="assets/js/workbench.js?v=202609261421"></script>
+<script src="assets/js/sims/m19-deepfake.js?v=202609261421"></script>
 <script>
   // 講座頁：模擬演練公開（和單元 19、半日資安頁同一份劇本），其餘都是靜態內容
   window.Workbench.mount(window.Course.$('[data-workbench]'), {
@@ -172,6 +181,6 @@
   });
   window.Tour.register([]);
 </script>
-<script src="assets/js/marketing.js?v=202609261413"></script>
+<script src="assets/js/marketing.js?v=202609261421"></script>
 </body>
 </html>

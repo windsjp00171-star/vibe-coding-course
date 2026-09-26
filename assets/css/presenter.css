@@ -1,0 +1,57 @@
+/* presenter.css — 講師提詞視窗。放在講師自己的筆電上，只給講師看。
+   原頁面的內容移到畫面外（不是 display:none），段落的版面還在，
+   這樣提詞視窗和投影視窗算出來的「第幾段」才會一致。 */
+.is-presenter body > header,
+.is-presenter body > footer,
+.is-presenter .page-nav,
+.is-presenter .timer,
+.is-presenter .slide-counter,
+.is-presenter .tour-backdrop,
+.is-presenter .tour-spot,
+.is-presenter .tour-pop { display: none !important; }
+.is-presenter main, .is-presenter nav[data-module-nav] {
+  position: absolute !important; left: -99999px !important; top: 0; width: 1200px;
+}
+.is-presenter body { overflow: hidden; background: #110f2b; }
+
+.pv {
+  position: fixed; inset: 0; z-index: 200; display: grid; grid-template-rows: auto 1fr auto;
+  background: radial-gradient(90% 70% at 90% 0%, rgb(99 102 241 / 22%), transparent 60%), #110f2b;
+  color: #eceefe; font-size: 17px;
+}
+.pv-top, .pv-bottom { display: flex; align-items: center; gap: 16px; padding: 12px 22px; border-bottom: 1px solid rgb(255 255 255 / 8%); }
+.pv-bottom { border-top: 1px solid rgb(255 255 255 / 8%); border-bottom: 0; justify-content: space-between; }
+.pv-bottom .muted { color: #9ea3d6; font-size: .85rem; }
+.pv-badge { font-weight: 900; letter-spacing: .04em; }
+.pv-status { font-size: .85rem; color: #fbbf24; }
+.pv-status.is-ok { color: #6ee7b7; }
+.pv-clock { margin-left: auto; display: grid; text-align: right; line-height: 1.1; }
+.pv-clock + .pv-clock { margin-left: 18px; }
+.pv-clock b { font: 800 1.5rem/1 "Inter", sans-serif; font-variant-numeric: tabular-nums; }
+.pv-clock small { color: #9ea3d6; font-size: .72rem; }
+
+.pv-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 0; overflow: hidden; }
+.pv-now { padding: 26px 30px; overflow: auto; }
+.pv-count { margin: 0; color: #a5b4fc; font-weight: 800; letter-spacing: .1em; }
+.pv-now h1 { margin: 6px 0 4px; font-size: clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); line-height: 1.2; color: #fff; }
+.pv-plan { margin: 0 0 18px; color: #fbbf24; font-weight: 700; }
+.pv-notes { font-size: 1.12rem; line-height: 1.8; color: #e5e7ff; }
+.pv-notes b, .pv-notes strong { color: #fff; }
+.pv-notes ul, .pv-notes ol { padding-left: 1.3em; }
+.pv-notes hr { border: 0; border-top: 1px dashed rgb(255 255 255 / 15%); margin: 16px 0; }
+.pv-notes .muted { color: #9ea3d6; }
+
+.pv-next { padding: 26px 22px; background: rgb(255 255 255 / 4%); border-left: 1px solid rgb(255 255 255 / 8%); overflow: auto; }
+.pv-label { margin: 0; color: #9ea3d6; font-size: .78rem; font-weight: 800; letter-spacing: .12em; }
+.pv-next h2 { margin: 6px 0 0; font-size: 1.2rem; color: #fff; }
+.pv-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; counter-reset: pv; }
+.pv-list button {
+  width: 100%; text-align: left; background: transparent; border: 0; color: #c7c9f2; font: inherit; font-size: .9rem;
+  padding: 6px 8px; border-radius: 8px; cursor: pointer;
+}
+.pv-list button:hover { background: rgb(255 255 255 / 8%); color: #fff; }
+.pv-list li.is-here button { background: #4f46e5; color: #fff; font-weight: 800; }
+.pv-list li.is-done button { color: #6b6f9e; }
+
+.pv .btn { background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 18%); color: #fff; }
+.pv .btn-primary { background: #4f46e5; border-color: #4f46e5; }
