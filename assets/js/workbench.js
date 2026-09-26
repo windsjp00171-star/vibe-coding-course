@@ -16,6 +16,8 @@
     let alive = true;
     let mistakes = 0;
     host.classList.add('wb');
+    host.classList.remove('is-thinking', 'is-hit'); // 重來一次時，上一局的狀態要清掉
+    host.style.setProperty('--wb-progress', '0%');
     host.innerHTML = `
       <div class="wb-top">
         <ol class="wb-missions">${config.missions.map((m, i) => `<li data-m="${i}"><span>${i + 1}</span>${esc(m)}</li>`).join('')}</ol>
@@ -62,10 +64,28 @@
 
     async function typing() {
       if (!TYPING_MS) return;
-      const dots = add('msg-claude msg-typing', '<i></i><i></i><i></i>');
+      host.classList.add('is-thinking'); // 標題列的 Claude 圖示會發亮，讓人感覺它「正在想」
+      const dots = add('msg-claude msg-typing', '<span class="wb-av">✻</span><span class="wb-dots"><i></i><i></i><i></i></span>');
       await wait(TYPING_MS);
       dots.remove();
+      host.classList.remove('is-thinking');
       check();
+    }
+
+    // 完成時的彩帶：純裝飾，設定「減少動態」時不放
+    function confetti() {
+      if (calm) return;
+      const colors = ['#818cf8', '#f472b6', '#fbbf24', '#34d399', '#60a5fa', '#f97316'];
+      const layer = document.createElement('div');
+      layer.className = 'wb-confetti';
+      layer.innerHTML = Array.from({ length: 42 }, (_, i) => {
+        const x = Math.round(Math.random() * 100);
+        const d = (0.6 + Math.random() * 0.9).toFixed(2);
+        const r = Math.round(Math.random() * 360);
+        return `<i style="left:${x}%;background:${colors[i % colors.length]};animation-duration:${d}s;animation-delay:${(Math.random() * 0.25).toFixed(2)}s;--r:${r}deg"></i>`;
+      }).join('');
+      host.append(layer);
+      setTimeout(() => layer.remove(), 2200);
     }
 
     // 等使用者點其中一顆按鈕，回傳它的 value
@@ -106,7 +126,9 @@
       },
       async boom(text) {
         await wait(calm ? 0 : 300);
-        add('msg-boom', `<p>${esc(text)}</p>`);
+        add('msg-boom', `<p>💥 ${esc(text)}</p>`);
+        host.classList.remove('is-hit'); void host.offsetWidth; host.classList.add('is-hit');
+        setTimeout(() => host.classList.remove('is-hit'), 700);
       },
       choose(options) {
         const el = add('msg-choose', options.map((o) => `<button type="button" class="btn" data-value="${esc(o.value)}">${esc(o.label)}</button>`).join(''));
@@ -122,6 +144,7 @@
         check();
         input.disabled = false;
         send.disabled = false;
+        form.classList.add('is-your-turn'); // 輸入框亮起來：現在輪到你說話
         input.placeholder = placeholder;
         input.focus({ preventScroll: true });
         $('[data-wb-hints]').innerHTML = hints.length ? `<button type="button" class="wb-hint-btn" data-hint="${esc(hints[0])}">💡 不知道怎麼說？看看範例</button>` : '';
@@ -133,6 +156,7 @@
             input.value = '';
             input.disabled = true;
             send.disabled = true;
+            form.classList.remove('is-your-turn');
             input.placeholder = '等 Claude Code 回應……';
             $('[data-wb-hints]').innerHTML = '';
             form.onsubmit = null;
@@ -182,15 +206,20 @@
         });
       },
       mission(i) {
-        host.querySelectorAll('.wb-missions li').forEach((li, j) => {
+        const items = host.querySelectorAll('.wb-missions li');
+        items.forEach((li, j) => {
           li.classList.toggle('is-done', j < i);
           li.classList.toggle('is-now', j === i);
         });
+        // 任務列下面的進度條
+        host.style.setProperty('--wb-progress', `${Math.round((i / Math.max(1, items.length)) * 100)}%`);
       },
       mistake() { mistakes += 1; },
       finish(lessons) {
         const stars = Math.max(1, MAX_STARS - mistakes);
         host.querySelectorAll('.wb-missions li').forEach((li) => { li.classList.add('is-done'); li.classList.remove('is-now'); });
+        host.style.setProperty('--wb-progress', '100%');
+        confetti();
         const sims = getState().sims || {};
         update({ sims: { ...sims, [config.id]: Math.max(sims[config.id] || 0, stars) } });
         add('msg-finish', `<p class="wb-stars">${'★'.repeat(stars)}${'☆'.repeat(MAX_STARS - stars)}</p>
