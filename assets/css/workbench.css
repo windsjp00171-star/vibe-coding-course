@@ -24,7 +24,7 @@
 .wb-bar { display: flex; gap: 12px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--wb-line); font-size: .85rem; }
 .wb-bar b { color: var(--wb-accent); }
 .wb-bar span { color: var(--wb-dim); font-family: var(--mono); }
-.wb-bar em { margin-left: auto; font-style: normal; font-size: .72rem; color: var(--wb-dim); border: 1px solid var(--wb-line); border-radius: 6px; padding: 1px 6px; }
+.wb-bar em { margin-left: auto; font-style: normal; font-size: .75rem; color: var(--wb-dim); border: 1px solid var(--wb-line); border-radius: 6px; padding: 1px 6px; }
 /* 高度跟著視窗走：縮放或小螢幕時，輸入框和送出鍵一定還看得到 */
 .wb-chat { max-height: min(640px, 84vh); }
 .wb-log { flex: 1 1 auto; min-height: 180px; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
