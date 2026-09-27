@@ -296,9 +296,10 @@
 
   function currentSlide() {
     const list = slides();
-    const y = window.scrollY + 90;
+    // 用畫面上的實際位置判斷，不用 offsetTop：段落被 zoom 縮小後，offsetTop 會用縮放後的座標回報，
+    // 位置被放大，換頁就會一直以為還停在第一段
     let idx = 0;
-    list.forEach((s, i) => { if (s.offsetTop <= y) idx = i; });
+    list.forEach((s, i) => { if (s.getBoundingClientRect().top <= 90) idx = i; });
     return idx;
   }
 
@@ -307,7 +308,11 @@
     if (!list.length) return;
     slideIndex = Math.max(0, Math.min(list.length - 1, i));
     fitSlide(list[slideIndex]);
-    list[slideIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 不用 scrollIntoView：段落有 zoom 時它算出來的位置會偏掉，停在上一段的尾巴。
+    // 自己用畫面上的實際位置算，段落頂端對齊到頁首下方
+    const el = list[slideIndex];
+    const margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - margin, behavior: calmMotion() ? 'auto' : 'smooth' });
     let counter = $('.slide-counter');
     if (!counter) { counter = document.createElement('div'); counter.className = 'slide-counter'; document.body.append(counter); }
     counter.textContent = `${slideIndex + 1} / ${list.length}`;
