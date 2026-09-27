@@ -5,9 +5,11 @@
  *   第一次：npm install　然後　npx playwright install chromium
  *   之後：  node check_mobile.js            → 檢查全站
  *          node check_mobile.js 02-install  → 只檢查檔名含這段字的頁面
+ *          node check_mobile.js --dark      → 用深色模式檢查（手機設成深色主題時看到的樣子）
  *
  * 會抓出：橫向捲動、超出畫面、按鈕被裁掉、表格擠成一格一個字、
- *        可以點的東西被別的東西蓋住（例如步驟數字蓋住勾選框）、點擊區太小、字太小、JS 錯誤。
+ *        可以點的東西被別的東西蓋住（例如步驟數字蓋住勾選框）、點擊區太小、字太小、
+ *        字和背景對比不夠（看不清楚）、深色模式下出現刺眼的大塊白底、JS 錯誤。
  * 有問題時結束代碼為 1，沒問題是 0。
  */
 const { chromium } = require('playwright');
@@ -18,13 +20,14 @@ const WIDTH = 375;
 const IGNORE = '.hidden-text, .cert, .cert-preview, [data-cert], .print-only, .handout-page, .ho-qr, .qt-paper, svg, .fx-sparks, .fx-confetti';
 
 (async () => {
-  const only = process.argv[2];
+  const dark = process.argv.includes('--dark');
+  const only = process.argv.slice(2).find((a) => !a.startsWith('--'));
   const pages = allPages().filter((p) => !only || p.includes(only));
   const { base, close } = await serve();
   const browser = await chromium.launch();
   let bad = 0;
   for (const p of pages) {
-    const page = await browser.newPage({ viewport: { width: WIDTH, height: 812 }, isMobile: true, hasTouch: true });
+    const page = await browser.newPage({ viewport: { width: WIDTH, height: 812 }, isMobile: true, hasTouch: true, colorScheme: dark ? 'dark' : 'light' });
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
     await page.goto(base + p);
@@ -107,6 +110,54 @@ const IGNORE = '.hidden-text, .cert, .cert-preview, [data-cert], .print-only, .h
         const fs = parseFloat(getComputedStyle(el).fontSize);
         if (fs < 12) out.push(`字太小：${name(el)} ${fs.toFixed(1)}px`);
       });
+      // 字和背景的對比度（WCAG AA：一般字 4.5、大字 3）。背景是漸層或圖片的算不準，略過
+      // 顏色轉成 [r, g, b, a]；color-mix() 算出來的是 color(srgb 0~1 …) 格式，要換算成 0~255
+      const rgb = (c) => {
+        if (/^(oklab|oklch|lab|lch|hsl)/.test(c)) return null; // 動畫中間或其他色彩空間，算不準就略過
+        const m = c.match(/[\d.]+/g); if (!m) return null;
+        const v = m.map(Number);
+        if (c.startsWith('color(')) return [v[0] * 255, v[1] * 255, v[2] * 255, v.length > 3 ? v[3] : 1];
+        return v;
+      };
+      const lum = ([r, g, b]) => [r, g, b].map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; })
+        .reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+      const bgOf = (el) => {
+        for (let a = el; a; a = a.parentElement) {
+          const s = getComputedStyle(a);
+          if (s.backgroundImage !== 'none') return null;
+          const c = rgb(s.backgroundColor);
+          if (c && (c.length < 4 || c[3] > 0.9)) return c;
+          if (c && c[3] > 0.05) return null; // 半透明疊在別的顏色上，算不準
+        }
+        return [255, 255, 255];
+      };
+      document.querySelectorAll('body *').forEach((el) => {
+        if (!shown(el) || skip(el) || el.closest('[class^="tour-"], .toast')) return;
+        if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) return;
+        const s = getComputedStyle(el);
+        if ((rgb(s.color) || [])[3] < 0.95) return; // 故意淡掉的半透明字（例如已勾選、翻牌卡提示）
+        if (el.closest('[disabled], .is-dim, .is-done, .is-soon')) return; // 停用或已完成的，故意變淡
+        const bg = bgOf(el); const fg = rgb(s.color);
+        if (!bg || !fg) return;
+        const [l1, l2] = [lum(fg), lum(bg)].sort((a, b) => b - a);
+        const ratio = (l1 + 0.05) / (l2 + 0.05);
+        const big = parseFloat(s.fontSize) >= 24 || (parseFloat(s.fontSize) >= 18.6 && Number(s.fontWeight) >= 700);
+        if (ratio < (big ? 3 : 4.5)) out.push(`對比不夠：${name(el)} ${ratio.toFixed(2)}:1`);
+      });
+
+      // 深色模式：頁面上出現大塊亮白底，會很刺眼（多半是寫死了 #fff）
+      if (matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelectorAll('body *').forEach((el) => {
+          // 故意做成白紙或手機畫面的（講義、模擬的手機通知、網頁預覽），以及勾選清單的刪除線（用漸層畫的細線）
+          if (!shown(el) || skip(el) || el.closest('img, video, iframe, .wb-preview, .msg-notify, .wb-phone, .ho-paper, .doc-paper, .ck-line')) return;
+          const r = el.getBoundingClientRect();
+          if (r.width * r.height < 20000) return;
+          const s = getComputedStyle(el);
+          const c = rgb(s.backgroundColor);
+          const light = (c && (c.length < 4 || c[3] > 0.9) && lum(c) > 0.7) || /rgb\((2[3-5]\d), (2[3-5]\d), (2[3-5]\d)\)/.test(s.backgroundImage);
+          if (light) out.push(`深色模式下的白底：${name(el)}`);
+        });
+      }
       return [...new Set(out)];
     }, IGNORE);
 

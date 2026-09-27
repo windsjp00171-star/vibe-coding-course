@@ -16,7 +16,7 @@
 }
 .sim-missions li.is-next { background: var(--brand-soft); box-shadow: inset 3px 0 0 var(--brand); }
 .sim-missions li.is-done { background: var(--ok-soft); color: var(--muted); text-decoration: line-through; }
-.sim-missions li.is-done::before { content: "✓"; background: var(--ok); border-color: var(--ok); color: #fff; }
+.sim-missions li.is-done::before { content: "✓"; background: var(--ok-fill); border-color: var(--ok); color: #fff; }
 
 .sim-stage { display: grid; gap: 12px; }
 .sim-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -48,11 +48,11 @@
 .sim-group > span { font-size: .78rem; font-weight: 800; color: var(--muted); width: 5.2em; flex: none; }
 .sim-commit { background: var(--card); border: 2px solid var(--brand); border-radius: var(--radius-m); padding: 12px 14px; animation: pop var(--normal) var(--ease); }
 .sim-log {
-  margin: 0; padding: 10px 14px; border-radius: var(--radius-m); background: var(--ink); color: var(--paper); font-size: .95rem;
+  margin: 0; padding: 10px 14px; border-radius: var(--radius-m); background: var(--invert-bg); color: var(--invert-ink); font-size: .95rem;
   min-height: 3em;
 }
-.sim-log.is-bad { background: var(--danger); color: #fff; }
-.sim-log.is-ok { background: var(--ok); color: #fff; }
+.sim-log.is-bad { background: var(--danger-fill); color: #fff; }
+.sim-log.is-ok { background: var(--ok-fill); color: #fff; }
 
 .glossary-card .flip-front h3 { font-size: 1.5rem; margin: 8px 0 2px; font-family: "Inter", sans-serif; }
 .glossary-card .zh { font-weight: 800; color: var(--brand); }
