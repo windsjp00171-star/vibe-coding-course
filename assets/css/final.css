@@ -14,6 +14,8 @@
   box-shadow: var(--shadow-lift); position: relative; opacity: .45; filter: grayscale(.6); transition: opacity var(--normal), filter var(--normal);
 }
 .certificate.is-earned { opacity: 1; filter: none; }
+/* 手機上寬度太窄，固定 A4 橫式比例會塞不下，內容溢出去蓋到下面的按鈕；螢幕上改成高度跟著內容長。列印仍是 A4 橫式 */
+@media screen and (max-width: 640px) { .certificate { aspect-ratio: auto; } }
 .cert-inner {
   height: 100%; border: 3px double var(--gold); outline: 1px solid var(--gold); outline-offset: -10px; border-radius: 4px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4% 6%;

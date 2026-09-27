@@ -65,7 +65,7 @@ img, svg { max-width: 100%; }
 a { color: var(--brand); }
 h1, h2, h3 { line-height: 1.25; margin: 0 0 .5em; letter-spacing: -0.01em; }
 h2 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); font-weight: 900; }
-h3 { font-size: 1.2rem; font-weight: 800; }
+h3, .h3 { font-size: 1.2rem; font-weight: 800; } /* .h3：標題層級要用 h2，但外觀跟卡片小標一樣大 */
 p { margin: 0 0 1em; }
 code, kbd { font-family: var(--mono); font-size: .9em; }
 :focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
@@ -98,6 +98,11 @@ main { isolation: isolate; overflow-x: clip; }
 .mode-switch button[data-mode="teacher"][aria-pressed="true"] { color: var(--teacher); }
 .progress-bar { height: 3px; background: transparent; }
 .progress-bar span { display: block; height: 100%; width: 0; background: var(--brand); transition: width var(--normal) var(--ease); }
+
+/* 講師：還沒回覆的聯絡留言數（頁首「管理後台」、後台「聯絡留言」分頁） */
+.unread-dot { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; margin-left: 6px; border-radius: 999px;
+  background: var(--danger); color: #fff; font: 800 .75rem/1 "Inter", sans-serif; vertical-align: 2px; }
+.unread-dot[hidden] { display: none; }
 
 /* ---------- Buttons ---------- */
 .btn {

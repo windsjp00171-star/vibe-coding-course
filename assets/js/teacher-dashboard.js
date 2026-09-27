@@ -33,7 +33,7 @@
         <button type="button" data-admin-tab="members" aria-pressed="${tab === 'members'}">👥 會員管理</button>
         <button type="button" data-admin-tab="classes" aria-pressed="${tab === 'classes'}">🏫 班級</button>
         <button type="button" data-admin-tab="signups" aria-pressed="${tab === 'signups'}">📝 報名管理</button>
-        <button type="button" data-admin-tab="messages" aria-pressed="${tab === 'messages'}">✉️ 聯絡留言</button>
+        <button type="button" data-admin-tab="messages" aria-pressed="${tab === 'messages'}">✉️ 聯絡留言<span class="unread-dot" data-unread ${window.Members.unread ? '' : 'hidden'}>${window.Members.unread || ''}</span></button>
         <button type="button" data-admin-tab="stuck" aria-pressed="${tab === 'stuck'}">🧭 卡關分析</button>
         <button type="button" data-admin-tab="files" aria-pressed="${tab === 'files'}">📁 教材下載</button>
       </div><div data-admin-body></div>`;
@@ -45,11 +45,15 @@
   let memberFilter = 'pending';
   let memberSearch = '';
 
-  const download = (name, text) => {
-    const url = URL.createObjectURL(new Blob([`\ufeff${text}`], { type: 'text/csv;charset=utf-8' }));
+  // 連結要真的放進頁面、網址晚一點才收回，不然瀏覽器會忽略檔名，存成「download」
+  const download = (name, text, type = 'text/csv;charset=utf-8') => {
+    const body = type.startsWith('text/csv') ? `\ufeff${text}` : text; // CSV 加 BOM，Excel 打開中文才不會亂碼
+    const url = URL.createObjectURL(new Blob([body], { type }));
     const a = Object.assign(document.createElement('a'), { href: url, download: name });
+    document.body.append(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   // ---------- 總覽 ----------
@@ -85,6 +89,13 @@
           <a class="btn btn-sm btn-ghost" href="security.html">🛡️ 半日資安課介紹</a>
           <a class="btn btn-sm btn-ghost" href="quizshow.html">🎯 課堂搶答</a></p>
         <p class="muted">報價單填的內容只存在你這台電腦，不會上傳。</p>
+      </div>
+      <div class="card" style="margin-bottom:18px">
+        <h3>📦 資料備份</h3>
+        <p>把所有會員、班級、進度、報名、留言一次存成一個檔案。建議<b>每個月、每次開班前後</b>各存一份，放在你的雲端硬碟。</p>
+        <p><button type="button" class="btn btn-primary btn-sm" data-backup-all>📦 一鍵匯出全部資料</button>
+          <a class="btn btn-sm btn-ghost" href="backup-reader.html" download>📖 下載離線閱讀器</a></p>
+        <p class="muted">離線閱讀器是一個網頁檔，不用網路、不用登入，雙擊打開、選匯出的檔案就能看資料。交接給別人時，連同 <code>docs/HANDOVER.md</code> 一起給。</p>
       </div>
       <div class="card">
         <h3>🏫 我的班級</h3>
@@ -302,6 +313,42 @@
           </div>`).join('')
         : '<p class="muted">還沒有人留言。</p>'}
       </div>`;
+  }
+
+  // ---------- 一鍵匯出全部資料（Rule 14：不能只有一個人拿得到資料） ----------
+  // 格式：{ format, exported_at, tables: { 資料表: { label, rows, error? } }, files }，離線閱讀器 backup-reader.html 讀得懂
+  const BACKUP_TABLES = [
+    ['profiles', '會員'], ['classes', '班級'], ['class_members', '班級成員'], ['progress', '學習進度'],
+    ['cohorts', '報名梯次'], ['signups', '報名名單'], ['contact_messages', '聯絡留言'],
+    ['certificates', '結業證書'], ['teacher_invites', '講師邀請'], ['teacher_notes', '講師筆記'],
+  ];
+  async function exportAll(btn) {
+    const db = window.Members.client;
+    btn.disabled = true;
+    btn.textContent = '匯出中…';
+    const tables = {};
+    for (const [name, label] of BACKUP_TABLES) {
+      const { data, error } = await db.from(name).select('*');
+      tables[name] = error ? { label, rows: [], error: error.message } : { label, rows: data || [] };
+    }
+    // 教材檔案本身太大不放進來，只記下有哪些檔案（檔案要另外從「教材下載」分頁下載）
+    const files = {};
+    for (const f of FOLDERS) {
+      const { data } = await db.storage.from(BUCKET).list(f.id, { limit: 100 });
+      files[f.id] = (data || []).filter((x) => x.name && !x.name.startsWith('.')).map((x) => x.name);
+    }
+    const backup = {
+      format: 'vibe-course-backup', version: 1, exported_at: new Date().toISOString(),
+      note: '講師後台匯出。結業證書只包含講師自己看得到的部分；完整的資料庫備份請另外用 Supabase 的 Database → Backups。',
+      tables, files,
+    };
+    const day = new Date().toLocaleDateString('sv-SE'); // 2026-09-27
+    download(`vibe-course-backup-${day}.json`, JSON.stringify(backup, null, 1), 'application/json');
+    const failed = Object.values(tables).filter((t) => t.error).map((t) => t.label);
+    const total = Object.values(tables).reduce((n, t) => n + t.rows.length, 0);
+    toast(failed.length ? `已匯出 ${total} 筆；讀不到：${failed.join('、')}（可能還沒執行對應的 SQL）` : `已匯出 ${total} 筆資料`);
+    btn.disabled = false;
+    btn.textContent = '📦 一鍵匯出全部資料';
   }
 
   // ---------- 卡關分析 ----------
@@ -537,6 +584,8 @@
   host.addEventListener('click', async (e) => {
     const t = e.target.closest('[data-admin-tab]');
     if (t) { tab = t.dataset.adminTab; render(); return; }
+    const backupBtn = e.target.closest('[data-backup-all]');
+    if (backupBtn) { exportAll(backupBtn); return; }
     const exp = e.target.closest('[data-export]');
     if (exp) {
       const body = $('[data-admin-body]');
@@ -561,7 +610,7 @@
       const { error } = await window.Members.client.from('contact_messages')
         .update({ handled: handled.dataset.now !== '1' }).eq('id', handled.dataset.msgHandled);
       toast(error ? `更新失敗：${error.message}` : '已更新');
-      if (!error) renderMessages();
+      if (!error) { renderMessages(); window.Members.refreshUnread?.(); }
       return;
     }
     const msgDel = e.target.closest('[data-msg-del]');
@@ -569,7 +618,7 @@
       if (!window.confirm('確定刪除這則留言嗎？刪除後無法復原。')) return;
       const { error } = await window.Members.client.from('contact_messages').delete().eq('id', msgDel.dataset.msgDel);
       toast(error ? `刪除失敗：${error.message}` : '已刪除');
-      if (!error) renderMessages();
+      if (!error) { renderMessages(); window.Members.refreshUnread?.(); }
       return;
     }
     const cohortToggle = e.target.closest('[data-cohort-toggle]');
@@ -628,6 +677,6 @@
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
   ]);
 })();

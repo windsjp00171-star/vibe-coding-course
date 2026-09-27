@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>課程資料離線閱讀器</title>
+<!--
+  離線閱讀器：打開講師後台「📦 一鍵匯出全部資料」存下來的 .json 檔。
+  這個檔案不需要網路、伺服器或帳號，下載到電腦後雙擊就能用；所有資料只在你的電腦上讀取，不會上傳到任何地方。
+  刻意全部寫在這一個檔案裡（不引用外部程式或字型），以後網站不在了也打得開。
+-->
+<style>
+  :root {
+    --paper: #faf8f4; --card: #fff; --ink: #1c1b29; --muted: #5d5b6e; --line: #e4dfd5;
+    --brand: #4f46e5; --brand-soft: #eceefe; --danger: #cc3b35; --danger-soft: #fbe7e5; --ok: #17835a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #15141d; --card: #211f2e; --ink: #f1eff8; --muted: #aaa7bd; --line: #34314a;
+      --brand: #8b85ff; --brand-soft: #2a2750; --danger: #ff7a73; --danger-soft: #3d1d1c; --ok: #4cc58f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.7 "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif; }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  .muted { color: var(--muted); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 16px; }
+  .drop { display: block; border: 2px dashed var(--brand); background: var(--brand-soft); text-align: center; padding: 36px 20px; cursor: pointer; }
+  .drop b { font-size: 1.15rem; }
+  .btn { font: inherit; font-weight: 700; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; min-height: 40px; }
+  .btn[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tabs small { font-weight: 400; opacity: .8; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
+  input[type=search] { font: inherit; flex: 1 1 220px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); }
+  .wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--brand-soft); position: sticky; top: 0; white-space: nowrap; }
+  td { max-width: 360px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .err { background: var(--danger-soft); color: var(--danger); border-radius: 10px; padding: 10px 14px; }
+  .sum { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .sum div { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+  .sum b { display: block; font-size: 1.6rem; color: var(--brand); }
+  @media print { .drop, .bar, .tabs, #pick { display: none; } th { position: static; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>📖 課程資料離線閱讀器</h1>
+  <p class="muted">打開講師後台「📦 一鍵匯出全部資料」存下來的檔案（檔名像「vibe-course-backup-2026-09-27.json」）。資料只在這台電腦上讀取，不會上傳。</p>
+
+  <label class="card drop" id="drop">
+    <b>📂 點這裡選檔案，或把檔案拖進來</b><br>
+    <span class="muted">支援 .json 備份檔</span>
+    <input type="file" id="pick" accept=".json,application/json" hidden>
+  </label>
+
+  <div id="out"></div>
+</main>
+<script>
+(function () {
+  'use strict';
+  // 欄位名稱翻成看得懂的中文；沒列到的就顯示原名
+  var COLS = {
+    id: '編號', name: '姓名／名稱', full_name: '姓名', display_name: '姓名', email: 'Email', phone: '電話', role: '身分',
+    enrolled: '已開通', created_at: '建立時間', updated_at: '更新時間', user_id: '會員編號', class_id: '班級編號',
+    teacher_id: '講師編號', code: '加入碼', open_until: '開放到單元', module_id: '單元', done: '過關', best: '最佳分數',
+    cohort_id: '梯次編號', org: '單位', goal: '想解決的問題', source: '從哪裡得知', status: '狀態', note: '備註',
+    contact: '聯絡方式', topic: '主題', message: '內容', page: '來自哪一頁', handled: '已回覆',
+    schedule_text: '上課時間', place: '地點', price: '費用', capacity: '名額', is_open: '開放報名', kind: '類型',
+    reg_start: '報名開始', reg_end: '報名截止', score: '分數', issued_at: '發證日期',
+    join_code: '加入碼', joined_at: '加入時間', invited_by: '邀請人', slot: '段落', html: '內容',
+  };
+  var data = null; var current = null; var query = '';
+  var out = document.getElementById('out');
+
+  function esc(v) {
+    return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+  }
+  function show(v) {
+    if (v === null || v === undefined) return '';
+    if (v === true) return '是';
+    if (v === false) return '否';
+    if (typeof v === 'object') return JSON.stringify(v);
+    if (typeof v === 'string' && /^\d{4}-\d\d-\d\dT/.test(v)) { var d = new Date(v); if (!isNaN(d)) return d.toLocaleString('zh-TW'); }
+    return String(v);
+  }
+  function columns(rows) {
+    var seen = [];
+    rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (seen.indexOf(k) < 0) seen.push(k); }); });
+    return seen;
+  }
+  function toCSV(rows) {
+    var cols = columns(rows);
+    var cell = function (v) { var s = show(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    return [cols.map(function (c) { return cell(COLS[c] || c); }).join(',')]
+      .concat(rows.map(function (r) { return cols.map(function (c) { return cell(r[c]); }).join(','); })).join('\r\n');
+  }
+
+  function load(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var json = JSON.parse(reader.result);
+        if (!json || json.format !== 'vibe-course-backup' || !json.tables) throw new Error('format');
+        data = json; current = Object.keys(json.tables)[0]; query = '';
+        render();
+      } catch (e) {
+        out.innerHTML = '<div class="card err">這個檔案看不懂。請選講師後台「📦 一鍵匯出全部資料」存下來的 .json 檔。</div>';
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+  }
+
+  function render() {
+    var names = Object.keys(data.tables);
+    var t = data.tables[current];
+    var rows = t.rows.filter(function (r) { return !query || JSON.stringify(r).toLowerCase().indexOf(query.toLowerCase()) >= 0; });
+    var cols = columns(t.rows);
+    var fileCount = 0; Object.keys(data.files || {}).forEach(function (k) { fileCount += data.files[k].length; });
+    out.innerHTML =
+      '<div class="card"><b>匯出時間：</b>' + esc(show(data.exported_at)) +
+        (data.note ? '<p class="muted" style="margin:6px 0 0">' + esc(data.note) + '</p>' : '') +
+        '<div class="sum" style="margin-top:12px">' + names.map(function (n) {
+          var x = data.tables[n]; return '<div><b>' + (x.error ? '—' : x.rows.length) + '</b>' + esc(x.label || n) + '</div>';
+        }).join('') + '<div><b>' + fileCount + '</b>教材檔案（只有檔名）</div></div></div>' +
+      '<div class="card"><div class="tabs">' + names.map(function (n) {
+        var x = data.tables[n];
+        return '<button type="button" class="btn" data-t="' + esc(n) + '" aria-pressed="' + (n === current) + '">' + esc(x.label || n) + ' <small>' + (x.error ? '讀取失敗' : x.rows.length) + '</small></button>';
+      }).join('') + '</div>' +
+      (t.error ? '<p class="err" style="margin-top:14px">匯出時讀不到這張表：' + esc(t.error) + '</p>' :
+        '<div class="bar"><input type="search" id="q" placeholder="搜尋這張表（姓名、Email、任何文字）" value="' + esc(query) + '">' +
+        '<span class="muted">顯示 ' + rows.length + '／' + t.rows.length + ' 筆</span>' +
+        '<button type="button" class="btn" id="csv">⬇️ 存成 Excel 打得開的 CSV</button>' +
+        '<button type="button" class="btn" onclick="window.print()">🖨️ 列印</button></div>' +
+        (rows.length ? '<div class="wrap"><table><thead><tr>' + cols.map(function (c) { return '<th>' + esc(COLS[c] || c) + '</th>'; }).join('') +
+          '</tr></thead><tbody>' + rows.map(function (r) {
+            return '<tr>' + cols.map(function (c) { return '<td>' + esc(show(r[c])) + '</td>'; }).join('') + '</tr>';
+          }).join('') + '</tbody></table></div>' : '<p class="muted">沒有資料。</p>')) +
+      '</div>' +
+      (fileCount ? '<div class="card"><b>教材檔案清單</b><p class="muted" style="margin:4px 0 8px">備份只記檔名；檔案本身要從講師後台「教材下載」另外下載保存。</p>' +
+        Object.keys(data.files).map(function (k) {
+          return data.files[k].length ? '<p style="margin:4px 0"><b>' + esc(k) + '：</b>' + data.files[k].map(esc).join('、') + '</p>' : '';
+        }).join('') + '</div>' : '');
+    var q = document.getElementById('q');
+    if (q) q.addEventListener('input', function () { query = q.value; var at = q.selectionStart; render(); var n = document.getElementById('q'); n.focus(); n.setSelectionRange(at, at); });
+    var csv = document.getElementById('csv');
+    if (csv) csv.addEventListener('click', function () {
+      var url = URL.createObjectURL(new Blob(['﻿' + toCSV(rows)], { type: 'text/csv;charset=utf-8' }));
+      var a = document.createElement('a'); a.href = url; a.download = (t.label || current) + '.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  out.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-t]');
+    if (b) { current = b.getAttribute('data-t'); query = ''; render(); }
+  });
+  document.getElementById('pick').addEventListener('change', function (e) { if (e.target.files[0]) load(e.target.files[0]); });
+  var drop = document.getElementById('drop');
+  ['dragover', 'dragenter'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); }); });
+  drop.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files[0]) load(e.dataTransfer.files[0]); });
+})();
+</script>
+</body>
+</html>
