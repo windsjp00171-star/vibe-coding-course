@@ -598,6 +598,32 @@
   // 講師後台「新增／編輯梯次」：把表單的文字轉成資料庫的一列，並擋下明顯填錯的地方。
   // 日期用 toISO 轉（網頁傳 new Date(v).toISOString()），測試可以換成固定的轉法
   const COHORT_KINDS = { core: '實戰課', security: '半日資安課', custom: '客製場次' };
+  // ---- 報名 → 繳費 → 給加入碼：一個梯次對應一個同名班級 ----
+  // 費用填 0 的梯次是免費的，報名就可以開通；其他梯次要講師把狀態改成「已繳費」
+  const isFreeCohort = (c) => c?.price === 0; // 沒填費用（null）不算免費，要講師確認
+  function signupLabels(c) {
+    const free = isFreeCohort(c);
+    return {
+      registered: { label: free ? '已報名' : '待繳費', tone: free ? 'ok' : 'warn' },
+      confirmed: { label: free ? '已確認' : '已繳費', tone: 'ok' },
+      waitlisted: { label: '候補中', tone: 'warn' },
+      cancelled: { label: '已取消', tone: 'muted' },
+    };
+  }
+  // 招生頁、報名表、後台共用的費用寫法
+  const priceText = (n, empty = '費用另行公布') => (n === null || n === undefined ? empty : n === 0 ? '免費' : `NT$ ${Number(n).toLocaleString('zh-TW')}`);
+  const canActivate = (c, status) => status === 'confirmed' || (status === 'registered' && isFreeCohort(c));
+  function activationNotice({ name = '', cohort = '', code = '', url = '' } = {}) {
+    return [
+      `${name ? `${name} 你好：` : '你好：'}`,
+      `「${cohort}」的報名已確認，歡迎加入！請用下面的步驟開通線上教材：`,
+      `1. 打開 ${url}`,
+      '2. 按右上角「登入保存進度」，用 Google 帳號登入',
+      `3. 在「加入你的班級」輸入加入碼：${code}（用上面的連結打開會自動填好）`,
+      '開通後就能看全部單元，建議上課前先看完第一個單元。有問題直接回覆這則訊息。',
+    ].join('\n');
+  }
+
   function cohortFromForm(f = {}, toISO = (v) => new Date(v).toISOString()) {
     const text = (k) => String(f[k] ?? '').trim();
     const name = text('name');
@@ -647,7 +673,7 @@
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { priceText, isFreeCohort, signupLabels, canActivate, activationNotice, COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

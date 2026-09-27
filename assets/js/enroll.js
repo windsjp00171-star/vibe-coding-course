@@ -71,7 +71,7 @@
     const each = (fn) => list.map((c) => `<div>${many ? `<b>${esc(c.name)}</b>：` : ''}${fn(c)}</div>`).join('');
     fill('schedule', each((c) => `${esc(c.schedule_text || '時間另行公布')}${c.place ? `．${esc(c.place)}` : ''}${c.note ? `<br><small class="muted">${esc(c.note)}</small>` : ''}`));
     fill('seats', each((c) => (c.capacity ? `限 ${c.capacity} 人${c.waitlist_enabled ? '，額滿可排候補' : '，額滿為止'}` : '不限人數')));
-    fill('price', each((c) => (c.price === null || c.price === undefined ? '費用另行公布' : `NT$ ${Number(c.price).toLocaleString('zh-TW')}`)));
+    fill('price', each((c) => window.CourseLib.priceText(c.price)));
   })();
 
   // 主題式套裝：同一批單元，換不同的組合賣給不同的人。
