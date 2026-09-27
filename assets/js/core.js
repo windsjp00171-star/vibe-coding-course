@@ -894,6 +894,32 @@
     });
   }
 
+  // ---------- 圖解進場：捲到才播放（流程步驟依序亮起、比喻框滑進來、對照表一列一列出現） ----------
+  // 只影響「還沒捲到的地方」，看得到的東西一律可以點；「減少動態」或不支援時完全不做
+  const REVEAL = '.steps, .analogy, .compare, .goals, .grid-3, .grid-2, .callout';
+  function initReveal(root = document) {
+    if (calmMotion() || !('IntersectionObserver' in window)) return;
+    const els = $$(REVEAL, root).filter((el) => !el.closest('[data-reveal], .print-only, .fx-quiz, .fx-classify'));
+    if (!els.length) return;
+    document.documentElement.classList.add('fx-reveal-on');
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      en.target.classList.add('is-in');
+      // 靜態的流程步驟（HTML 就寫好 is-on 的）：先熄掉，再一步一步點亮
+      if (en.target.matches('.steps')) {
+        const steps = $$('.step.is-on', en.target);
+        steps.forEach((st) => st.classList.remove('is-on'));
+        steps.forEach((st, k) => setTimeout(() => st.classList.add('is-on'), 250 + k * 320));
+      }
+    }), { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    els.forEach((el) => {
+      el.dataset.reveal = '';
+      $$(':scope > *, tbody > tr', el).forEach((c, j) => c.style.setProperty('--ri', Math.min(j, 8)));
+      io.observe(el);
+    });
+  }
+
   // 產生器輸出框內容一變（單元程式寫入新的文字），就掃過一道光
   function watchGenOut(root = document) {
     $$('.gen-out', root).forEach((box) => {
@@ -919,6 +945,7 @@
     initChecklists();
     initCopy();
     watchGenOut();
+    initReveal();
     document.addEventListener('keydown', onKey);
   }
 

@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609270252">
-  <link rel="stylesheet" href="assets/css/home.css?v=202609270252">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609270259">
+  <link rel="stylesheet" href="assets/css/home.css?v=202609270259">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -48,6 +48,7 @@
   <section class="slide" id="map" data-nav="課程地圖" data-tour="map">
     <div class="section-head"><span class="section-num">⌘</span>
       <div><span class="kicker">課程地圖</span><h2>從零到上線，再到進階實戰</h2><p>完成的單元會打勾。可以照順序，也可以跳著看。</p></div></div>
+    <div class="map-path" data-map-path data-tour="path"></div>
     <div class="map-jump" data-map-jump></div>
     <div class="course-map" data-map></div>
     <a class="card" href="pitfalls.html" data-tour="pitfalls" style="display:flex;gap:16px;align-items:center;margin-top:20px;text-decoration:none;color:inherit;border:2px dashed var(--warn)">
@@ -92,14 +93,14 @@
 
 <footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹與報名</a>．<a href="works.html">學員作品牆</a>．<a href="verify.html">證書查證</a>．<a href="security.html">半日資安課</a>．<a href="me.html">我的學習</a>．<a href="quizshow.html">課堂搶答</a>．<a href="glossary.html">名詞小辭典</a>．<a href="teacher.html" data-teacher-only hidden>講師後台</a><a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202609270252"></script>
-<script src="assets/js/config.js?v=202609270252"></script>
-<script src="assets/js/core.js?v=202609270252"></script>
-<script src="assets/js/members.js?v=202609270252"></script>
-<script src="assets/js/tour.js?v=202609270252"></script>
-<script src="assets/js/glossary-data.js?v=202609270252"></script>
-<script src="assets/js/glossary.js?v=202609270252"></script>
-<script src="assets/js/home.js?v=202609270252"></script>
+<script src="assets/js/lib.js?v=202609270259"></script>
+<script src="assets/js/config.js?v=202609270259"></script>
+<script src="assets/js/core.js?v=202609270259"></script>
+<script src="assets/js/members.js?v=202609270259"></script>
+<script src="assets/js/tour.js?v=202609270259"></script>
+<script src="assets/js/glossary-data.js?v=202609270259"></script>
+<script src="assets/js/glossary.js?v=202609270259"></script>
+<script src="assets/js/home.js?v=202609270259"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -114,7 +115,25 @@
       if (window.Members.access(m) === 'class') return '🔒 尚未開放';
       return m.trial && !window.Members.profile?.enrolled ? '免費試用' : '→';
     };
-    const renderMap = () => { $('[data-map]').innerHTML = parts.map((part) => `
+    const nextId = MODULES.find((m) => !progress[m.id]?.done && built.has(m.id))?.id;
+    // 關卡路線：必修一條、選修一條。完成的點亮，下一關閃爍，相鄰兩關都完成時中間的路也點亮
+    const lane = (label, list) => {
+      const done = list.filter((m) => progress[m.id]?.done).length;
+      return `<div class="mp-lane ${done === list.length ? 'is-clear' : ''}">
+        <div class="mp-head"><b>${label}</b><span>點亮 ${done}／${list.length}${done === list.length ? ' 🏆' : ''}</span></div>
+        <ol class="mp-road" style="--n:${list.length}">${list.map((m, k) => {
+          const d = progress[m.id]?.done;
+          const cls = [d ? 'is-done' : '', m.id === nextId ? 'is-next' : '', built.has(m.id) ? '' : 'is-soon',
+            k && d && progress[list[k - 1].id]?.done ? 'is-linked' : ''].join(' ');
+          const name = `${m.id.slice(1)}．${m.title}${d ? '（已完成）' : m.id === nextId ? '（下一關）' : ''}`;
+          return `<li class="mp-node ${cls}" style="--i:${k}"><a href="${m.file}" title="${esc(name)}" aria-label="${esc(name)}"><span aria-hidden="true">${m.emoji}</span></a>${m.id === nextId ? '<em class="mp-here" aria-hidden="true">下一關</em>' : ''}</li>`;
+        }).join('')}</ol></div>`;
+    };
+    const renderPath = () => {
+      const elective = MODULES.filter((m) => m.part.startsWith('D'));
+      $('[data-map-path]').innerHTML = lane('必修路線', MODULES.filter((m) => !elective.includes(m))) + lane('選修路線', elective);
+    };
+    const renderMap = () => { renderPath(); $('[data-map]').innerHTML = parts.map((part) => `
       <div class="map-part" id="part-${parts.indexOf(part)}">
         <h3 class="map-part-title">${esc(part)}</h3>
         <ol class="map-list">${MODULES.filter((m) => m.part === part).map((m) => {
@@ -125,7 +144,7 @@
             <span class="map-title">${esc(m.title)}<small>課前 ${m.minutes} 分${done ? `．最佳 ${progress[m.id].best} 分` : ''}</small></span>
             <span class="map-state">${stateOf(m, done, ready)}</span>`;
           const closed = ready && !done && window.Members?.enabled && window.Members.access(m) === 'class';
-          return `<li>${ready ? `<a class="map-item ${done ? 'is-done' : ''} ${closed ? 'is-closed' : ''}" href="${m.file}">${inner}</a>` : `<div class="map-item is-soon">${inner}</div>`}</li>`;
+          return `<li>${ready ? `<a class="map-item ${done ? 'is-done' : ''} ${closed ? 'is-closed' : ''} ${m.id === nextId && !closed ? 'is-next' : ''}" href="${m.file}">${inner}</a>` : `<div class="map-item is-soon">${inner}</div>`}</li>`;
         }).join('')}</ol>
       </div>`).join(''); };
     $('[data-map-jump]').innerHTML = parts.map((part, i) => {
@@ -165,6 +184,7 @@
       { tour: 'flow', title: '翻轉教室', text: '這門課要先在家自學，上課時做工作坊。每個單元都分成課前、課中、課後三段。' },
       { tour: 'roles', title: '你和 AI 怎麼分工', text: '程式交給 AI 寫，你負責說清楚、做決定、驗收。這門課教的就是左邊這些能力。' },
       { tour: 'pitfalls', title: '踩坑圖鑑', text: '講師真實踩過的坑，可以玩「看症狀猜原因」。' },
+      { tour: 'path', title: '你的關卡路線', text: '每個圓圈是一個單元。做完小測驗過關就會點亮，會閃的那一個是你的下一關，點圓圈可以直接進去。' },
       { tour: 'map', title: '課程地圖', text: 'A 到 C 是必修，D 是進階選修（資料庫、LINE、手機 App）。做完小測驗過關的單元會打勾。' },
       { tour: 'showcase', title: '講師的作品', text: '這些都是用同一套方法做出來的，還在線上的可以點開來玩。卡片下方告訴你用到的技術在哪個單元學。' },
     ]);

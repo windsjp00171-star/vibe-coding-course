@@ -328,6 +328,40 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 .step.is-bad.is-on { border-color: var(--danger); }
 .step.is-bad.is-on::before { background: var(--danger); }
 
+/* 流程步驟：步驟之間畫一條連接線，亮起時從上往下長出來 */
+.steps .step:not(:last-child)::after {
+  content: ""; position: absolute; left: 30px; top: 46px; bottom: -28px; width: 2px; border-radius: 2px;
+  background: linear-gradient(var(--brand), #a78bfa); transform-origin: top; transform: scaleY(0);
+  transition: transform .4s var(--ease) .15s;
+}
+.steps .step.is-on:not(:last-child)::after { transform: scaleY(1); }
+.steps .step.is-bad.is-on:not(:last-child)::after { background: var(--danger); }
+.steps .step.is-on::before { box-shadow: 0 0 0 4px var(--brand-soft); transition: box-shadow var(--normal); }
+
+/* ---------- 圖解進場：捲到才播放（core.js 的 initReveal；沒有 JS 或「減少動態」時不會加上 fx-reveal-on） ---------- */
+.fx-reveal-on :is(.analogy, .callout, .steps)[data-reveal]:not(.is-in),
+.fx-reveal-on :is(.goals, .grid-2, .grid-3)[data-reveal]:not(.is-in) > *,
+.fx-reveal-on .compare[data-reveal]:not(.is-in) tbody tr { opacity: 0; }
+.fx-reveal-on :is(.callout, .steps)[data-reveal].is-in { animation: rv-rise .55s cubic-bezier(.2, .9, .3, 1.15) backwards; }
+.fx-reveal-on .analogy[data-reveal].is-in { animation: rv-slide .6s cubic-bezier(.2, .9, .3, 1.15) backwards; position: relative; }
+.fx-reveal-on .analogy[data-reveal].is-in::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 55%) 50%, transparent 65%) 150% 0 / 250% 100% no-repeat;
+  animation: fx-shine 1.1s .35s ease-out both;
+}
+.fx-reveal-on :is(.goals, .grid-2, .grid-3)[data-reveal].is-in > * { animation: rv-rise .55s cubic-bezier(.2, .9, .3, 1.15) calc(var(--ri, 0) * 90ms) backwards; }
+.fx-reveal-on .goals[data-reveal].is-in > li::before { animation: fx-pop .4s cubic-bezier(.2, .9, .3, 1.6) calc(var(--ri, 0) * 90ms + .3s) backwards; }
+.fx-reveal-on .compare[data-reveal].is-in tbody tr { animation: rv-row .45s ease-out calc(var(--ri, 0) * 90ms) backwards; }
+.fx-reveal-on .compare[data-reveal].is-in td.hl { animation: rv-hl 1.4s ease-in-out calc(var(--ri, 0) * 90ms + .4s); }
+@keyframes rv-rise { from { opacity: 0; transform: translateY(18px) scale(.98); } }
+@keyframes rv-slide { from { opacity: 0; transform: translateX(-28px); } }
+@keyframes rv-row { from { opacity: 0; transform: translateX(-14px); } }
+@keyframes rv-hl { 35% { background: color-mix(in srgb, var(--brand) 26%, var(--card)); box-shadow: inset 3px 0 0 var(--brand); } }
+@media (prefers-reduced-motion: reduce) { .steps .step::after { transition: none; } }
+@media print {
+  .fx-reveal-on [data-reveal], .fx-reveal-on [data-reveal] > *, .fx-reveal-on [data-reveal] tr { opacity: 1 !important; animation: none !important; }
+}
+
 /* ---------- Module nav / footer ---------- */
 .module-nav { display: flex; justify-content: space-between; gap: 12px; padding: 32px 0 64px; flex-wrap: wrap; }
 .module-nav a { max-width: 48%; }
