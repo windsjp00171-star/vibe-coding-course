@@ -26,7 +26,7 @@
 .matrix { width: 100%; border-collapse: collapse; min-width: 520px; }
 .matrix th, .matrix td { padding: 10px; border-bottom: 1px solid var(--line); text-align: center; }
 .matrix th:first-child, .matrix td:first-child { text-align: left; font-weight: 700; }
-.matrix input { width: 20px; height: 20px; accent-color: var(--brand); }
+.matrix input { width: 24px; height: 24px; accent-color: var(--brand); } /* 手指點得到的最小尺寸 */
 .matrix td.is-risky { background: var(--danger-soft); }
 
 /* 聊天泡泡（LINE Bot 模擬） */

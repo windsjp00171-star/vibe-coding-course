@@ -14,7 +14,7 @@
     seats: null,         // 例如：'限 12 人，額滿為止'
     price: null,         // 例如：'NT$ 6,800（早鳥 NT$ 5,800，10/15 前報名）'
     corporate: null,     // 例如：'企業內訓另行報價，歡迎來信洽詢'
-    formUrl: null,       // 例如：Google 表單網址
+    formUrl: null,       // 選填：改用外部報名表（例如 Google 表單）才需要填；留 null 就用網站本身的報名表
   };
   // ▲▲▲ 開課資訊 ▲▲▲
 
@@ -49,8 +49,8 @@
       <div><dt>費用</dt><dd>${INFO.price ? esc(INFO.price) : TODO('學費、早鳥優惠')}</dd></div>
       <div><dt>企業內訓</dt><dd>${INFO.corporate ? esc(INFO.corporate) : TODO('內訓報價方式')}</dd></div>
       <div><dt>報名與洽詢</dt><dd>
-        ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : TODO('報名表網址')}
-        <a href="#contact">用聯絡表單洽詢 ↓</a></dd></div>
+        ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : ''}
+        報名表就在下方；有問題可以<a href="#contact">用聯絡表單洽詢 ↓</a></dd></div>
     </dl>
     <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7、19，確認上課方式適合你再決定。</p>`;
 

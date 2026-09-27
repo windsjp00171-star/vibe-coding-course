@@ -60,6 +60,7 @@
     renderAuth();
     applyGate();
     document.dispatchEvent(new CustomEvent('course:auth', { detail: { user, profile } }));
+    if (profile?.role === 'teacher') refreshUnread();
   }
 
   // ---------- 試用閘門：非試用單元要登入、開通，而且班級已開放 ----------
@@ -144,13 +145,28 @@
     if (!slot) return;
     const { esc } = window.Course;
     const adminLink = profile?.role === 'teacher'
-      ? `<a class="btn btn-sm btn-ghost" href="${document.body.dataset.base || './'}teacher.html" title="開通會員、邀請講師、開班級、看進度">🛠️ 管理後台</a> `
+      ? `<a class="btn btn-sm btn-ghost" href="${document.body.dataset.base || './'}teacher.html" title="開通會員、邀請講師、開班級、看進度">🛠️ 管理後台<span class="unread-dot" data-unread hidden></span></a> `
       : '';
     const base = document.body.dataset.base || './';
     const meLink = `<a class="btn btn-sm btn-ghost" href="${base}me.html" title="看自己的進度、改顯示名稱">📈 我的學習</a> `;
     slot.innerHTML = user
       ? `${adminLink}${meLink}<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
       : '<button type="button" class="btn btn-sm btn-ghost" data-auth="in" title="用 Google 登入，換電腦也能接著學">☁️ 登入保存進度</button>';
+  }
+
+  // 講師：頁首「管理後台」旁顯示還沒回覆的聯絡留言數。只算數量，不讀內容
+  let unread = 0;
+  async function refreshUnread() {
+    if (!client || profile?.role !== 'teacher') return 0;
+    const { count, error } = await client.from('contact_messages').select('id', { count: 'exact', head: true }).eq('handled', false);
+    unread = error ? 0 : count || 0; // 還沒建立留言資料表時就當作 0，不打擾
+    document.querySelectorAll('[data-unread]').forEach((el) => {
+      el.hidden = !unread;
+      el.textContent = unread > 99 ? '99+' : String(unread);
+      el.title = `${unread} 則聯絡留言還沒回覆`;
+    });
+    document.dispatchEvent(new CustomEvent('course:unread', { detail: { count: unread } }));
+    return unread;
   }
 
   document.addEventListener('click', (e) => {
@@ -262,6 +278,8 @@
     openUntil,
     gateMessage,
     get client() { return client; },
+    refreshUnread,
+    get unread() { return unread; },
   };
 
   if (enabled) {
