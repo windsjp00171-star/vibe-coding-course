@@ -70,6 +70,7 @@
 | 網站打不開 | GitHub Pages 暫時故障，或儲存庫被改成私人 | 到 GitHub 的 `vibe-coding-course` → Settings → Pages，確認有開啟 |
 | 網站打得開，但登入、報名、進度都不能用，頁面出現「會員功能載入失敗」 | Supabase 免費方案**一段時間沒人使用會自動暫停** | 登入 Supabase → 選課程專案 → 按「Restore」恢復，等幾分鐘 |
 | 按 Google 登入出現錯誤 | Google 登入的設定被改動或過期 | 請懂技術的人對照 `docs/SETUP-MEMBERS.md` 第 3 節檢查 |
+| 學員按「產生可驗證的證書編號」出現「證書功能正在更新」 | 發證書的資料庫函式還沒建立 | 在 Supabase SQL Editor（課程專案）執行 `supabase/fix-security.sql` |
 | 聯絡表單顯示「尚未啟用」 | 資料表還沒建立 | 在 Supabase SQL Editor（課程專案）執行 `supabase/add-contact.sql` |
 | 報名頁看不到梯次 | 梯次沒開放，或權限設定沒跑 | 講師後台「📝 報名管理」按「開放報名」；還是不行就執行 `supabase/fix-grants.sql` |
 

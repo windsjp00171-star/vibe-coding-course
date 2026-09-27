@@ -89,7 +89,9 @@
           <textarea name="goal" rows="3" maxlength="300" placeholder="例如：每個月手動整理一份 200 筆的報名表，想自動化"></textarea>
           <small>講師會用這些回答準備上課的案例。</small>
         </label>
-        <p class="su-privacy">送出即表示同意講師為了辦理本課程與你聯絡而保存上述資料。資料只有講師看得到，不會提供給第三方；要查詢或刪除，來信告知即可。</p>
+        <!-- 給機器人看的欄位：真人看不到也不會填，填了就是機器人 -->
+        <label class="ct-trap" aria-hidden="true">網站<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="su-privacy">送出即表示同意講師為了辦理本課程與你聯絡而保存上述資料。資料只有講師看得到，不會提供給第三方；要查詢或刪除，用<a href="#contact">下方的聯絡表單</a>告知即可。</p>
         <p><button type="submit" class="btn btn-primary" data-su-send>送出報名</button> <span data-su-msg aria-live="polite"></span></p>
       </form>`;
 
@@ -126,6 +128,11 @@
     }
 
     const form = new FormData(e.target);
+    // 機器人填了陷阱欄位：假裝成功，不寫進資料庫
+    if ((form.get('website') || '').toString()) {
+      host.innerHTML = '<div class="su-done"><b>✅ 報名成功</b><p>講師會用 Email 與你確認上課細節。</p></div>';
+      return;
+    }
     const row = {
       cohort_id: cohort.id,
       status: verdict === SEAT.WAITLIST ? 'waitlisted' : 'registered',

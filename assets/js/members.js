@@ -226,25 +226,20 @@
   // ---------- 結業證書 ----------
   // 證書本身是列印出來的紙，光靠紙沒辦法證明真假；
   // 所以發證時在雲端留一筆，證書上印編號，任何人都能用 verify.html 查。
-  async function issueCertificate(displayName, score) {
+  // 證書一律由資料庫的 issue_certificate() 發（supabase/fix-security.sql）：
+  // 它會檢查帳號已開通、雲端的總測驗成績 80 分以上，分數也由資料庫自己讀，網頁傳的不算數。
+  // 已經有證書時同一個函式會更新名字與分數，編號不變
+  async function issueCertificate(displayName) {
     await ready;
     if (!user) throw new Error('請先登入');
-    const existing = await myCertificate();
-    if (existing) {
-      // 重考更高分或改名字時更新同一張，不再發新編號
-      if (existing.display_name === displayName && existing.score >= score) return existing;
-      const { data, error } = await client.from('certificates')
-        .update({ display_name: displayName, score: Math.max(score, existing.score) })
-        .eq('user_id', user.id).select().maybeSingle();
-      if (error) throw new Error(error.message);
-      return data;
-    }
+    // 資料庫只認雲端的成績：先把這台電腦上的總測驗成績送上去，免得剛考完還沒同步
+    const local = window.Course.getState().progress?.m9;
+    if (local) await client.from('progress').upsert({ user_id: user.id, module_id: 'm9', best: local.best || 0, done: Boolean(local.done) });
     const bytes = crypto.getRandomValues(new Uint8Array(window.CourseLib.CERT_LENGTH));
     const code = window.CourseLib.certCode(bytes);
-    const { data, error } = await client.from('certificates')
-      .insert({ user_id: user.id, code, display_name: displayName, score }).select().maybeSingle();
+    const { data, error } = await client.rpc('issue_certificate', { p_name: displayName, p_code: code });
     if (error) throw new Error(error.message);
-    return data;
+    return Array.isArray(data) ? data[0] : data;
   }
 
   async function myCertificate() {
