@@ -595,13 +595,28 @@
     return SEAT.WAITLIST;
   }
 
+  // 聯絡表單：送出前的檢查。長度上限和 supabase/add-contact.sql 的寫入規則一致，
+  // 前台先擋下來，對方才看得到白話說明，而不是資料庫的英文錯誤
+  const CONTACT_TOPICS = { course: '實戰課報名', corporate: '企業內訓', security: '半日資安講座', other: '其他問題' };
+  function checkContact({ name = '', contact = '', topic = '', message = '' } = {}) {
+    const n = name.trim(); const c = contact.trim(); const m = message.trim();
+    if (!n) return '請填你的稱呼。';
+    if (n.length > 40) return '稱呼請在 40 字以內。';
+    if (c.length < 3) return '請留一個聯絡方式（Email、電話或 LINE ID），講師才能回覆你。';
+    if (c.length > 120) return '聯絡方式請在 120 字以內。';
+    if (!CONTACT_TOPICS[topic]) return '請選一個想詢問的主題。';
+    if (m.length < 5) return '請多寫幾個字，說明你想問什麼。';
+    if (m.length > 2000) return '內容請在 2000 字以內。';
+    return '';
+  }
+
   // 還剩幾位。沒設名額就回 null（不顯示數字，而不是顯示 0）
   function seatsLeft(cohort, taken = 0) {
     const cap = Number(cohort?.capacity) || 0;
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

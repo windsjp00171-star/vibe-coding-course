@@ -26,7 +26,7 @@
   function notReady(msg) {
     host.innerHTML = `<div class="su-empty">
       <b>目前沒有開放報名的梯次</b>
-      <p>${esc(msg)}想先收到開班通知，或談企業內訓場次，歡迎直接與講師聯絡。</p>
+      <p>${esc(msg)}想先收到開班通知，或談企業內訓場次，歡迎用下方的聯絡表單留言。</p>
     </div>`;
   }
 

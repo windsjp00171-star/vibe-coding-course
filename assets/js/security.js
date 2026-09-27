@@ -13,7 +13,6 @@
     price: null,      // 例如：'NT$ 18,000／場（含講義，交通另計）'
     travel: null,     // 例如：'台南、高雄免收交通費；其他縣市另計'
     lead: null,       // 例如：'建議提前 3 週預約'
-    contact: 'emmark19890901@gmail.com',
     formUrl: null,    // 例如：Google 表單或洽詢表單網址
   };
   // ▲▲▲ 洽詢資訊 ▲▲▲
@@ -28,9 +27,9 @@
       <div><dt>預約</dt><dd>${INFO.lead ? esc(INFO.lead) : TODO('需要提前多久預約')}</dd></div>
       <div><dt>洽詢</dt><dd>
         ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫洽詢表單 →</a>　` : ''}
-        來信：<a href="mailto:${esc(INFO.contact)}">${esc(INFO.contact)}</a></dd></div>
+        <a href="#contact">用聯絡表單洽詢 ↓</a></dd></div>
     </dl>
-    <p class="muted">來信時告訴我：單位名稱、預計人數、希望的日期、場地有沒有投影設備，我會回覆可行的時段與報價。</p>`;
+    <p class="muted">留言時告訴我：單位名稱、預計人數、希望的日期、場地有沒有投影設備，我會回覆可行的時段與報價。</p>`;
 
   // 招生用的公開試玩：和單元 19 同一份劇本
   window.Workbench.mount($('[data-workbench]'), {
@@ -42,5 +41,7 @@
 
   $('[data-en-print]').addEventListener('click', () => window.print());
 
-  window.Tour.register([]);
+  window.Tour.register([
+    { tour: 'contact', title: '聯絡講師', text: '想安排講座，在這裡留言就好，不用寄信。寫上單位、人數和希望的日期，講師會用你留的聯絡方式回覆。' },
+  ]);
 })();

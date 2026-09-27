@@ -33,10 +33,11 @@
         <button type="button" data-admin-tab="members" aria-pressed="${tab === 'members'}">👥 會員管理</button>
         <button type="button" data-admin-tab="classes" aria-pressed="${tab === 'classes'}">🏫 班級</button>
         <button type="button" data-admin-tab="signups" aria-pressed="${tab === 'signups'}">📝 報名管理</button>
+        <button type="button" data-admin-tab="messages" aria-pressed="${tab === 'messages'}">✉️ 聯絡留言</button>
         <button type="button" data-admin-tab="stuck" aria-pressed="${tab === 'stuck'}">🧭 卡關分析</button>
         <button type="button" data-admin-tab="files" aria-pressed="${tab === 'files'}">📁 教材下載</button>
       </div><div data-admin-body></div>`;
-    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, signups: renderSignups, stuck: renderStuck, files: renderFiles }[tab];
+    const render = { overview: renderOverview, members: renderMembers, classes: renderClasses, signups: renderSignups, messages: renderMessages, stuck: renderStuck, files: renderFiles }[tab];
     await render();
   }
 
@@ -260,6 +261,46 @@
           <thead><tr><th>報名者</th><th>梯次</th><th>單位</th><th>想解決的問題</th><th>狀態</th><th>報名日</th><th>操作</th></tr></thead>
           <tbody>${rowsHtml}</tbody></table></div>`
         : '<p class="muted">還沒有人報名。梯次開放後，招生頁就會出現報名表。</p>'}
+      </div>`;
+  }
+
+  // ---------- 聯絡留言：招生頁、資安課頁的聯絡表單（supabase/add-contact.sql） ----------
+  async function renderMessages() {
+    const body = $('[data-admin-body]');
+    const { data, error } = await window.Members.client.from('contact_messages').select('*').order('created_at', { ascending: false });
+    if (error) {
+      body.innerHTML = /relation|does not exist|schema cache/i.test(error.message)
+        ? `<div class="card"><h3>⚠️ 還沒建立聯絡留言資料表</h3>
+            <p>到 Supabase（選課程專案，不要選到教會的專案）→ SQL Editor 執行一次 <code>supabase/add-contact.sql</code>，招生頁的聯絡表單就能用，留言會出現在這裡。</p></div>`
+        : `<div class="card"><h3>讀取失敗</h3><p>${esc(error.message)}</p></div>`;
+      return;
+    }
+    const rows = data || [];
+    const { CONTACT_TOPICS } = window.CourseLib;
+    const PAGE = { enroll: '招生頁', security: '資安課頁' };
+    body.dataset.messagesCsv = window.CourseLib.toCSV([
+      ['稱呼', '聯絡方式', '主題', '內容', '來自', '已回覆', '留言時間'],
+      ...rows.map((r) => [r.name, r.contact, CONTACT_TOPICS[r.topic] || r.topic, r.message, PAGE[r.page] || r.page || '',
+        r.handled ? '是' : '否', new Date(r.created_at).toLocaleString('zh-TW')]),
+    ]);
+    const waiting = rows.filter((r) => !r.handled).length;
+    body.innerHTML = `<div class="card" style="margin-bottom:18px">
+        <h3>✉️ 聯絡留言</h3>
+        <p>招生頁、資安課頁的聯絡表單會進到這裡，<b>只有講師讀得到</b>。回覆完按「標記已回覆」，下次一眼就知道還有哪些沒處理。</p>
+      </div>
+      <div class="card">
+        <div class="quiz-head"><h3 style="margin:0">留言（${rows.length}，未回覆 ${waiting}）</h3>
+          <button type="button" class="btn btn-sm" data-export="messages">⬇️ 匯出 CSV</button></div>
+        ${rows.length ? rows.map((r) => `<div class="card" style="margin-top:12px;${r.handled ? 'opacity:.6' : 'border-color:var(--brand)'}">
+            <div class="quiz-head"><b>${esc(r.name)}　<span class="pill pill-brand">${esc(CONTACT_TOPICS[r.topic] || r.topic)}</span></b>
+              <small class="muted">${esc(PAGE[r.page] || r.page || '')}．${new Date(r.created_at).toLocaleString('zh-TW')}</small></div>
+            <p style="white-space:pre-wrap;margin:8px 0">${esc(r.message)}</p>
+            <p class="muted" style="margin:0 0 10px">聯絡方式：${esc(r.contact)}</p>
+            <button type="button" class="btn btn-sm" data-msg-handled="${esc(r.id)}" data-now="${r.handled ? '1' : '0'}">${r.handled ? '↩️ 改回未回覆' : '✅ 標記已回覆'}</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-copy-mail="${esc(r.contact)}">📋 複製聯絡方式</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-msg-del="${esc(r.id)}">🗑️ 刪除</button>
+          </div>`).join('')
+        : '<p class="muted">還沒有人留言。</p>'}
       </div>`;
   }
 
@@ -500,8 +541,8 @@
     if (exp) {
       const body = $('[data-admin-body]');
       const kind = exp.dataset.export;
-      const text = { members: body.dataset.membersCsv, stuck: body.dataset.stuckCsv, signups: body.dataset.signupsCsv }[kind];
-      download({ members: '會員名單.csv', stuck: '各單元作答狀況.csv', signups: '報名名單.csv' }[kind] || '匯出.csv', text || '');
+      const text = { members: body.dataset.membersCsv, stuck: body.dataset.stuckCsv, signups: body.dataset.signupsCsv, messages: body.dataset.messagesCsv }[kind];
+      download({ members: '會員名單.csv', stuck: '各單元作答狀況.csv', signups: '報名名單.csv', messages: '聯絡留言.csv' }[kind] || '匯出.csv', text || '');
       return;
     }
     const classCsv = e.target.closest('[data-class-csv]');
@@ -512,7 +553,23 @@
     }
     const copyMail = e.target.closest('[data-copy-mail]');
     if (copyMail) {
-      navigator.clipboard.writeText(copyMail.dataset.copyMail).then(() => toast('Email 已複製'), () => toast('複製失敗，請手動選取'));
+      navigator.clipboard.writeText(copyMail.dataset.copyMail).then(() => toast('已複製'), () => toast('複製失敗，請手動選取'));
+      return;
+    }
+    const handled = e.target.closest('[data-msg-handled]');
+    if (handled) {
+      const { error } = await window.Members.client.from('contact_messages')
+        .update({ handled: handled.dataset.now !== '1' }).eq('id', handled.dataset.msgHandled);
+      toast(error ? `更新失敗：${error.message}` : '已更新');
+      if (!error) renderMessages();
+      return;
+    }
+    const msgDel = e.target.closest('[data-msg-del]');
+    if (msgDel) {
+      if (!window.confirm('確定刪除這則留言嗎？刪除後無法復原。')) return;
+      const { error } = await window.Members.client.from('contact_messages').delete().eq('id', msgDel.dataset.msgDel);
+      toast(error ? `刪除失敗：${error.message}` : '已刪除');
+      if (!error) renderMessages();
       return;
     }
     const cohortToggle = e.target.closest('[data-cohort-toggle]');
@@ -571,6 +628,6 @@
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。' },
   ]);
 })();
