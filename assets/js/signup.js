@@ -21,7 +21,7 @@
   let cohorts = [];
   let counts = {};
 
-  const money = (n) => (n === null || n === undefined ? '費用另行公布' : `NT$ ${Number(n).toLocaleString('zh-TW')}`);
+  const money = (n) => window.CourseLib.priceText(n);
 
   function notReady(msg) {
     host.innerHTML = `<div class="su-empty">
@@ -107,6 +107,16 @@
     });
 
     $('[data-su-form]').addEventListener('submit', submit);
+    // 講師分享的報名連結（?cohort=梯次編號）：直接選好那個梯次
+    const wanted = new URLSearchParams(location.search).get('cohort');
+    const radio = wanted && [...host.querySelectorAll('[name="cohort"]')].find((r) => r.value === wanted && !r.disabled);
+    if (radio) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change'));
+      // 等圖片、字型都載完再捲：太早捲的話，上面的內容長高後報名表又會被推下去
+      const go = () => host.scrollIntoView({ block: 'start' });
+      if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
+    }
   }
 
   async function submit(e) {

@@ -32,7 +32,8 @@
     if (seen[page]) return;
     const firstEver = Object.keys(seen).length === 0;
     try { localStorage.setItem(SEEN_KEY, JSON.stringify({ ...seen, [page]: true })); } catch { /* 忽略 */ }
-    if (firstEver) setTimeout(start, 700);
+    // 從分享連結直接跳到頁面某一段（例如 #signup）時不自動播放，免得導覽把畫面捲回最上面
+    if (firstEver && !location.hash) setTimeout(start, 700);
     else setTimeout(hintButton, 900);
   }
 
