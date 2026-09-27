@@ -32,7 +32,7 @@
 .lp-path .lp-who { font-weight: 700; color: var(--brand-ink); font-size: .95rem; }
 .lp-path ul { margin: 0; padding-left: 1.1em; color: var(--muted); display: grid; gap: 5px; }
 .lp-path .lp-go { margin-top: auto; font-weight: 800; color: var(--brand); }
-.lp-path--security { background: linear-gradient(180deg, #fff, var(--warn-soft)); }
+.lp-path--security { background: linear-gradient(180deg, var(--card), var(--warn-soft)); }
 .lp-path--security .lp-who, .lp-path--security .lp-go { color: #8c5208; }
 .lp-path--security:hover { border-color: var(--warn); }
 
@@ -66,12 +66,12 @@
 .lp-free {
   position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: center;
   margin-top: 18px; padding: 22px 24px; border-radius: var(--radius-l); text-decoration: none; color: inherit;
-  background: linear-gradient(120deg, var(--ok-soft), #fff 70%); border: 1.5px solid #b7e2cd;
+  background: linear-gradient(120deg, var(--ok-soft), var(--card) 70%); border: 1.5px solid #b7e2cd;
   transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), border-color var(--fast) var(--ease);
 }
 .lp-free:hover, .lp-free:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: var(--ok); }
 .lp-free-tag {
-  position: absolute; top: -11px; left: 22px; background: var(--ok); color: #fff;
+  position: absolute; top: -11px; left: 22px; background: var(--ok-fill); color: #fff;
   font-size: .75rem; font-weight: 800; letter-spacing: .06em; padding: 4px 12px; border-radius: 999px;
 }
 .lp-free-icon { font-size: 2.4rem; line-height: 1; }

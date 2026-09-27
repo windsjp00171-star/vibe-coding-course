@@ -13,11 +13,11 @@
 <style>
   :root {
     --paper: #faf8f4; --card: #fff; --ink: #1c1b29; --muted: #5d5b6e; --line: #e4dfd5;
-    --brand: #4f46e5; --brand-soft: #eceefe; --danger: #cc3b35; --danger-soft: #fbe7e5; --ok: #17835a;
+    --brand: #4f46e5; --brand-soft: #eceefe; --fill: #4f46e5; --danger: #cc3b35; --danger-soft: #fbe7e5; --ok: #17835a;
   }
   @media (prefers-color-scheme: dark) {
     :root { --paper: #15141d; --card: #211f2e; --ink: #f1eff8; --muted: #aaa7bd; --line: #34314a;
-      --brand: #8b85ff; --brand-soft: #2a2750; --danger: #ff7a73; --danger-soft: #3d1d1c; --ok: #4cc58f; }
+      --brand: #8b85ff; --brand-soft: #2a2750; --fill: #5b52e0; --danger: #ff7a73; --danger-soft: #3d1d1c; --ok: #4cc58f; }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.7 "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif; }
@@ -28,7 +28,7 @@
   .drop { display: block; border: 2px dashed var(--brand); background: var(--brand-soft); text-align: center; padding: 36px 20px; cursor: pointer; }
   .drop b { font-size: 1.15rem; }
   .btn { font: inherit; font-weight: 700; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; min-height: 40px; }
-  .btn[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn[aria-pressed="true"] { background: var(--fill); border-color: var(--fill); color: #fff; }
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
   .tabs small { font-weight: 400; opacity: .8; }
   .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }

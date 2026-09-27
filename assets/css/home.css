@@ -45,7 +45,7 @@ body { position: relative; isolation: isolate; }
 :root[data-theme="dark"] .aurora span { opacity: .28; }
 
 .home-hero h1 .rotator { display: inline-block; min-width: 5.2em; }
-.home-hero h1 .rotator::after { content: ""; display: inline-block; width: .08em; height: .9em; margin-left: .06em; vertical-align: -.08em; background: var(--brand); animation: caret 1s steps(1) infinite; }
+.home-hero h1 .rotator::after { content: ""; display: inline-block; width: .08em; height: .9em; margin-left: .06em; vertical-align: -.08em; background: var(--brand-fill); animation: caret 1s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
 
 .ai-window {
@@ -159,7 +159,7 @@ body { position: relative; isolation: isolate; }
 @keyframes mp-pulse { 50% { box-shadow: 0 0 0 7px rgb(79 70 229 / 18%), 0 0 18px rgb(79 70 229 / 45%); } }
 .mp-here {
   position: absolute; bottom: calc(100% + 2px); left: 50%; translate: -50% 0; white-space: nowrap; z-index: 2;
-  font-style: normal; font-size: .75rem; font-weight: 900; color: #fff; background: var(--brand); border-radius: 999px; padding: 1px 8px;
+  font-style: normal; font-size: .75rem; font-weight: 900; color: #fff; background: var(--brand-fill); border-radius: 999px; padding: 1px 8px;
   animation: mp-bob 1.6s ease-in-out infinite;
 }
 @keyframes mp-bob { 50% { transform: translateY(-3px); } }

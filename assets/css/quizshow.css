@@ -22,7 +22,7 @@
 .qs-letter { flex: none; display: grid; place-items: center; width: 1.8em; height: 1.8em; border-radius: 50%;
   background: var(--brand-soft); color: var(--brand); font-family: "Inter", sans-serif; font-weight: 900; }
 .qs-opt.is-right { border-color: var(--ok); background: var(--ok-soft); transform: scale(1.02); }
-.qs-opt.is-right .qs-letter { background: var(--ok); color: #fff; }
+.qs-opt.is-right .qs-letter { background: var(--ok-fill); color: #fff; }
 .qs-opt.is-wrong { opacity: .45; }
 .qs-opt.is-final { border-color: var(--brand); }
 

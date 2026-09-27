@@ -69,7 +69,7 @@
 .mk .lp-path:hover .lp-go::after { transform: translateX(4px); }
 .mk .lp-path:first-child::before {
   content: '多數人從這裡開始'; position: absolute; top: 0; left: 0;
-  background: var(--brand); color: #fff; border-bottom-right-radius: 12px;
+  background: var(--brand-fill); color: #fff; border-bottom-right-radius: 12px;
   font-size: .72rem; font-weight: 800; letter-spacing: .06em; padding: 6px 14px;
 }
 .mk .lp-path:first-child { padding-top: clamp(44px, 4vw, 56px); }
@@ -127,7 +127,7 @@
 .mk .mk-body { padding: 18px 20px 20px; }
 .mk .mk-title { margin: 0 0 14px; font-weight: 900; font-size: 1.05rem; }
 .mk .mk-field { border: 1.5px solid #e4dfd5; border-radius: 9px; padding: 9px 12px; margin-bottom: 9px; font-size: .84rem; color: #8c899c; background: #fff; }
-.mk .mk-btn { display: inline-block; background: var(--brand); color: #fff; font-weight: 800; font-size: .86rem; padding: 9px 20px; border-radius: 9px; margin-top: 4px; }
+.mk .mk-btn { display: inline-block; background: var(--brand-fill); color: #fff; font-weight: 800; font-size: .86rem; padding: 9px 20px; border-radius: 9px; margin-top: 4px; }
 .mk .mk-note { margin: 12px 0 0; font-size: .74rem; color: #17835a; font-weight: 700; }
 .mk .mk-window { margin-bottom: 34px; }
 
