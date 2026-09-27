@@ -464,9 +464,10 @@
 
   // ---------- 炫光特效（測驗、分類卡共用）：全部是裝飾層，不擋點擊；「減少動態」時不放 ----------
   // 火花：從按下去的那個元素中心往外噴
-  function sparkBurst(el, count = 16) {
-    const host = el && el.closest('.fx-quiz, .fx-classify');
-    if (!host || calmMotion()) return;
+  // host：火花畫在哪個容器裡（預設是所在的測驗／分類卡）
+  function sparkBurst(el, count = 16, host = el && el.closest('.fx-quiz, .fx-classify')) {
+    if (!el || !host || calmMotion()) return;
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
     const colors = ['#34d399', '#fbbf24', '#818cf8', '#f472b6', '#60a5fa'];
     const a = el.getBoundingClientRect(); const b = host.getBoundingClientRect();
     const x = a.left - b.left + a.width / 2; const y = a.top - b.top + a.height / 2;
@@ -619,9 +620,29 @@
       card.dataset.flipReady = '';
       card.setAttribute('tabindex', '0');
       card.setAttribute('role', 'button');
-      const flip = () => card.classList.toggle('is-flipped');
+      const inner = $('.flip-inner', card);
+      const flip = () => {
+        card.classList.toggle('is-flipped');
+        // 翻面這一下要用完整的翻轉時間；平常跟著滑鼠傾斜則要跟得快
+        card.classList.add('is-turning');
+        clearTimeout(card.turnTimer);
+        card.turnTimer = setTimeout(() => card.classList.remove('is-turning'), 650);
+      };
       card.addEventListener('click', flip);
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+      // 滑鼠移上去：卡片跟著游標微微傾斜、反光跟著走
+      if (!inner || !window.matchMedia('(hover: hover)').matches) return;
+      card.addEventListener('pointermove', (e) => {
+        if (calmMotion()) return;
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width; const py = (e.clientY - r.top) / r.height;
+        const side = card.classList.contains('is-flipped') ? -1 : 1; // 翻到背面時左右方向相反
+        inner.style.setProperty('--rx', `${((0.5 - py) * 10).toFixed(2)}deg`);
+        inner.style.setProperty('--ry', `${((px - 0.5) * 12 * side).toFixed(2)}deg`);
+        card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+        card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+      });
+      card.addEventListener('pointerleave', () => { inner.style.removeProperty('--rx'); inner.style.removeProperty('--ry'); });
     });
   }
 
@@ -644,14 +665,46 @@
       list.dataset.checklistReady = '';
       const key = list.dataset.checklist;
       const saved = getState().checklists?.[key] || [];
-      $$('input[type="checkbox"]', list).forEach((box) => {
+      const boxes = $$('input[type="checkbox"]', list);
+      // 上方的完成進度條
+      const bar = document.createElement('div');
+      bar.className = 'ck-progress screen-only';
+      bar.innerHTML = '<div class="ck-track"><i></i></div><span class="ck-count" aria-live="polite"></span>';
+      list.before(bar);
+      const paint = () => {
+        const done = boxes.filter((b) => b.checked).length;
+        bar.style.setProperty('--p', `${(done / boxes.length) * 100}%`);
+        bar.classList.toggle('is-all', done === boxes.length);
+        $('.ck-count', bar).textContent = done === boxes.length ? `🎉 全部完成 ${done}／${boxes.length}` : `完成 ${done}／${boxes.length}`;
+      };
+      boxes.forEach((box) => {
         box.checked = saved.includes(box.value);
+        // 文字包成一段，勾選時才能畫出一條刪除線
+        const label = box.closest('label');
+        if (label && !$('.ck-text', label)) {
+          // label 是 flex，外層 span 會變成區塊；刪除線畫在裡面那層行內 span，換行時每一行都畫得到
+          const text = document.createElement('span');
+          const line = document.createElement('span');
+          text.className = 'ck-text'; line.className = 'ck-line';
+          [...label.childNodes].filter((n) => n !== box).forEach((n) => line.append(n));
+          text.append(line);
+          label.append(text);
+        }
+        box.closest('li')?.classList.toggle('is-done', box.checked);
         box.addEventListener('change', () => {
-          const values = $$('input[type="checkbox"]:checked', list).map((b) => b.value);
+          const li = box.closest('li');
+          li?.classList.toggle('is-done', box.checked);
+          const values = boxes.filter((b) => b.checked).map((b) => b.value);
           update({ checklists: { ...(getState().checklists || {}), [key]: values } });
-          if (values.length === $$('input[type="checkbox"]', list).length) toast('🎉 課後任務全部完成！');
+          paint();
+          if (!box.checked) return;
+          li?.classList.remove('is-pop'); void li?.offsetWidth; li?.classList.add('is-pop');
+          const host = list.closest('.card') || list;
+          sparkBurst(box, 12, host);
+          if (values.length === boxes.length) { toast('🎉 課後任務全部完成！'); confetti(host, 60); }
         });
       });
+      paint();
     });
   }
 
@@ -668,7 +721,7 @@
     host.innerHTML = `<div class="meter-scale" aria-hidden="true">${window.CourseLib.RATING_LEVELS.map((lv) => `<span>${lv.emoji}</span>`).join('')}</div>`
       + SELF_SKILLS.map((s, i) => {
         const v = saved[s.name] ?? DEFAULT_RATING;
-        return `<div class="meter-row"><label for="${stateKey}-${i}">${esc(s.name)}</label>
+        return `<div class="meter-row" data-lv="${v}"><label for="${stateKey}-${i}">${esc(s.name)}</label>
         <input type="range" id="${stateKey}-${i}" min="1" max="5" step="1" value="${v}" data-skill="${esc(s.name)}"
           style="--pct:${pct(v)}" aria-valuetext="${esc(ratingLevel(v).label)}">
         <output class="meter-out" for="${stateKey}-${i}">${outHtml(v)}</output></div>`;
@@ -687,6 +740,8 @@
       out.dataset.v = r.value;
       // 換到新的一格才彈一下，拖曳時同一格不要一直閃
       if (changed) { out.classList.remove('is-pop'); void out.offsetWidth; out.classList.add('is-pop'); }
+      r.closest('.meter-row').dataset.lv = r.value;
+      if (changed && Number(r.value) === 5) sparkBurst($('.meter-emoji', out), 14, host);
       values[r.dataset.skill] = Number(r.value);
       onChange(values);
       clearTimeout(pending);
