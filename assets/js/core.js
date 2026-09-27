@@ -844,15 +844,18 @@
   // steps: 正確順序的字串陣列
   function mountOrder(host, steps, { title = '排出正確順序', explain = '' } = {}) {
     if (!host) return;
+    host.classList.add('fx-order');
     let order = window.CourseLib.shuffle(steps.map((s, k) => k));
     if (order.every((v, k) => v === k)) order = order.slice().reverse();
-    function render(checked) {
+    function render(checked, moved) {
       host.innerHTML = `
         <p class="kicker">${esc(title)}</p>
         <ol class="order-list">${order.map((k, pos) => {
           let cls = '';
           if (checked) cls = k === pos ? 'is-right' : 'is-wrong';
-          return `<li class="${cls}"><span>${esc(steps[k])}</span>
+          // 剛交換的兩格從原本的位置滑過來
+          if (moved && (pos === moved.from || pos === moved.to)) cls += pos === moved.to ? ' is-moved' : ' is-moved-back';
+          return `<li class="${cls}" style="--d:${pos * 70}ms;--dir:${moved ? Math.sign(moved.from - moved.to) : 0}"><span>${esc(steps[k])}</span>
             <span class="order-btns"><button type="button" class="btn btn-sm" data-move="${pos}" data-dir="-1" aria-label="往上" ${pos === 0 ? 'disabled' : ''}>↑</button>
             <button type="button" class="btn btn-sm" data-move="${pos}" data-dir="1" aria-label="往下" ${pos === order.length - 1 ? 'disabled' : ''}>↓</button></span></li>`;
         }).join('')}</ol>
@@ -860,12 +863,15 @@
         <div class="order-after"></div>`;
       $$('[data-move]', host).forEach((b) => b.addEventListener('click', () => {
         const pos = Number(b.dataset.move); const to = pos + Number(b.dataset.dir);
-        const next = order.slice(); [next[pos], next[to]] = [next[to], next[pos]]; order = next; render(false);
+        const next = order.slice(); [next[pos], next[to]] = [next[to], next[pos]]; order = next; render(false, { from: pos, to });
         $(`[data-move="${to}"][data-dir="${b.dataset.dir}"]`, host)?.focus();
       }));
       $('[data-check]', host).addEventListener('click', () => {
         render(true);
         const ok = order.every((v, k) => v === k);
+        host.classList.toggle('is-solved', ok);
+        flashHost(host, ok);
+        if (ok) { sparkBurst($('[data-check]', host), 20, host); confetti(host); }
         $('.order-after', host).innerHTML = `<div class="feedback ${ok ? 'ok' : 'bad'}"><b>${ok ? '✅ 順序完全正確！' : '還有幾個位置不對（紅色的），再調整看看。'}</b> ${ok ? esc(explain) : ''}</div>`;
       });
     }
@@ -879,7 +885,23 @@
       if (!btn) return;
       const target = $(btn.dataset.copy);
       const text = target ? (target.value ?? target.textContent) : '';
-      try { await navigator.clipboard.writeText(text); toast('已複製，可以貼到 Claude Code 了'); } catch { toast('瀏覽器不讓我複製，請手動選取文字'); }
+      try {
+        await navigator.clipboard.writeText(text);
+        toast('已複製，可以貼到 Claude Code 了');
+        if (target) { target.classList.add('is-copied'); setTimeout(() => target.classList.remove('is-copied'), 900); }
+        sparkBurst(btn, 12, btn.closest('.card'));
+      } catch { toast('瀏覽器不讓我複製，請手動選取文字'); }
+    });
+  }
+
+  // 產生器輸出框內容一變（單元程式寫入新的文字），就掃過一道光
+  function watchGenOut(root = document) {
+    $$('.gen-out', root).forEach((box) => {
+      new MutationObserver(() => {
+        box.classList.remove('is-new'); void box.offsetWidth; box.classList.add('is-new');
+        clearTimeout(box.newTimer);
+        box.newTimer = setTimeout(() => box.classList.remove('is-new'), 1200);
+      }).observe(box, { childList: true, characterData: true, subtree: true });
     });
   }
 
@@ -896,12 +918,13 @@
     initTabs();
     initChecklists();
     initCopy();
+    watchGenOut();
     document.addEventListener('keydown', onKey);
   }
 
   window.Course = {
     MODULES, isTeacher: () => teacherReady, slides, currentSlide, isPresenterWindow, getState, update, recordModule, completedCount, esc, $, $$, toast, mountQuiz, renderPrintQuiz, mountMeters,
-    mountClassify, mountOrder, confetti, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
+    mountClassify, mountOrder, confetti, sparkBurst, initFlips, initTabs, initChecklists, goSlide, enableTeacher,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
