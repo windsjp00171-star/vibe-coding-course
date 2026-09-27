@@ -462,10 +462,57 @@
     return -1;
   }
 
+  // ---------- 炫光特效（測驗、分類卡共用）：全部是裝飾層，不擋點擊；「減少動態」時不放 ----------
+  // 火花：從按下去的那個元素中心往外噴
+  function sparkBurst(el, count = 16) {
+    const host = el && el.closest('.fx-quiz, .fx-classify');
+    if (!host || calmMotion()) return;
+    const colors = ['#34d399', '#fbbf24', '#818cf8', '#f472b6', '#60a5fa'];
+    const a = el.getBoundingClientRect(); const b = host.getBoundingClientRect();
+    const x = a.left - b.left + a.width / 2; const y = a.top - b.top + a.height / 2;
+    const layer = document.createElement('div');
+    layer.className = 'fx-sparks';
+    layer.innerHTML = Array.from({ length: count }, (_, k) => {
+      const ang = (k / count) * Math.PI * 2 + Math.random() * 0.4;
+      const dist = 60 + Math.random() * 70;
+      return `<i style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;color:${colors[k % colors.length]};--dx:${(Math.cos(ang) * dist).toFixed(0)}px;--dy:${(Math.sin(ang) * dist).toFixed(0)}px"></i>`;
+    }).join('');
+    host.append(layer);
+    setTimeout(() => layer.remove(), 900);
+  }
+
+  // 整張卡閃一下：答對綠光、答錯紅光
+  function flashHost(host, ok) {
+    if (!host || calmMotion()) return;
+    host.classList.remove('fx-hit-ok', 'fx-hit-bad');
+    void host.offsetWidth;
+    host.classList.add(ok ? 'fx-hit-ok' : 'fx-hit-bad');
+  }
+
+  // 滑鼠聚光：選項跟著游標亮起來；分類卡跟著游標微微傾斜。只在有滑鼠的裝置
+  function trackPointer(host) {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    host.addEventListener('pointermove', (e) => {
+      const t = e.target.closest('.option, .cl-choice, .cl-card');
+      if (!t || t.disabled) return;
+      const r = t.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width; const py = (e.clientY - r.top) / r.height;
+      t.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+      t.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+      const stack = t.classList.contains('cl-card') && !calmMotion() && t.closest('.cl-stack');
+      if (stack) stack.style.transform = `rotateX(${((0.5 - py) * 10).toFixed(2)}deg) rotateY(${((px - 0.5) * 12).toFixed(2)}deg)`;
+    });
+    host.addEventListener('pointerout', (e) => {
+      const card = e.target.closest('.cl-card');
+      if (card && !card.contains(e.relatedTarget)) card.closest('.cl-stack').style.transform = '';
+    });
+  }
+
   function mountQuiz(host, questions, { moduleId, title = '隨堂小測驗', onFinish, onRetry, passPercent = window.CourseLib.PASS_PERCENT } = {}) {
     if (!host) return;
     addQuizShowLink(host, moduleId);
     host.classList.add('fx-quiz');
+    trackPointer(host);
     const answers = [];
     let i = 0;
     let streak = 0;
@@ -475,7 +522,7 @@
       return `<div class="qz-bar" role="img" aria-label="第 ${i + 1} 題，共 ${questions.length} 題">${questions.map((_, k) => {
         let cls = '';
         if (k === i && answers[k] === undefined) cls = 'now';
-        else if (answers[k] !== undefined) cls = answers[k] === questions[k].answer ? 'ok' : 'bad';
+        else if (answers[k] !== undefined) cls = `${answers[k] === questions[k].answer ? 'ok' : 'bad'}${k === i ? ' just' : ''}`;
         return `<i class="${cls}"></i>`;
       }).join('')}</div>`;
     }
@@ -516,6 +563,9 @@
       const streakEl = $('.qz-streak', host);
       streakEl.className = `qz-streak ${streak >= 2 ? 'is-hot is-pop' : ''}`;
       streakEl.textContent = streak >= 2 ? `🔥 連對 ${streak}` : '';
+      host.classList.toggle('fx-hot', streak >= 3);
+      flashHost(host, ok);
+      if (ok) sparkBurst($(`.option[data-k="${k}"]`, host), streak >= 3 ? 26 : 16);
       const last = i === questions.length - 1;
       $('.quiz-after', host).innerHTML = `
         <div class="feedback qz-feedback ${ok ? 'ok' : 'bad'}"><span class="qz-fb-icon" aria-hidden="true">${ok ? '🎯' : '💡'}</span>
@@ -531,17 +581,20 @@
       const message = result.passed
         ? '這個單元過關了！進度已經幫你記下來。'
         : `還差一點，${passPercent} 分就過關。回頭看一下答錯的地方再試一次吧。`;
+      const perfect = result.correct === result.total;
+      host.classList.remove('fx-hot');
       host.innerHTML = `
-        <div class="qz-result">
+        <div class="qz-result ${result.passed ? 'is-pass' : ''} ${perfect ? 'is-perfect' : ''}">
           <p class="kicker">${esc(title)}成績</p>
+          ${perfect ? '<div class="fx-trophy" aria-hidden="true">🏆</div>' : ''}
           ${scoreRing(result.percent, { passed: result.passed })}
-          <p class="qz-verdict ${result.passed ? 'ok' : 'bad'}">${result.passed ? '✅ 過關' : '再試一次'}</p>
+          <p class="qz-verdict ${result.passed ? 'ok' : 'bad'}">${perfect ? '🏆 全對滿分' : result.passed ? '✅ 過關' : '再試一次'}</p>
           <p>答對 ${result.correct}／${result.total} 題．${esc(message)}</p>
-          <div class="qz-recap">${questions.map((q, k) => `<span class="${answers[k] === q.answer ? 'ok' : 'bad'}" title="${esc(q.q)}">${k + 1}</span>`).join('')}</div>
+          <div class="qz-recap">${questions.map((q, k) => `<span class="${answers[k] === q.answer ? 'ok' : 'bad'}" style="--d:${Math.min(k * 40, 600)}ms" title="${esc(q.q)}">${k + 1}</span>`).join('')}</div>
           <button type="button" class="btn" data-retry>再做一次</button>
         </div>`;
       runCountUp(host);
-      if (result.passed) confetti(host);
+      if (result.passed) confetti(host, perfect ? 90 : 42);
       // onRetry：讓呼叫者決定重做的方式（例如總測驗要重新抽題）
       $('[data-retry]', host).addEventListener('click', () => {
         if (onRetry) { onRetry(); return; }
@@ -653,6 +706,7 @@
   function mountClassify(host, items, categories, { title = '分類挑戰', onFinish } = {}) {
     if (!host) return;
     host.classList.add('fx-classify');
+    trackPointer(host);
     let i = 0; let right = 0; let answered = false; let interacted = false;
     const cats = categories.slice(0, 4);
 
@@ -694,9 +748,12 @@
       const dir = cats.length <= 1 ? 0 : (picked / (cats.length - 1)) * 2 - 1;
       card.style.setProperty('--fly', `${Math.round(dir * 26)}px`);
       card.classList.add(ok ? 'is-right' : 'is-wrong', 'is-flying');
+      card.closest('.cl-stack').style.transform = '';
       const score = $('.cl-score', host);
-      score.innerHTML = `答對 <b>${right}</b>`;
+      score.innerHTML = `答對 <b>${right}</b>${ok ? '<span class="fx-plus" aria-hidden="true">+1</span>' : ''}`;
       if (ok) { score.classList.remove('is-pop'); void score.offsetWidth; score.classList.add('is-pop'); }
+      flashHost(host, ok);
+      if (ok) sparkBurst($$('[data-cat]', host)[picked]);
       const last = i === items.length - 1;
       const label = categories.find((c) => c.key === item.answer).label;
       $('.classify-after', host).innerHTML = `
@@ -706,13 +763,15 @@
       $('[data-next]', host).addEventListener('click', () => {
         if (!last) { i += 1; render(); return; }
         const percent = Math.round((right / items.length) * 100);
-        host.innerHTML = `<div class="qz-result"><p class="kicker">${esc(title)}</p>
+        const perfect = right === items.length;
+        host.innerHTML = `<div class="qz-result ${perfect ? 'is-pass is-perfect' : ''}"><p class="kicker">${esc(title)}</p>
+          ${perfect ? '<div class="fx-trophy" aria-hidden="true">🏆</div>' : ''}
           ${scoreRing(percent, { passed: right === items.length, value: right, label: `／${items.length} 張` })}
           <p class="qz-verdict ${right === items.length ? 'ok' : 'bad'}">${right === items.length ? '🎉 全對' : `答對 ${right} 張`}</p>
           <p>${right === items.length ? '全對！你已經很有概念了。' : '錯的那幾張，上課時我們會拿出來討論。'}</p>
           <button type="button" class="btn" data-again>再玩一次</button></div>`;
         runCountUp(host);
-        if (right === items.length) confetti(host);
+        if (perfect) confetti(host, 90);
         $('[data-again]', host).addEventListener('click', () => { i = 0; right = 0; render(); });
         if (onFinish) onFinish(right);
       });

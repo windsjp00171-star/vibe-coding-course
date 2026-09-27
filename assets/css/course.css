@@ -716,6 +716,113 @@ body.is-locked [data-module-nav] { display: none; }
 .qz-recap .ok { background: var(--ok-soft); color: var(--ok); }
 .qz-recap .bad { background: var(--danger-soft); color: var(--danger); }
 
+/* ---------- 炫光層：測驗與分類卡共用 ----------
+   本專案選擇走「炫」的路線（不套全域 300ms 上限），但底線照守：
+   特效全是裝飾層（pointer-events: none），播放中照樣能點；「減少動態」全部關掉；列印不出現。 */
+@property --fx-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes fx-spin { to { --fx-a: 360deg; } }
+
+/* 外框流光：一圈彩色光沿著卡片邊緣繞。連對 3 題以上變成火焰色、繞得更快 */
+.fx-quiz::before, .fx-classify::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; pointer-events: none; z-index: 0;
+  background: conic-gradient(from var(--fx-a), transparent 0 55%, #818cf8 70%, #f472b6 80%, #fbbf24 88%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: .55; transition: opacity var(--normal);
+  animation: fx-spin 5s linear infinite;
+}
+.fx-quiz:hover::before, .fx-quiz:focus-within::before,
+.fx-classify:hover::before, .fx-classify:focus-within::before { opacity: 1; }
+.fx-quiz.fx-hot::before {
+  opacity: 1; animation-duration: 1.6s;
+  background: conic-gradient(from var(--fx-a), transparent 0 40%, #f97316 60%, #fbbf24 72%, #ef4444 84%, transparent 96%);
+}
+.fx-quiz.fx-hot { box-shadow: var(--shadow), 0 0 42px -14px #f97316; }
+.fx-quiz.fx-hot .qz-streak { animation: fx-flicker .9s ease-in-out infinite; text-shadow: 0 0 12px rgb(249 115 22 / 55%); }
+@keyframes fx-flicker { 50% { transform: scale(1.08) rotate(-2deg); } }
+
+/* 答對／答錯：整張卡閃一下光 */
+.fx-quiz::after, .fx-classify::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; z-index: 0;
+}
+.fx-hit-ok::after { box-shadow: inset 0 0 0 3px var(--ok), inset 0 0 60px -10px var(--ok); animation: fx-hit .7s ease-out; }
+.fx-hit-bad::after { box-shadow: inset 0 0 0 3px var(--danger), inset 0 0 60px -10px var(--danger); animation: fx-hit .5s ease-out; }
+@keyframes fx-hit { 0% { opacity: 0; } 20% { opacity: .9; } 100% { opacity: 0; } }
+
+/* 火花 */
+.fx-sparks { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; border-radius: inherit; }
+.fx-sparks i {
+  position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%;
+  background: currentColor; box-shadow: 0 0 10px currentColor; animation: fx-spark .75s cubic-bezier(.15, .8, .3, 1) forwards;
+}
+.fx-sparks i:nth-child(3n) { width: 5px; height: 12px; border-radius: 3px; }
+@keyframes fx-spark { to { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; } }
+
+/* 選項：游標所在的位置亮起一圈光 */
+.fx-quiz .option:hover:not(:disabled), .fx-classify .cl-choice:hover:not(:disabled) {
+  background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(129 140 248 / 22%), transparent 65%);
+}
+/* 答對的選項：一道光從左掃到右 */
+.fx-quiz .option.is-right, .fx-classify .cl-choice.is-right {
+  background-image: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 70%) 50%, transparent 65%);
+  background-size: 250% 100%; background-repeat: no-repeat; background-position: 150% 0;
+  animation: fx-right .5s cubic-bezier(.2, .9, .3, 1.4), fx-shine .9s .1s ease-out both;
+}
+@keyframes fx-shine { to { background-position: -60% 0; } }
+
+/* 進度條：剛答完的那一格從左邊長出來 */
+.fx-quiz .qz-bar i.just { transform-origin: left; animation: fx-grow .45s cubic-bezier(.2, .9, .3, 1.2); }
+.fx-quiz .qz-bar i.ok.just { box-shadow: 0 0 12px var(--ok); }
+@keyframes fx-grow { from { transform: scaleX(0); } }
+
+/* 成績：過關的圓環發光，全對再加一座獎盃 */
+.qz-result.is-pass .fx-ring svg { filter: drop-shadow(0 0 10px rgb(23 131 90 / 45%)); }
+.qz-result.is-perfect .fx-ring::before {
+  content: ""; position: absolute; inset: -10px; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from var(--fx-a), #818cf8, #f472b6, #fbbf24, #34d399, #818cf8);
+  -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 86%, #000 99%, transparent);
+  mask: radial-gradient(closest-side, transparent 84%, #000 86%, #000 99%, transparent);
+  animation: fx-spin 3s linear infinite; opacity: .8;
+}
+.fx-trophy { font-size: 3rem; line-height: 1; margin-top: 4px; animation: fx-trophy .8s cubic-bezier(.2, .9, .3, 1.5) .5s both; filter: drop-shadow(0 6px 14px rgb(251 191 36 / 55%)); }
+@keyframes fx-trophy { from { transform: translateY(24px) scale(.3) rotate(-25deg); opacity: 0; } }
+.qz-result .qz-recap span { animation: fx-pop .4s cubic-bezier(.2, .9, .3, 1.5) calc(var(--d, 0ms) + .3s) both; }
+
+/* 分類卡：卡片跟著游標傾斜，加一道反光 */
+.fx-classify .cl-stack { transition: transform .2s ease-out; transform-style: preserve-3d; }
+.fx-classify .cl-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity var(--normal);
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgb(255 255 255 / 55%), transparent 55%);
+}
+.fx-classify .cl-card:hover::after { opacity: 1; }
+/* 答完蓋一個印章：對 / 錯 */
+.fx-classify .cl-card.is-right::before, .fx-classify .cl-card.is-wrong::before {
+  position: absolute; top: 10px; right: 14px; padding: 2px 10px; border: 3px solid; border-radius: 10px;
+  font: 900 .95rem/1.4 var(--font); rotate: 12deg; animation: fx-stamp .4s cubic-bezier(.2, .9, .3, 1.4) .15s both;
+}
+.fx-classify .cl-card.is-right::before { content: "✓ 正確"; color: var(--ok); }
+.fx-classify .cl-card.is-wrong::before { content: "✗ 再想想"; color: var(--danger); }
+@keyframes fx-stamp { from { transform: scale(2.4); opacity: 0; } }
+.fx-classify .cl-score { position: relative; }
+.fx-plus { position: absolute; right: -6px; top: -4px; font: 900 .95rem "Inter", sans-serif; color: var(--ok); pointer-events: none; animation: fx-rise .9s ease-out forwards; }
+@keyframes fx-rise { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-26px); opacity: 0; } }
+
+/* 內容要浮在流光外框之上 */
+.fx-quiz > *, .fx-classify > * { position: relative; z-index: 1; }
+.fx-quiz > .fx-confetti, .fx-classify > .fx-confetti, .fx-quiz > .fx-sparks, .fx-classify > .fx-sparks { position: absolute; z-index: 20; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-quiz::before, .fx-classify::before, .fx-quiz.fx-hot .qz-streak, .fx-quiz .qz-bar i.just, .fx-quiz .option.is-right,
+  .fx-classify .cl-choice.is-right, .qz-result.is-perfect .fx-ring::before, .fx-trophy, .qz-result .qz-recap span,
+  .fx-classify .cl-card::before, .fx-plus { animation: none !important; }
+  .fx-quiz .option.is-right, .fx-classify .cl-choice.is-right { background-image: none; }
+  .fx-classify .cl-stack { transform: none !important; }
+  .fx-plus, .fx-sparks { display: none; }
+}
+@media print {
+  .fx-quiz::before, .fx-quiz::after, .fx-classify::before, .fx-classify::after, .fx-sparks, .fx-trophy { display: none; }
+}
+
 /* ---------- 分類卡 ---------- */
 .cl-score { font-weight: 800; color: var(--muted); }
 .cl-score b { color: var(--ok); font-size: 1.15rem; }
