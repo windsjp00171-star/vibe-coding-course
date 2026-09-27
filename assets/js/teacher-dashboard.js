@@ -231,14 +231,16 @@
       return `<div class="card" style="margin-bottom:14px">
         <div class="quiz-head">
           <h3 style="margin:0">${esc(c.name)}　${c.is_open ? '<span class="pill pill-ok">開放中</span>' : '<span class="pill">未開放</span>'}</h3>
-          <button type="button" class="btn btn-sm" data-cohort-toggle="${esc(c.id)}" data-open="${c.is_open ? '1' : '0'}">${c.is_open ? '關閉報名' : '開放報名'}</button>
+          <span><button type="button" class="btn btn-sm" data-cohort-toggle="${esc(c.id)}" data-open="${c.is_open ? '1' : '0'}">${c.is_open ? '關閉報名' : '開放報名'}</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-cohort-edit="${esc(c.id)}">✏️ 編輯</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-cohort-del="${esc(c.id)}" data-name="${esc(c.name)}" data-count="${mine.length}">🗑️ 刪除</button></span>
         </div>
         <p class="muted">${esc(c.schedule_text || '（時間待填）')}．${esc(c.place || '（地點待填）')}．${c.price === null || c.price === undefined ? '（費用待填）' : `NT$ ${Number(c.price).toLocaleString('zh-TW')}`}</p>
         <p><b>已報名 ${taken}</b>${c.capacity ? `／${c.capacity} 位（還有 ${left} 位）` : '（不限人數）'}${waiting ? `．候補 ${waiting} 人` : ''}</p>
       </div>`;
     }).join('') : `<div class="card" style="margin-bottom:14px"><h3>還沒有梯次</h3>
-        <p>梯次目前直接在 Supabase 的 <code>cohorts</code> 資料表新增（名稱、時間、地點、費用、名額），存檔後按上面的「開放報名」就會出現在招生頁。</p>
-        <p class="muted">刻意不做後台新增：梯次一年只開幾次，在 Supabase 填一次比維護一個表單畫面划算。</p></div>`;
+        <p>按上面的「➕ 新增梯次」填好時間、地點、費用、名額，存檔後再按「開放報名」，招生頁就會出現這個梯次。</p></div>`;
+    cohortList = list;
 
     const rowsHtml = signups.map((r) => {
       const st = SIGNUP_STATUS[r.status] || { label: r.status, tone: '' };
@@ -263,7 +265,9 @@
         <h3>📝 報名管理</h3>
         <p>招生頁的報名會進到這裡。名單含姓名、Email、電話，<b>只有講師讀得到</b>（前台只能寫入）。</p>
         <p class="muted">額滿時系統會自動把人排成候補；有人取消後，把候補的人改成「已報名」即可遞補，記得寄信通知他。</p>
+        <p style="margin:0"><button type="button" class="btn btn-primary btn-sm" data-cohort-new>➕ 新增梯次</button></p>
       </div>
+      <div data-cohort-form-slot></div>
       ${cohortCards}
       <div class="card">
         <div class="quiz-head"><h3 style="margin:0">報名名單（${signups.length}）</h3>
@@ -273,6 +277,43 @@
           <tbody>${rowsHtml}</tbody></table></div>`
         : '<p class="muted">還沒有人報名。梯次開放後，招生頁就會出現報名表。</p>'}
       </div>`;
+  }
+
+  // ---------- 新增／編輯梯次（報名頁上的梯次時間、名額、費用都讀這裡） ----------
+  let cohortList = [];
+  // 資料庫存的是國際時間；表單的日期欄位要顯示台灣（這台電腦）的時間
+  const localInput = (iso) => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  };
+  function showCohortForm(c = null) {
+    const slot = $('[data-cohort-form-slot]');
+    if (!slot) return;
+    const v = (k) => esc(c?.[k] ?? '');
+    const { COHORT_KINDS } = window.CourseLib;
+    slot.innerHTML = `<form class="card" data-cohort-form data-id="${c ? esc(c.id) : ''}" style="margin-bottom:18px;border:2px solid var(--brand)">
+      <h3>${c ? '✏️ 編輯梯次' : '➕ 新增梯次'}</h3>
+      <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))">
+        <label>梯次名稱（招生頁會顯示）<input type="text" name="name" maxlength="60" required value="${v('name')}" placeholder="例如：2026 秋季班（週六）"></label>
+        <label>課程類型<select name="kind">${Object.entries(COHORT_KINDS).map(([k, label]) => `<option value="${k}" ${(c?.kind || 'core') === k ? 'selected' : ''}>${esc(label)}</option>`).join('')}</select></label>
+        <label>上課時間<input type="text" name="schedule_text" maxlength="120" value="${v('schedule_text')}" placeholder="例如：11/14、11/21、11/28 每週六 13:30–17:00"></label>
+        <label>地點<input type="text" name="place" maxlength="80" value="${v('place')}" placeholder="例如：台南（地點開課前通知）"></label>
+        <label>費用（新台幣，不填＝另行公布）<input type="text" name="price" inputmode="numeric" value="${v('price')}" placeholder="例如：6800"></label>
+        <label>名額（不填＝不限人數）<input type="text" name="capacity" inputmode="numeric" value="${v('capacity')}" placeholder="例如：12"></label>
+        <label>報名開始（不填＝開放後馬上可以報）<input type="datetime-local" name="reg_start" value="${localInput(c?.reg_start)}"></label>
+        <label>報名截止（不填＝不會自動截止）<input type="datetime-local" name="reg_end" value="${localInput(c?.reg_end)}"></label>
+        <label>候補截止（不填＝一直可以排候補）<input type="datetime-local" name="waitlist_deadline" value="${localInput(c?.waitlist_deadline)}"></label>
+      </div>
+      <label style="display:flex;gap:10px;align-items:center;margin:14px 0"><input type="checkbox" name="waitlist_enabled" ${c ? (c.waitlist_enabled ? 'checked' : '') : 'checked'} style="width:22px;height:22px"> 額滿後可以排候補</label>
+      <label class="form-grid">補充說明（選填，招生頁會顯示在上課時間下面，例如早鳥優惠）<input type="text" name="note" maxlength="120" value="${v('note')}" placeholder="例如：10/15 前報名早鳥價 NT$ 5,800"></label>
+      <p style="margin:14px 0 0"><button type="submit" class="btn btn-primary">${c ? '儲存修改' : '建立梯次'}</button>
+        <button type="button" class="btn btn-ghost" data-cohort-cancel>取消</button>
+        <span class="muted" data-cohort-msg aria-live="polite"></span></p>
+      ${c ? '' : '<p class="muted" style="margin:8px 0 0">建立後先是「未開放」，確認內容沒問題再按「開放報名」。</p>'}
+    </form>`;
+    slot.querySelector('input[name="name"]').focus();
+    slot.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
 
   // ---------- 聯絡留言：招生頁、資安課頁的聯絡表單（supabase/add-contact.sql） ----------
@@ -513,7 +554,8 @@
       <div class="quiz-head"><h3 style="margin:0">${esc(c.name)}</h3>
         <span>加入碼 <span class="code-badge">${esc(c.join_code)}</span>
           <button type="button" class="btn btn-sm btn-ghost" data-copy-code="${esc(c.join_code)}">複製</button>
-          <button type="button" class="btn btn-sm btn-ghost" data-class-csv="${c.id}">⬇️ CSV</button></span></div>
+          <button type="button" class="btn btn-sm btn-ghost" data-class-csv="${c.id}">⬇️ CSV</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-class-del="${c.id}" data-name="${esc(c.name)}" data-count="${ids.length}">🗑️ 刪除班級</button></span></div>
       ${picker}
       <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。${limit !== null ? '灰色欄位是這班還沒開放的單元（試用單元對這班也一樣不開放）。' : ''}</p>
       <div class="table-wrap"><table class="roster"><thead><tr><th>學員</th>${mods.map((m) => `<th title="${esc(m.title)}"${closedCol(m)}>${m.emoji} ${m.id.slice(1)}</th>`).join('')}</tr></thead>
@@ -529,6 +571,21 @@
       if (error) { toast(`設定失敗：${error.message}`); return; }
       toast(data === 'promoted' ? `${email} 已經是講師了` : `已邀請 ${email}，對方第一次登入就會成為講師`);
       renderMembers();
+      return;
+    }
+    if (e.target.matches('[data-cohort-form]')) {
+      e.preventDefault();
+      const form = e.target;
+      const f = Object.fromEntries(new FormData(form));
+      f.waitlist_enabled = form.waitlist_enabled.checked;
+      const { row, error: problem } = window.CourseLib.cohortFromForm(f);
+      const msg = form.querySelector('[data-cohort-msg]');
+      if (problem) { msg.textContent = problem; return; }
+      const db = window.Members.client.from('cohorts');
+      const { error } = form.dataset.id ? await db.update(row).eq('id', form.dataset.id) : await db.insert({ ...row, is_open: false });
+      if (error) { msg.textContent = `存檔失敗：${error.message}`; return; }
+      toast(form.dataset.id ? '梯次已更新' : '梯次建立好了，確認沒問題再按「開放報名」');
+      renderSignups();
       return;
     }
     if (!e.target.matches('[data-new-class]')) return;
@@ -584,6 +641,28 @@
   host.addEventListener('click', async (e) => {
     const t = e.target.closest('[data-admin-tab]');
     if (t) { tab = t.dataset.adminTab; render(); return; }
+    if (e.target.closest('[data-cohort-new]')) { showCohortForm(); return; }
+    const cohortEdit = e.target.closest('[data-cohort-edit]');
+    if (cohortEdit) { showCohortForm(cohortList.find((c) => c.id === cohortEdit.dataset.cohortEdit)); return; }
+    if (e.target.closest('[data-cohort-cancel]')) { $('[data-cohort-form-slot]').innerHTML = ''; return; }
+    const cohortDel = e.target.closest('[data-cohort-del]');
+    if (cohortDel) {
+      const n = Number(cohortDel.dataset.count);
+      const warn = n ? `\n\n⚠️ 這個梯次有 ${n} 筆報名資料，會一起被刪除，而且無法復原。只是想暫停報名的話，請改按「關閉報名」。` : '';
+      if (!window.confirm(`確定刪除梯次「${cohortDel.dataset.name}」嗎？${warn}`)) return;
+      const { error } = await window.Members.client.from('cohorts').delete().eq('id', cohortDel.dataset.cohortDel);
+      toast(error ? `刪除失敗：${error.message}` : '梯次已刪除');
+      if (!error) renderSignups();
+      return;
+    }
+    const classDel = e.target.closest('[data-class-del]');
+    if (classDel) {
+      if (!window.confirm(`確定刪除班級「${classDel.dataset.name}」嗎？\n\n・加入碼會失效，這班的學員名單會移除（${classDel.dataset.count} 位）\n・學員的帳號、開通狀態、學習進度都不會被刪除\n・刪除後無法復原`)) return;
+      const { error } = await window.Members.client.from('classes').delete().eq('id', classDel.dataset.classDel);
+      toast(error ? `刪除失敗：${error.message}` : '班級已刪除');
+      if (!error) renderClasses();
+      return;
+    }
     const backupBtn = e.target.closest('[data-backup-all]');
     if (backupBtn) { exportAll(backupBtn); return; }
     const exp = e.target.closest('[data-export]');
@@ -677,6 +756,6 @@
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「班級」可以開班、把 6 碼加入碼給學員，看全班進度、刪除不用的班；「報名管理」可以新增、編輯梯次（時間、地點、費用、名額），招生頁會自動顯示；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
   ]);
 })();

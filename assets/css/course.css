@@ -320,11 +320,12 @@ main { isolation: isolate; overflow-x: clip; }
 .code-line.miss { background: rgb(255 255 255 / 5%); animation: shake 300ms; }
 .code-line.found { background: rgb(76 197 143 / 16%); border-left-color: #4cc58f; }
 
-textarea, input[type="text"], select {
+textarea, input[type="text"], input[type="datetime-local"], select {
   font: inherit; width: 100%; border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
   border-radius: var(--radius-m); padding: 10px 14px;
 }
 textarea { min-height: 120px; resize: vertical; }
+input[type="datetime-local"] { min-width: 0; }
 textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #1b1a26; color: #e9e7f5; min-height: 190px; }
 
 .stat-row { display: flex; gap: 12px; flex-wrap: wrap; }

@@ -595,6 +595,37 @@
     return SEAT.WAITLIST;
   }
 
+  // 講師後台「新增／編輯梯次」：把表單的文字轉成資料庫的一列，並擋下明顯填錯的地方。
+  // 日期用 toISO 轉（網頁傳 new Date(v).toISOString()），測試可以換成固定的轉法
+  const COHORT_KINDS = { core: '實戰課', security: '半日資安課', custom: '客製場次' };
+  function cohortFromForm(f = {}, toISO = (v) => new Date(v).toISOString()) {
+    const text = (k) => String(f[k] ?? '').trim();
+    const name = text('name');
+    if (!name) return { error: '請填梯次名稱，例如「2026 秋季班（週六）」。' };
+    if (name.length > 60) return { error: '梯次名稱請在 60 字以內。' };
+    if (!COHORT_KINDS[text('kind')]) return { error: '請選課程類型。' };
+    const num = (k, label) => {
+      const v = text(k);
+      if (!v) return { value: null };
+      const n = Number(v.replace(/[,，\s]/g, ''));
+      if (!Number.isInteger(n) || n < 0) return { error: `${label}請填整數（不填就留空）。` };
+      return { value: n };
+    };
+    const price = num('price', '費用'); if (price.error) return price;
+    const capacity = num('capacity', '名額'); if (capacity.error) return capacity;
+    const date = (k) => (text(k) ? toISO(text(k)) : null);
+    const row = {
+      name, kind: text('kind'),
+      schedule_text: text('schedule_text') || null, place: text('place') || null,
+      price: price.value, capacity: capacity.value === 0 ? null : capacity.value, // 0 當作不限人數
+      waitlist_enabled: Boolean(f.waitlist_enabled),
+      reg_start: date('reg_start'), reg_end: date('reg_end'), waitlist_deadline: date('waitlist_deadline'),
+      note: text('note') || null,
+    };
+    if (row.reg_start && row.reg_end && row.reg_end < row.reg_start) return { error: '報名截止時間比開始時間還早，請再確認。' };
+    return { row };
+  }
+
   // 聯絡表單：送出前的檢查。長度上限和 supabase/add-contact.sql 的寫入規則一致，
   // 前台先擋下來，對方才看得到白話說明，而不是資料庫的英文錯誤
   const CONTACT_TOPICS = { course: '實戰課報名', corporate: '企業內訓', security: '半日資安講座', other: '其他問題' };
@@ -616,7 +647,7 @@
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

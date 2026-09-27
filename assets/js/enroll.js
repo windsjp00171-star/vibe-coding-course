@@ -1,7 +1,7 @@
 /*
  * enroll.js — 招生用的課程介紹頁。
- * 費用、梯次、地點這些只有講師知道的資訊，集中放在下面的 INFO；還沒決定的先留 null，
- * 頁面會顯示明顯的「待填」提醒，避免不小心印出錯的數字。
+ * 梯次時間、名額、費用：自動讀講師後台「📝 報名管理」裡開放報名的梯次，講師在後台改，這裡就跟著變。
+ * 其他固定的說明文字放在下面的 INFO。
  */
 (function () {
   'use strict';
@@ -10,10 +10,7 @@
   // ▼▼▼ 開課資訊：改這裡就好 ▼▼▼
   const INFO = {
     format: '實體課程或線上同步皆可（地點與平台於開班前通知）',
-    schedule: null,      // 例如：'2026/11/8（六）、11/15（六）　09:30–17:00'
-    seats: null,         // 例如：'限 12 人，額滿為止'
-    price: null,         // 例如：'NT$ 6,800（早鳥 NT$ 5,800，10/15 前報名）'
-    corporate: null,     // 例如：'企業內訓另行報價，歡迎來信洽詢'
+    corporate: '依人數、時數與地點另行報價，請用下方的聯絡表單洽詢',
     formUrl: null,       // 選填：改用外部報名表（例如 Google 表單）才需要填；留 null 就用網站本身的報名表
   };
   // ▲▲▲ 開課資訊 ▲▲▲
@@ -44,15 +41,38 @@
   $('[data-en-signup]').innerHTML = `
     <dl class="en-info">
       <div><dt>上課方式</dt><dd>${INFO.format ? esc(INFO.format) : TODO('實體或線上、地點')}</dd></div>
-      <div><dt>梯次時間</dt><dd>${INFO.schedule ? esc(INFO.schedule) : TODO('上課日期與時間')}</dd></div>
-      <div><dt>名額</dt><dd>${INFO.seats ? esc(INFO.seats) : TODO('人數上限')}</dd></div>
-      <div><dt>費用</dt><dd>${INFO.price ? esc(INFO.price) : TODO('學費、早鳥優惠')}</dd></div>
+      <div><dt>梯次時間</dt><dd data-en-cohort="schedule">讀取中…</dd></div>
+      <div><dt>名額</dt><dd data-en-cohort="seats">讀取中…</dd></div>
+      <div><dt>費用</dt><dd data-en-cohort="price">讀取中…</dd></div>
       <div><dt>企業內訓</dt><dd>${INFO.corporate ? esc(INFO.corporate) : TODO('內訓報價方式')}</dd></div>
       <div><dt>報名與洽詢</dt><dd>
         ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : ''}
         報名表就在下方；有問題可以<a href="#contact">用聯絡表單洽詢 ↓</a></dd></div>
     </dl>
     <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7、19，確認上課方式適合你再決定。</p>`;
+
+  // 梯次時間、名額、費用：讀講師在後台開放報名的實戰課梯次（訪客讀得到「已開放」的梯次，不用登入）
+  (async () => {
+    const fill = (key, html) => { const el = $(`[data-en-cohort="${key}"]`); if (el) el.innerHTML = html; };
+    const none = () => {
+      fill('schedule', '下一梯次確定後會公布在這裡。想先收到通知，可以用<a href="#contact">下方的聯絡表單</a>留言。');
+      fill('seats', '依梯次公布');
+      fill('price', '依梯次公布');
+    };
+    if (!window.Members?.enabled) { none(); return; }
+    await window.Members.ready;
+    const client = window.Members.client;
+    if (!client) { none(); return; }
+    const { data } = await client.from('cohorts').select('name, kind, schedule_text, place, price, capacity, waitlist_enabled, note')
+      .eq('is_open', true).eq('kind', 'core').order('sort_order');
+    const list = data || [];
+    if (!list.length) { none(); return; }
+    const many = list.length > 1;
+    const each = (fn) => list.map((c) => `<div>${many ? `<b>${esc(c.name)}</b>：` : ''}${fn(c)}</div>`).join('');
+    fill('schedule', each((c) => `${esc(c.schedule_text || '時間另行公布')}${c.place ? `．${esc(c.place)}` : ''}${c.note ? `<br><small class="muted">${esc(c.note)}</small>` : ''}`));
+    fill('seats', each((c) => (c.capacity ? `限 ${c.capacity} 人${c.waitlist_enabled ? '，額滿可排候補' : '，額滿為止'}` : '不限人數')));
+    fill('price', each((c) => (c.price === null || c.price === undefined ? '費用另行公布' : `NT$ ${Number(c.price).toLocaleString('zh-TW')}`)));
+  })();
 
   // 主題式套裝：同一批單元，換不同的組合賣給不同的人。
   // 時數由單元的課中時間自動加總，改單元就會跟著變，不用手動維護。
