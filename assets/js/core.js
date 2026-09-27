@@ -287,6 +287,11 @@
   // 互動練習做到一半會變高（例如模擬器一直長出新訊息），要重新算一次。
   // 不用 ResizeObserver：改動 zoom 本身會再觸發一次觀察，容易互相追著跑。
   window.addEventListener('resize', scheduleFit);
+  // 什麼時候要重新找：畫面變寬變窄、登入後試用閘門打開、頁面全部載入完、學員點了東西（很多表格是點了才產生）
+  const remarkScroll = () => { clearTimeout(markScrollRegions.t); markScrollRegions.t = setTimeout(markScrollRegions, 250); };
+  ['resize', 'load'].forEach((ev) => window.addEventListener(ev, remarkScroll));
+  document.addEventListener('course:auth', remarkScroll);
+  document.addEventListener('click', remarkScroll);
   document.addEventListener('course:resize', scheduleFit);
   document.addEventListener('click', (e) => {
     if (!document.documentElement.classList.contains('presenting')) return;
@@ -925,6 +930,23 @@
     });
   }
 
+  // ---------- 可以左右滑的表格：讓只用鍵盤的人也能選到、用方向鍵捲動 ----------
+  // 只標真的放不下、需要滑的區塊；畫面變寬放得下時就拿掉，免得多一個按 Tab 會停下來的空位置
+  function markScrollRegions() {
+    $$('.table-wrap, [style*="overflow-x:auto"], [style*="overflow-x: auto"]').forEach((el) => {
+      const scrolls = el.scrollWidth > el.clientWidth + 1;
+      if (scrolls && !el.hasAttribute('tabindex')) {
+        el.tabIndex = 0;
+        el.setAttribute('role', 'region');
+        el.setAttribute('aria-label', '表格（可以左右捲動）');
+        el.dataset.scrollRegion = '';
+      } else if (!scrolls && el.dataset.scrollRegion !== undefined) {
+        el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label');
+        delete el.dataset.scrollRegion;
+      }
+    });
+  }
+
   // 產生器輸出框內容一變（單元程式寫入新的文字），就掃過一道光
   function watchGenOut(root = document) {
     $$('.gen-out', root).forEach((box) => {
@@ -951,6 +973,7 @@
     initCopy();
     watchGenOut();
     initReveal();
+    markScrollRegions();
     document.addEventListener('keydown', onKey);
   }
 
