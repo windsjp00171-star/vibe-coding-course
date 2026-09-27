@@ -222,8 +222,21 @@
   background: linear-gradient(160deg, #312e81, #1e1b4b 55%, #0f0e1f); border: 1px solid #818cf8;
   box-shadow: 0 0 0 1px rgb(129 140 248 / 20%), 0 20px 50px -18px rgb(129 140 248 / 80%);
 }
-.wb-stars { background: linear-gradient(90deg, #fde68a, #fbbf24, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; animation: wb-stars .8s cubic-bezier(.2, .9, .3, 1.4) both; }
-@keyframes wb-stars { from { transform: scale(.4); opacity: 0; } }
+/* 星星一顆一顆亮起來：拿到的金色發光，沒拿到的淡淡的 */
+.wb-stars span { display: inline-block; color: rgb(255 255 255 / 25%); animation: wb-stars .6s cubic-bezier(.2, .9, .3, 1.6) calc(.2s + var(--d, 0ms)) both; }
+.wb-stars span.is-on {
+  background: linear-gradient(180deg, #fde68a, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 10px rgb(251 191 36 / 70%));
+}
+@keyframes wb-stars { from { transform: scale(.2) rotate(-90deg); opacity: 0; } 70% { transform: scale(1.35) rotate(8deg); } }
+
+/* 預覽長出新網頁時，掃過一道光 */
+.wb-preview { position: relative; }
+.wb-preview.is-new::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgb(129 140 248 / 30%) 50%, transparent 65%) 150% 0 / 250% 100% no-repeat;
+  animation: fx-shine 1s ease-out both;
+}
 
 /* 彩帶已移到 course.css 的 .fx-confetti，測驗、分類卡、工作台共用 */
 
@@ -243,5 +256,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .wb-msg, .msg-notify, .wb-stars, .msg-perm, .wb-missions li.is-now, .msg-typing .wb-av,
-  .wb-input.is-your-turn textarea, .wb-bar b::before, .msg-tool::after, .wb.is-hit .wb-chat::after { animation: none !important; }
+  .wb-input.is-your-turn textarea, .wb-bar b::before, .msg-tool::after, .wb.is-hit .wb-chat::after,
+  .wb-stars span, .wb-preview.is-new::after { animation: none !important; }
 }

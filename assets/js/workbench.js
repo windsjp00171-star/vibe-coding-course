@@ -72,10 +72,6 @@
       check();
     }
 
-    // 完成時的彩帶：純裝飾，設定「減少動態」時不放
-    // 彩帶和測驗、分類卡共用同一份（core.js 的 Course.confetti）
-    function confetti() { window.Course.confetti?.(host); }
-
     // 等使用者點其中一顆按鈕，回傳它的 value
     function buttons(el, selector) {
       return new Promise((resolve) => {
@@ -196,6 +192,8 @@
       mission(i) {
         const items = host.querySelectorAll('.wb-missions li');
         items.forEach((li, j) => {
+          // 剛過關的那一關噴一下火花
+          if (j < i && !li.classList.contains('is-done')) window.Course.sparkBurst?.(li, 10, host);
           li.classList.toggle('is-done', j < i);
           li.classList.toggle('is-now', j === i);
         });
@@ -207,10 +205,11 @@
         const stars = Math.max(1, MAX_STARS - mistakes);
         host.querySelectorAll('.wb-missions li').forEach((li) => { li.classList.add('is-done'); li.classList.remove('is-now'); });
         host.style.setProperty('--wb-progress', '100%');
-        confetti();
+        window.Course.confetti?.(host, stars === MAX_STARS ? 90 : 42);
         const sims = getState().sims || {};
         update({ sims: { ...sims, [config.id]: Math.max(sims[config.id] || 0, stars) } });
-        add('msg-finish', `<p class="wb-stars">${'★'.repeat(stars)}${'☆'.repeat(MAX_STARS - stars)}</p>
+        add('msg-finish', `<p class="wb-stars" aria-label="${stars} 顆星">${Array.from({ length: MAX_STARS }, (_, k) =>
+            `<span class="${k < stars ? 'is-on' : ''}" style="--d:${k * 220}ms" aria-hidden="true">${k < stars ? '★' : '☆'}</span>`).join('')}</p>
           <h3>任務完成！</h3>
           <p>${mistakes ? `過程中踩了 ${mistakes} 個坑，沒關係，在模擬裡踩總比在真的電腦上踩好。` : '一個坑都沒踩，太強了！'}</p>
           <p><b>你剛剛做的，就是 Vibe Coding：</b></p>
