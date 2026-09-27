@@ -256,6 +256,37 @@ main { isolation: isolate; overflow-x: clip; }
 .flip-hint { position: absolute; bottom: 14px; right: 18px; font-size: .78rem; color: var(--muted); }
 .flip-back .flip-hint { color: color-mix(in srgb, var(--paper) 70%, transparent); }
 
+/* 翻牌卡炫光：跟著游標傾斜、反光跟著走，翻面時回彈，翻到背面掃過一道光，正面滑過時外框流光 */
+.flip { position: relative; }
+.flip-inner { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .18s ease-out; }
+.flip.is-flipped .flip-inner { transform: rotateX(var(--rx, 0deg)) rotateY(calc(180deg + var(--ry, 0deg))); }
+.flip.is-turning .flip-inner { transition: transform 650ms cubic-bezier(.3, 1.35, .5, 1); }
+.flip:hover .flip-face, .flip:focus-visible .flip-face { box-shadow: var(--shadow-lift); }
+.flip-face::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity var(--normal);
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgb(255 255 255 / 40%), transparent 55%);
+}
+.flip-back::after { background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgb(255 255 255 / 16%), transparent 55%); }
+.flip:hover .flip-face::after { opacity: 1; }
+.flip-front::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; pointer-events: none; opacity: 0;
+  background: conic-gradient(from var(--fx-a), transparent 0 55%, #818cf8 70%, #f472b6 80%, #fbbf24 88%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  transition: opacity var(--normal); animation: fx-spin 4s linear infinite;
+}
+.flip:hover .flip-front::before, .flip:focus-visible .flip-front::before { opacity: 1; }
+.flip-back::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 22%) 50%, transparent 65%) 150% 0 / 250% 100% no-repeat;
+}
+.flip.is-flipped .flip-back::before { animation: fx-shine .9s .35s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner, .flip.is-turning .flip-inner { transition: none; }
+  .flip-front::before, .flip.is-flipped .flip-back::before { animation: none; }
+}
+@media print { .flip-face::before, .flip-face::after { display: none; } }
+
 .code {
   font-family: var(--mono); font-size: .88rem; background: #1b1a26; color: #e9e7f5; border-radius: var(--radius-m);
   padding: 12px 0; overflow-x: auto; line-height: 1.7; margin: 0;
@@ -507,6 +538,33 @@ body.is-locked [data-module-nav] { display: none; }
 @keyframes meter-pop { 0% { transform: scale(.6) rotate(-12deg); } 60% { transform: scale(1.25) rotate(6deg); } 100% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .meter-out.is-pop .meter-emoji { animation: none; } }
 
+/* 拉桿炫光：越往右顏色越熱（彩虹一路露出來），把手的光圈跟著變色，拉到滿格發金光、噴火花 */
+.meter-row { position: relative; }
+.meter-row[data-lv="1"] { --lv-c: #a5b4fc; }
+.meter-row[data-lv="2"] { --lv-c: #818cf8; }
+.meter-row[data-lv="3"] { --lv-c: #a78bfa; }
+.meter-row[data-lv="4"] { --lv-c: #f472b6; }
+.meter-row[data-lv="5"] { --lv-c: #f59e0b; }
+.meter-row input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, transparent var(--pct, 25%), var(--paper-2) var(--pct, 25%)),
+    linear-gradient(90deg, #a5b4fc, #818cf8 25%, #a78bfa 50%, #f472b6 75%, #fbbf24);
+}
+.meter-row input[type="range"]::-moz-range-progress { background: linear-gradient(90deg, #a5b4fc, #818cf8, #a78bfa, #f472b6, #fbbf24); }
+.meter-row input[type="range"]::-webkit-slider-thumb {
+  border-color: var(--lv-c, var(--brand));
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--lv-c, var(--brand)) 25%, transparent), 0 3px 10px color-mix(in srgb, var(--lv-c, var(--brand)) 50%, transparent);
+  transition: transform var(--fast) var(--ease), border-color var(--fast), box-shadow var(--fast);
+}
+.meter-row input[type="range"]::-moz-range-thumb {
+  border-color: var(--lv-c, var(--brand));
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--lv-c, var(--brand)) 25%, transparent);
+}
+.meter-row input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.1); }
+.meter-row[data-lv="5"] .meter-emoji { filter: drop-shadow(0 0 8px rgb(251 191 36 / 80%)); animation: fx-flicker 1.4s ease-in-out infinite; }
+.meter-row[data-lv="5"] .meter-out.is-pop .meter-emoji { animation: meter-pop .38s var(--ease), fx-flicker 1.4s .38s ease-in-out infinite; }
+.meter-row[data-lv="5"] .meter-label { background: linear-gradient(90deg, #db2777, #d97706); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (prefers-reduced-motion: reduce) { .meter-row[data-lv="5"] .meter-emoji, .meter-row[data-lv="5"] .meter-out.is-pop .meter-emoji { animation: none; } }
+
 @media (max-width: 560px) {
   .meter-scale { display: none; }
   .meter-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; }
@@ -528,6 +586,37 @@ body.is-locked [data-module-nav] { display: none; }
 .checklist label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
 .checklist input { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--ok); flex: none; }
 .checklist input:checked + * { color: var(--muted); }
+
+/* 勾選清單炫光：上方進度條、勾下去時一圈光往外擴＋火花、文字畫上刪除線，全部完成灑彩帶 */
+.ck-progress { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; }
+.ck-track { flex: 1; height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+.ck-track i {
+  position: relative; display: block; height: 100%; width: var(--p, 0%); border-radius: inherit; overflow: hidden;
+  background: linear-gradient(90deg, #818cf8, #34d399); transition: width .5s cubic-bezier(.2, .9, .3, 1.2);
+}
+.ck-track i::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 55%) 50%, transparent 70%) 150% 0 / 250% 100% no-repeat;
+  animation: fx-shine 2.4s ease-in-out infinite;
+}
+.ck-progress.is-all .ck-track i { background: linear-gradient(90deg, #34d399, #fbbf24, #f472b6); box-shadow: 0 0 12px rgb(52 211 153 / 60%); }
+.ck-count { font-weight: 800; font-size: .85rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ck-progress.is-all .ck-count { color: var(--ok); }
+.checklist li { position: relative; padding: 6px 10px; margin-inline: -10px; border-radius: var(--radius-m); transition: background var(--fast); }
+.checklist li:hover { background: var(--brand-soft); }
+.checklist li.is-pop { animation: ck-pop .4s cubic-bezier(.2, .9, .3, 1.5); }
+.checklist li.is-pop input { animation: ck-ring .6s ease-out; }
+@keyframes ck-pop { 40% { transform: scale(1.02); } }
+@keyframes ck-ring { from { box-shadow: 0 0 0 0 rgb(23 131 90 / 55%); } to { box-shadow: 0 0 0 14px rgb(23 131 90 / 0%); } }
+.ck-line {
+  background: linear-gradient(currentColor, currentColor) 0 62% / 0 2px no-repeat;
+  transition: background-size .45s var(--ease), color var(--normal);
+}
+.checklist input:checked + .ck-text .ck-line { background-size: 100% 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .ck-track i::after, .checklist li.is-pop, .checklist li.is-pop input { animation: none; }
+  .ck-track i, .ck-line { transition: none; }
+}
 
 .print-q { margin-bottom: 10pt; break-inside: avoid; }
 .print-q ol { margin: 4pt 0 0; padding-left: 1.4em; list-style: upper-alpha; }
