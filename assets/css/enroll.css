@@ -66,3 +66,12 @@
 .su-empty, .su-done { padding: 20px 22px; border-radius: var(--radius-m); background: var(--paper-2); }
 .su-done { background: var(--ok-soft); }
 .su-empty b, .su-done b { display: block; font-size: 1.1rem; margin-bottom: 6px; }
+
+/* ---------- 聯絡表單（contact.js） ---------- */
+.ct-form { display: grid; gap: 14px; margin-top: 12px; }
+.ct-form input, .ct-form select, .ct-form textarea { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: var(--radius-s); border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+.ct-form input:focus, .ct-form select:focus, .ct-form textarea:focus { outline: 3px solid var(--brand-soft); border-color: var(--brand); }
+.ct-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; }
+.ct-note { font-size: .85rem; margin: 0; }
+/* 機器人陷阱欄位：移到畫面外，真人看不到（不用 display:none，有些機器人會跳過隱藏欄位） */
+.ct-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

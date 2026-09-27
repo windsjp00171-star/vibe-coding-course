@@ -14,7 +14,6 @@
     seats: null,         // 例如：'限 12 人，額滿為止'
     price: null,         // 例如：'NT$ 6,800（早鳥 NT$ 5,800，10/15 前報名）'
     corporate: null,     // 例如：'企業內訓另行報價，歡迎來信洽詢'
-    contact: 'emmark19890901@gmail.com',
     formUrl: null,       // 例如：Google 表單網址
   };
   // ▲▲▲ 開課資訊 ▲▲▲
@@ -51,7 +50,7 @@
       <div><dt>企業內訓</dt><dd>${INFO.corporate ? esc(INFO.corporate) : TODO('內訓報價方式')}</dd></div>
       <div><dt>報名與洽詢</dt><dd>
         ${INFO.formUrl ? `<a class="btn btn-primary btn-sm" href="${esc(INFO.formUrl)}" target="_blank" rel="noopener">填寫報名表 →</a>　` : TODO('報名表網址')}
-        來信：<a href="mailto:${esc(INFO.contact)}">${esc(INFO.contact)}</a></dd></div>
+        <a href="#contact">用聯絡表單洽詢 ↓</a></dd></div>
     </dl>
     <p class="muted">報名前可以先到<a href="learn.html">課程網站</a>免費試看單元 0、1、4、7、19，確認上課方式適合你再決定。</p>`;
 
@@ -98,5 +97,7 @@
 
   $('[data-en-print]').addEventListener('click', () => window.print());
 
-  window.Tour.register([]);
+  window.Tour.register([
+    { tour: 'contact', title: '聯絡講師', text: '想問開班時間或企業內訓，在這裡留言就好，不用寄信。留言只有講師看得到，講師會用你留的聯絡方式回覆。' },
+  ]);
 })();
