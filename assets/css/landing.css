@@ -72,7 +72,7 @@
 .lp-free:hover, .lp-free:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: var(--ok); }
 .lp-free-tag {
   position: absolute; top: -11px; left: 22px; background: var(--ok); color: #fff;
-  font-size: .72rem; font-weight: 800; letter-spacing: .06em; padding: 4px 12px; border-radius: 999px;
+  font-size: .75rem; font-weight: 800; letter-spacing: .06em; padding: 4px 12px; border-radius: 999px;
 }
 .lp-free-icon { font-size: 2.4rem; line-height: 1; }
 .lp-free-text b { display: block; font-size: 1.15rem; margin-bottom: 4px; }

@@ -62,7 +62,7 @@ body { position: relative; isolation: isolate; }
 .ai-bar span { margin-left: 8px; font-family: var(--mono); }
 .ai-body { padding: 18px 20px 20px; display: grid; gap: 10px; align-content: start; flex: 1; }
 .ai-you { background: rgb(129 140 248 / 16%); border: 1px solid rgb(129 140 248 / 30%); border-radius: 12px; padding: 10px 14px; min-height: 3.2em; }
-.ai-you b { display: block; font-size: .72rem; color: #a5b4fc; letter-spacing: .08em; }
+.ai-you b { display: block; font-size: .75rem; color: #a5b4fc; letter-spacing: .08em; }
 .ai-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-family: var(--mono); font-size: .84rem; }
 .ai-lines li { animation: pop 380ms var(--ease) both; color: var(--win-ink); }
 .ai-lines li.dim { color: var(--win-dim); }
@@ -159,7 +159,7 @@ body { position: relative; isolation: isolate; }
 @keyframes mp-pulse { 50% { box-shadow: 0 0 0 7px rgb(79 70 229 / 18%), 0 0 18px rgb(79 70 229 / 45%); } }
 .mp-here {
   position: absolute; bottom: calc(100% + 2px); left: 50%; translate: -50% 0; white-space: nowrap; z-index: 2;
-  font-style: normal; font-size: .7rem; font-weight: 900; color: #fff; background: var(--brand); border-radius: 999px; padding: 1px 8px;
+  font-style: normal; font-size: .75rem; font-weight: 900; color: #fff; background: var(--brand); border-radius: 999px; padding: 1px 8px;
   animation: mp-bob 1.6s ease-in-out infinite;
 }
 @keyframes mp-bob { 50% { transform: translateY(-3px); } }

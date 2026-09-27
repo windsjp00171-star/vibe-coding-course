@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609270259">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609270315">
   <style>
     .gl-tools { display: grid; gap: 12px; margin-bottom: 22px; }
     .gl-search { font: inherit; width: 100%; padding: 12px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-m); background: var(--card); color: var(--ink); }
@@ -20,7 +20,7 @@
     .gl-card .term-like { color: var(--muted); font-size: .92rem; }
     .gl-card:target { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-soft), var(--shadow-lift); }
     .gl-meta { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 700; }
-    .gl-meta a { text-decoration: none; }
+    .gl-meta a { text-decoration: none; display: inline-block; padding-block: 4px; } /* 手機上點得到：至少 24px 高 */
     .gl-empty { padding: 30px; text-align: center; }
     .gl-back { margin: 18px 0 -10px; }
   </style>
@@ -49,12 +49,12 @@
 
 <footer class="site-footer"><div class="wrap"><a href="learn.html">回課程首頁</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202609270259"></script>
-<script src="assets/js/config.js?v=202609270259"></script>
-<script src="assets/js/core.js?v=202609270259"></script>
-<script src="assets/js/members.js?v=202609270259"></script>
-<script src="assets/js/tour.js?v=202609270259"></script>
-<script src="assets/js/glossary-data.js?v=202609270259"></script>
+<script src="assets/js/lib.js?v=202609270315"></script>
+<script src="assets/js/config.js?v=202609270315"></script>
+<script src="assets/js/core.js?v=202609270315"></script>
+<script src="assets/js/members.js?v=202609270315"></script>
+<script src="assets/js/tour.js?v=202609270315"></script>
+<script src="assets/js/glossary-data.js?v=202609270315"></script>
 <script>
   (function () {
     const { $, esc, MODULES } = window.Course;
