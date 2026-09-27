@@ -10,6 +10,8 @@
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const CANCEL = Symbol('cancel');
   const TYPING_MS = calm ? 0 : 650;
+  // 手機、平板：自動把游標放進輸入框會直接彈出鍵盤，而且鍵盤會蓋住輸入框。觸控裝置改成讓學員自己點
+  const touch = window.matchMedia('(hover: none)').matches;
   const MAX_STARS = 3;
 
   function mount(host, config) {
@@ -130,8 +132,10 @@
         send.disabled = false;
         form.classList.add('is-your-turn'); // 輸入框亮起來：現在輪到你說話
         input.placeholder = placeholder;
-        input.focus({ preventScroll: true });
         $('[data-wb-hints]').innerHTML = hints.length ? `<button type="button" class="wb-hint-btn" data-hint="${esc(hints[0])}">💡 不知道怎麼說？看看範例</button>` : '';
+        // 範例按鈕放好之後再捲，不然輸入區多出一列又被推出畫面
+        if (touch) form.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
+        else input.focus({ preventScroll: true });
         return new Promise((resolve) => {
           form.onsubmit = (e) => {
             e.preventDefault();
@@ -222,8 +226,21 @@
       const b = e.target.closest('[data-hint]');
       if (!b) return;
       input.value = b.dataset.hint;
-      input.focus({ preventScroll: true });
+      if (!touch) input.focus({ preventScroll: true });
     });
+
+    // 鍵盤彈出後，輸入框如果被鍵盤蓋住，就把頁面往上捲到看得見。
+    // 手機瀏覽器的鍵盤通常只縮小「看得到的範圍」（visualViewport），頁面本身不變，所以要自己算
+    const keepInputVisible = () => {
+      const vv = window.visualViewport;
+      if (!vv || document.activeElement !== input) return;
+      const hidden = form.getBoundingClientRect().bottom - (vv.offsetTop + vv.height);
+      if (hidden > 0) window.scrollBy({ top: hidden + 12, behavior: 'auto' });
+    };
+    if (touch && window.visualViewport) {
+      input.addEventListener('focus', () => setTimeout(keepInputVisible, 350));
+      window.visualViewport.addEventListener('resize', keepInputVisible);
+    }
 
     $('[data-wb-reset]').addEventListener('click', () => {
       alive = false;
