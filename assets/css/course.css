@@ -258,11 +258,12 @@ main { isolation: isolate; overflow-x: clip; }
 .chip[aria-pressed="true"] { background: var(--invert-bg); color: var(--invert-ink); border-color: var(--invert-bg); }
 
 .flip { perspective: 1000px; min-height: 240px; cursor: pointer; }
-.flip-inner { position: relative; height: 100%; min-height: inherit; transition: transform 600ms var(--ease); transform-style: preserve-3d; }
+.flip-inner { position: relative; display: grid; min-height: inherit; transition: transform 600ms var(--ease); transform-style: preserve-3d; }
 .flip.is-flipped .flip-inner { transform: rotateY(180deg); }
 .flip-face {
-  position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-l);
-  padding: 22px; border: 1px solid var(--line); box-shadow: var(--shadow); overflow: auto;
+  /* 正反兩面疊在同一格：卡片高度跟著比較長的那一面，手機上背面字多也不用在卡片裡捲動 */
+  position: relative; grid-area: 1 / 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: var(--radius-l);
+  padding: 22px 22px 44px; border: 1px solid var(--line); box-shadow: var(--shadow);
 }
 .flip-front { background: var(--card); }
 .flip-back { background: var(--invert-bg); color: var(--invert-ink); transform: rotateY(180deg); }
@@ -549,6 +550,7 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* ---------- 對照表（通用） ---------- */
 .table-wrap { overflow-x: auto; }
+[data-scroll-region]:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 .compare { width: 100%; border-collapse: collapse; min-width: 560px; }
 .compare th, .compare td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .compare thead th { font-size: .82rem; color: var(--muted); }
@@ -748,6 +750,7 @@ body.is-locked [data-module-nav] { display: none; }
   .card, .goals li, .step, .flip-face { box-shadow: none !important; }
   .step { opacity: 1 !important; }
   .flip { min-height: 0 !important; }
+  .flip-inner { display: block !important; }
   .flip-inner { transform: none !important; }
   .flip-face { position: static !important; transform: none !important; backface-visibility: visible; margin-bottom: 6pt; }
   .flip-back { background: #f4f4f4 !important; color: #111 !important; }
