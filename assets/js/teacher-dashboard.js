@@ -339,7 +339,7 @@
     }
     const backup = {
       format: 'vibe-course-backup', version: 1, exported_at: new Date().toISOString(),
-      note: '講師後台匯出。結業證書只包含講師自己看得到的部分；完整的資料庫備份請另外用 Supabase 的 Database → Backups。',
+      note: '講師後台匯出。完整的資料庫備份（含登入帳號）請另外用 Supabase 的 Database → Backups。',
       tables, files,
     };
     const day = new Date().toLocaleDateString('sv-SE'); // 2026-09-27

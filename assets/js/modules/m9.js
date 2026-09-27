@@ -80,15 +80,20 @@
     if (!state.finalScore || !state.name) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先通過總測驗並填上名字。</div>'; return; }
     btn.disabled = true;
     try {
-      const cert = await window.Members.issueCertificate(state.name, state.finalScore);
+      const cert = await window.Members.issueCertificate(state.name);
       showCode(cert);
     } catch (err) {
       // 學員看到的要是白話；資料庫原文只留給講師看的括號裡
       const msg = err.message || '';
-      const needTable = /relation|does not exist|schema cache/i.test(msg);
+      const needFix = /issue_certificate/i.test(msg); // 資料庫還沒有發證書的函式
+      const needTable = !needFix && /relation|does not exist|schema cache/i.test(msg);
+      const plain = /開通|總測驗|名字|編號格式/.test(msg); // 資料庫檢查不過時回的白話原因，直接給學員看
       const needGrant = /permission denied|42501/i.test(msg);
       const text = err.message === '請先登入'
         ? '請先按右上角「登入保存進度」，才能產生可驗證的編號。'
+        : plain ? esc(msg)
+        : needFix
+          ? '證書功能正在更新，請通知講師。你的總測驗成績已經保存，之後再按一次就好。<br><span class="muted">（講師：請到 Supabase 執行 supabase/fix-security.sql）</span>'
         : needTable
           ? '證書功能還沒啟用，請通知講師。<br><span class="muted">（講師：請到 Supabase 執行 supabase/add-certificates.sql）</span>'
           : needGrant
