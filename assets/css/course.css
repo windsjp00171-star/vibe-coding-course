@@ -676,8 +676,9 @@ body.is-locked [data-module-nav] { display: none; }
 .ck-progress.is-all .ck-track i { background: linear-gradient(90deg, #34d399, #fbbf24, #f472b6); box-shadow: 0 0 12px rgb(52 211 153 / 60%); }
 .ck-count { font-weight: 800; font-size: .85rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ck-progress.is-all .ck-count { color: var(--ok); }
-.checklist li { position: relative; padding: 6px 10px; margin-inline: -10px; border-radius: var(--radius-m); transition: background var(--fast); }
-.checklist li:hover { background: var(--brand-soft); }
+/* 安裝步驟清單（install-steps）也是勾選清單，但有自己的卡片外框和左側步驟數字，不能套這裡的留白 */
+.checklist:not(.install-steps) li { position: relative; padding: 6px 10px; margin-inline: -10px; border-radius: var(--radius-m); transition: background var(--fast); }
+.checklist:not(.install-steps) li:hover { background: var(--brand-soft); }
 .checklist li.is-pop { animation: ck-pop .4s cubic-bezier(.2, .9, .3, 1.5); }
 .checklist li.is-pop input { animation: ck-ring .6s ease-out; }
 @keyframes ck-pop { 40% { transform: scale(1.02); } }
