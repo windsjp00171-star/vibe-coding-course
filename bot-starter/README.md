@@ -7,12 +7,12 @@
 - 「會議室密碼 4321」→ 分成**筆記**，記下來就好
 - 傳「清單」看還沒做完的事，「完成 2」把第 2 件打勾，「說明」看用法
 
-**分工（單元 12）**：看懂一句話是什麼、日期是哪天，交給 AI（Claude）；什麼時候提醒、清單怎麼排、打勾，全部由程式決定，不花 AI 的錢。
+**分工（單元 12）**：看懂一句話是什麼、日期是哪天，交給 AI（預設免費的 Gemini，也可以換成 Claude）；什麼時候提醒、清單怎麼排、打勾，全部由程式決定，不花 AI 的錢。
 
 **零件**
 | 檔案 | 做什麼 |
 |---|---|
-| `functions/line-bot/index.ts` | 收 LINE 訊息、檢查簽章、指令、請 Claude 分類、存資料、回覆。最上面的 `DESIGN` 就是你的小秘書設計 |
+| `functions/line-bot/index.ts` | 收 LINE 訊息、檢查簽章、指令、請 AI 分類、存資料、回覆。最上面的 `DESIGN` 就是你的小秘書設計 |
 | `functions/line-remind/index.ts` | 鬧鐘：時間到了推提醒、每天早上 8 點推今日清單 |
 | `setup.sql` | 資料表、權限、排程 |
 | `reader.html` | 離線看備份（CSV） |
@@ -31,10 +31,19 @@
 4. 用手機掃 Messaging API 分頁的 QR code，**加好友**。
 5. 到 LINE Official Account Manager → 設定 → 回應設定：**關掉「自動回應訊息」**、打開 **Webhook**（不然官方帳號會搶著回罐頭訊息）。
 
-### 2. Claude API 金鑰（約 5 分鐘）
-1. 到 console.anthropic.com 註冊、儲值（小秘書一則訊息的費用很低，先儲最少的金額就好）。
-2. **設定每月花費上限**（Settings → Limits），免得意外爆帳單（單元 22）。
-3. API Keys → Create Key，抄下來（秘密）。
+### 2. AI 金鑰：先決定用哪一種（約 5 分鐘）
+
+| | 免費 Gemini（預設） | Claude |
+|---|---|---|
+| 費用 | 免費，有每分鐘、每天的次數上限 | 要先儲值；分類一句話的費用很低 |
+| 你的訊息 | ⚠️ 依 Google 條款，免費方案送出的內容**可能被拿去改進 Google 的產品，也可能有人工審閱**；Google 也提醒不要送敏感、機密或個人資料 | 付費 API，預設不拿來訓練 |
+| 適合 | 自己練習、不敏感的內容（買菜、喝水、交報告） | 小組出席、代禱事項、同事請假這類有個資或內部資料的用途 |
+
+條款會變動，以官方最新說明為準（單元 21：免費的代價常常是你的資料）。
+
+**用免費 Gemini**：到 aistudio.google.com → Get API key → Create API key，抄下來（秘密）。
+
+**用 Claude**：到 console.anthropic.com 註冊、儲值，**設定每月花費上限**（Settings → Limits，單元 22），再到 API Keys → Create Key。
 
 ### 3. Supabase：資料表與權限（約 10 分鐘）
 1. supabase.com → **New project**（小秘書用一個新的專案，不要和別的系統混在一起）。
@@ -46,7 +55,10 @@
    |---|---|
    | `LINE_CHANNEL_SECRET` | 第 1 步的 Channel secret |
    | `LINE_CHANNEL_ACCESS_TOKEN` | 第 1 步的 long-lived token |
-   | `ANTHROPIC_API_KEY` | 第 2 步的 API 金鑰 |
+   | `GEMINI_API_KEY` | 用 Gemini 時：第 2 步的金鑰 |
+   | `AI_PROVIDER` | 用 Claude 時才要設，值填 `claude`（不設就是 Gemini） |
+   | `ANTHROPIC_API_KEY` | 用 Claude 時：第 2 步的金鑰 |
+   | `GEMINI_MODEL` | 選填：想換 Gemini 模型時填，例如 `gemini-3.8-flash`（免費方案能用哪些，以 AI Studio 為準） |
    | `CRON_SECRET` | 自己亂打 20 個以上的英數字（當鬧鐘的暗號） |
    | `ALLOWED_LINE_USERS` | 選填：只讓這些人用，逗號分隔（見第 7 步） |
 2. Edge Functions → Deploy a new function → **Via Editor**：
@@ -87,17 +99,17 @@ LINE Developers → 你的 Messaging API channel → Messaging API 分頁：
 **你需要拿到的權限**
 - LINE Developers：這個 Provider 的管理權限
 - Supabase：這個專案的成員權限
-- Anthropic Console：帳號的管理權限（付費、金鑰）
+- AI 金鑰所在的帳號：Google AI Studio（Gemini）或 Anthropic Console（Claude）的管理權限
 
 **日常要做的事**
 - **每個月備份一次**：Supabase → Table Editor → `bot_items` → Export → **CSV**，存到雲端硬碟或隨身碟。看舊備份：雙擊 `reader.html`，選那個 CSV（Excel 也打得開）。
-- **每個月看一次帳單**：Anthropic Console → Billing。
+- **每個月看一次用量**：用 Claude 的看 Anthropic Console → Billing；用免費 Gemini 的看 AI Studio 的用量，快到上限時小秘書會開始回「我沒看懂」
 
 **出事了怎麼辦**
 | 狀況 | 先檢查 |
 |---|---|
 | 小秘書完全不回 | LINE Developers 的 Webhook 有沒有打開、Verify 是否 Success；`line-bot` 的 Verify JWT 是否關掉 |
-| 回「我沒看懂」 | `ANTHROPIC_API_KEY` 是否正確、帳戶有沒有餘額 |
+| 回「我沒看懂」 | AI 金鑰是否正確；免費 Gemini 是否用完今天的額度（隔天會恢復）；Claude 帳戶有沒有餘額 |
 | 沒收到提醒 | Extensions 的 pg_cron、pg_net 有沒有開；`select * from cron.job_run_details order by start_time desc limit 10;` 看排程有沒有跑；暗號兩邊是否一樣 |
 | 提醒時間差 8 小時 | 排程用的是國際時間（UTC），台灣要減 8（單元 12） |
 | 官方帳號回罐頭訊息 | Official Account Manager 的「自動回應訊息」沒關 |
@@ -108,5 +120,5 @@ LINE Developers → 你的 Messaging API channel → Messaging API 分頁：
 1. 先匯出一次 CSV 備份
 2. SQL Editor 執行：`select cron.unschedule('bot-due'); select cron.unschedule('bot-morning');`
 3. LINE Developers → Webhook 關掉
-4. Anthropic Console → 刪除 API 金鑰
+4. 到 AI Studio 或 Anthropic Console 刪除 API 金鑰
 5. Supabase → 暫停或刪除專案（刪除後資料無法復原）
