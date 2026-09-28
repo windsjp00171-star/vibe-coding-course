@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609280354">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609280354">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609280354">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609280745">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609280745">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609280745">
 </head>
 <body data-module="m13" data-base="../">
 <header data-course-header></header>
@@ -126,8 +126,8 @@
 
   <section class="slide" id="line-session" data-tour="line-session">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">LINE 場．半天</span><h2>把 LINE 登入和通知，接到你的登記系統</h2>
-        <p>單元 10 的範本已經內建 LINE 加裝包。這一場做完，你的系統會變成「用 LINE 登入」，管理者改了狀態，本人會收到 LINE 訊息。</p></div></div>
+      <div><span class="kicker">課後加裝．約 90 分</span><h2>把 LINE 登入和通知，接到你的登記系統</h2>
+        <p>LINE 場的主軸是<a href="12-line-bot.html">單元 12 的 AI 小秘書</a>；做完之後，可以照這一段自己把 LINE 登入和通知加到單元 10 的登記系統。系統會變成「用 LINE 登入」，管理者改了狀態，本人會收到 LINE 訊息。</p></div></div>
     <div class="split">
       <div class="card">
         <h3>🧩 三個零件</h3>
@@ -144,19 +144,19 @@
       </div>
     </div>
     <div class="ws-how card" style="margin-top:18px">
-      <p><b>👥 怎麼分組</b>三人一組，每個人做自己的系統；測試通知時互相當對方的使用者</p>
+      <p><b>👥 怎麼分組</b>自己做；測試通知時，請一位朋友或家人當使用者</p>
       <p><b>🎒 要準備</b>單元 10 已經能用 Email 登入的登記系統、手機上的 LINE、LINE Developers 帳號（用自己的 LINE 登入就有）</p>
       <p><b>🎁 做完要交出</b>用 LINE 登入的系統，組員送出登記、你改成「已確認」後，組員的手機收到 LINE 訊息</p>
     </div>
     <div class="workshop">
-      <p><span class="phase phase-in">LINE 場．約 180 分（中間休息 10 分）</span></p>
+      <p><span class="phase phase-post">課後自學．約 90 分（卡住了到課後問答找講師）</span></p>
       <ol>
-        <li><span class="time">0–30 分</span>第 01、02 段：用「去櫃台換證」講一次流程，看五個不會報錯的坑。</li>
-        <li><span class="time">30–70 分</span>LINE Developers：建 Provider、LINE Login channel（填 Callback URL）、Messaging API channel，再把官方帳號連到 Login channel（<code>LINE.md</code> 第 1 步）。</li>
-        <li><span class="time">70–110 分</span>Supabase：設定 Secrets、貼上兩支 Edge Functions（<code>line-login</code> 關掉 Verify JWT）、建 Database Webhook（第 2 步）。</li>
-        <li><span class="time">110–130 分</span><code>config.js</code> 改成 <code>login: 'line'</code>、填 Channel ID，push；用 LINE 登入、加好友，把「管理者設定碼」設成管理者（第 3、4 步）。</li>
-        <li><span class="time">130–160 分</span><b>互測</b>：組員用 LINE 登入送一筆；你把它改成「已確認」，看他的手機有沒有收到。門禁測試照舊：他看不到你的資料。</li>
-        <li><span class="time">160–180 分</span>第 05 段工作坊：把今天卡最久的地方寫成交接文件，放進專案的 <code>docs/</code>。</li>
+        <li><span class="time">步驟 1</span>先看第 01、02 段：「去櫃台換證」的流程，和五個不會報錯的坑。</li>
+        <li><span class="time">步驟 2</span>LINE Developers：建 Provider、LINE Login channel（填 Callback URL）、Messaging API channel，再把官方帳號連到 Login channel（<code>LINE.md</code> 第 1 步）。</li>
+        <li><span class="time">步驟 3</span>Supabase：設定 Secrets、貼上兩支 Edge Functions（<code>line-login</code> 關掉 Verify JWT）、建 Database Webhook（第 2 步）。</li>
+        <li><span class="time">步驟 4</span><code>config.js</code> 改成 <code>login: 'line'</code>、填 Channel ID，push；用 LINE 登入、加好友，把「管理者設定碼」設成管理者（第 3、4 步）。</li>
+        <li><span class="time">步驟 5</span><b>互測</b>：組員用 LINE 登入送一筆；你把它改成「已確認」，看他的手機有沒有收到。門禁測試照舊：他看不到你的資料。</li>
+        <li><span class="time">步驟 6</span>照第 05 段，把卡最久的地方寫成交接文件，放進專案的 <code>docs/</code>。</li>
       </ol>
       <p style="margin-top:10px"><a class="btn btn-primary" href="../downloads/vibe-starter.zip" download>⬇️ 下載範本（含 LINE.md 與 functions/）</a></p>
       <div data-teacher-slot="m13-line"></div>
@@ -184,18 +184,18 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 13　LINE 平台規則以 LINE Developers 官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609280354"></script>
-<script src="../assets/js/quiz-bank.js?v=202609280354"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609280354"></script>
-<script src="../assets/js/config.js?v=202609280354"></script>
-<script src="../assets/js/core.js?v=202609280354"></script>
-<script src="../assets/js/members.js?v=202609280354"></script>
-<script src="../assets/js/tour.js?v=202609280354"></script>
-<script src="../assets/js/glossary-data.js?v=202609280354"></script>
-<script src="../assets/js/glossary.js?v=202609280354"></script>
-<script src="../assets/js/modules/electives.js?v=202609280354"></script>
-<script src="../assets/js/workbench.js?v=202609280354"></script>
-<script src="../assets/js/sims/m13-login.js?v=202609280354"></script>
-<script src="../assets/js/modules/m13.js?v=202609280354"></script>
+<script src="../assets/js/lib.js?v=202609280745"></script>
+<script src="../assets/js/quiz-bank.js?v=202609280745"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609280745"></script>
+<script src="../assets/js/config.js?v=202609280745"></script>
+<script src="../assets/js/core.js?v=202609280745"></script>
+<script src="../assets/js/members.js?v=202609280745"></script>
+<script src="../assets/js/tour.js?v=202609280745"></script>
+<script src="../assets/js/glossary-data.js?v=202609280745"></script>
+<script src="../assets/js/glossary.js?v=202609280745"></script>
+<script src="../assets/js/modules/electives.js?v=202609280745"></script>
+<script src="../assets/js/workbench.js?v=202609280745"></script>
+<script src="../assets/js/sims/m13-login.js?v=202609280745"></script>
+<script src="../assets/js/modules/m13.js?v=202609280745"></script>
 </body>
 </html>
