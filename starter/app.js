@@ -22,7 +22,46 @@
     return;
   }
   const db = window.supabase.createClient(APP.supabaseUrl, APP.supabaseKey);
+  const useLine = APP.login === 'line';
   let user = null;
+  $('[data-login-email]').hidden = useLine;
+  $('[data-login-line]').hidden = !useLine;
+
+  // ---------- LINE 登入：去 LINE 同意 → 帶著一次性代碼回來 → 交給後端換成登入狀態 ----------
+  const here = location.origin + location.pathname;
+  $('[data-line-login]').addEventListener('click', () => {
+    if (!APP.lineChannelId) { notice('還沒設定 LINE：請在 config.js 填上 lineChannelId（步驟在 LINE.md）。', 'warn'); return; }
+    // state 是防偽造的暗號：回來時對不上就不處理（單元 13）
+    const state = Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, '0')).join('');
+    sessionStorage.setItem('line_state', state);
+    location.href = 'https://access.line.me/oauth2/v2.1/authorize?' + new URLSearchParams({
+      response_type: 'code', client_id: APP.lineChannelId, redirect_uri: here, state, scope: 'profile openid', bot_prompt: 'aggressive',
+    });
+  });
+  async function finishLineLogin() {
+    const params = new URLSearchParams(location.search);
+    if (!params.has('code') && !params.has('error')) return;
+    history.replaceState(null, '', here); // 網址列不留代碼
+    const expected = sessionStorage.getItem('line_state');
+    sessionStorage.removeItem('line_state');
+    if (params.has('error')) { notice('LINE 登入取消了，可以再按一次「用 LINE 登入」。', 'warn'); return; }
+    if (!expected || params.get('state') !== expected) { notice('登入連結對不上，為了安全沒有登入。請重新按一次「用 LINE 登入」。', 'bad'); return; }
+    notice('登入中…', 'warn');
+    try {
+      const res = await fetch(`${APP.supabaseUrl}/functions/v1/line-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: APP.supabaseKey, Authorization: `Bearer ${APP.supabaseKey}` },
+        body: JSON.stringify({ code: params.get('code'), redirectUri: here }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || `登入失敗（${res.status}）`);
+      const { error } = await db.auth.verifyOtp({ token_hash: body.token_hash, type: 'magiclink' });
+      if (error) throw error;
+    } catch (err) {
+      notice(`LINE 登入失敗：${esc(err.message)}`, 'bad');
+    }
+  }
+  if (useLine) finishLineLogin();
 
   // ---------- 登入：寄一封有登入連結的信 ----------
   $('[data-login-form]').addEventListener('submit', async (e) => {
@@ -152,7 +191,10 @@
     $('[data-login]').hidden = Boolean(user);
     ['[data-app]', '[data-mine]', '[data-who]'].forEach((s) => { $(s).hidden = !user; });
     if (!user) $('[data-admin]').hidden = true;
-    $('[data-email]').textContent = user?.email || '';
+    $('[data-email]').textContent = user?.user_metadata?.name || user?.email || '';
+    // LINE 帳號沒有 Email，管理者名單要填這個設定碼（README 的「設定管理者」）
+    $('[data-admin-code]').hidden = !(user && useLine);
+    $('[data-admin-code]').textContent = user && useLine ? `管理者設定碼：${user.email}（要把這個帳號設成管理者時，把這串填進 setup.sql 最後一行）` : '';
     // 在這個回呼裡直接呼叫資料庫可能會卡住（supabase-js 的已知限制），所以晚一拍再讀
     if (user) { notice(''); setTimeout(refresh, 0); }
   });

@@ -20,11 +20,17 @@
     <!-- 還沒登入 -->
     <section class="card" data-login hidden>
       <h2>登入</h2>
-      <p>輸入 Email，我們會寄一封信給你，點信裡的連結就登入了，不用記密碼。</p>
-      <form data-login-form class="stack">
-        <label>Email<input type="email" name="email" required autocomplete="email" placeholder="例如：amy@example.com"></label>
-        <button type="submit" class="btn">寄登入連結給我</button>
-      </form>
+      <div data-login-email>
+        <p>輸入 Email，我們會寄一封信給你，點信裡的連結就登入了，不用記密碼。</p>
+        <form data-login-form class="stack">
+          <label>Email<input type="email" name="email" required autocomplete="email" placeholder="例如：amy@example.com"></label>
+          <button type="submit" class="btn">寄登入連結給我</button>
+        </form>
+      </div>
+      <div data-login-line hidden>
+        <p>用你的 LINE 帳號登入，不用另外記帳號密碼。登入時請加官方帳號好友，登記有更新時會用 LINE 通知你。</p>
+        <button type="button" class="btn btn-line" data-line-login>用 LINE 登入</button>
+      </div>
     </section>
 
     <!-- 已登入 -->
@@ -48,6 +54,8 @@
       </p>
       <div data-admin-list></div>
     </section>
+
+    <p class="muted" data-admin-code hidden></p>
   </main>
 
   <script src="config.js"></script>

@@ -5,7 +5,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const dir = path.join(__dirname, '..', 'starter');
-const files = fs.readdirSync(dir);
+const files = fs.readdirSync(dir, { recursive: true }).filter((f) => fs.statSync(path.join(dir, f)).isFile());
 const read = (f) => fs.readFileSync(path.join(dir, f), 'utf8');
 
 test('範本裡不能出現 service_role／secret key，也沒有填好的真鑰匙', () => {
@@ -16,6 +16,8 @@ test('範本裡不能出現 service_role／secret key，也沒有填好的真鑰
   }
   assert.match(read('config.js'), /supabaseUrl: '',/);
   assert.match(read('config.js'), /supabaseKey: '',/);
+  assert.match(read('config.js'), /lineChannelId: '',/);
+  assert.ok(!/LINE_CHANNEL_SECRET\s*[:=]\s*['"][^'"]+/.test(files.map(read).join('\n')), 'Channel secret 不能寫在檔案裡');
 });
 
 test('setup.sql：每張表都開 RLS，訪客沒有任何權限', () => {
@@ -29,6 +31,7 @@ test('setup.sql：每張表都開 RLS，訪客沒有任何權限', () => {
 test('config.js 的欄位格式正確（key 是英文、type 是支援的種類）', () => {
   const window = {};
   new Function('window', read('config.js'))(window);
+  assert.ok(['email', 'line'].includes(window.APP.login));
   const keys = window.APP.fields.map((f) => f.key);
   assert.strictEqual(new Set(keys).size, keys.length, 'key 重複');
   for (const f of window.APP.fields) {

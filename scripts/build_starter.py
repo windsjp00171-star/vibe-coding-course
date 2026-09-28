@@ -12,10 +12,10 @@ OUT = ROOT / 'downloads' / 'vibe-starter.zip'
 
 OUT.parent.mkdir(exist_ok=True)
 with zipfile.ZipFile(OUT, 'w', zipfile.ZIP_DEFLATED) as z:
-    for f in sorted(SRC.iterdir()):
+    for f in sorted(SRC.rglob('*')):
         if f.is_file():
             # 解壓縮後是一個 vibe-starter 資料夾；固定時間戳記，內容沒變時檔案就不會變
-            info = zipfile.ZipInfo(f'vibe-starter/{f.name}', date_time=(2026, 1, 1, 0, 0, 0))
+            info = zipfile.ZipInfo(f'vibe-starter/{f.relative_to(SRC).as_posix()}', date_time=(2026, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             z.writestr(info, f.read_bytes())
 print(f'wrote {OUT.relative_to(ROOT)}')

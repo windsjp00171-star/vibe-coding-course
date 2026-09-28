@@ -17,6 +17,10 @@ window.APP = {
   supabaseUrl: '',
   supabaseKey: '',
 
+  // 登入方式：'email'（寄登入連結）或 'line'（用 LINE 登入，步驟在 LINE.md）
+  login: 'email',
+  lineChannelId: '', // LINE Login channel 的 Channel ID（可以公開）；Channel secret 不要放這裡
+
   fields: [
     { key: 'name', label: '姓名', type: 'text', required: true, max: 40 },
     { key: 'item', label: '要借的設備', type: 'select', options: ['投影機', '筆電', '麥克風'], required: true },

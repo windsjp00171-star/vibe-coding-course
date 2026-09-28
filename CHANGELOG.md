@@ -3,6 +3,12 @@
 ## [Unreleased] — 2026-09-26
 
 ### Added
+- LINE 場（第五個半天）與範本的 LINE 加裝包：
+  - `config.js` 新增 `login: 'email' | 'line'` 切換，一個系統只用一種登入方式；LINE 模式顯示「用 LINE 登入」按鈕，並用 state 暗號防偽造
+  - 兩支 Supabase Edge Function（`starter/functions/`）：`line-login` 用一次性代碼換登入身分，Channel secret 只放在 Supabase；`line-notify` 在管理者改狀態時推 LINE 訊息給本人，沒有 webhook 暗號一律拒絕
+  - LINE 使用者代號存在 app_metadata（使用者自己改不了）；LINE 帳號的「管理者設定碼」顯示在頁面下方
+  - `LINE.md`：LINE Developers 兩個 channel、Secrets、Edge Functions、Database Webhook、設定管理者與測試的步驟，以及卡關對照表。學員不用安裝任何指令工具
+  - 單元 13 新增「LINE 場」段落：三個零件、最容易出事的兩件事、半天時間表；招生頁說明 LINE 場內容
 - 起始範本「登記系統」（`starter/`，下載檔 `downloads/vibe-starter.zip`，改了範本執行 `python3 scripts/build_starter.py` 重新打包）：
   - Email 登入連結（不用記密碼）、登記表單、「我的登記」、管理者看全部並改狀態
   - 表單欄位寫在 `config.js`，存在資料庫的同一格，改題目不用改資料庫
