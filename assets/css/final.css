@@ -29,6 +29,7 @@
 .cert-body { font-size: clamp(.75rem, .65rem + .45vw, 1.05rem); line-height: 1.9; color: #444; margin: 0 0 1em; }
 .cert-project { font-size: clamp(.65rem, .6rem + .3vw, .85rem); color: #3730a3; margin: -.4em 0 1em; word-break: break-all; }
 .cert-project:empty { display: none; }
+.cert-note { margin: .8em 0 0; font-size: clamp(.55rem, .5rem + .2vw, .7rem); color: #666; }
 .cert-skills { list-style: none; padding: 0; margin: 0 0 1.2em; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
 .cert-skills li { font-size: clamp(.6rem, .55rem + .3vw, .8rem); border: 1px solid #c7c2f5; color: #3730a3; border-radius: 999px; padding: 2px 10px; font-weight: 700; }
 .cert-foot { display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: clamp(.65rem, .6rem + .3vw, .85rem); color: #555; }
