@@ -598,6 +598,18 @@
   // 講師後台「新增／編輯梯次」：把表單的文字轉成資料庫的一列，並擋下明顯填錯的地方。
   // 日期用 toISO 轉（網頁傳 new Date(v).toISOString()），測試可以換成固定的轉法
   const COHORT_KINDS = { core: '實戰課', security: '半日資安課', custom: '客製場次' };
+  // ---- 上課前檢查：三個半天各要先預習哪些單元（和招生頁的課表一致） ----
+  const CLASS_SESSIONS = [
+    { key: 'A', label: '半天 A 起步', units: ['m0', 'm1', 'm2', 'm3'] },
+    { key: 'B', label: '半天 B 上線與資安', units: ['m4', 'm5', 'm6', 'm7', 'm8'] },
+    { key: 'C', label: '半天 C 做出你的工具', units: ['m20'] },
+  ];
+  // 小測驗過關才算預習完成；回傳每位學員還沒完成的單元
+  function prepStatus(units, people = [], rows = []) {
+    const done = new Set(rows.filter((r) => r.done).map((r) => `${r.user_id}|${r.module_id}`));
+    return people.map((u) => ({ id: u.id, name: u.display_name || '（未命名）', missing: units.filter((m) => !done.has(`${u.id}|${m}`)) }));
+  }
+
   // ---- 結業作品：證書要有一個真的上線的作品，不是只考選擇題 ----
   const PROJECT_CHECKS = [
     { key: 'claudemd', label: '專案裡有 CLAUDE.md，而且寫進了你在各單元加的規則' },
@@ -688,7 +700,7 @@
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { PROJECT_CHECKS, projectReady, priceText, isFreeCohort, signupLabels, canActivate, activationNotice, COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { CLASS_SESSIONS, prepStatus, PROJECT_CHECKS, projectReady, priceText, isFreeCohort, signupLabels, canActivate, activationNotice, COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;

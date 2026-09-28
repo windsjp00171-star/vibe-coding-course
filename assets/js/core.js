@@ -7,16 +7,16 @@
   'use strict';
 
   const MODULES = [
-    { id: 'm0', part: 'A 起步', emoji: '🧠', title: 'AI 到底在做什麼？', file: 'modules/00-ai-basics.html', minutes: 25, inClass: 25, post: 10 },
-    { id: 'm1', part: 'A 起步', emoji: '🚗', title: '什麼是 Vibe Coding？', file: 'modules/01-vibe-coding.html', minutes: 15, inClass: 30, post: 10 },
-    { id: 'm2', part: 'A 起步', emoji: '🧰', title: '安裝你的 AI 工程師', file: 'modules/02-install.html', minutes: 15, inClass: 40, post: 10 },
-    { id: 'm3', part: 'A 起步', emoji: '🗣️', title: '怎麼跟 Claude Code 合作', file: 'modules/03-work-with-claude.html', minutes: 25, inClass: 45, post: 20 },
-    { id: 'm4', part: 'B 上線', emoji: '💾', title: 'Git 與 GitHub 白話講', file: 'modules/04-git-github.html', minutes: 20, inClass: 25, post: 15 },
-    { id: 'm5', part: 'B 上線', emoji: '🚀', title: '把作品放上網路', file: 'modules/05-deploy.html', minutes: 20, inClass: 35, post: 15 },
-    { id: 'm6', part: 'C 資安', emoji: '🔑', title: '鑰匙與機密別外流', file: 'modules/06-secrets.html', minutes: 20, inClass: 30, post: 10 },
-    { id: 'm7', part: 'C 資安', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 20, inClass: 35, post: 10 },
-    { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 25, inClass: 35, post: 15 },
-    { id: 'm20', part: 'C 資安', emoji: '🛟', title: '三個月後還救得回來嗎', file: 'modules/20-handover.html', minutes: 20, inClass: 35, post: 15 },
+    { id: 'm0', part: 'A 起步', emoji: '🧠', title: 'AI 到底在做什麼？', file: 'modules/00-ai-basics.html', minutes: 25, inClass: 25, post: 10, must: ['hallucination', 'kinds', 'limits'], mustMin: 10 },
+    { id: 'm1', part: 'A 起步', emoji: '🚗', title: '什麼是 Vibe Coding？', file: 'modules/01-vibe-coding.html', minutes: 15, inClass: 30, post: 10, must: ['what', 'fit'], mustMin: 8 },
+    { id: 'm2', part: 'A 起步', emoji: '🧰', title: '安裝你的 AI 工程師', file: 'modules/02-install.html', minutes: 15, inClass: 40, post: 10, must: ['plan', 'permission'], mustMin: 8 },
+    { id: 'm3', part: 'A 起步', emoji: '🗣️', title: '怎麼跟 Claude Code 合作', file: 'modules/03-work-with-claude.html', minutes: 25, inClass: 45, post: 20, must: ['parts', 'small-steps', 'claude-md'], mustMin: 12 },
+    { id: 'm4', part: 'B 上線', emoji: '💾', title: 'Git 與 GitHub 白話講', file: 'modules/04-git-github.html', minutes: 20, inClass: 25, post: 15, must: ['git-vs-github', 'claude-git'], mustMin: 8 },
+    { id: 'm5', part: 'B 上線', emoji: '🚀', title: '把作品放上網路', file: 'modules/05-deploy.html', minutes: 20, inClass: 35, post: 15, must: ['static', 'pages'], mustMin: 10 },
+    { id: 'm6', part: 'C 資安', emoji: '🔑', title: '鑰匙與機密別外流', file: 'modules/06-secrets.html', minutes: 20, inClass: 30, post: 10, must: ['what', 'pack', 'leaked'], mustMin: 10 },
+    { id: 'm7', part: 'C 資安', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 20, inClass: 35, post: 10, must: ['why', 'claude-code'], mustMin: 8 },
+    { id: 'm8', part: 'C 資安', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 25, inClass: 35, post: 15, must: ['traps', 'checklist'], mustMin: 10 },
+    { id: 'm20', part: 'C 資安', emoji: '🛟', title: '三個月後還救得回來嗎', file: 'modules/20-handover.html', minutes: 20, inClass: 35, post: 15, must: ['pack', 'drill'], mustMin: 10 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '做出你的工具與結業', file: 'modules/09-final.html', minutes: 15, inClass: 150, post: 0 },
     { id: 'm10', part: 'D 進階選修', emoji: '🗄️', title: 'Supabase：雲端資料庫', file: 'modules/10-supabase.html', minutes: 20, inClass: 35, post: 15 },
     { id: 'm11', part: 'D 進階選修', emoji: '🪪', title: '會員系統：註冊、登入、權限', file: 'modules/11-members.html', minutes: 20, inClass: 40, post: 15 },
@@ -178,6 +178,20 @@
     });
     refreshProgressBar();
     renderPageNav();
+  }
+
+  // 最低預習：翻轉教室最怕沒預習就進教室，所以告訴沒時間的人「至少看哪幾段」
+  function renderMustRead() {
+    const unit = MODULES.find((m) => m.id === document.body.dataset.module);
+    const row = document.querySelector('.module-hero .meta-row');
+    if (!unit?.must || !row || document.querySelector('.must-read')) return;
+    const links = unit.must.map((id) => {
+      const h = document.querySelector(`#${id} h2`);
+      return h ? `<a href="#${id}">${esc(h.textContent)}</a>` : '';
+    }).filter(Boolean);
+    row.insertAdjacentHTML('afterend', `<div class="callout callout-warn must-read">
+      <b>⏱️ 時間不夠？至少看這 ${links.length} 段（約 ${unit.mustMin} 分鐘）</b>：${links.join('、')}，再做<a href="#quiz">隨堂小測驗</a>。
+      其他段落上課時會帶到；真的沒預習也照樣來，工作坊會安排你跟有預習的人同組。</div>`);
   }
 
   // 單元開頭那排方塊就是「這個單元的目標」，補上標題免得看不懂
@@ -966,6 +980,7 @@
     renderTimer();
     applyMode(getState().mode);
     labelGoals();
+    renderMustRead();
     loadLocalTeacherNotes();
     initFlips();
     initTabs();

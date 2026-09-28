@@ -573,6 +573,15 @@
         return pr ? `${pr.done ? '過關 ' : ''}${pr.best}` : '';
       })]),
     ]);
+    // 上課前檢查：每個半天要先預習的單元，誰還沒過關
+    const unitNo = (id) => id.slice(1);
+    const prep = (people || []).length ? window.CourseLib.CLASS_SESSIONS.map((sess) => {
+      const status = window.CourseLib.prepStatus(sess.units, people, rows);
+      const behind = status.filter((x) => x.missing.length);
+      return `<li><b>${esc(sess.label)}</b>（單元 ${sess.units.map(unitNo).join('、')}）：預習完成 ${status.length - behind.length}／${status.length}
+        ${behind.length ? `<br><small class="muted">還沒完成：${behind.map((x) => `${esc(x.name)}（缺 ${x.missing.map(unitNo).join('、')}）`).join('、')}</small>
+        <button type="button" class="btn btn-sm btn-ghost" data-prep-remind="${esc(sess.key)}">📋 複製提醒訊息</button>` : ' ✅'}</li>`;
+    }).join('') : '';
     const limit = c.open_until ?? null;
     // 和學員那邊同一條規則：依課程順序，不依單元編號（19、20 排在 9 前面）
     const closedCol = (m) => (limit !== null
@@ -591,6 +600,8 @@
           <button type="button" class="btn btn-sm btn-ghost" data-class-del="${c.id}" data-name="${esc(c.name)}" data-count="${ids.length}">🗑️ 刪除班級</button></span></div>
       ${picker}
       <p class="muted">${ids.length} 位學員．綠色是已過關（數字是最佳分數），黃色是作答過但還沒過關。${limit !== null ? '灰色欄位是這班還沒開放的單元（試用單元對這班也一樣不開放）。' : ''}</p>
+      ${prep ? `<details class="prep-check"><summary>📋 上課前檢查：誰還沒預習</summary><ul>${prep}</ul>
+        <p class="muted">以小測驗過關為準。提醒訊息沒有點名，可以直接貼到班級群組，或私訊給還沒完成的人。</p></details>` : ''}
       <div class="table-wrap"><table class="roster"><thead><tr><th>學員</th>${mods.map((m) => `<th title="${esc(m.title)}"${closedCol(m)}>${m.emoji} ${m.id.slice(1)}</th>`).join('')}</tr></thead>
       <tbody>${body || `<tr><td colspan="${mods.length + 1}" class="muted">還沒有學員加入。請學員到課程首頁輸入加入碼。</td></tr>`}</tbody></table></div>
       <textarea hidden data-csv-for="${c.id}">${esc(csv)}</textarea></div>`;
@@ -783,6 +794,19 @@
       navigator.clipboard.writeText(copyLink.dataset.copyLink).then(() => toast('報名連結已複製'), () => toast('複製失敗，請手動選取'));
       return;
     }
+    const remind = e.target.closest('[data-prep-remind]');
+    if (remind) {
+      const sess = window.CourseLib.CLASS_SESSIONS.find((x) => x.key === remind.dataset.prepRemind);
+      const units = MODULES.filter((m) => sess.units.includes(m.id));
+      const mins = units.reduce((n, m) => n + (m.mustMin || 0), 0);
+      copyText([
+        `提醒大家：下次上課（${sess.label}）前，請先完成這幾個單元的預習和小測驗：`,
+        ...units.map((m) => `・單元 ${m.id.slice(1)} ${m.title}`),
+        `時間不夠的話，每個單元開頭都有「至少看這幾段」，全部約 ${mins} 分鐘。`,
+        `課程首頁：${new URL('learn.html', location.href).href}`,
+      ].join('\n'), '提醒訊息已複製，貼到班級群組就好');
+      return;
+    }
     const copyCode = e.target.closest('[data-copy-code]');
     if (copyCode) {
       navigator.clipboard.writeText(copyCode.dataset.copyCode).then(() => toast('加入碼已複製'), () => toast('複製失敗，請手動選取'));
@@ -829,6 +853,6 @@
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「報名管理」可以新增、編輯梯次（時間、地點、費用、名額），招生頁會自動顯示，並有可以分享的報名連結；收到款項後把報名者改成「已繳費」，按「🔑 開通通知」複製含加入碼的訊息給學員；每個梯次會自動有一個同名班級，在「班級」看全班進度、控制開放單元、刪除不用的班；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「報名管理」可以新增、編輯梯次（時間、地點、費用、名額），招生頁會自動顯示，並有可以分享的報名連結；收到款項後把報名者改成「已繳費」，按「🔑 開通通知」複製含加入碼的訊息給學員；每個梯次會自動有一個同名班級，在「班級」看全班進度、控制開放單元、刪除不用的班，並用「上課前檢查」看誰還沒預習、複製提醒訊息；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
   ]);
 })();
