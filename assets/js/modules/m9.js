@@ -1,10 +1,10 @@
-/* m9.js — 單元 09：總測驗與結業證書 */
+/* m9.js — 單元 09：做出你的工具與結業（作品登記、總測驗、結業證書） */
 (function () {
   'use strict';
   const { $, esc, MODULES, getState, update, mountQuiz, mountMeters } = window.Course;
-  const { buildExam } = window.CourseLib;
+  const { buildExam, projectReady, PROJECT_CHECKS } = window.CourseLib;
 
-  const CORE_UNITS = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm19'];
+  const CORE_UNITS = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm20'];
   const EXAM_SIZE = 12;
   const FINAL_PASS_PERCENT = 80;
 
@@ -34,20 +34,52 @@
     });
   }
 
+  // ---------- 作品登記：證書要有一個真的上線的作品 ----------
+  function renderProject() {
+    const project = getState().project || {};
+    $('[data-project-url]').value = project.url || '';
+    $('[data-project-checks]').innerHTML = PROJECT_CHECKS.map((c) => `
+      <li><label><input type="checkbox" data-project-check="${c.key}" ${project.checks?.[c.key] ? 'checked' : ''}> ${esc(c.label)}</label></li>`).join('');
+    renderProjectStatus();
+  }
+  function renderProjectStatus() {
+    const { ok, missing } = projectReady(getState().project);
+    $('[data-project-status]').innerHTML = ok
+      ? '<div class="feedback ok">✅ 作品登記完成！網址會印在你的證書上。</div>'
+      : `<div class="callout callout-warn">還差：${[
+        missing.some((m) => m.startsWith('作品網址')) && '填上作品網址（要是別人打得開的 https:// 網址，不是 localhost）',
+        missing.filter((m) => !m.startsWith('作品網址')).length && `${missing.filter((m) => !m.startsWith('作品網址')).length} 項檢查還沒打勾`,
+      ].filter(Boolean).join('、')}</div>`;
+  }
+  function saveProject(patch) {
+    const project = getState().project || {};
+    update({ project: { ...project, ...patch, checks: { ...project.checks, ...patch.checks } } });
+    renderProjectStatus();
+    renderCert();
+  }
+  $('[data-project-url]').addEventListener('input', (e) => saveProject({ url: e.target.value.trim().slice(0, 200) }));
+  $('[data-project-checks]').addEventListener('change', (e) => {
+    const box = e.target.closest('[data-project-check]');
+    if (box) saveProject({ checks: { [box.dataset.projectCheck]: box.checked } });
+  });
+
   // ---------- 證書 ----------
   function renderCert() {
     const state = getState();
-    const earned = Boolean(state.finalScore);
+    const passed = Boolean(state.finalScore);
+    const built = projectReady(state.project).ok;
+    const earned = passed && built;
     const name = state.name || '';
     $('[data-cert-name]').value = name;
     $('[data-cert-out-name]').textContent = name || '＿＿＿＿＿＿';
     $('[data-cert-date]').textContent = `結業日期　${new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' })}`;
     $('[data-cert-score]').textContent = earned ? `總測驗　${state.finalScore} 分` : '';
+    $('[data-cert-project]').textContent = earned ? `結業作品　${state.project.url}` : '';
     $('[data-cert]').classList.toggle('is-earned', earned);
     $('[data-cert-print]').disabled = !(earned && name);
     $('[data-cert-status]').innerHTML = earned
       ? (name ? '<div class="feedback ok">🎉 恭喜結業！可以列印證書了。</div>' : '<div class="feedback ok">🎉 已通過總測驗！輸入名字就能列印證書。</div>')
-      : `<div class="callout callout-warn">總測驗 ${FINAL_PASS_PERCENT} 分以上才能列印證書。</div>`;
+      : `<div class="callout callout-warn">列印證書還差：${[!built && '上面的作品登記', !passed && `總測驗 ${FINAL_PASS_PERCENT} 分以上`].filter(Boolean).join('、')}</div>`;
   }
 
   // ---------- 可驗證的證書編號 ----------
@@ -77,7 +109,7 @@
   $('[data-cert-issue]').addEventListener('click', async () => {
     const btn = $('[data-cert-issue]');
     const state = getState();
-    if (!state.finalScore || !state.name) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先通過總測驗並填上名字。</div>'; return; }
+    if (!state.finalScore || !state.name || !projectReady(state.project).ok) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先完成作品登記、通過總測驗，並填上名字。</div>'; return; }
     btn.disabled = true;
     try {
       const cert = await window.Members.issueCertificate(state.name);
@@ -116,6 +148,7 @@
   window.addEventListener('afterprint', () => document.documentElement.classList.remove('print-cert'));
 
   renderReview();
+  renderProject();
   startExam();
   renderCert();
 
@@ -139,8 +172,9 @@
 
   window.Tour.register([
     { tour: 'review', title: '學習紀錄', text: '十個必修單元的小測驗成績。沒過的可以點進去重做。' },
+    { tour: 'build', title: '做出你的工具', text: '課中用 90 分鐘把你的題目做出第一版並上線。做完把網址填進「作品登記」，四項檢查都打勾。' },
     { tour: 'exam', title: '總測驗', text: '12 題、80 分過關。每次都會重新抽題、打亂選項。' },
-    { tour: 'cert', title: '結業證書', text: '通過總測驗並輸入名字後，就能列印證書或存成 PDF。' },
+    { tour: 'cert', title: '結業證書', text: '作品登記完成、通過總測驗、輸入名字後，就能列印證書或存成 PDF。作品網址會印在證書上。' },
     { tour: 'growth', title: '上課前 vs 現在', text: '把單元 1 拉過的五種能力再拉一次，右邊會顯示每一項進步了幾分。' },
     { tour: 'next', title: '結業之後', text: '明天就能做的五件事，做完打勾。' },
   ]);

@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609270707">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609270707">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609280238">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609280238">
 </head>
 <body data-module="m5" data-base="../">
 <header data-course-header></header>
@@ -190,26 +190,27 @@
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">課中工作坊</span><h2>30 分鐘上線挑戰</h2><p>把單元 2 做的自我介紹網頁，用 GitHub Pages 放上網路。</p></div></div>
+      <div><span class="kicker">課中工作坊</span><h2>30 分鐘上線挑戰</h2><p>先用自我介紹網頁暖身、走一次上線流程，再把<b>你的題目</b>做出第一個畫面，也放上網路。</p></div></div>
     <div class="ws-how card">
-      <p><b>👥 怎麼分組</b>個人做，兩人互測</p>
-      <p><b>🎒 要準備</b>做好的網頁、GitHub 帳號</p>
-      <p><b>🎁 做完要交出</b>一個真的能用網址打開的網站，並請夥伴用他的手機開一次</p>
+      <p><b>👥 怎麼分組</b>個人做，同組互測</p>
+      <p><b>🎒 要準備</b>做好的自我介紹網頁、GitHub 帳號、單元 01 的題目卡</p>
+      <p><b>🎁 做完要交出</b>你的題目的第一個畫面，真的能用網址打開，並請同組的人用他的手機開一次</p>
       <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
     </div>
     <div class="workshop">
       <p><span class="phase phase-in">課中．約 35 分</span></p>
       <ol>
-        <li><span class="time">0–15 分</span>用第 04 段的指令請 Claude Code 上線（記得 repo 要 Public，而且裡面沒有任何密碼）。</li>
-        <li><span class="time">15–20 分</span>把網址貼到課程群組。</li>
-        <li><span class="time">20–30 分</span>用<b>手機</b>打開三位同學的網址，各找一個問題（字太小、按鈕按不到、圖片跑版），留言給對方。</li>
+        <li><span class="time">0–10 分</span>暖身：用第 04 段的指令請 Claude Code 把自我介紹網頁上線（記得 repo 要 Public，而且裡面沒有任何密碼）。</li>
+        <li><span class="time">10–25 分</span>開一個新資料夾給你的題目，把 CLAUDE.md 放進去。請 Claude Code 照題目卡做出<b>第一個畫面</b>：標題、一句說明、主要的按鈕或表單長什麼樣子。先「看得到」就好，還不用真的能用。做好一樣上線。</li>
+        <li><span class="time">25–30 分</span>把題目的網址貼到課程群組，用<b>手機</b>打開同組兩位的網址，各找一個問題（字太小、按鈕按不到、看不懂要做什麼），留言給對方。</li>
         <li><span class="time">30–35 分</span>把收到的問題貼給 Claude Code 修好，再 push 一次，看網站自動更新。</li>
       </ol>
       <div data-teacher-slot="m5-1"></div>
     </div>
     <div class="print-only card">
       <h3>✍️ 我的網站</h3>
-      <p>網址：<span class="blank" style="min-width:24em"></span></p>
+      <p>自我介紹：<span class="blank" style="min-width:22em"></span></p>
+      <p>我的題目：<span class="blank" style="min-width:22em"></span></p>
       <p>同學幫我找到的問題：</p><div class="write-lines"></div>
     </div>
   </section>
@@ -225,9 +226,9 @@
     <div class="section-head"><span class="section-num">10</span>
       <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
     <div class="card"><ul class="checklist" data-checklist="m5-home">
-      <li><label><input type="checkbox" value="live"> 自我介紹網頁已經上線，而且用手機打得開</label></li>
+      <li><label><input type="checkbox" value="live"> 自我介紹網頁和題目的第一個畫面都已經上線，而且用手機打得開</label></li>
       <li><label><input type="checkbox" value="update"> 請 Claude Code 改一個地方、push，確認網站在幾分鐘內自動更新</label></li>
-      <li><label><input type="checkbox" value="plan"> 想一想：你的課程題目是靜態還是動態？如果是動態，會放在哪個平台？</label></li>
+      <li><label><input type="checkbox" value="plan"> 想一想：你的題目需要把資料存起來嗎（靜態還是動態）？如果是動態，會放在哪個平台？寫進題目卡，單元 09 會用到</label></li>
     </ul></div>
   </section>
 </main>
@@ -235,16 +236,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 05　各平台的方案與介面以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609270707"></script>
-<script src="../assets/js/quiz-bank.js?v=202609270707"></script>
-<script src="../assets/js/config.js?v=202609270707"></script>
-<script src="../assets/js/core.js?v=202609270707"></script>
-<script src="../assets/js/members.js?v=202609270707"></script>
-<script src="../assets/js/tour.js?v=202609270707"></script>
-<script src="../assets/js/glossary-data.js?v=202609270707"></script>
-<script src="../assets/js/glossary.js?v=202609270707"></script>
-<script src="../assets/js/workbench.js?v=202609270707"></script>
-<script src="../assets/js/sims/m5-ship.js?v=202609270707"></script>
-<script src="../assets/js/modules/m5.js?v=202609270707"></script>
+<script src="../assets/js/lib.js?v=202609280238"></script>
+<script src="../assets/js/quiz-bank.js?v=202609280238"></script>
+<script src="../assets/js/config.js?v=202609280238"></script>
+<script src="../assets/js/core.js?v=202609280238"></script>
+<script src="../assets/js/members.js?v=202609280238"></script>
+<script src="../assets/js/tour.js?v=202609280238"></script>
+<script src="../assets/js/glossary-data.js?v=202609280238"></script>
+<script src="../assets/js/glossary.js?v=202609280238"></script>
+<script src="../assets/js/workbench.js?v=202609280238"></script>
+<script src="../assets/js/sims/m5-ship.js?v=202609280238"></script>
+<script src="../assets/js/modules/m5.js?v=202609280238"></script>
 </body>
 </html>
