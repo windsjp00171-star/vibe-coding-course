@@ -80,7 +80,7 @@
         ${stat(students.length, '註冊學員', `其中 ${enrolled.length} 位已開通`)}
         ${stat(active, '開始上課', '至少過關一個單元')}
         ${stat(avg.toFixed(1), '平均完成單元', `全部共 ${ready} 個`)}
-        ${stat(finished, '完成全部單元', '可以發證書了')}
+        ${stat(finished, '完成全部單元', '可以結業了')}
       </div>
       <div class="card" style="margin-bottom:18px">
         <h3>🧰 講師工具</h3>
@@ -393,7 +393,7 @@
   const BACKUP_TABLES = [
     ['profiles', '會員'], ['classes', '班級'], ['class_members', '班級成員'], ['progress', '學習進度'],
     ['cohorts', '報名梯次'], ['signups', '報名名單'], ['contact_messages', '聯絡留言'],
-    ['certificates', '結業證書'], ['teacher_invites', '講師邀請'], ['teacher_notes', '講師筆記'],
+    ['certificates', '結業證明'], ['teacher_invites', '講師邀請'], ['teacher_notes', '講師筆記'],
   ];
   async function exportAll(btn) {
     const db = window.Members.client;

@@ -66,7 +66,7 @@
           <div class="me-ring" style="--p:${pct}"><b>${pct}%</b></div>
           <p style="font-weight:800;margin:.2em 0">完成 ${done} ／ ${total} 個單元</p>
           <p class="muted" style="font-size:.9rem">過關標準是小測驗答對 70%。</p>
-          <p><a class="btn btn-sm" href="modules/09-final.html">🎓 總測驗與證書</a></p>
+          <p><a class="btn btn-sm" href="modules/09-final.html">🎓 做出你的工具與結業</a></p>
           <p><a class="btn btn-sm btn-ghost" href="handout.html?m=book">🖨️ 印我的講義</a></p>
         </aside>
       </div>`;
