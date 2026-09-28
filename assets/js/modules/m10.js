@@ -1,4 +1,4 @@
-/* m10.js — 單元 10：Supabase 雲端資料庫 */
+/* m10.js — 單元 10：存資料（放在哪、誰看得到、用範本做出有門禁的登記系統） */
 (function () {
   'use strict';
   const { $, $$, esc, mountQuiz, renderPrintQuiz, mountClassify } = window.Course;
@@ -52,6 +52,15 @@
   $('[data-rls]').addEventListener('change', renderRls);
   renderRls();
 
+  // ---------- 資料要放在哪 ----------
+  mountClassify($('[data-classify-where]'), [
+    { text: '自己用的記帳小工具，資料只有自己看。', answer: 'browser', why: '只有自己用，存在自己的瀏覽器就好，不用登入、不用資料庫。' },
+    { text: '調查部門聚餐吃葷還是素，主辦人統計完就結束。', answer: 'form', why: '只是「收」大家的回答，主辦人一個人看，Google 表單最快。' },
+    { text: '設備借用：每個人看得到自己借了什麼，管理員要審核、改成「已確認」。', answer: 'db', why: '要登入、每個人看自己的、有人審核改狀態，這就需要資料庫和權限。' },
+    { text: '把每月三份報表合併整理成一份。', answer: 'browser', why: '檔案在自己電腦上處理就好，資料不用上傳到任何地方，還比較安全。' },
+    { text: '請假系統：同事送假單，主管核准，同事要看得到自己的假單狀態。', answer: 'db', why: '有登入、有審核、有狀態，而且假單只能給本人和主管看。' },
+  ], [{ key: 'browser', label: '🖥️ 瀏覽器' }, { key: 'form', label: '📝 Google 表單' }, { key: 'db', label: '🗄️ 資料庫' }], { title: '資料要放在哪？' });
+
   // ---------- 哪把鑰匙可以放在哪 ----------
   mountClassify($('[data-classify-keys]'), [
     { text: '把 sb_publishable_ 開頭的金鑰寫在網頁的 config.js 裡。', answer: 'ok', why: '這把本來就是設計給網頁用的，真正的保護靠 RLS。這個課程網站就是這樣做的。' },
@@ -68,9 +77,13 @@
   renderPrintQuiz($('[data-quiz-print]'), QUIZ);
 
   window.Tour.register([
+    { tour: 'where', title: '資料放在哪', text: '先判斷要不要用資料庫：自己用放瀏覽器、只是收回條用 Google 表單、要登入和審核才用資料庫。' },
+    { tour: 'draw', title: '畫成一張表', text: '動手前先在紙上決定：一列是什麼、有哪些欄位。' },
     { tour: 'rls', title: 'RLS 模擬', text: '切換「你是誰」和 RLS 開關，看看同一張表每個人能看到什麼。' },
+    { tour: 'matrix', title: '權限矩陣', text: '誰能新增、看、改、刪。範本已經照這張表設定好。' },
     { tour: 'keys', title: '兩把鑰匙', text: '分清楚哪把鑰匙可以放在網頁上、哪把絕對不行。' },
+    { tour: 'template', title: '起始範本', text: '下載講師準備好的登記系統，照 README 五步設定，改成你的題目。' },
     { tour: 'pits', title: '真實事故', text: '講師在資料庫上踩過的坑，點卡片翻面。' },
-    { tour: 'workshop', title: '工作坊', text: '課堂上用 Claude Code 建一張有門禁的報名表。' },
+    { tour: 'workshop', title: '工作坊', text: '裝好範本、上線，再用第二個帳號確認門禁真的有效。' },
   ]);
 })();

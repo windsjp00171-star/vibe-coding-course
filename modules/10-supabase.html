@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Supabase：雲端資料庫｜Vibe Coding 實戰課</title>
-  <meta name="description" content="用「雲端的共用 Excel」理解資料庫，親手切換 RLS 看每個人能看到哪些資料，分清楚兩種金鑰，以及講師踩過的資料庫坑。">
+  <title>存資料：放在哪、誰看得到｜Vibe Coding 實戰課</title>
+  <meta name="description" content="判斷資料該放瀏覽器、Google 表單還是資料庫；把題目畫成一張表、排出權限矩陣，再用講師的範本做出有 Email 登入和門禁（RLS）的登記系統。">
   <!-- 分享到 LINE／Facebook 時的預覽（標題、說明、圖） -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Vibe Coding 實戰課">
   <meta property="og:locale" content="zh_TW">
-  <meta property="og:title" content="Supabase：雲端資料庫｜Vibe Coding 實戰課">
-  <meta property="og:description" content="用「雲端的共用 Excel」理解資料庫，親手切換 RLS 看每個人能看到哪些資料，分清楚兩種金鑰，以及講師踩過的資料庫坑。">
+  <meta property="og:title" content="存資料：放在哪、誰看得到｜Vibe Coding 實戰課">
+  <meta property="og:description" content="判斷資料該放瀏覽器、Google 表單還是資料庫；把題目畫成一張表、排出權限矩陣，再用講師的範本做出有 Email 登入和門禁（RLS）的登記系統。">
   <meta property="og:url" content="https://windsjp00171-star.github.io/vibe-coding-course/modules/10-supabase.html">
   <meta property="og:image" content="https://windsjp00171-star.github.io/vibe-coding-course/assets/img/og-course.jpg">
   <meta property="og:image:width" content="1200">
@@ -19,32 +19,49 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609280322">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609280322">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609280340">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609280340">
 </head>
 <body data-module="m10" data-base="../">
 <header data-course-header></header>
 
 <main class="wrap">
   <section class="module-hero slide">
-    <span class="eyebrow"><b>10</b> D 進階選修．資料庫</span>
-    <h1>資料庫就是一本<br><em>有門禁的雲端 Excel</em></h1>
-    <p class="lead">報名表要存名單、會員要有帳號，資料就得放在一個「大家都能連、但不是人人都能看」的地方。講師大部分的系統都用 Supabase。這個單元帶你搞懂它，特別是最重要的那道門禁：RLS。</p>
+    <span class="eyebrow"><b>10</b> C 存資料</span>
+    <h1>資料要放在哪？<br>誰<em>看得到</em>？</h1>
+    <p class="lead">報名、請假、借設備、訂便當……上班族想做的工具，大多要「把大家填的東西存起來」。這個單元從最根本的問題開始：資料到底要放在哪、長什麼樣、誰可以看。最後用講師準備好的範本，做出一個真的有登入、有門禁的登記系統。</p>
     <ul class="goals">
-      <li>說得出資料庫和 Excel 的相同與不同</li>
-      <li>親手體驗 RLS 如何決定「誰看得到哪一列」</li>
+      <li>判斷資料該放在瀏覽器、Google 表單，還是資料庫</li>
+      <li>把自己的題目畫成一張表，說得出誰能看、誰能改</li>
+      <li>用範本建好有門禁（RLS）的登記系統，並用第二個帳號驗證</li>
       <li>分清楚可以公開和絕對不能公開的金鑰</li>
     </ul>
     <div class="meta-row">
-      <span class="phase phase-pre">課前自學 約 20 分</span>
-      <span class="phase phase-in">課中工作坊 約 35 分</span>
-      <span class="phase phase-post">課後任務 約 15 分</span>
+      <span class="phase phase-pre">課前自學 約 25 分</span>
+      <span class="phase phase-in">課中工作坊 約 150 分</span>
+      <span class="phase phase-post">課後任務 約 20 分</span>
     </div>
     <div data-teacher-slot="m10-1"></div>
   </section>
 
-  <section class="slide" id="what">
+  <section class="slide" id="where" data-tour="where">
     <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">先問這個</span><h2>資料要放在哪？不一定要用資料庫</h2>
+        <p>很多人一想到「存資料」就要架資料庫。其實先問兩個問題：<b>誰要看得到？</b><b>需不需要登入？</b></p></div></div>
+    <div class="table-wrap card" style="margin-bottom:18px"><table class="compare">
+      <thead><tr><th>放在哪</th><th>適合</th><th>例子</th><th>缺點</th></tr></thead>
+      <tbody>
+        <tr><th>🖥️ 使用者自己的瀏覽器</th><td>只有自己用，資料不用給別人看</td><td>個人記帳、報表整理器、計算機</td><td>換台電腦就不見；別人看不到</td></tr>
+        <tr><th>📝 Google 表單＋試算表</th><td>只是要「收」大家填的東西，主辦人一個人看</td><td>聚餐調查、活動回條</td><td>填的人看不到自己填過什麼；很難做登入、分權限</td></tr>
+        <tr class="hl"><th>🗄️ 資料庫（Supabase）</th><td>要登入、每個人看自己的、管理者看全部、還要改狀態</td><td>設備借用、請假、報名審核、訂單</td><td>要設定權限，設錯就會外洩（這個單元教你怎麼設對）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="analogy">先用最簡單的方法。<strong>Google 表單做得到的，就用 Google 表單</strong>；需要「每個人看自己的、有人審核、狀態會變」，才用資料庫。知道什麼時候<strong>不用</strong>寫程式，也是導演的能力。</div>
+    <div class="card screen-only" data-classify-where></div>
+  </section>
+
+  <section class="slide" id="what">
+    <div class="section-head"><span class="section-num">02</span>
       <div><span class="kicker">先講概念</span><h2>資料庫跟 Excel 哪裡一樣、哪裡不一樣？</h2></div></div>
     <div class="table-wrap card"><table class="compare">
       <thead><tr><th></th><th>Excel</th><th class="hl">資料庫（Supabase）</th></tr></thead>
@@ -53,14 +70,43 @@
         <tr><th>放在哪</th><td>你的電腦或雲端硬碟</td><td class="hl">雲端，網站和 App 隨時都能讀寫</td></tr>
         <tr><th>多人同時用</th><td>容易互相蓋掉</td><td class="hl">幾千人同時報名也不會亂</td></tr>
         <tr><th>誰能看</th><td>拿到檔案就全部看得到</td><td class="hl"><b>可以規定每個人只能看某幾列</b>（RLS）</td></tr>
-        <tr><th>規則</th><td>靠大家自律</td><td class="hl">可以規定「電話一定要填」「年齡不能是負的」</td></tr>
+        <tr><th>規則</th><td>靠大家自律</td><td class="hl">可以規定「電話一定要填」「狀態只能是這三種」</td></tr>
       </tbody>
     </table></div>
-    <div class="analogy"><strong>Supabase 是什麼？</strong>一個幫你準備好「雲端資料庫＋會員登入＋檔案儲存」的服務，免費方案就能開始用。講師的財務系統、報名系統、靈修日記、LINE 小秘書，還有這個課程網站的會員功能，都是用它做的。</div>
+    <div class="analogy"><strong>Supabase 是什麼？</strong>一個幫你準備好「雲端資料庫＋會員登入＋檔案儲存」的服務，免費方案就能開始用。講師的報名系統、靈修日記、LINE 小秘書，還有這個課程網站的會員功能，都是用它做的。</div>
+  </section>
+
+  <section class="slide" id="draw" data-tour="draw">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">紙上練習</span><h2>把你的題目畫成一張表</h2>
+        <p>動手之前，先在紙上畫：<b>一列是什麼？</b>（一次借用、一張假單、一筆訂單）<b>有哪些欄位？</b>（每一欄要填什麼）</p></div></div>
+    <div class="split">
+      <div class="card">
+        <h3>例子：設備借用</h3>
+        <div class="table-wrap"><table class="compare">
+          <thead><tr><th>姓名</th><th>要借的設備</th><th>使用日期</th><th>備註</th><th>狀態</th></tr></thead>
+          <tbody><tr><td>王小明</td><td>投影機</td><td>10/1</td><td>—</td><td>待處理</td></tr><tr><td>陳美美</td><td>筆電</td><td>10/2</td><td>會議用</td><td>已確認</td></tr></tbody>
+        </table></div>
+        <p class="muted" style="margin-top:10px">「狀態」和「時間」範本已經幫你準備好了，你只要決定前面那幾欄。</p>
+      </div>
+      <div>
+        <p><b>三個好習慣</b></p>
+        <ul>
+          <li><b>只收用得到的</b>：用不到的欄位不要收，尤其是身分證字號、生日、住址（單元 21）</li>
+          <li><b>能選就不要打字</b>：葷素、部門、設備用下拉選單，資料才整齊</li>
+          <li><b>欄位名稱用白話</b>：之後匯出給主管看，一看就懂</li>
+        </ul>
+      </div>
+    </div>
+    <div class="print-only card">
+      <h3>✍️ 我的資料表</h3>
+      <p>一列是：<span class="blank" style="min-width:14em"></span></p>
+      <p>欄位（名稱／要填什麼／打字還是選擇）：</p><div class="write-lines"></div>
+    </div>
   </section>
 
   <section class="slide" id="rls" data-tour="rls">
-    <div class="section-head"><span class="section-num">02</span>
+    <div class="section-head"><span class="section-num">04</span>
       <div><span class="kicker">動手玩．最重要的一課</span><h2>RLS：誰看得到哪一列？</h2>
         <p>這是一張聚餐報名表。切換「你是誰」和「RLS 開關」，看看每個人能看到哪些資料。</p></div></div>
     <div class="split">
@@ -78,8 +124,23 @@
     </div>
   </section>
 
+  <section class="slide" id="matrix" data-tour="matrix">
+    <div class="section-head"><span class="section-num">05</span>
+      <div><span class="kicker">權限矩陣</span><h2>誰可以看、誰可以改？</h2>
+        <p>把「誰」和「能做什麼」排成一張表，就是權限矩陣。下面是範本已經設定好的規則，你的題目大多可以直接用。</p></div></div>
+    <div class="table-wrap card"><table class="compare">
+      <thead><tr><th></th><th>新增</th><th>看自己的</th><th>看別人的</th><th>改狀態</th><th>刪除</th></tr></thead>
+      <tbody>
+        <tr><th>🕶️ 沒登入的人</th><td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td></tr>
+        <tr><th>🙋 登入的人</th><td>✓（只能用自己的名義）</td><td>✓</td><td>✗</td><td>✗</td><td>✓ 自己的</td></tr>
+        <tr class="hl"><th>🧑‍💼 管理者</th><td>✓</td><td>✓</td><td>✓ 全部</td><td>✓</td><td>✓ 全部</td></tr>
+      </tbody>
+    </table></div>
+    <div class="analogy" style="margin-top:14px">新帳號<strong>預設什麼都不能多做</strong>，管理者要另外指定。寧可少給、之後再加，不要一開始就全開。</div>
+  </section>
+
   <section class="slide" id="keys" data-tour="keys">
-    <div class="section-head"><span class="section-num">03</span>
+    <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker">兩把鑰匙</span><h2>哪一把可以放在網頁上？</h2></div></div>
     <div class="grid grid-2" style="margin-bottom:18px">
       <div class="card"><span class="pill pill-ok">可以公開</span><h3>🪪 Publishable key（訪客證）</h3><p>以 <code>sb_publishable_</code> 開頭（舊版叫 anon key）。放在網頁上沒關係，因為拿著它能做什麼，完全由 RLS 規則決定。</p></div>
@@ -88,58 +149,87 @@
     <div class="card screen-only" data-classify-keys></div>
   </section>
 
+  <section class="slide" id="template" data-tour="template">
+    <div class="section-head"><span class="section-num">07</span>
+      <div><span class="kicker">起始範本</span><h2>一個已經裝好門禁的登記系統</h2>
+        <p>權限最容易出錯，所以講師先把它做對了。你要做的，是把範本<b>改成你的題目</b>。</p></div></div>
+    <div class="split">
+      <div class="card">
+        <h3>📦 範本裡有什麼</h3>
+        <ul>
+          <li><b>Email 登入</b>：點信裡的連結就登入，不用記密碼</li>
+          <li><b>登記表單</b>：欄位寫在 <code>config.js</code>，改欄位不用改資料庫</li>
+          <li><b>我的登記</b>／<b>全部登記（管理者）</b>：上面那張權限矩陣</li>
+          <li><b>下載 CSV 與備份</b>，還有離線看備份的 <code>reader.html</code></li>
+          <li><code>setup.sql</code>：建資料表和權限，貼上按一次 Run</li>
+          <li><code>CLAUDE.md</code>：提醒 Claude Code「不要為了讓功能能動去關掉權限」</li>
+          <li><code>README.md</code>：設定步驟，以及給接手的人看的說明</li>
+        </ul>
+        <p><a class="btn btn-primary" href="../downloads/vibe-starter.zip" download>⬇️ 下載範本（vibe-starter.zip）</a></p>
+      </div>
+      <div>
+        <p><b>設定只要五步（詳細在範本的 README.md）</b></p>
+        <ol>
+          <li>在 Supabase 建一個新專案</li>
+          <li>SQL Editor 貼上 <code>setup.sql</code>，最後一行換成你的 Email，按 Run</li>
+          <li>Authentication → URL Configuration 填上你的網站網址</li>
+          <li>把 Project URL 和 <b>publishable</b> key 貼進 <code>config.js</code></li>
+          <li>push、開 GitHub Pages（單元 05）</li>
+        </ol>
+        <div class="callout callout-warn"><b>免費方案寄登入信有數量限制</b>：一小時只能寄幾封。上課時不要一直重寄，第二個帳號可以回家再測。</div>
+      </div>
+    </div>
+  </section>
+
   <section class="slide" id="pits" data-tour="pits">
-    <div class="section-head"><span class="section-num">04</span>
+    <div class="section-head"><span class="section-num">08</span>
       <div><span class="kicker">講師踩過的坑</span><h2>資料庫相關的真實事故</h2><p>點卡片看原因，還有下次可以直接對 Claude Code 說的話。</p></div></div>
     <div class="grid grid-2" data-pits></div>
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
-    <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">課中工作坊</span><h2>用 Claude Code 建一張有門禁的報名表</h2></div></div>
+    <div class="section-head"><span class="section-num">09</span>
+      <div><span class="kicker">課中工作坊</span><h2>裝好範本，用第二個帳號驗證門禁</h2></div></div>
     <div class="ws-how card">
-      <p><b>👥 怎麼分組</b>兩人一組</p>
-      <p><b>🎒 要準備</b>Supabase 免費帳號</p>
-      <p><b>🎁 做完要交出</b>一張開好 RLS 的資料表，並用另一個帳號驗證看不到別人的資料</p>
+      <p><b>👥 怎麼分組</b>三人一組（和單元 01 同一組），每個人做自己的</p>
+      <p><b>🎒 要準備</b>Supabase 免費帳號（課前先註冊）、GitHub 帳號、兩個能收信的 Email</p>
+      <p><b>🎁 做完要交出</b>自己的登記系統網址，並用第二個 Email 確認看不到第一個 Email 的資料</p>
       <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
     </div>
     <div class="workshop">
-      <p><span class="phase phase-in">課中．約 35 分</span>　準備：每人一個免費的 Supabase 帳號（課前先註冊）。</p>
+      <p><span class="phase phase-in">課中．約 150 分（中間休息 10 分）</span></p>
       <ol>
-        <li><span class="time">0–10 分</span>在 Supabase 建一個練習專案。<b>建立時勾選「Enable automatic RLS」</b>。</li>
-        <li><span class="time">10–25 分</span>把下面這段指令交給 Claude Code，請它產生 SQL，<b>先不要執行</b>，請它逐行用白話解釋。</li>
-        <li><span class="time">25–35 分</span>兩人一組互相檢查：每張表都有開 RLS 嗎？有沒有任何地方用到 service_role key？</li>
+        <li><span class="time">0–25 分</span>在紙上把你的題目畫成一張表（第 03 段），再照第 05 段填一張權限矩陣。組員互相問：這個欄位真的需要嗎？這個人真的要看得到嗎？</li>
+        <li><span class="time">25–40 分</span>下載範本、解壓縮，用 Claude Code 打開資料夾，請它「讀 README.md 和 CLAUDE.md，用白話跟我說這個專案在做什麼」。</li>
+        <li><span class="time">40–75 分</span>照 README 的五步設定：建 Supabase 專案、貼 <code>setup.sql</code>、填網址、填鑰匙、push 上線。卡住就把錯誤訊息貼給 Claude Code，<b>先把鑰匙換成 xxx</b>。</li>
+        <li><span class="time">75–100 分</span>用你的 Email 登入，新增兩筆；到 Supabase 的 Table Editor 看資料真的進去了。</li>
+        <li><span class="time">100–125 分</span><b>門禁測試</b>：用第二個 Email 登入（或請組員登入），確認看不到你的資料、也看不到「全部登記」。再到 Supabase 的 Advisors 確認沒有「RLS 未開啟」的警告。</li>
+        <li><span class="time">125–150 分</span>請 Claude Code 把 <code>config.js</code> 的欄位改成你第 03 段畫的那張表（先改名稱和欄位就好），push，看網站更新。</li>
       </ol>
-      <pre class="gen-out" id="db-prompt">請幫我設計一個 Supabase 資料表「聚餐報名」：
-- 欄位：姓名、葷素、交通方式、報名時間、報名者帳號
-- 一定要開啟 RLS
-- 規則：報名者只能看、改自己的那一筆；主辦人可以看全部
-- 先產生 SQL 給我看，並逐行用白話解釋，不要直接執行</pre>
-      <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#db-prompt">📋 複製指令</button></p>
       <div data-teacher-slot="m10-2"></div>
     </div>
     <div class="print-only card">
-      <h3>✍️ 我的資料表設計</h3>
-      <p>資料表名稱：<span class="blank" style="min-width:12em"></span></p>
-      <p>欄位：</p><div class="write-lines"></div>
-      <p>誰可以看全部？誰只能看自己的？</p><div class="write-lines"></div>
+      <h3>✍️ 我的登記系統</h3>
+      <p>網址：<span class="blank" style="min-width:22em"></span></p>
+      <p>管理者 Email：<span class="blank" style="min-width:16em"></span></p>
+      <p>門禁測試：□ 第二個帳號看不到我的資料　□ 看不到全部登記　□ Advisors 沒有 RLS 警告</p>
     </div>
   </section>
 
   <section class="slide" id="quiz" data-tour="quiz">
-    <div class="section-head"><span class="section-num">06</span>
+    <div class="section-head"><span class="section-num">10</span>
       <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
 
   <section class="slide" id="homework">
-    <div class="section-head"><span class="section-num">07</span>
+    <div class="section-head"><span class="section-num">11</span>
       <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
     <div class="card"><ul class="checklist" data-checklist="m10-home">
-      <li><label><input type="checkbox" value="account"> 註冊 Supabase 免費帳號，建立一個練習專案</label></li>
-      <li><label><input type="checkbox" value="table"> 用工作坊的指令建好報名表，在 Supabase 後台的 Table Editor 看到它</label></li>
-      <li><label><input type="checkbox" value="advisor"> 打開 Supabase 的 Advisors（安全建議），確認沒有「RLS 未開啟」的警告</label></li>
+      <li><label><input type="checkbox" value="second"> 課堂上沒測完的話：用第二個 Email 登入，確認看不到你的資料和「全部登記」</label></li>
+      <li><label><input type="checkbox" value="fields"> 把 config.js 的欄位改成你的題目，請一位同事或家人實際填一次</label></li>
+      <li><label><input type="checkbox" value="backup"> 用管理者身分按「下載備份」，再用 reader.html 打開，確認看得到剛剛的資料</label></li>
     </ul></div>
   </section>
 </main>
@@ -147,16 +237,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 10　Supabase 介面與方案以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609280322"></script>
-<script src="../assets/js/quiz-bank.js?v=202609280322"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609280322"></script>
-<script src="../assets/js/config.js?v=202609280322"></script>
-<script src="../assets/js/core.js?v=202609280322"></script>
-<script src="../assets/js/members.js?v=202609280322"></script>
-<script src="../assets/js/tour.js?v=202609280322"></script>
-<script src="../assets/js/glossary-data.js?v=202609280322"></script>
-<script src="../assets/js/glossary.js?v=202609280322"></script>
-<script src="../assets/js/modules/electives.js?v=202609280322"></script>
-<script src="../assets/js/modules/m10.js?v=202609280322"></script>
+<script src="../assets/js/lib.js?v=202609280340"></script>
+<script src="../assets/js/quiz-bank.js?v=202609280340"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609280340"></script>
+<script src="../assets/js/config.js?v=202609280340"></script>
+<script src="../assets/js/core.js?v=202609280340"></script>
+<script src="../assets/js/members.js?v=202609280340"></script>
+<script src="../assets/js/tour.js?v=202609280340"></script>
+<script src="../assets/js/glossary-data.js?v=202609280340"></script>
+<script src="../assets/js/glossary.js?v=202609280340"></script>
+<script src="../assets/js/modules/electives.js?v=202609280340"></script>
+<script src="../assets/js/modules/m10.js?v=202609280340"></script>
 </body>
 </html>

@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609280322">
-  <link rel="stylesheet" href="../assets/css/final.css?v=202609280322">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609280340">
+  <link rel="stylesheet" href="../assets/css/final.css?v=202609280340">
 </head>
 <body data-module="m9" data-base="../">
 <header data-course-header></header>
@@ -29,7 +29,7 @@
   <section class="module-hero slide">
     <span class="eyebrow"><b>09</b> 結業</span>
     <h1>最後一哩：<br>做出<em>你自己的工具</em></h1>
-    <p class="lead">這門課的結業作品，是你從單元 01 開始想的那個題目。課中先用 90 分鐘把它做出第一版、放上網路，再上台發表。結業證明要三樣都有：<b>上線的作品</b>、<b>上線前檢查</b>、<b>總測驗 80 分</b>。</p>
+    <p class="lead">這門課的結業作品，是你從單元 01 開始想的那個題目。單元 10 已經裝好有登入、有門禁的登記系統，課中再用 90 分鐘把它改成你的題目、放上網路，然後上台發表。結業證明要三樣都有：<b>上線的作品</b>、<b>上線前檢查</b>、<b>總測驗 80 分</b>。</p>
     <div class="meta-row">
       <span class="phase phase-pre">課前 總測驗 約 15 分</span>
       <span class="phase phase-in">課中 做出你的工具＋成果發表 約 150 分</span>
@@ -47,17 +47,17 @@
       <div><span class="kicker">課中．90 分</span><h2>做出你的工具</h2><p>用這門課學到的方法，把你的題目做出<b>第一版</b>。不求完美，求「真的有人打得開、用得了」。</p></div></div>
     <div class="ws-how card">
       <p><b>👥 怎麼分組</b>三人一組互相幫忙，但每個人做自己的題目</p>
-      <p><b>🎒 要準備</b>單元 01 寫的題目卡、你的 CLAUDE.md、單元 03 存下來的規劃</p>
+      <p><b>🎒 要準備</b>單元 01 的題目卡、單元 10 裝好的登記系統（或你自己的專案）、你的 CLAUDE.md</p>
       <p><b>🎁 做完要交出</b>一個別人打得開的網址，並在下面登記</p>
-      <p class="muted">卡住超過 10 分鐘就舉手，或請同組的人看一下。講師會巡場。</p>
+      <p class="muted">你的題目不需要存別人的資料（例如報表整理器、計算機）？不用範本也可以，照單元 05 的方式做。卡住超過 10 分鐘就舉手，或請同組的人看一下。講師會巡場。</p>
     </div>
     <div class="workshop">
       <p><span class="phase phase-in">課中．約 90 分</span></p>
       <ol>
-        <li><span class="time">0–10 分</span>打開你的專案，確認 CLAUDE.md 還在；用<b>規劃模式</b>請 Claude Code 讀你的題目卡，列出「第一版只做哪三件事」。多的先放進「之後再做」。</li>
-        <li><span class="time">10–55 分</span>一次一小步：做一件事 → 自己打開來試 → 沒問題就請它存檔、push。每做完一件，在題目卡上打一個勾。</li>
-        <li><span class="time">55–70 分</span>放上網路（單元 05），用自己的手機打開一次，再請同組的人用他的手機開一次。</li>
-        <li><span class="time">70–85 分</span>開一個新對話，跑一次全域稽核（單元 08），先處理最嚴重的那一項。</li>
+        <li><span class="time">0–10 分</span>打開單元 10 的登記系統，確認 CLAUDE.md 還在；用<b>規劃模式</b>請 Claude Code 讀你的題目卡，列出「第一版只做哪三件事」（例如：改欄位、改說明、加一個管理者）。多的先放進「之後再做」。</li>
+        <li><span class="time">10–55 分</span>一次一小步：做一件事 → 自己打開來試 → 沒問題就請它存檔、push。每做完一件，在題目卡上打一個勾。<b>要改 setup.sql（權限）之前，一定先請它用白話說明誰會多什麼權限。</b></li>
+        <li><span class="time">55–70 分</span>用自己的手機打開一次；請同組的人用<b>他的 Email</b> 登入、填一筆，確認他看不到你的資料。</li>
+        <li><span class="time">70–85 分</span>開一個新對話，跑一次全域稽核（單元 08），先處理最嚴重的那一項；再按一次「下載備份」。</li>
         <li><span class="time">85–90 分</span>請它寫一張收工紙條（Session Snapshot），把網址登記在下面。</li>
       </ol>
       <div data-teacher-slot="m9-build"></div>
@@ -127,7 +127,7 @@
       <li><label><input type="checkbox" value="claudemd"> 每個新專案都先放一份 CLAUDE.md</label></li>
       <li><label><input type="checkbox" value="commit"> 養成「做完一小段就存檔、push」的習慣</label></li>
       <li><label><input type="checkbox" value="env"> 密碼一律放 .env，上線前跑一次全域稽核</label></li>
-      <li><label><input type="checkbox" value="elective"> 挑一個 D 段選修（資料庫、LINE、手機 App）繼續學</label></li>
+      <li><label><input type="checkbox" value="elective"> 挑一個 D 段選修（LINE、手機 App、資料整理）繼續學，或報名 LINE 場</label></li>
     </ul></div>
   </section>
 
@@ -155,14 +155,14 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 09</div></footer>
 
-<script src="../assets/js/lib.js?v=202609280322"></script>
-<script src="../assets/js/quiz-bank.js?v=202609280322"></script>
-<script src="../assets/js/config.js?v=202609280322"></script>
-<script src="../assets/js/core.js?v=202609280322"></script>
-<script src="../assets/js/members.js?v=202609280322"></script>
-<script src="../assets/js/tour.js?v=202609280322"></script>
-<script src="../assets/js/glossary-data.js?v=202609280322"></script>
-<script src="../assets/js/glossary.js?v=202609280322"></script>
-<script src="../assets/js/modules/m9.js?v=202609280322"></script>
+<script src="../assets/js/lib.js?v=202609280340"></script>
+<script src="../assets/js/quiz-bank.js?v=202609280340"></script>
+<script src="../assets/js/config.js?v=202609280340"></script>
+<script src="../assets/js/core.js?v=202609280340"></script>
+<script src="../assets/js/members.js?v=202609280340"></script>
+<script src="../assets/js/tour.js?v=202609280340"></script>
+<script src="../assets/js/glossary-data.js?v=202609280340"></script>
+<script src="../assets/js/glossary.js?v=202609280340"></script>
+<script src="../assets/js/modules/m9.js?v=202609280340"></script>
 </body>
 </html>

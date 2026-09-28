@@ -16,7 +16,7 @@ test('小測驗過關才算預習完成，列出還沒完成的單元', () => {
   assert.strictEqual(r[1].name, '（未命名）');
 });
 
-test('三個半天的預習單元不重複，而且都是必修', () => {
+test('四個半天的預習單元不重複，而且都是必修', () => {
   const all = CLASS_SESSIONS.flatMap((s) => s.units);
   assert.strictEqual(new Set(all).size, all.length);
   assert.ok(!all.includes('m19'), '19 已改成選修');
