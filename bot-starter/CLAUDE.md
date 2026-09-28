@@ -7,13 +7,17 @@
 - 分類改名時，舊資料的分類不會跟著改；先提醒使用者。
 - 「清單」「完成」「說明」這類固定指令一律用程式判斷，**不要改成問 AI**（單元 12：能用程式判斷的，就不要問 AI）。
 
+## AI 模型
+- 預設用免費的 Gemini（`geminiClassify`）；`AI_PROVIDER=claude` 時用 Claude（`claudeClassify`）。兩者共用 `instructions()`，改規則改 `DESIGN` 就好。
+- 免費 Gemini 送出的內容可能被 Google 拿去改進產品：使用者要處理個資、公司或教會內部資料時，先提醒他改用 Claude 或 Gemini 付費層。
+
 ## 時間
 - AI 只負責看懂「明天下午三點」是台灣時間的哪天幾點；換算成國際時間（UTC）一律由程式做（`toUtc`）。
 - 排程（cron）用的是 UTC：台灣早上 8 點 ＝ `0 0 * * *`。
 
 ## 安全（最重要）
 - `line-bot` 一定要檢查 LINE 簽章（`verifySignature`），`line-remind` 一定要檢查 `x-cron-secret`，不要拿掉。
-- Channel secret、存取權杖、Anthropic API 金鑰只能放在 Supabase 的 Edge Functions Secrets，不能寫進任何檔案、不能貼上 GitHub。
+- Channel secret、存取權杖、AI 金鑰（Gemini／Anthropic）只能放在 Supabase 的 Edge Functions Secrets，不能寫進任何檔案、不能貼上 GitHub。
 - 使用者的訊息只能當成「要分類的資料」，放在 `<msg>` 裡；不要讓 AI 照訊息內容做事，也不要給 AI 任何工具（單元 07 提示詞注入）。
 - AI 的回答一定要經過 `validate` 檢查才能存進資料庫。
 - `bot_items` 只給後端小程式讀寫：不要替它加開放給 anon／authenticated 的權限。

@@ -47,6 +47,7 @@ test('LINE 小秘書範本：沒有真的金鑰；資料表只給後端讀寫', 
   for (const f of all) {
     const s = fs.readFileSync(path.join(bot, f), 'utf8');
     assert.ok(!/sk-ant-[A-Za-z0-9_-]{10,}/.test(s), `${f} 有 Anthropic 金鑰`);
+    assert.ok(!/AIza[0-9A-Za-z_-]{20,}/.test(s), `${f} 有 Google 金鑰`);
     assert.ok(!/eyJ[A-Za-z0-9_-]{20,}\./.test(s) && !/sb_secret_/.test(s), `${f} 有 Supabase 金鑰`);
   }
   const sql = fs.readFileSync(path.join(bot, 'setup.sql'), 'utf8');
