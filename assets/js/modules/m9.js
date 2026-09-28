@@ -4,7 +4,7 @@
   const { $, esc, MODULES, getState, update, mountQuiz, mountMeters } = window.Course;
   const { buildExam, projectReady, PROJECT_CHECKS } = window.CourseLib;
 
-  const CORE_UNITS = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm20'];
+  const CORE_UNITS = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm10', 'm20'];
   const EXAM_SIZE = 12;
   const FINAL_PASS_PERCENT = 80;
 
@@ -173,7 +173,7 @@
   mountMeters($('[data-meters-after]'), 'selfRatingAfter', renderGrowth);
 
   window.Tour.register([
-    { tour: 'review', title: '學習紀錄', text: '十個必修單元的小測驗成績。沒過的可以點進去重做。' },
+    { tour: 'review', title: '學習紀錄', text: '十一個必修單元的小測驗成績。沒過的可以點進去重做。' },
     { tour: 'build', title: '做出你的工具', text: '課中用 90 分鐘把你的題目做出第一版並上線。做完把網址填進「作品登記」，四項檢查都打勾。' },
     { tour: 'exam', title: '總測驗', text: '12 題、80 分過關。每次都會重新抽題、打亂選項。' },
     { tour: 'cert', title: '結業證明', text: '作品登記完成、通過總測驗、輸入名字後，就能列印結業證明或存成 PDF。作品網址要不要印在上面，由你自己決定。' },

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>備份閱讀器</title>
+  <meta name="description" content="離線打開登記系統的 JSON 備份檔，不用網路、不用帳號。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top"><h1>備份閱讀器</h1></header>
+  <main class="wrap">
+    <section class="card">
+      <h2>打開備份檔</h2>
+      <p>選管理者頁面下載的 <b>backup-日期.json</b>。不用網路、不用登入，資料不會離開這台電腦。</p>
+      <p><input type="file" accept=".json,application/json" data-file aria-label="選擇備份檔"></p>
+      <p><input type="search" data-q placeholder="搜尋（姓名、項目…）" aria-label="搜尋" hidden></p>
+      <div data-out aria-live="polite"></div>
+    </section>
+  </main>
+  <script>
+    // 離線看備份：不連網、不載入任何外部程式
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let backup = null;
+    function render() {
+      const q = document.querySelector('[data-q]').value.trim();
+      const fields = backup.fields || [];
+      const rows = (backup.rows || []).filter((r) => !q || JSON.stringify(r.data).includes(q));
+      document.querySelector('[data-out]').innerHTML = `<p class="muted">${esc(backup.title || '')}．匯出時間 ${esc(new Date(backup.exported_at).toLocaleString('zh-TW'))}．共 ${rows.length} 筆</p>
+        <div class="table-wrap"><table><thead><tr><th>時間</th>${fields.map((f) => `<th>${esc(f.label)}</th>`).join('')}<th>狀態</th></tr></thead>
+        <tbody>${rows.map((r) => `<tr><td>${esc(new Date(r.created_at).toLocaleString('zh-TW'))}</td>${fields.map((f) => `<td>${esc(r.data[f.key])}</td>`).join('')}<td>${esc(r.status)}</td></tr>`).join('')}</tbody></table></div>`;
+    }
+    document.querySelector('[data-file]').addEventListener('change', async (e) => {
+      try {
+        backup = JSON.parse(await e.target.files[0].text());
+        document.querySelector('[data-q]').hidden = false;
+        render();
+      } catch {
+        document.querySelector('[data-out]').innerHTML = '<div class="notice notice-bad">這個檔案打不開：請選管理者頁面下載的 backup-日期.json。</div>';
+      }
+    });
+    document.querySelector('[data-q]').addEventListener('input', () => backup && render());
+  </script>
+</body>
+</html>

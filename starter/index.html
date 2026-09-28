@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登記系統</title>
+  <meta name="description" content="登入後填寫登記表單；每個人看得到自己的登記，管理者看得到全部。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 data-title>登記系統</h1>
+    <div data-who hidden><span data-email></span> <button type="button" class="btn btn-ghost" data-logout>登出</button></div>
+  </header>
+
+  <main class="wrap">
+    <p class="intro" data-intro></p>
+    <div data-notice aria-live="polite"></div>
+
+    <!-- 還沒登入 -->
+    <section class="card" data-login hidden>
+      <h2>登入</h2>
+      <p>輸入 Email，我們會寄一封信給你，點信裡的連結就登入了，不用記密碼。</p>
+      <form data-login-form class="stack">
+        <label>Email<input type="email" name="email" required autocomplete="email" placeholder="例如：amy@example.com"></label>
+        <button type="submit" class="btn">寄登入連結給我</button>
+      </form>
+    </section>
+
+    <!-- 已登入 -->
+    <section class="card" data-app hidden>
+      <h2>新增一筆登記</h2>
+      <form data-entry-form class="stack"></form>
+    </section>
+
+    <section class="card" data-mine hidden>
+      <h2>我的登記</h2>
+      <div data-mine-list></div>
+    </section>
+
+    <!-- 管理者才看得到（由資料庫判斷，網頁被改也看不到別人的資料） -->
+    <section class="card" data-admin hidden>
+      <h2>全部登記（管理者）</h2>
+      <p class="muted">每個月按一次「下載備份」，存到不是這台電腦的地方。下載的檔案可以用 reader.html 離線打開。</p>
+      <p class="row">
+        <button type="button" class="btn btn-ghost" data-export="csv">⬇️ 下載 Excel 用的 CSV</button>
+        <button type="button" class="btn btn-ghost" data-export="json">⬇️ 下載備份（JSON）</button>
+      </p>
+      <div data-admin-list></div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js" integrity="sha384-AkNSQdptcXlJ0/NBZc4qGk86cDVXcCevwoWgEKIpHOEfbvlXGLlIkimQtONt8KNf" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>

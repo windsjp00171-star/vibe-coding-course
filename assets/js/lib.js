@@ -334,7 +334,7 @@
   // 回傳 'open' 可以看／'login' 要登入／'enroll' 要輸入加入碼／'class' 講師還沒開放
   // 已加入班級的學員一律照講師的開課進度（試用單元也一樣）；試用單元只對還沒加入班級的人開放
   // order：課程實際的上課順序（單元 id 陣列）。單元編號不等於順序——
-  // 20 是後來加進必修的，排在 8 之後、9 之前；19 是選修，排在 18 之後。沒給 order 時才退回用編號比較。
+  // 10、20 是必修，排在 8 之後、9 之前；19 是選修，排在 18 之後。沒給 order 時才退回用編號比較。
   function unitAccess(unit, viewer, order) {
     if (viewer?.role === 'teacher') return 'open';
     const limits = viewer?.enrolled ? viewer.limits || [] : [];
@@ -598,11 +598,12 @@
   // 講師後台「新增／編輯梯次」：把表單的文字轉成資料庫的一列，並擋下明顯填錯的地方。
   // 日期用 toISO 轉（網頁傳 new Date(v).toISOString()），測試可以換成固定的轉法
   const COHORT_KINDS = { core: '實戰課', security: '半日資安課', custom: '客製場次' };
-  // ---- 上課前檢查：三個半天各要先預習哪些單元（和招生頁的課表一致） ----
+  // ---- 上課前檢查：四個半天各要先預習哪些單元（和招生頁的課表一致） ----
   const CLASS_SESSIONS = [
     { key: 'A', label: '半天 A 起步', units: ['m0', 'm1', 'm2', 'm3'] },
     { key: 'B', label: '半天 B 上線與資安', units: ['m4', 'm5', 'm6', 'm7', 'm8'] },
-    { key: 'C', label: '半天 C 做出你的工具', units: ['m20'] },
+    { key: 'C', label: '半天 C 存資料', units: ['m10'] },
+    { key: 'D', label: '半天 D 做出你的工具', units: ['m20'] },
   ];
   // 小測驗過關才算預習完成；回傳每位學員還沒完成的單元
   function prepStatus(units, people = [], rows = []) {
@@ -616,6 +617,7 @@
     { key: 'secrets', label: '密碼和金鑰都放在 .env，程式和 GitHub 上搜不到' },
     { key: 'vibecheck', label: '跑過一次全域稽核（單元 08），最嚴重的問題已經處理' },
     { key: 'phone', label: '用手機打開網址，主要功能都能用' },
+    { key: 'access', label: '用第二個帳號登入過，確認看不到別人的資料和管理者區（沒有存資料的作品可以直接打勾）' },
   ];
   function projectReady(project = {}) {
     const missing = [];
