@@ -12,6 +12,11 @@
 - 只能用 anon／publishable key。**絕對不要**把 service_role／secret key 寫進任何檔案。
 - 不要新增收錢、身分證字號、病歷這類敏感欄位；使用者要求時，先說明風險。
 
+## LINE 加裝包（functions/）
+- Channel secret、存取權杖只能放在 Supabase 的 Edge Functions Secrets，不能寫進任何檔案或 config.js。
+- `line-notify` 一定要檢查 `x-webhook-secret`，不要拿掉。
+- LINE 使用者代號放在 app_metadata（使用者改不了），不要改放到 user_metadata。
+
 ## 每次改完
 - 用白話說你改了什麼、為什麼。
 - 提醒使用者用第二個 Email 登入，確認看不到別人的資料。

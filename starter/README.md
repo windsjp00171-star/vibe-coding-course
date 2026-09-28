@@ -26,6 +26,10 @@
    ⚠️ 不要貼 service_role／secret 那一把。那把鑰匙可以繞過所有權限。
 5. **上線**：push 到 GitHub，開 GitHub Pages（課程單元 05）。
 
+## 想改成用 LINE 登入、狀態改變時 LINE 通知本人？
+
+照 `LINE.md` 做（課程的 LINE 場）。會多兩支放在 Supabase 的後端小程式（`functions/` 資料夾）。
+
 ## 改成你的題目
 
 只要改 `config.js`：`title`（名稱）、`intro`（說明）、`fields`（表單欄位）。
