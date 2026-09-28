@@ -334,7 +334,7 @@
   // 回傳 'open' 可以看／'login' 要登入／'enroll' 要輸入加入碼／'class' 講師還沒開放
   // 已加入班級的學員一律照講師的開課進度（試用單元也一樣）；試用單元只對還沒加入班級的人開放
   // order：課程實際的上課順序（單元 id 陣列）。單元編號不等於順序——
-  // 19、20 是後來加進必修的，排在 8 之後、9 之前。沒給 order 時才退回用編號比較。
+  // 20 是後來加進必修的，排在 8 之後、9 之前；19 是選修，排在 18 之後。沒給 order 時才退回用編號比較。
   function unitAccess(unit, viewer, order) {
     if (viewer?.role === 'teacher') return 'open';
     const limits = viewer?.enrolled ? viewer.limits || [] : [];
@@ -598,6 +598,21 @@
   // 講師後台「新增／編輯梯次」：把表單的文字轉成資料庫的一列，並擋下明顯填錯的地方。
   // 日期用 toISO 轉（網頁傳 new Date(v).toISOString()），測試可以換成固定的轉法
   const COHORT_KINDS = { core: '實戰課', security: '半日資安課', custom: '客製場次' };
+  // ---- 結業作品：證書要有一個真的上線的作品，不是只考選擇題 ----
+  const PROJECT_CHECKS = [
+    { key: 'claudemd', label: '專案裡有 CLAUDE.md，而且寫進了你在各單元加的規則' },
+    { key: 'secrets', label: '密碼和金鑰都放在 .env，程式和 GitHub 上搜不到' },
+    { key: 'vibecheck', label: '跑過一次全域稽核（單元 08），最嚴重的問題已經處理' },
+    { key: 'phone', label: '用手機打開網址，主要功能都能用' },
+  ];
+  function projectReady(project = {}) {
+    const missing = [];
+    const url = String(project.url || '').trim();
+    if (!/^https:\/\/[^\s/]+\.[^\s]+/.test(url) || /localhost|127\.0\.0\.1/.test(url)) missing.push('作品網址（要是別人打得開的 https:// 網址，不是 localhost）');
+    PROJECT_CHECKS.forEach((c) => { if (!project.checks?.[c.key]) missing.push(c.label); });
+    return { ok: missing.length === 0, missing };
+  }
+
   // ---- 報名 → 繳費 → 給加入碼：一個梯次對應一個同名班級 ----
   // 費用填 0 的梯次是免費的，報名就可以開通；其他梯次要講師把狀態改成「已繳費」
   const isFreeCohort = (c) => c?.price === 0; // 沒填費用（null）不算免費，要講師確認
@@ -673,7 +688,7 @@
     return cap ? Math.max(0, cap - taken) : null;
   }
 
-  const api = { priceText, isFreeCohort, signupLabels, canActivate, activationNotice, COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
+  const api = { PROJECT_CHECKS, projectReady, priceText, isFreeCohort, signupLabels, canActivate, activationNotice, COHORT_KINDS, cohortFromForm, CONTACT_TOPICS, checkContact, RATING_LEVELS, ratingLevel, SEAT, SEAT_MESSAGE, seatVerdict, seatsLeft, estimateCost, FREE_LIMITS, POLICY_CLAUSES, buildPolicy, BACKUP_LAYERS, DISASTERS, backupCoverage, certCode, normalizeCertCode, formatCertCode, isCertCode, CERT_LENGTH, storageKey, storageLabel, toCSV, cleanRows, toHalfWidth, upgradePrompt, PROMPT_UPGRADES, matchNeeds, unitAccess, SELF_SKILLS, DEFAULT_RATING, weakestSkill, compareRatings, firstSentence, unitTerms, maskPII, scanCode, checkPrompt, classifyNote, utcToTaiwan, simulatePushWeek, scoreQuiz, scoreGate, shuffle, pick, buildExam, matchTerms, PASS_PERCENT, GATE_POINTS };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CourseLib = api;
