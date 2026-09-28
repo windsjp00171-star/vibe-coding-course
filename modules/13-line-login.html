@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609282331">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609282331">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609282331">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609282349">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609282349">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609282349">
 </head>
 <body data-module="m13" data-base="../">
 <header data-course-header></header>
@@ -136,7 +136,7 @@
           <li><b>兩支後端小程式</b>（Supabase Edge Functions）：<code>line-login</code> 拿一次性代碼換登入身分；<code>line-notify</code> 在狀態被改時推訊息。秘密金鑰只放在這裡。</li>
           <li><b>資料庫觸發</b>（Database Webhook）：登記一被改，就叫 <code>line-notify</code> 起來工作，並附上暗號，別人冒充不了。</li>
         </ol>
-        <p class="muted">步驟都寫在範本的 <code>LINE.md</code>，照著做就好，不用裝任何指令工具。</p>
+        <p class="muted">步驟都寫在範本的 <code>LINE.md</code>，照著做就好，不用裝任何指令工具。LINE 的畫面看<a href="../guide-line.html#login">圖解：LINE Developers</a>，Supabase 的畫面看<a href="../guide-supabase.html#s7">圖解：Supabase</a>。</p>
       </div>
       <div>
         <div class="callout callout-danger"><b>最容易出事的兩件事</b><br>① Channel secret 和存取權杖寫進 <code>config.js</code> 或貼上 GitHub：它們只能放在 Supabase 的 Secrets。<br>② 兩個 channel 建在不同的 Provider：LINE 給的使用者代號會不一樣，通知永遠送不到，而且<b>不會有任何錯誤訊息</b>。</div>
@@ -184,18 +184,18 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 13　LINE 平台規則以 LINE Developers 官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609282331"></script>
-<script src="../assets/js/quiz-bank.js?v=202609282331"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609282331"></script>
-<script src="../assets/js/config.js?v=202609282331"></script>
-<script src="../assets/js/core.js?v=202609282331"></script>
-<script src="../assets/js/members.js?v=202609282331"></script>
-<script src="../assets/js/tour.js?v=202609282331"></script>
-<script src="../assets/js/glossary-data.js?v=202609282331"></script>
-<script src="../assets/js/glossary.js?v=202609282331"></script>
-<script src="../assets/js/modules/electives.js?v=202609282331"></script>
-<script src="../assets/js/workbench.js?v=202609282331"></script>
-<script src="../assets/js/sims/m13-login.js?v=202609282331"></script>
-<script src="../assets/js/modules/m13.js?v=202609282331"></script>
+<script src="../assets/js/lib.js?v=202609282349"></script>
+<script src="../assets/js/quiz-bank.js?v=202609282349"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609282349"></script>
+<script src="../assets/js/config.js?v=202609282349"></script>
+<script src="../assets/js/core.js?v=202609282349"></script>
+<script src="../assets/js/members.js?v=202609282349"></script>
+<script src="../assets/js/tour.js?v=202609282349"></script>
+<script src="../assets/js/glossary-data.js?v=202609282349"></script>
+<script src="../assets/js/glossary.js?v=202609282349"></script>
+<script src="../assets/js/modules/electives.js?v=202609282349"></script>
+<script src="../assets/js/workbench.js?v=202609282349"></script>
+<script src="../assets/js/sims/m13-login.js?v=202609282349"></script>
+<script src="../assets/js/modules/m13.js?v=202609282349"></script>
 </body>
 </html>

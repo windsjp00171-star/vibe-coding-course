@@ -22,6 +22,10 @@
 
 ## 第一次設定（約 60 分鐘，只要做一次）
 
+第一次用？每一步按哪裡，看圖解：
+- LINE：https://windsjp00171-star.github.io/vibe-coding-course/guide-line.html
+- Supabase：https://windsjp00171-star.github.io/vibe-coding-course/guide-supabase.html
+
 ### 1. LINE Developers：建一個 Messaging API channel（約 15 分鐘）
 1. developers.line.biz → 用你的 LINE 登入 → Console → Create a new provider（例如你的名字）。
 2. Create a new channel → **Messaging API**（會引導你建一個 LINE 官方帳號）。

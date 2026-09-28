@@ -15,6 +15,10 @@ LINE 登入和推播都要用到**秘密金鑰**（Channel secret、存取權杖
 
 ---
 
+每一步按哪裡，看圖解：
+- LINE：https://windsjp00171-star.github.io/vibe-coding-course/guide-line.html
+- Supabase：https://windsjp00171-star.github.io/vibe-coding-course/guide-supabase.html
+
 ## 1. LINE Developers：建兩個 channel（約 20 分鐘）
 
 1. 到 developers.line.biz 用你的 LINE 帳號登入，建立一個 **Provider**（例如你的單位名稱）。

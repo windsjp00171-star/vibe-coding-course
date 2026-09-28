@@ -3,6 +3,11 @@
 ## [Unreleased] — 2026-09-26
 
 ### Added
+- 兩頁圖解設定教學，給完全沒用過的人：
+  - `guide-supabase.html`：5 個名詞、10 步（註冊、建專案、貼 SQL、找鑰匙、登入網址、看資料、Secrets、放後端小程式、開排程、看錯誤）
+  - `guide-line.html`：5 個名詞、8 步（登入、Provider、官方帳號、Channel secret、存取權杖、Webhook、關自動回應、加好友測試），加上課後的 LINE 登入設定
+  - 每一步左邊白話說明與常見錯誤，右邊一張示意圖，紅框和號碼標出要按的地方；每一步可以勾「我做完了」，下次回來記得做到哪
+  - 單元 10、12、13 與兩個範本的 README、LINE.md 都連到圖解
 - LINE AI 小秘書範本（`bot-starter/`，下載檔 `downloads/vibe-line-bot.zip`，和登記系統範本一起由 `scripts/build_starter.py` 打包）：
   - 在 LINE 傳一句話，Claude 判斷是待辦、提醒還是筆記並抽出日期時間；提醒時間到了用 LINE 推播，每天台灣早上 8 點（UTC 0 點）推今日清單
   - 「清單」「完成 N」「說明」由程式處理，不花 AI 的錢；時區換算一律由程式做
