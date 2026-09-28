@@ -41,12 +41,30 @@ test('config.js 的欄位格式正確（key 是英文、type 是支援的種類�
   }
 });
 
-test('downloads/vibe-starter.zip 和 starter/ 一致（改了範本要重新打包）', () => {
-  const list = execFileSync('python3', ['-c', `
+test('LINE 小秘書範本：沒有真的金鑰；資料表只給後端讀寫', () => {
+  const bot = path.join(__dirname, '..', 'bot-starter');
+  const all = fs.readdirSync(bot, { recursive: true }).filter((f) => fs.statSync(path.join(bot, f)).isFile());
+  for (const f of all) {
+    const s = fs.readFileSync(path.join(bot, f), 'utf8');
+    assert.ok(!/sk-ant-[A-Za-z0-9_-]{10,}/.test(s), `${f} 有 Anthropic 金鑰`);
+    assert.ok(!/eyJ[A-Za-z0-9_-]{20,}\./.test(s) && !/sb_secret_/.test(s), `${f} 有 Supabase 金鑰`);
+  }
+  const sql = fs.readFileSync(path.join(bot, 'setup.sql'), 'utf8');
+  assert.match(sql, /alter table public\.bot_items enable row level security/);
+  assert.match(sql, /revoke all on public\.bot_items from anon, authenticated/);
+  assert.ok(!/create policy/i.test(sql), '不應該有開放給網頁的規則');
+});
+
+for (const [folder, zip] of [['starter', 'vibe-starter'], ['bot-starter', 'vibe-line-bot']]) {
+  test(`downloads/${zip}.zip 和 ${folder}/ 一致（改了範本要重新打包）`, () => {
+    const src = path.join(__dirname, '..', folder);
+    const count = fs.readdirSync(src, { recursive: true }).filter((f) => fs.statSync(path.join(src, f)).isFile()).length;
+    const list = execFileSync('python3', ['-c', `
 import zipfile,sys
 z=zipfile.ZipFile(sys.argv[1])
 for n in sorted(z.namelist()): print(n, z.read(n) == open(sys.argv[2] + '/' + n.split('/', 1)[1], 'rb').read())
-`, path.join(__dirname, '..', 'downloads', 'vibe-starter.zip'), dir]).toString().trim().split('\n');
-  assert.strictEqual(list.length, files.length, 'zip 裡的檔案數和 starter/ 不同，請執行 python3 scripts/build_starter.py');
-  for (const line of list) assert.ok(line.endsWith('True'), `${line.split(' ')[0]} 和 starter/ 不同，請執行 python3 scripts/build_starter.py`);
-});
+`, path.join(__dirname, '..', 'downloads', `${zip}.zip`), src]).toString().trim().split('\n');
+    assert.strictEqual(list.length, count, `zip 裡的檔案數和 ${folder}/ 不同，請執行 python3 scripts/build_starter.py`);
+    for (const line of list) assert.ok(line.endsWith('True'), `${line.split(' ')[0]} 和 ${folder}/ 不同，請執行 python3 scripts/build_starter.py`);
+  });
+}

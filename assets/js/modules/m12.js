@@ -75,6 +75,7 @@
     { tour: 'flow', title: '訊息的旅程', text: '按「下一步」或「從頭播放」，看一則訊息經過哪些地方。' },
     { tour: 'sim', title: '小秘書模擬器', text: '輸入或點選例句，看它被分類成什麼，以及程式收到的資料格式。' },
     { tour: 'tz', title: '時區陷阱', text: '拉動滑桿，看排程時間換算成台灣時間是幾點。' },
-    { tour: 'workshop', title: '工作坊', text: '課堂上分組設計你自己的小秘書。' },
+    { tour: 'template', title: '小秘書範本', text: '下載講師準備好的範本：你只要改最上面的 DESIGN（分類、規則、口氣），其他的範本都做好了。' },
+    { tour: 'workshop', title: 'LINE 場', text: '半天：先設計你的小秘書，再照 README 讓它在你的 LINE 裡上工，最後互相測試。' },
   ]);
 })();

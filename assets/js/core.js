@@ -20,7 +20,7 @@
     { id: 'm20', part: 'C 資安與存資料', emoji: '🛟', title: '三個月後還救得回來嗎', file: 'modules/20-handover.html', minutes: 20, inClass: 35, post: 15, must: ['pack', 'drill'], mustMin: 10 },
     { id: 'm9', part: '結業', emoji: '🎓', title: '做出你的工具與結業', file: 'modules/09-final.html', minutes: 15, inClass: 150, post: 0 },
     { id: 'm11', part: 'D 進階選修', emoji: '🪪', title: '會員系統：註冊、登入、權限', file: 'modules/11-members.html', minutes: 20, inClass: 40, post: 15 },
-    { id: 'm12', part: 'D 進階選修', emoji: '🤖', title: 'LINE Bot：做一個 AI 小秘書', file: 'modules/12-line-bot.html', minutes: 20, inClass: 40, post: 20 },
+    { id: 'm12', part: 'D 進階選修', emoji: '🤖', title: 'LINE Bot：做一個 AI 小秘書', file: 'modules/12-line-bot.html', minutes: 20, inClass: 180, post: 30 },
     { id: 'm13', part: 'D 進階選修', emoji: '💚', title: 'LINE 登入：免記帳號密碼', file: 'modules/13-line-login.html', minutes: 20, inClass: 35, post: 15 },
     { id: 'm14', part: 'D 進階選修', emoji: '📱', title: 'PWA：讓網站變成手機 App', file: 'modules/14-pwa.html', minutes: 15, inClass: 35, post: 10 },
     { id: 'm15', part: 'D 進階選修', emoji: '🔔', title: '推播通知：主動提醒使用者', file: 'modules/15-push.html', minutes: 20, inClass: 30, post: 10 },

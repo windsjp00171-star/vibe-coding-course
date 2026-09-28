@@ -55,6 +55,6 @@
     { tour: 'pits', title: '五個隱形的坑', text: '從講師踩過的十個坑裡精選五個，點卡片看原因和解法。' },
     { tour: 'handoff', title: '交接文件', text: '把踩過的坑寫成文件交給 AI，是這個單元最重要的技巧。' },
     { tour: 'workshop', title: '工作坊', text: '課堂上寫一份你自己的交接文件。' },
-    { tour: 'line-session', title: 'LINE 場', text: '把 LINE 登入和狀態通知接到單元 10 的登記系統：三個零件、容易出事的地方，還有半天的時間表。' },
+    { tour: 'line-session', title: '課後加裝', text: '上完 LINE 場之後，照這一段把 LINE 登入和狀態通知加到單元 10 的登記系統。' },
   ]);
 })();

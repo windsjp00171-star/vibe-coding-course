@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小秘書備份閱讀器</title>
+  <meta name="description" content="離線打開 LINE AI 小秘書的 CSV 備份，不用網路、不用帳號。">
+  <style>
+    :root { --bg: #f8fafc; --card: #fff; --ink: #1e293b; --muted: #526072; --line: #d9dee7; --brand: #3730a3; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #0f172a; --card: #1e293b; --ink: #e2e8f0; --muted: #a3b0c2; --line: #334155; --brand: #c7c4ff; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.7 "Noto Sans TC", system-ui, sans-serif; }
+    main { max-width: 900px; margin: 0 auto; padding: 16px; }
+    h1 { color: var(--brand); font-size: 1.3rem; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+    input { font: inherit; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); width: 100%; margin: 6px 0; }
+    .muted { color: var(--muted); }
+    .wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>小秘書備份閱讀器</h1>
+    <div class="card">
+      <p>選從 Supabase 匯出的 <b>bot_items</b> CSV 檔。不用網路、不用登入，資料不會離開這台電腦。</p>
+      <input type="file" accept=".csv,text/csv" data-file aria-label="選擇備份檔">
+      <input type="search" data-q placeholder="搜尋（事項、分類…）" aria-label="搜尋" hidden>
+      <div data-out aria-live="polite"></div>
+    </div>
+  </main>
+  <script>
+    // 離線看備份：不連網、不載入任何外部程式
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    // 讀 CSV：處理引號裡的逗號、換行和 "" 跳脫
+    function parseCsv(text) {
+      const rows = []; let row = []; let cell = ''; let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const c = text[i];
+        if (quoted) {
+          if (c === '"' && text[i + 1] === '"') { cell += '"'; i += 1; } else if (c === '"') quoted = false; else cell += c;
+        } else if (c === '"') quoted = true;
+        else if (c === ',') { row.push(cell); cell = ''; }
+        else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i += 1; row.push(cell); rows.push(row); row = []; cell = ''; }
+        else cell += c;
+      }
+      if (cell || row.length) { row.push(cell); rows.push(row); }
+      return rows.filter((r) => r.some((c) => c !== ''));
+    }
+    const LABEL = { kind: '分類', title: '事項', date: '日期', time: '時間', done: '完成', reminded: '已提醒', raw_text: '原本的訊息', created_at: '建立時間' };
+    const SHOW = ['created_at', 'kind', 'title', 'date', 'time', 'done', 'raw_text']; // 不顯示 LINE 使用者代號這類內部欄位
+    let head = []; let body = [];
+    function render() {
+      const q = document.querySelector('[data-q]').value.trim();
+      const cols = SHOW.filter((k) => head.includes(k));
+      const rows = body.filter((r) => !q || r.join(' ').includes(q));
+      document.querySelector('[data-out]').innerHTML = `<p class="muted">共 ${rows.length} 筆</p><div class="wrap"><table>
+        <thead><tr>${cols.map((k) => `<th>${esc(LABEL[k] || k)}</th>`).join('')}</tr></thead>
+        <tbody>${rows.map((r) => `<tr>${cols.map((k) => { const v = r[head.indexOf(k)]; return `<td>${esc(k === 'done' ? (v === 'true' ? '✓' : '') : v)}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
+    }
+    document.querySelector('[data-file]').addEventListener('change', async (e) => {
+      const all = parseCsv((await e.target.files[0].text()).replace(/^﻿/, ''));
+      [head, ...body] = all;
+      if (!head || !head.includes('title')) {
+        document.querySelector('[data-out]').innerHTML = '<p>這個檔案看起來不是 bot_items 的備份，請到 Supabase → Table Editor → bot_items → Export → CSV 下載。</p>';
+        return;
+      }
+      document.querySelector('[data-q]').hidden = false;
+      render();
+    });
+    document.querySelector('[data-q]').addEventListener('input', () => head.length && render());
+  </script>
+</body>
+</html>

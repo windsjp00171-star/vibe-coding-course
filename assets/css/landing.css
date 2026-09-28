@@ -78,6 +78,16 @@
 .lp-free-text b { display: block; font-size: 1.15rem; margin-bottom: 4px; }
 .lp-free-text span { color: var(--muted); font-size: .94rem; line-height: 1.6; }
 .lp-free-go { font-weight: 800; color: var(--ok); white-space: nowrap; }
+/* ---------- 招牌作品：LINE AI 小秘書 ---------- */
+.lb-feature { display: grid; gap: 28px; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); align-items: center; }
+.lb-phone { display: grid; gap: 10px; padding: 18px 16px; border-radius: 24px; background: var(--paper-2); border: 1px solid var(--line); }
+.lb-phone p { margin: 0; max-width: 85%; padding: 9px 13px; border-radius: 16px; font-size: .92rem; line-height: 1.55; }
+.lb-me { justify-self: end; background: #03863b; color: #fff; border-bottom-right-radius: 4px; } /* LINE 綠加深，白字才看得清楚 */
+.lb-bot { justify-self: start; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.lb-push { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); }
+.lb-points { display: grid; gap: 12px; padding-left: 1.2em; margin: 0 0 18px; }
+@media (max-width: 760px) { .lb-feature { grid-template-columns: 1fr; } }
+
 @media (max-width: 640px) {
   .lp-free { grid-template-columns: auto minmax(0, 1fr); }
   .lp-free-go { grid-column: 1 / -1; }

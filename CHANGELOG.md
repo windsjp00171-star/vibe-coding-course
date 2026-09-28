@@ -3,6 +3,13 @@
 ## [Unreleased] — 2026-09-26
 
 ### Added
+- LINE AI 小秘書範本（`bot-starter/`，下載檔 `downloads/vibe-line-bot.zip`，和登記系統範本一起由 `scripts/build_starter.py` 打包）：
+  - 在 LINE 傳一句話，Claude 判斷是待辦、提醒還是筆記並抽出日期時間；提醒時間到了用 LINE 推播，每天台灣早上 8 點（UTC 0 點）推今日清單
+  - 「清單」「完成 N」「說明」由程式處理，不花 AI 的錢；時區換算一律由程式做
+  - 檔案最上面的 `DESIGN` 就是小秘書的設計（分類、規則、口氣），單元 12 工作坊的設計稿直接填進去
+  - 安全：檢查 LINE 簽章、鬧鐘要暗號才會動、可設白名單、送給 AI 的訊息有長度上限、AI 只能回固定格式且程式再檢查一次、資料表只給後端讀寫（本機 Postgres 測過）
+  - 全部放在 Supabase（Edge Functions＋pg_cron），不用 Vercel、不用裝指令工具；附設定步驟、給接手者的說明、每月 CSV 備份與離線閱讀器 `reader.html`
+- 首頁新增「招牌作品：在你的 LINE 裡，做一位 AI 小秘書」（對話示意、四個重點）；招生頁新增 LINE 場介紹
 - LINE 場（第五個半天）與範本的 LINE 加裝包：
   - `config.js` 新增 `login: 'email' | 'line'` 切換，一個系統只用一種登入方式；LINE 模式顯示「用 LINE 登入」按鈕，並用 state 暗號防偽造
   - 兩支 Supabase Edge Function（`starter/functions/`）：`line-login` 用一次性代碼換登入身分，Channel secret 只放在 Supabase；`line-notify` 在管理者改狀態時推 LINE 訊息給本人，沒有 webhook 暗號一律拒絕
@@ -54,6 +61,8 @@
 - 講師後台「教材下載」新增「🎤 講座」區塊
 
 ### Changed
+- LINE 場改成以「做你自己的 AI 小秘書」為主軸：單元 12 新增範本段落與 180 分鐘的 LINE 場時間表（設計 → LINE Developers → Supabase → 排程 → 測試，含提示詞注入測試），回家練習改成真的用一週並調整規則；金鑰表改成放在 Edge Functions Secrets；隨堂小測驗新增一題「完成 2 交給程式判斷」
+- 登記系統的 LINE 登入與通知（單元 13）改成 LINE 場之後的課後加裝
 - 課程改成四個半天：A 起步、B 上線與資安、**C 存資料**、D 做出你的工具與結業。必修改為 11 個單元，招生頁、首頁、課程首頁、報價單、半日資安課頁同步更新；另預告加開的 LINE 場（LINE Developers、LINE 登入與通知）
 - 單元 10 改寫成必修「存資料：放在哪、誰看得到」：資料放瀏覽器／Google 表單／資料庫的判斷（含分類遊戲）、把題目畫成一張表、權限矩陣、下載範本；課中工作坊改成裝好範本並用第二個帳號驗證門禁。隨堂小測驗換兩題
 - 單元 09 作品實作改成「把單元 10 的登記系統改成你的題目」；作品登記多一項「用第二個帳號確認看不到別人的資料」；後台上課前檢查改為四個半天
