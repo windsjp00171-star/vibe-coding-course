@@ -12,6 +12,8 @@
 
 ## 第一次設定（約 20 分鐘，只要做一次）
 
+第一次用 Supabase？每一步按哪裡，看圖解：https://windsjp00171-star.github.io/vibe-coding-course/guide-supabase.html
+
 1. **建立 Supabase 專案**
    到 supabase.com 註冊 → New project。名稱取你的作品名，密碼存進密碼管理器（之後幾乎用不到，但不要弄丟）。
 2. **建資料表和權限**

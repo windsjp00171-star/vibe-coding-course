@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>圖解：LINE Developers 從零開始｜Vibe Coding 實戰課</title>
+  <meta name="description" content="完全沒用過 LINE Developers 也看得懂：登入、建 Provider、建官方帳號、抄秘密、接 Webhook、關掉自動回應、加好友，以及 LINE 登入的設定，每一步都有圖、標出要按哪裡。">
+  <!-- 分享到 LINE／Facebook 時的預覽（標題、說明、圖） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vibe Coding 實戰課">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="圖解：LINE Developers 從零開始｜Vibe Coding 實戰課">
+  <meta property="og:description" content="完全沒用過 LINE Developers 也看得懂：登入、建 Provider、建官方帳號、抄秘密、接 Webhook、關掉自動回應、加好友，以及 LINE 登入的設定，每一步都有圖、標出要按哪裡。">
+  <meta property="og:url" content="https://windsjp00171-star.github.io/vibe-coding-course/guide-line.html">
+  <meta property="og:image" content="https://windsjp00171-star.github.io/vibe-coding-course/assets/img/og-course.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609282349">
+  <link rel="stylesheet" href="assets/css/guide.css?v=202609282349">
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">圖解設定．給第一次用的人</span>
+    <h1>LINE Developers 從零開始：<br><em>每一步按哪裡</em></h1>
+    <p class="lead">LINE 場的 AI 小秘書，要先在 LINE 開一個「官方帳號」給它住。這一頁假設你<b>從來沒用過 LINE Developers</b>，一步一步帶你做。右邊示意圖的<b>紅框和號碼</b>就是要按的地方。</p>
+    <p class="muted">示意圖是簡化過的畫面，不是真的截圖；LINE 偶爾會改按鈕的名字或位置，也可能是英文或中文介面。找不到的話，把你的畫面截圖給講師看。</p>
+    <ul class="gd-toc" data-tour="toc">
+      <li><a href="#words">先認識 5 個名詞</a></li>
+      <li><a href="#l1">1 登入</a></li><li><a href="#l2">2 建 Provider</a></li><li><a href="#l3">3 建官方帳號</a></li>
+      <li><a href="#l4">4 抄 Channel secret</a></li><li><a href="#l5">5 發存取權杖</a></li><li><a href="#l6">6 接 Webhook</a></li>
+      <li><a href="#l7">7 關自動回應</a></li><li><a href="#l8">8 加好友測試</a></li><li><a href="#login">課後：LINE 登入</a></li>
+    </ul>
+  </section>
+
+  <section class="slide" id="words" data-tour="words">
+    <div class="section-head"><span class="section-num">00</span>
+      <div><span class="kicker">開始之前</span><h2>先認識 5 個名詞</h2><p>看不懂也沒關係，做的時候回來查。</p></div></div>
+    <div class="gd-words">
+      <div><b>LINE Developers</b>LINE 給開發者用的後台（developers.line.biz）。用你自己的 LINE 帳號就能登入，免費。</div>
+      <div><b>Provider</b>一個「資料夾」，放同一個單位的所有 LINE 設定。通常用你的名字或單位名稱。</div>
+      <div><b>Channel</b>資料夾裡的一個「東西」。小秘書是 <b>Messaging API</b> channel；LINE 登入是 <b>LINE Login</b> channel。</div>
+      <div><b>官方帳號</b>使用者在 LINE 上看到、加好友的那個帳號。小秘書就「住」在這裡。</div>
+      <div><b>Channel secret／存取權杖</b>兩個<b>秘密</b>：一個用來確認訊息真的是 LINE 送來的，一個讓程式能回話。只放在 Supabase 的 Secrets（單元 06）。</div>
+    </div>
+    <div class="callout callout-warn" style="margin-top:14px"><b>要準備：</b>手機上的 LINE、一台電腦、大約 30 分鐘，以及已經照<a href="guide-supabase.html">圖解：Supabase</a>建好的專案（第 6 步會用到它的網址）。</div>
+  </section>
+
+  <section class="slide" id="steps">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">一步一步</span><h2>讓小秘書住進 LINE</h2><p>每做完一步，勾一下「我做完了」，下次回來就知道做到哪。</p></div></div>
+
+    <article class="gd-step" id="l1" data-tour="step">
+      <div>
+        <h3><span class="gd-num">1</span>登入 LINE Developers</h3>
+        <ol>
+          <li>電腦打開 <b>developers.line.biz</b>，按右上角 <b>Log in to Console</b> ①</li>
+          <li>選 <b>用 LINE 帳號登入</b> ②，手機上的 LINE 會跳出確認，按同意（或掃 QR code）</li>
+          <li>第一次登入會要你填<b>開發者名稱和 Email</b>，填好、同意條款</li>
+        </ol>
+        <p class="gd-why">用你自己的 LINE 帳號就可以，不用另外申請。</p>
+        <ul class="checklist gd-done" data-checklist="gd-line-1"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：LINE Developers 首頁">
+        <div class="shot-bar"><i></i><i></i><i></i><span>developers.line.biz</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><b>LINE Developers</b><span class="m-btn is-main hot" data-n="1">Log in to Console</span></div>
+          <div class="shot-title" style="margin-top:10px">登入</div>
+          <span class="m-btn is-main hot" data-n="2" style="justify-self:start">用 LINE 帳號登入</span>
+          <span class="m-btn" style="justify-self:start">用商用帳號登入</span>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l2">
+      <div>
+        <h3><span class="gd-num">2</span>建一個 Provider（資料夾）</h3>
+        <ol>
+          <li>登入後按 <b>Create a new provider</b>（或 Providers 旁的 Create）①</li>
+          <li><b>Provider name</b> 填你的名字或單位 ②，例如「王小明的小秘書」</li>
+          <li>按 <b>Create</b> ③</li>
+        </ol>
+        <div class="gd-warn">⚠️ 之後的小秘書（Messaging API）和 LINE 登入（LINE Login）<b>一定要建在同一個 Provider 底下</b>。放在不同資料夾，LINE 給的使用者代號會不一樣，通知會送不到，而且<b>不會有任何錯誤訊息</b>。</div>
+        <ul class="checklist gd-done" data-checklist="gd-line-2"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：建立 Provider">
+        <div class="shot-bar"><i></i><i></i><i></i><span>developers.line.biz/console</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><b>Providers</b><span class="m-btn is-main hot" data-n="1">Create</span></div>
+          <div class="m-field"><span>Provider name</span><div class="m-input hot" data-n="2">王小明的小秘書</div></div>
+          <span class="m-btn is-main hot" data-n="3" style="justify-self:end">Create</span>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l3">
+      <div>
+        <h3><span class="gd-num">3</span>建官方帳號（Messaging API channel）</h3>
+        <ol>
+          <li>進到剛剛的 Provider，按 <b>Create a Messaging API channel</b> ①</li>
+          <li>畫面會帶你到 <b>LINE Official Account Manager</b> 建一個官方帳號：填<b>帳號名稱</b> ②（使用者會看到，例如「小明的小秘書」）、Email、業種（選「個人」或最接近的就好）</li>
+          <li>建好之後，在 Official Account Manager 右上角 <b>設定</b> → <b>Messaging API</b> → <b>啟用 Messaging API</b> ③，選剛剛的 Provider</li>
+          <li>回到 LINE Developers，Provider 裡就會多一個 Messaging API channel ④</li>
+        </ol>
+        <p class="gd-why">官方帳號是使用者看到的那個 LINE 帳號；Messaging API 讓你的程式可以收訊息、回訊息。</p>
+        <ul class="checklist gd-done" data-checklist="gd-line-3"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：建立官方帳號與 Messaging API">
+        <div class="shot-bar"><i></i><i></i><i></i><span>manager.line.biz</span></div>
+        <div class="shot-body">
+          <span class="m-btn hot" data-n="1" style="justify-self:start">Create a Messaging API channel</span>
+          <div class="m-field"><span>帳號名稱</span><div class="m-input hot" data-n="2">小明的小秘書</div></div>
+          <div class="m-row" style="justify-content:space-between"><span class="muted">設定 › Messaging API</span><span class="m-btn is-main hot" data-n="3">啟用 Messaging API</span></div>
+          <div class="m-input hot" data-n="4">📨 小明的小秘書　<span class="muted">Messaging API</span></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l4" data-tour="secret">
+      <div>
+        <h3><span class="gd-num">4</span>抄下 Channel secret（秘密）</h3>
+        <ol>
+          <li>LINE Developers → 點你的 Messaging API channel</li>
+          <li>選 <b>Basic settings</b> 分頁 ①</li>
+          <li>往下捲到 <b>Channel secret</b> ②，按旁邊的複製</li>
+          <li>貼到 Supabase 的 Secrets，名稱 <code>LINE_CHANNEL_SECRET</code>（<a href="guide-supabase.html#s7">圖解：Supabase 第 7 步</a>）</li>
+        </ol>
+        <div class="gd-warn">🚫 秘密<b>只貼到 Supabase 的 Secrets</b>：不要貼進程式、不要貼到 GitHub、不要傳到 LINE 群組。不小心外流就按旁邊的 Issue 換一把新的（單元 06：換鎖）。</div>
+        <ul class="checklist gd-done" data-checklist="gd-line-4"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Basic settings">
+        <div class="shot-bar"><i></i><i></i><i></i><span>…/channel/…/basics</span></div>
+        <div class="shot-body">
+          <div class="m-row"><span class="m-tab is-on hot" data-n="1">Basic settings</span><span class="m-tab">Messaging API</span><span class="m-tab">Roles</span></div>
+          <div class="m-field"><span>Channel ID</span><div class="m-input is-code">2001234567</div></div>
+          <div class="m-field"><span>Channel secret <span class="m-bad">秘密</span></span><div class="m-row"><div class="m-input is-code hot" data-n="2" style="flex:1">••••••••••••••••</div><span class="m-btn">Issue</span></div></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l5">
+      <div>
+        <h3><span class="gd-num">5</span>發一把存取權杖（秘密）</h3>
+        <ol>
+          <li>同一個 channel，換到 <b>Messaging API</b> 分頁 ①</li>
+          <li>捲到最下面的 <b>Channel access token (long-lived)</b> ②</li>
+          <li>按 <b>Issue</b> ③，出現一長串字，複製</li>
+          <li>貼到 Supabase 的 Secrets，名稱 <code>LINE_CHANNEL_ACCESS_TOKEN</code></li>
+        </ol>
+        <p class="gd-why">有了這把，你的程式才能回訊息、主動推提醒。</p>
+        <ul class="checklist gd-done" data-checklist="gd-line-5"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Channel access token">
+        <div class="shot-bar"><i></i><i></i><i></i><span>…/channel/…/messaging-api</span></div>
+        <div class="shot-body">
+          <div class="m-row"><span class="m-tab">Basic settings</span><span class="m-tab is-on hot" data-n="1">Messaging API</span></div>
+          <div class="m-field hot" data-n="2"><span>Channel access token (long-lived) <span class="m-bad">秘密</span></span><div class="m-row"><div class="m-input is-code" style="flex:1">••••••••••••••••••••</div><span class="m-btn is-main hot" data-n="3">Issue</span></div></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l6" data-tour="webhook">
+      <div>
+        <h3><span class="gd-num">6</span>接上 Webhook（把訊息送到你的程式）</h3>
+        <p>先照<a href="guide-supabase.html#s8">圖解：Supabase 第 8 步</a>放好 <code>line-bot</code>，拿到它的網址：<code>https://你的專案代號.supabase.co/functions/v1/line-bot</code></p>
+        <ol>
+          <li>Messaging API 分頁 → <b>Webhook URL</b> 旁按 <b>Edit</b> ①，貼上網址，按 <b>Update</b></li>
+          <li>按 <b>Verify</b> ②，出現 <b>Success</b> 就對了</li>
+          <li>把下面的 <b>Use webhook</b> 打開 ③</li>
+        </ol>
+        <div class="gd-warn">⚠️ Verify 失敗常見原因：網址打錯一個字；<code>line-bot</code> 的 <b>Verify JWT</b> 沒關；Supabase 的 <code>LINE_CHANNEL_SECRET</code> 和第 4 步的不一樣。</div>
+        <ul class="checklist gd-done" data-checklist="gd-line-6"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Webhook 設定">
+        <div class="shot-bar"><i></i><i></i><i></i><span>…/channel/…/messaging-api</span></div>
+        <div class="shot-body">
+          <div class="m-field"><span>Webhook URL</span><div class="m-row"><div class="m-input is-code" style="flex:1">https://abcd1234.supabase.co/functions/v1/line-bot</div><span class="m-btn hot" data-n="1">Edit</span></div></div>
+          <div class="m-row"><span class="m-btn hot" data-n="2">Verify</span><span class="m-ok">Success</span></div>
+          <div class="m-row" style="justify-content:space-between"><span>Use webhook</span><span class="m-toggle is-on hot" data-n="3"></span></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l7">
+      <div>
+        <h3><span class="gd-num">7</span>關掉官方帳號的「自動回應」</h3>
+        <ol>
+          <li>Messaging API 分頁中間的 <b>Auto-reply messages</b> 旁按 <b>Edit</b>，會打開 Official Account Manager</li>
+          <li>找到 <b>回應設定</b> ①</li>
+          <li><b>自動回應訊息</b>：關掉 ②</li>
+          <li><b>Webhook</b>：打開 ③</li>
+        </ol>
+        <p class="gd-why">沒關的話，官方帳號會搶著回「感謝您的訊息」這種罐頭訊息，小秘書的回覆會被蓋過去。</p>
+        <ul class="checklist gd-done" data-checklist="gd-line-7"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：回應設定">
+        <div class="shot-bar"><i></i><i></i><i></i><span>manager.line.biz/…/setting/response</span></div>
+        <div class="shot-body shot-cols">
+          <div class="shot-side"><div>帳號設定</div><div class="is-on hot" data-n="1">回應設定</div><div>Messaging API</div></div>
+          <div style="display:grid;gap:10px">
+            <div class="m-row" style="justify-content:space-between"><span>聊天</span><span class="m-toggle"></span></div>
+            <div class="m-row" style="justify-content:space-between"><span>自動回應訊息</span><span class="m-toggle hot" data-n="2">關</span></div>
+            <div class="m-row" style="justify-content:space-between"><span>Webhook</span><span class="m-toggle is-on hot" data-n="3">開</span></div>
+          </div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="l8">
+      <div>
+        <h3><span class="gd-num">8</span>加好友，傳第一句話</h3>
+        <ol>
+          <li>Messaging API 分頁上方有一個 <b>QR code</b> ①</li>
+          <li>用手機的 LINE 掃描 → <b>加入好友</b></li>
+          <li>傳「說明」②，小秘書應該回你用法 ③</li>
+          <li>再傳「5 分鐘後提醒我喝水」，等 5～10 分鐘收到 ⏰（排程要先照<a href="guide-supabase.html#s9">圖解：Supabase 第 9 步</a>開好）</li>
+        </ol>
+        <div class="gd-warn">⚠️ 完全沒回應：先看<a href="guide-supabase.html#s10">圖解：Supabase 第 10 步</a>的 Logs。有沒有出現紀錄、是不是紅色，就知道卡在哪一段。</div>
+        <ul class="checklist gd-done" data-checklist="gd-line-8"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：加好友並傳訊息">
+        <div class="shot-bar"><i></i><i></i><i></i><span>手機 LINE</span></div>
+        <div class="shot-body">
+          <div class="m-row"><div class="m-qr hot" data-n="1"></div><span class="muted">用手機 LINE 掃這個<br>→ 加入好友</span></div>
+          <div class="m-phone">
+            <span class="m-bubble is-me hot" data-n="2">說明</span>
+            <span class="m-bubble is-bot hot" data-n="3">我是小秘書，直接跟我說要記的事就好…</span>
+          </div>
+        </div>
+      </figure>
+    </article>
+  </section>
+
+  <section class="slide" id="login" data-tour="login">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">課後加裝</span><h2>LINE 登入（讓登記系統用 LINE 登入）</h2>
+        <p>只有要把<a href="modules/13-line-login.html#line-session">單元 13 的課後加裝</a>做起來的人才需要。一樣在<b>同一個 Provider</b> 底下。</p></div></div>
+
+    <article class="gd-step" id="login1">
+      <div>
+        <h3><span class="gd-num">A</span>建 LINE Login channel</h3>
+        <ol>
+          <li>進到同一個 Provider，按 <b>Create a new channel</b> → <b>LINE Login</b> ①</li>
+          <li><b>App types</b> 勾 <b>Web app</b> ②，名稱、說明照填</li>
+          <li>建好後到 <b>LINE Login</b> 分頁 → <b>Callback URL</b> 填登記系統的網址 ③（和 Supabase 的 Site URL 完全一樣）</li>
+          <li><b>Basic settings</b> 抄下 <b>Channel ID</b>（可以公開，填進 <code>config.js</code>）和 <b>Channel secret</b>（秘密，放 Supabase Secrets）</li>
+        </ol>
+        <ul class="checklist gd-done" data-checklist="gd-line-a"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：建立 LINE Login channel">
+        <div class="shot-bar"><i></i><i></i><i></i><span>…/console/channel/new</span></div>
+        <div class="shot-body">
+          <div class="m-row"><span class="m-btn">Messaging API</span><span class="m-btn is-main hot" data-n="1">LINE Login</span></div>
+          <div class="m-field"><span>App types</span><div class="m-row hot" data-n="2"><span>☑ Web app</span><span>☐ Mobile app</span></div></div>
+          <div class="m-field"><span>Callback URL（LINE Login 分頁）</span><div class="m-input is-code hot" data-n="3">https://amy.github.io/my-signup/</div></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="login2">
+      <div>
+        <h3><span class="gd-num">B</span>連上官方帳號，再公開</h3>
+        <ol>
+          <li>LINE Login channel → <b>Basic settings</b> → <b>Linked LINE Official Account</b> ① 選你的官方帳號，這樣登入時會問使用者要不要加好友</li>
+          <li>頁面上方的狀態從 <b>Developing</b> 改成 <b>Published</b> ②，別人才登入得了（自己測試時可以先不改）</li>
+        </ol>
+        <p class="gd-why">接下來照範本的 <code>LINE.md</code> 第 2～4 步，到 Supabase 放 <code>line-login</code>、<code>line-notify</code> 兩支小程式。</p>
+        <ul class="checklist gd-done" data-checklist="gd-line-b"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：連結官方帳號與公開">
+        <div class="shot-bar"><i></i><i></i><i></i><span>…/channel/…/basics</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><b>我的登記系統</b><span class="m-btn hot" data-n="2">Developing ▸ Published</span></div>
+          <div class="m-field"><span>Linked LINE Official Account</span><div class="m-input hot" data-n="1">小明的小秘書 ▾</div></div>
+        </div>
+      </figure>
+    </article>
+  </section>
+
+  <section class="slide" id="next">
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker">接下來</span><h2>回到你的範本</h2></div></div>
+    <div class="card">
+      <ul>
+        <li>LINE 小秘書：回<a href="modules/12-line-bot.html#template">單元 12</a>，照範本 README 繼續（DESIGN、白名單、測試）</li>
+        <li>LINE 登入：照範本的 <code>LINE.md</code> 繼續</li>
+        <li>Supabase 的步驟：<a href="guide-supabase.html">圖解：Supabase</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．圖解設定　示意圖為簡化畫面，按鈕名稱以 LINE 實際畫面為準。</div></footer>
+
+<script src="assets/js/lib.js?v=202609282349"></script>
+<script src="assets/js/config.js?v=202609282349"></script>
+<script src="assets/js/core.js?v=202609282349"></script>
+<script src="assets/js/members.js?v=202609282349"></script>
+<script src="assets/js/tour.js?v=202609282349"></script>
+<script src="assets/js/glossary-data.js?v=202609282349"></script>
+<script src="assets/js/glossary.js?v=202609282349"></script>
+<script>
+  window.Tour.register([
+    { tour: 'toc', title: '目錄', text: '點號碼直接跳到那一步。第一次用就從「先認識 5 個名詞」開始。' },
+    { tour: 'words', title: '5 個名詞', text: 'Provider 是資料夾、Channel 是裡面的東西、官方帳號是小秘書住的地方。' },
+    { tour: 'step', title: '每一步', text: '左邊是要做什麼，右邊的示意圖用紅框和號碼標出要按的地方。做完勾「我做完了」。' },
+    { tour: 'secret', title: '秘密', text: 'Channel secret 和存取權杖只貼到 Supabase 的 Secrets。' },
+    { tour: 'webhook', title: 'Webhook', text: '把 LINE 收到的訊息送到你的程式。按 Verify 出現 Success 才算接好。' },
+    { tour: 'login', title: '課後加裝', text: '要讓登記系統用 LINE 登入的人再做這一段。' },
+  ]);
+</script>
+</body>
+</html>
