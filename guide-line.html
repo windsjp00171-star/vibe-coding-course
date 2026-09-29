@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609282349">
-  <link rel="stylesheet" href="assets/css/guide.css?v=202609282349">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609290001">
+  <link rel="stylesheet" href="assets/css/guide.css?v=202609290001">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -31,6 +31,7 @@
     <h1>LINE Developers 從零開始：<br><em>每一步按哪裡</em></h1>
     <p class="lead">LINE 場的 AI 小秘書，要先在 LINE 開一個「官方帳號」給它住。這一頁假設你<b>從來沒用過 LINE Developers</b>，一步一步帶你做。右邊示意圖的<b>紅框和號碼</b>就是要按的地方。</p>
     <p class="muted">示意圖是簡化過的畫面，不是真的截圖；LINE 偶爾會改按鈕的名字或位置，也可能是英文或中文介面。找不到的話，把你的畫面截圖給講師看。</p>
+    <div class="callout callout-ok"><b>這一頁只帶你點「平台的按鈕」。</b>註冊帳號、開專案、抄鑰匙這些事，本來就要自己在 LINE Developers 的網頁上點。<b>真正做東西的部分（改功能、找錯誤），一樣交給 Claude Code</b>：每一步都附一句「卡住時對 Claude Code 說」，你負責把狀況講清楚、最後自己驗收。</div>
     <ul class="gd-toc" data-tour="toc">
       <li><a href="#words">先認識 5 個名詞</a></li>
       <li><a href="#l1">1 登入</a></li><li><a href="#l2">2 建 Provider</a></li><li><a href="#l3">3 建官方帳號</a></li>
@@ -65,6 +66,7 @@
           <li>第一次登入會要你填<b>開發者名稱和 Email</b>，填好、同意條款</li>
         </ol>
         <p class="gd-why">用你自己的 LINE 帳號就可以，不用另外申請。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我第一次登入 LINE Developers，它要我填開發者名稱和 Email，這些會被誰看到？填什麼比較好？」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-1"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：LINE Developers 首頁">
@@ -87,6 +89,7 @@
           <li>按 <b>Create</b> ③</li>
         </ol>
         <div class="gd-warn">⚠️ 之後的小秘書（Messaging API）和 LINE 登入（LINE Login）<b>一定要建在同一個 Provider 底下</b>。放在不同資料夾，LINE 給的使用者代號會不一樣，通知會送不到，而且<b>不會有任何錯誤訊息</b>。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Provider 要取什麼名字？之後小秘書和 LINE 登入為什麼一定要放在同一個 Provider？請用白話說明。」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-2"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：建立 Provider">
@@ -109,6 +112,7 @@
           <li>回到 LINE Developers，Provider 裡就會多一個 Messaging API channel ④</li>
         </ol>
         <p class="gd-why">官方帳號是使用者看到的那個 LINE 帳號；Messaging API 讓你的程式可以收訊息、回訊息。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我在建 LINE 官方帳號，畫面問業種和帳號名稱（描述你看到的）。帳號名稱之後改得了嗎？使用者會看到什麼？」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-3"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：建立官方帳號與 Messaging API">
@@ -132,6 +136,7 @@
           <li>貼到 Supabase 的 Secrets，名稱 <code>LINE_CHANNEL_SECRET</code>（<a href="guide-supabase.html#s7">圖解：Supabase 第 7 步</a>）</li>
         </ol>
         <div class="gd-warn">🚫 秘密<b>只貼到 Supabase 的 Secrets</b>：不要貼進程式、不要貼到 GitHub、不要傳到 LINE 群組。不小心外流就按旁邊的 Issue 換一把新的（單元 06：換鎖）。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Channel secret 是做什麼用的？萬一我不小心貼到 GitHub 了，要怎麼處理？（不要叫我把 secret 貼給你）」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-4"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Basic settings">
@@ -154,6 +159,7 @@
           <li>貼到 Supabase 的 Secrets，名稱 <code>LINE_CHANNEL_ACCESS_TOKEN</code></li>
         </ol>
         <p class="gd-why">有了這把，你的程式才能回訊息、主動推提醒。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Channel access token 和 Channel secret 有什麼不一樣？各要放到 Supabase Secrets 的哪個名稱？」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-5"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Channel access token">
@@ -175,6 +181,7 @@
           <li>把下面的 <b>Use webhook</b> 打開 ③</li>
         </ol>
         <div class="gd-warn">⚠️ Verify 失敗常見原因：網址打錯一個字；<code>line-bot</code> 的 <b>Verify JWT</b> 沒關；Supabase 的 <code>LINE_CHANNEL_SECRET</code> 和第 4 步的不一樣。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我按 Webhook 的 Verify 出現這個錯誤：（貼上）。請列出最可能的三個原因，一個一個帶我檢查。」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-6"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Webhook 設定">
@@ -197,6 +204,7 @@
           <li><b>Webhook</b>：打開 ③</li>
         </ol>
         <p class="gd-why">沒關的話，官方帳號會搶著回「感謝您的訊息」這種罐頭訊息，小秘書的回覆會被蓋過去。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我的官方帳號一直回「感謝您的訊息」，小秘書的回覆被蓋過去了。請帶我找到要關掉的設定。」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-7"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：回應設定">
@@ -222,6 +230,7 @@
           <li>再傳「5 分鐘後提醒我喝水」，等 5～10 分鐘收到 ⏰（排程要先照<a href="guide-supabase.html#s9">圖解：Supabase 第 9 步</a>開好）</li>
         </ol>
         <div class="gd-warn">⚠️ 完全沒回應：先看<a href="guide-supabase.html#s10">圖解：Supabase 第 10 步</a>的 Logs。有沒有出現紀錄、是不是紅色，就知道卡在哪一段。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我傳訊息給小秘書，它完全沒有回。請帶我從 LINE Webhook、Supabase Logs、Secrets 一段一段檢查卡在哪裡。」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-8"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：加好友並傳訊息">
@@ -251,6 +260,7 @@
           <li>建好後到 <b>LINE Login</b> 分頁 → <b>Callback URL</b> 填登記系統的網址 ③（和 Supabase 的 Site URL 完全一樣）</li>
           <li><b>Basic settings</b> 抄下 <b>Channel ID</b>（可以公開，填進 <code>config.js</code>）和 <b>Channel secret</b>（秘密，放 Supabase Secrets）</li>
         </ol>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請讀 LINE.md，告訴我 LINE Login channel 的 Callback URL 要填什麼，還有 Channel ID 和 Channel secret 各要放在哪裡。」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-a"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：建立 LINE Login channel">
@@ -271,6 +281,7 @@
           <li>頁面上方的狀態從 <b>Developing</b> 改成 <b>Published</b> ②，別人才登入得了（自己測試時可以先不改）</li>
         </ol>
         <p class="gd-why">接下來照範本的 <code>LINE.md</code> 第 2～4 步，到 Supabase 放 <code>line-login</code>、<code>line-notify</code> 兩支小程式。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Linked LINE Official Account 和 Published 各是做什麼的？沒設定的話會發生什麼事？」</p>
         <ul class="checklist gd-done" data-checklist="gd-line-b"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：連結官方帳號與公開">
@@ -298,13 +309,13 @@
 
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．圖解設定　示意圖為簡化畫面，按鈕名稱以 LINE 實際畫面為準。</div></footer>
 
-<script src="assets/js/lib.js?v=202609282349"></script>
-<script src="assets/js/config.js?v=202609282349"></script>
-<script src="assets/js/core.js?v=202609282349"></script>
-<script src="assets/js/members.js?v=202609282349"></script>
-<script src="assets/js/tour.js?v=202609282349"></script>
-<script src="assets/js/glossary-data.js?v=202609282349"></script>
-<script src="assets/js/glossary.js?v=202609282349"></script>
+<script src="assets/js/lib.js?v=202609290001"></script>
+<script src="assets/js/config.js?v=202609290001"></script>
+<script src="assets/js/core.js?v=202609290001"></script>
+<script src="assets/js/members.js?v=202609290001"></script>
+<script src="assets/js/tour.js?v=202609290001"></script>
+<script src="assets/js/glossary-data.js?v=202609290001"></script>
+<script src="assets/js/glossary.js?v=202609290001"></script>
 <script>
   window.Tour.register([
     { tour: 'toc', title: '目錄', text: '點號碼直接跳到那一步。第一次用就從「先認識 5 個名詞」開始。' },

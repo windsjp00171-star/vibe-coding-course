@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609282349">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609282349">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609290001">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609290001">
 </head>
 <body data-module="m10" data-base="../">
 <header data-course-header></header>
@@ -205,8 +205,16 @@
         <li><span class="time">40–75 分</span>照 README 的五步設定：建 Supabase 專案、貼 <code>setup.sql</code>、填網址、填鑰匙、push 上線。卡住就把錯誤訊息貼給 Claude Code，<b>先把鑰匙換成 xxx</b>。</li>
         <li><span class="time">75–100 分</span>用你的 Email 登入，新增兩筆；到 Supabase 的 Table Editor 看資料真的進去了。</li>
         <li><span class="time">100–125 分</span><b>門禁測試</b>：用第二個 Email 登入（或請組員登入），確認看不到你的資料、也看不到「全部登記」。再到 Supabase 的 Advisors 確認沒有「RLS 未開啟」的警告。</li>
-        <li><span class="time">125–150 分</span>請 Claude Code 把 <code>config.js</code> 的欄位改成你第 03 段畫的那張表（先改名稱和欄位就好），push，看網站更新。</li>
+        <li><span class="time">125–140 分</span><b>用對話改成你的題目</b>：不要自己打開檔案改，把第 03 段畫的表講給 Claude Code 聽（下面有範例），讓它動手、跟你解釋改了什麼，再 push。</li>
+        <li><span class="time">140–150 分</span><b>自己驗收</b>：用手機打開網站填一筆、用第二個帳號再測一次門禁、下載 CSV 看欄位對不對。有問題就把「看到什麼、預期是什麼」講給 Claude Code 修。</li>
       </ol>
+      <pre class="gen-out" id="m10-custom-prompt">照 CLAUDE.md 的規則，把這個登記系統改成「＿＿＿（你的題目）」：
+- 表單欄位：＿＿（打字）、＿＿（下拉選單：＿／＿／＿）、＿＿（日期）
+- 標題和說明改成：＿＿＿
+- 先用規劃模式告訴我你要改哪些檔案，等我說好再改
+- 改完用白話說明改了什麼，並告訴我要怎麼測試</pre>
+      <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#m10-custom-prompt">📋 複製這段指令</button></p>
+      <div class="callout callout-warn" style="margin-top:12px"><b>AI 說「做好了」不算數，你測過才算（單元 01）。</b>每改一次都要自己驗收：手機打得開、填得進去、第二個帳號看不到別人的資料、下載的 CSV 欄位是對的。</div>
       <div data-teacher-slot="m10-2"></div>
     </div>
     <div class="print-only card">
@@ -217,20 +225,43 @@
     </div>
   </section>
 
-  <section class="slide" id="quiz" data-tour="quiz">
+  <section class="slide" id="challenge" data-tour="challenge">
     <div class="section-head"><span class="section-num">10</span>
+      <div><span class="kicker">延伸挑戰．真正的 Vibe Coding</span><h2>請 Claude Code 加一個範本沒有的功能</h2>
+        <p>範本只是起點。挑一個你的題目真的需要的功能，<b>自己把需求講清楚、讓 Claude Code 動手、自己驗收</b>。這才是這門課要練的能力。</p></div></div>
+    <div class="grid grid-2">
+      <div class="card"><h3>🧮 額滿就不能再登記</h3><p>同一天超過 5 筆就擋下來。提示：這要改資料庫的規則（<code>setup.sql</code>），CLAUDE.md 會提醒 Claude Code 先跟你解釋誰多了、少了什麼權限。</p></div>
+      <div class="card"><h3>🔎 管理者可以搜尋、篩選</h3><p>管理者區加一個搜尋框和「只看待處理」的按鈕。只改網頁，不用動資料庫，最適合第一次挑戰。</p></div>
+      <div class="card"><h3>🗓️ 我的登記照日期排序</h3><p>「我的登記」照使用日期排，過期的變灰色。練習把「怎樣算完成」講清楚。</p></div>
+      <div class="card"><h3>💡 你自己想的</h3><p>用你第 03 段畫的表想一個：「如果多了＿＿，會更好用」。</p></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>怎麼開口（單元 03 的五個零件）</h3>
+      <pre class="gen-out" id="m10-challenge-prompt">我想在登記系統加一個功能：＿＿＿（要做什麼）
+- 給誰用：＿＿（管理者／登記的人）
+- 限制：照 CLAUDE.md 的規則；要改 setup.sql 的話先用白話說明權限怎麼變，等我同意
+- 怎樣算完成：＿＿＿（例如：同一天第 6 筆會跳出「這天已經額滿」）
+- 先用規劃模式給我看計畫，一次只做一小步，每一步告訴我怎麼測</pre>
+      <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-copy="#m10-challenge-prompt">📋 複製這段指令</button></p>
+      <p class="muted" style="margin-top:10px"><b>驗收三件事：</b>① 新功能照「怎樣算完成」真的做到 ② 原本的功能沒被弄壞（登入、登記、門禁、匯出）③ 第二個帳號還是看不到別人的資料。</p>
+    </div>
+  </section>
+
+  <section class="slide" id="quiz" data-tour="quiz">
+    <div class="section-head"><span class="section-num">11</span>
       <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
 
   <section class="slide" id="homework">
-    <div class="section-head"><span class="section-num">11</span>
+    <div class="section-head"><span class="section-num">12</span>
       <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
     <div class="card"><ul class="checklist" data-checklist="m10-home">
       <li><label><input type="checkbox" value="second"> 課堂上沒測完的話：用第二個 Email 登入，確認看不到你的資料和「全部登記」</label></li>
       <li><label><input type="checkbox" value="fields"> 把 config.js 的欄位改成你的題目，請一位同事或家人實際填一次</label></li>
       <li><label><input type="checkbox" value="backup"> 用管理者身分按「下載備份」，再用 reader.html 打開，確認看得到剛剛的資料</label></li>
+      <li><label><input type="checkbox" value="challenge"> 挑一個「延伸挑戰」，用五個零件請 Claude Code 做出來，並完成三件驗收</label></li>
     </ul></div>
   </section>
 </main>
@@ -238,16 +269,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 10　Supabase 介面與方案以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609282349"></script>
-<script src="../assets/js/quiz-bank.js?v=202609282349"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609282349"></script>
-<script src="../assets/js/config.js?v=202609282349"></script>
-<script src="../assets/js/core.js?v=202609282349"></script>
-<script src="../assets/js/members.js?v=202609282349"></script>
-<script src="../assets/js/tour.js?v=202609282349"></script>
-<script src="../assets/js/glossary-data.js?v=202609282349"></script>
-<script src="../assets/js/glossary.js?v=202609282349"></script>
-<script src="../assets/js/modules/electives.js?v=202609282349"></script>
-<script src="../assets/js/modules/m10.js?v=202609282349"></script>
+<script src="../assets/js/lib.js?v=202609290001"></script>
+<script src="../assets/js/quiz-bank.js?v=202609290001"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609290001"></script>
+<script src="../assets/js/config.js?v=202609290001"></script>
+<script src="../assets/js/core.js?v=202609290001"></script>
+<script src="../assets/js/members.js?v=202609290001"></script>
+<script src="../assets/js/tour.js?v=202609290001"></script>
+<script src="../assets/js/glossary-data.js?v=202609290001"></script>
+<script src="../assets/js/glossary.js?v=202609290001"></script>
+<script src="../assets/js/modules/electives.js?v=202609290001"></script>
+<script src="../assets/js/modules/m10.js?v=202609290001"></script>
 </body>
 </html>

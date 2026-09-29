@@ -84,6 +84,7 @@
     { tour: 'keys', title: '兩把鑰匙', text: '分清楚哪把鑰匙可以放在網頁上、哪把絕對不行。' },
     { tour: 'template', title: '起始範本', text: '下載講師準備好的登記系統，照 README 五步設定，改成你的題目。' },
     { tour: 'pits', title: '真實事故', text: '講師在資料庫上踩過的坑，點卡片翻面。' },
-    { tour: 'workshop', title: '工作坊', text: '裝好範本、上線，再用第二個帳號確認門禁真的有效。' },
+    { tour: 'workshop', title: '工作坊', text: '裝好範本、上線，用對話請 Claude Code 改成你的題目，最後自己驗收：第二個帳號看不到別人的資料。' },
+    { tour: 'challenge', title: '延伸挑戰', text: '請 Claude Code 加一個範本沒有的功能。需求自己講清楚、自己驗收，這才是 Vibe Coding。' },
   ]);
 })();

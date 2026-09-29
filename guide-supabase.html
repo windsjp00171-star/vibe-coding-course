@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202609282349">
-  <link rel="stylesheet" href="assets/css/guide.css?v=202609282349">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609290001">
+  <link rel="stylesheet" href="assets/css/guide.css?v=202609290001">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -31,6 +31,7 @@
     <h1>Supabase 從零開始：<br><em>每一步按哪裡</em></h1>
     <p class="lead">單元 10 的登記系統、LINE 場的小秘書，資料都放在 Supabase。這一頁假設你<b>從來沒用過</b>，一步一步帶你做。每一步右邊有一張示意圖，<b>紅框和號碼</b>就是要按的地方。</p>
     <p class="muted">示意圖是簡化過的畫面，不是真的截圖；Supabase 偶爾會改按鈕的名字或位置。找不到的話，把你的畫面截圖給講師看。</p>
+    <div class="callout callout-ok"><b>這一頁只帶你點「平台的按鈕」。</b>註冊帳號、開專案、抄鑰匙這些事，本來就要自己在 Supabase 的網頁上點。<b>真正做東西的部分（改功能、找錯誤），一樣交給 Claude Code</b>：每一步都附一句「卡住時對 Claude Code 說」，你負責把狀況講清楚、最後自己驗收。</div>
     <ul class="gd-toc" data-tour="toc">
       <li><a href="#words">先認識 5 個名詞</a></li>
       <li><a href="#s1">1 註冊</a></li><li><a href="#s2">2 建專案</a></li><li><a href="#s3">3 貼 SQL</a></li>
@@ -65,6 +66,7 @@
           <li>選 <b>Continue with GitHub</b> ②，用你的 GitHub 帳號登入，按同意</li>
         </ol>
         <p class="gd-why">為什麼用 GitHub 登入？少記一組密碼，之後上線也用同一個帳號。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我要註冊 Supabase，畫面上看到這些選項（貼上或描述你看到的），我該按哪一個？為什麼？」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-1"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Supabase 首頁">
@@ -89,6 +91,7 @@
           <li>按 <b>Create new project</b> ④，等 1～2 分鐘，畫面跑完就好了</li>
         </ol>
         <div class="gd-warn">⚠️ 免費方案最多兩個專案，而且<b>一週沒人用會自動暫停</b>。暫停後到專案頁按 Restore 就能恢復，資料還在。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我在 Supabase 建新專案，Region 有好幾個選項，住在台灣的使用者選哪個比較好？資料庫密碼要怎麼保管？」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-2"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：建立新專案">
@@ -115,6 +118,7 @@
         </ol>
         <p class="gd-why">這一步會建立「放資料的表格」和「誰能看什麼」的門禁規則（RLS）。</p>
         <div class="gd-warn">⚠️ 登記系統的 <code>setup.sql</code>：<b>最後一行的 Email 要先換成你自己的</b>，你才會是管理者。<br>⚠️ 出現紅色錯誤？把錯誤訊息整段複製給 Claude Code 或講師看。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我在 Supabase 的 SQL Editor 貼上 setup.sql 按 Run，出現這個錯誤：（貼上錯誤）。請先用白話說明原因，不要直接改檔案。」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-3"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：SQL Editor">
@@ -145,6 +149,7 @@
           <li>貼進範本的 <code>config.js</code>（登記系統才需要；小秘書不用）</li>
         </ol>
         <div class="gd-warn">🚫 <b>secret／service_role 那一把絕對不要複製</b> ⑤。它能繞過所有門禁，貼到網頁或 GitHub 等於把整個資料庫送人。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請讀我的 config.js，告訴我 supabaseUrl 和 supabaseKey 應該貼什麼。我手上有 publishable 和 secret 兩把，哪一把可以放網頁？」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-4"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：API Keys 設定頁">
@@ -171,6 +176,7 @@
         </ol>
         <p class="gd-why">登入信裡的連結會帶人回到這個網址。沒設的話，點信會跑到錯的地方。</p>
         <div class="gd-warn">⚠️ 網址要<b>一模一樣</b>，結尾的 <code>/</code> 也算。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我點了登入信的連結，卻跑到錯的網址（貼上網址）。請一步一步帶我檢查 Supabase 的 URL Configuration 該填什麼。」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-5"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：URL Configuration">
@@ -196,6 +202,7 @@
           <li>要備份：右上角 <b>Export → CSV</b> ④</li>
         </ol>
         <p class="gd-why">網站或小秘書說「送出了」，到這裡看得到才算真的存起來。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「網站說「送出了」，但我在 Table Editor 看不到資料。請列出可能的原因，一項一項帶我檢查。」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-6"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Table Editor">
@@ -222,6 +229,7 @@
           <li>按 <b>Save</b> ④。範本 README 列了要放哪幾把，一把一把加</li>
         </ol>
         <p class="gd-why">秘密鑰匙放這裡，後端小程式讀得到，網頁、GitHub、別人都看不到（單元 06）。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請讀 README.md，列出我要在 Supabase Secrets 新增哪幾個名稱，每一個的值要去哪裡找。只列名稱，不要叫我把值貼給你。」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-7"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Edge Functions Secrets">
@@ -247,6 +255,7 @@
           <li>部署完進到這支小程式的設定，照 README 決定 <b>Verify JWT</b> 要不要關 ⑤</li>
         </ol>
         <div class="gd-warn">⚠️ <b>Verify JWT</b>（有的版本叫 Enforce JWT Verification）：<code>line-bot</code>、<code>line-remind</code>、<code>line-login</code> 要<b>關掉</b>；<code>line-notify</code> 保持開著。關錯了 LINE 會收到錯誤。<br>⚠️ 改了程式（例如 <code>DESIGN</code>），要<b>整份重新貼上再 Deploy 一次</b>才會生效。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我要把 functions/line-bot/index.ts 部署到 Supabase 的 Edge Functions，請一步一步帶我，每一步等我說好了再繼續。Verify JWT 要開還是關？為什麼？」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-8"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：部署 Edge Function">
@@ -272,6 +281,7 @@ const DESIGN = { … }
           <li>回到 SQL Editor，貼上範本 <code>setup.sql</code> 的<b>第 3 段</b>（先換掉專案代號和暗號），按 Run</li>
         </ol>
         <p class="gd-why">排程用的是國際時間：<code>0 0 * * *</code> 是台灣早上 8 點（單元 12 的時區陷阱）。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請用白話解釋 setup.sql 第 3 段的排程在做什麼，還有「0 0 * * *」為什麼是台灣早上 8 點。我要換掉哪兩個地方？」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-9"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Database Extensions">
@@ -296,6 +306,7 @@ const DESIGN = { … }
           <li>紅色的那幾行就是錯誤 ③。<b>先把裡面的鑰匙、權杖換成 xxx</b>，再截圖或複製給 Claude Code 或講師</li>
         </ol>
         <p class="gd-why">小秘書不回話、LINE 登入失敗，答案幾乎都在這裡。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「這是 Edge Function 的 Logs（金鑰已經換成 xxx）：（貼上）。請用白話告訴我哪裡出錯、我下一步該檢查什麼。」</p>
         <ul class="checklist gd-done" data-checklist="gd-sb-10"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
       </div>
       <figure class="shot" aria-label="示意圖：Edge Function Logs">
@@ -323,13 +334,13 @@ const DESIGN = { … }
 
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．圖解設定　示意圖為簡化畫面，按鈕名稱以 Supabase 實際畫面為準。</div></footer>
 
-<script src="assets/js/lib.js?v=202609282349"></script>
-<script src="assets/js/config.js?v=202609282349"></script>
-<script src="assets/js/core.js?v=202609282349"></script>
-<script src="assets/js/members.js?v=202609282349"></script>
-<script src="assets/js/tour.js?v=202609282349"></script>
-<script src="assets/js/glossary-data.js?v=202609282349"></script>
-<script src="assets/js/glossary.js?v=202609282349"></script>
+<script src="assets/js/lib.js?v=202609290001"></script>
+<script src="assets/js/config.js?v=202609290001"></script>
+<script src="assets/js/core.js?v=202609290001"></script>
+<script src="assets/js/members.js?v=202609290001"></script>
+<script src="assets/js/tour.js?v=202609290001"></script>
+<script src="assets/js/glossary-data.js?v=202609290001"></script>
+<script src="assets/js/glossary.js?v=202609290001"></script>
 <script>
   window.Tour.register([
     { tour: 'toc', title: '目錄', text: '點號碼直接跳到那一步。第一次用就從「先認識 5 個名詞」開始。' },
