@@ -515,22 +515,16 @@
     host.classList.add(ok ? 'fx-hit-ok' : 'fx-hit-bad');
   }
 
-  // 滑鼠聚光：選項跟著游標亮起來；分類卡跟著游標微微傾斜。只在有滑鼠的裝置
+  // 滑鼠聚光：選項跟著游標亮起來。只在有滑鼠的裝置。
+  // 題目卡（.cl-card）不能按，所以不跟著游標傾斜，免得看起來像可以按
   function trackPointer(host) {
     if (!window.matchMedia('(hover: hover)').matches) return;
     host.addEventListener('pointermove', (e) => {
-      const t = e.target.closest('.option, .cl-choice, .cl-card');
+      const t = e.target.closest('.option, .cl-choice');
       if (!t || t.disabled) return;
       const r = t.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width; const py = (e.clientY - r.top) / r.height;
-      t.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
-      t.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
-      const stack = t.classList.contains('cl-card') && !calmMotion() && t.closest('.cl-stack');
-      if (stack) stack.style.transform = `rotateX(${((0.5 - py) * 10).toFixed(2)}deg) rotateY(${((px - 0.5) * 12).toFixed(2)}deg)`;
-    });
-    host.addEventListener('pointerout', (e) => {
-      const card = e.target.closest('.cl-card');
-      if (card && !card.contains(e.relatedTarget)) card.closest('.cl-stack').style.transform = '';
+      t.style.setProperty('--mx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+      t.style.setProperty('--my', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
     });
   }
 
@@ -645,29 +639,9 @@
       card.dataset.flipReady = '';
       card.setAttribute('tabindex', '0');
       card.setAttribute('role', 'button');
-      const inner = $('.flip-inner', card);
-      const flip = () => {
-        card.classList.toggle('is-flipped');
-        // 翻面這一下要用完整的翻轉時間；平常跟著滑鼠傾斜則要跟得快
-        card.classList.add('is-turning');
-        clearTimeout(card.turnTimer);
-        card.turnTimer = setTimeout(() => card.classList.remove('is-turning'), 650);
-      };
+      const flip = () => card.classList.toggle('is-flipped');
       card.addEventListener('click', flip);
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
-      // 滑鼠移上去：卡片跟著游標微微傾斜、反光跟著走
-      if (!inner || !window.matchMedia('(hover: hover)').matches) return;
-      card.addEventListener('pointermove', (e) => {
-        if (calmMotion()) return;
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width; const py = (e.clientY - r.top) / r.height;
-        const side = card.classList.contains('is-flipped') ? -1 : 1; // 翻到背面時左右方向相反
-        inner.style.setProperty('--rx', `${((0.5 - py) * 10).toFixed(2)}deg`);
-        inner.style.setProperty('--ry', `${((px - 0.5) * 12 * side).toFixed(2)}deg`);
-        card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
-        card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
-      });
-      card.addEventListener('pointerleave', () => { inner.style.removeProperty('--rx'); inner.style.removeProperty('--ry'); });
     });
   }
 

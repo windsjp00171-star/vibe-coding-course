@@ -85,18 +85,6 @@
         <div class="show-links">${w.demo ? `<a href="${w.demo}" target="_blank" rel="noopener">▶ 打開來玩 ↗</a>` : ''}${w.code ? `<a href="${w.code}" target="_blank" rel="noopener">看原始碼 ↗</a>` : ''}</div>
         <div class="show-learn">${w.learn.map(mod).filter(Boolean).map((m) => `<a href="${m.file}">${m.emoji} 單元 ${m.id.slice(1)} ${esc(m.title)}</a>`).join('')}</div>
       </article>`).join('');
-    if (calm) return;
-    host.addEventListener('pointermove', (e) => {
-      const card = e.target.closest('.show-card');
-      if (!card) return;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - 0.5) * 6}deg`);
-      card.style.setProperty('--rx', `${((e.clientY - r.top) / r.height - 0.5) * -6}deg`);
-    });
-    host.addEventListener('pointerout', (e) => {
-      const card = e.target.closest('.show-card');
-      if (card && !card.contains(e.relatedTarget)) { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); }
-    });
   }
 
   renderWorks();

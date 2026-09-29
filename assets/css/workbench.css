@@ -259,3 +259,8 @@
   .wb-input.is-your-turn textarea, .wb-bar b::before, .msg-tool::after, .wb.is-hit .wb-chat::after,
   .wb-stars span, .wb-preview.is-new::after { animation: none !important; }
 }
+
+/* 任務進度只是顯示到第幾關，不能按：拿掉膠囊外框，免得看起來像按鈕 */
+.wb-missions li { border: 0; background: none; padding: 3px 6px 3px 0; }
+.wb-missions li.is-now { box-shadow: none; animation: none; }
+.wb-bar em { border: 0; padding: 0; }

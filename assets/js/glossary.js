@@ -8,7 +8,7 @@
 
   const list = window.Glossary || [];
   const byId = new Map(list.map((g) => [g.id, g]));
-  const SKIP = 'code, pre, a, button, h1, h2, h3, h4, input, textarea, select, label, kbd, script, style, .term, [data-no-gloss], [data-glossary], [data-quiz], .gen-out, [data-teacher-slot], .quiz, .site-header, .tour-pop, .print-only, .eyebrow, .kicker, .show-kind, .flip'; // .flip：整張翻牌卡就是一顆按鈕，裡面不能再放按鈕（螢幕報讀會混亂）
+  const SKIP = 'code, pre, a, button, h1, h2, h3, h4, input, textarea, select, label, kbd, script, style, .term, [data-no-gloss], [data-glossary], [data-quiz], .gen-out, [data-teacher-slot], .quiz, .site-header, .tour-pop, .print-only, .eyebrow, .kicker, .show-kind, .flip, .shot'; // .flip：整張翻牌卡就是一顆按鈕，裡面不能再放按鈕（螢幕報讀會混亂）
   let pop = null;
   let current = null;
 

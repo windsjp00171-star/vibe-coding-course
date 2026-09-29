@@ -15,10 +15,8 @@
 .lp-hero h1 em { font-style: normal; color: #c7d2fe; }
 .lp-hero p { max-width: 54ch; color: #dbe0ff; font-size: clamp(1rem, .95rem + .3vw, 1.2rem); margin: 0; }
 .lp-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-.lp-badges span {
-  padding: 7px 14px; border-radius: 999px; font-size: .88rem; font-weight: 700;
-  background: rgb(255 255 255 / 12%); color: #eef0ff;
-}
+.lp-badges span { font-size: .88rem; font-weight: 700; color: #eef0ff; } /* 只是重點，不是按鈕：不用膠囊底色 */
+.lp-badges span::before { content: "✓ "; color: #fbbf24; }
 
 .lp-paths { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
 .lp-path {
