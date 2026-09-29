@@ -59,7 +59,7 @@
       wb.mistake();
       await wb.coach('LINE 的做法是：你給它一個網址（Webhook），有人傳訊息，它就把訊息送到那個網址。你不用一直去問。', 'warn');
     }
-    wb.tool('⚙️ 設定 Webhook', ['+ https://你的專案.vercel.app/webhook', '✓ LINE 驗證成功']);
+    wb.tool('⚙️ 設定 Webhook', ['+ https://你的專案.vercel.app/api/webhook', '✓ LINE 驗證成功']);
     await wb.coach('Webhook 就是「有事打這支電話」。這個觀念之後串金流、串表單都會再遇到。', 'good');
 
     // 第 2 關：鑰匙放哪
