@@ -60,6 +60,9 @@
 .hot { position: relative; outline: 3px solid var(--danger); outline-offset: 2px; border-radius: 6px; }
 .hot::after { content: attr(data-n); position: absolute; top: -12px; right: -12px; width: 22px; height: 22px; border-radius: 50%;
   display: grid; place-items: center; background: var(--danger-fill); color: #fff; font-size: .72rem; font-weight: 900; line-height: 1; }
+/* 畫出來的指頭游標：表示「在真的網頁上按這裡」。它是圖的一部分，本身不能按 */
+.m-cursor { position: absolute; right: -12px; bottom: -16px; width: 24px; height: 24px; pointer-events: none; z-index: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 2.6a1.5 1.5 0 0 1 3 0V10l.4-.1a1.5 1.5 0 0 1 3 .3v.5a1.5 1.5 0 0 1 3 .4v.6a1.5 1.5 0 0 1 3 .5V16c0 3.3-2.7 6-6 6h-2.3c-1.7 0-3.3-.8-4.3-2.2l-4.2-5.3a1.5 1.5 0 0 1 2.3-1.9L9 14.4z' fill='%23fff' stroke='%23111' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; filter: drop-shadow(0 1px 1px rgb(0 0 0 / 35%)); }
 .shot-caption { margin: 6px 2px 0; font-size: .78rem; color: var(--muted); }
 
 @media (max-width: 760px) {
@@ -69,5 +72,6 @@
 }
 @media print {
   .gd-step { break-inside: avoid; }
+  .m-cursor { filter: none; }
   .hot { outline-color: #000; }
 }

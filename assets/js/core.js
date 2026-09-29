@@ -947,6 +947,15 @@
     });
   }
 
+  // ---------- 圖解示意圖：要按的地方畫一個指頭游標 ----------
+  // 示意圖裡的按鈕是畫出來的，不能按；畫上游標，一看就知道是「截圖上的標示」，不是網頁本身的按鈕
+  function markShotCursors(root = document) {
+    $$('.shot .hot:not([data-cursor])', root).forEach((el) => {
+      el.dataset.cursor = '';
+      el.insertAdjacentHTML('beforeend', '<span class="m-cursor" aria-hidden="true"></span>');
+    });
+  }
+
   // ---------- 啟動 ----------
   function boot() {
     renderHeader();
@@ -958,6 +967,7 @@
     renderMustRead();
     loadLocalTeacherNotes();
     initFlips();
+    markShotCursors();
     initTabs();
     initChecklists();
     initCopy();
