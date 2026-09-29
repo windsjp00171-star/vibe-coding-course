@@ -13,7 +13,7 @@
   - 學習目標的打勾圓圈、模擬器的關卡進度，不再像按鈕
   - 作品牆卡片、首頁作品卡、分類題目卡、整塊測驗外框，滑過不再浮起、傾斜或發亮
   - 首頁示意畫面拿掉假的「送出報名」按鈕和輸入框，改成報名名單
-  - 圖解裡的示意畫面右上角標明「示意圖．不能按」
+  - 圖解裡的示意畫面右上角標明「示意圖．不能按」，要按的地方畫上指頭游標，一看就是截圖上的標示
 
 - LINE 場改用講師開源的小秘書 [line-secretary-](https://github.com/windsjp00171-star/line-secretary-)：學員 Fork 一份，部署到 Vercel，再用 Claude Code 改成自己的用途
   - 單元 12 重寫：訊息旅程改成 Vercel＋Gemini＋Supabase＋cron-job.org；時區坑補上「AI 回的時間沒寫時區，提醒晚 8 小時」；金鑰表改成 8 個 Vercel 環境變數；工作坊改成 LINE → Supabase → Fork＋Vercel → 設定精靈 → 測試 → 用 Claude Code 改 `lib/classifier.js`；延伸挑戰換成早安簡報改時間、喝水打卡、購物清單
