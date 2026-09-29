@@ -10,7 +10,6 @@
   border-radius: var(--radius-l); background: var(--card); border: 1.5px solid var(--line);
   box-shadow: var(--shadow); transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
 }
-.wk-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
 .wk-top { display: flex; gap: 12px; align-items: center; }
 .wk-glyph { font-size: 2.2rem; line-height: 1; }
 .wk-who { display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; color: var(--muted); }
@@ -18,7 +17,7 @@
 .wk-card p { margin: 0; color: var(--muted); line-height: 1.65; }
 .wk-made { font-size: .85rem; color: var(--brand-ink); font-weight: 700; }
 .wk-links { display: flex; flex-wrap: wrap; gap: 14px; font-weight: 700; font-size: .9rem; }
-.wk-links a { color: var(--brand); }
+.wk-links a { color: var(--brand); text-decoration: underline; text-underline-offset: .2em; }
 
 .wk-card--demo { background: linear-gradient(180deg, var(--card), var(--brand-soft)); border-color: var(--line); }
 
@@ -26,7 +25,6 @@
   position: relative; place-content: center; text-align: center; min-height: 190px;
   background: transparent; border: 2px dashed var(--line); box-shadow: none;
 }
-.wk-seat:hover { transform: none; box-shadow: none; border-color: var(--brand); }
 .wk-seat-num {
   font-size: 2.2rem; font-weight: 900; color: var(--line); line-height: 1;
 }
