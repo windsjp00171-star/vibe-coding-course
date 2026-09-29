@@ -18,6 +18,7 @@
 .gd-step ol li { margin: 6px 0; }
 .gd-why { color: var(--muted); font-size: .95rem; }
 .gd-warn { margin-top: 10px; padding: 10px 14px; border-radius: 10px; background: var(--warn-soft); font-size: .92rem; }
+.gd-ai { margin-top: 10px; padding: 10px 14px; border-radius: 10px; background: var(--brand-soft); font-size: .92rem; }
 .gd-done { margin-top: 12px; }
 .gd-step .ck-progress { display: none; } /* 每一步只有一個勾，進度條沒有意義 */
 

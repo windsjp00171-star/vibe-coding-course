@@ -76,6 +76,7 @@
     { tour: 'sim', title: '小秘書模擬器', text: '輸入或點選例句，看它被分類成什麼，以及程式收到的資料格式。' },
     { tour: 'tz', title: '時區陷阱', text: '拉動滑桿，看排程時間換算成台灣時間是幾點。' },
     { tour: 'template', title: '小秘書範本', text: '下載講師準備好的範本：你只要改最上面的 DESIGN（分類、規則、口氣），其他的範本都做好了。' },
-    { tour: 'workshop', title: 'LINE 場', text: '半天：先設計你的小秘書，再照 README 讓它在你的 LINE 裡上工，最後互相測試。' },
+    { tour: 'workshop', title: 'LINE 場', text: '半天：先設計你的小秘書、講給 Claude Code 聽讓它改 DESIGN，再照 README 讓它上工，最後自己驗收、互相測試。' },
+    { tour: 'challenge', title: '延伸挑戰', text: '請 Claude Code 教小秘書一招新的。需求自己講清楚、自己驗收，這才是 Vibe Coding。' },
   ]);
 })();
