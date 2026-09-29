@@ -1,6 +1,23 @@
 # Changelog
 
-## [Unreleased] — 2026-09-26
+## [Unreleased] — 2026-09-29
+
+### Changed
+- LINE 場改用講師開源的小秘書 [line-secretary-](https://github.com/windsjp00171-star/line-secretary-)：學員 Fork 一份，部署到 Vercel，再用 Claude Code 改成自己的用途
+  - 單元 12 重寫：訊息旅程改成 Vercel＋Gemini＋Supabase＋cron-job.org；時區坑補上「AI 回的時間沒寫時區，提醒晚 8 小時」；金鑰表改成 8 個 Vercel 環境變數；工作坊改成 LINE → Supabase → Fork＋Vercel → 設定精靈 → 測試 → 用 Claude Code 改 `lib/classifier.js`；延伸挑戰換成早安簡報改時間、喝水打卡、購物清單
+  - 單元 12 新增「講師的小秘書壞過的四次」：AI 靜靜失敗好幾個月、提醒晚 8 小時、免費模型一天只有 20 次、外部排程停了沒人知道
+  - 隨堂測驗新增兩題（改環境變數要 Redeploy、失敗要大聲）
+  - 圖解：LINE 的鑰匙改存記事本、部署時貼進 Vercel；Webhook 改用設定精靈一鍵設定；第 8 步改成加好友拿 userId 設定主人
+  - 圖解：Supabase 標出小秘書只要做第 1～4、6 步；第 4 步說明小秘書要用 secret 鑰匙且只能放 Vercel；拿掉只有舊範本用得到的「開排程」
+  - 首頁、報名頁、作品牆的小秘書介紹改成開源、Fork、只回應主人
+
+### Added
+- `guide-vercel.html` 圖解：Vercel 部署小秘書，8 步（Fork、Gemini 金鑰、填鑰匙部署、設定精靈、設定主人並 Redeploy、cron-job.org、看錯誤、Sync fork 接收更新）
+
+### Removed
+- 課程自製的小秘書範本 `bot-starter/` 與 `downloads/vibe-line-bot.zip`（改用講師的開源專案）
+
+### （2026-09-26）
 
 ### Added
 - 兩頁圖解設定教學，給完全沒用過的人：

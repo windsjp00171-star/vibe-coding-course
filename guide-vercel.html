@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>圖解：Vercel 部署 LINE 小秘書｜Vibe Coding 實戰課</title>
+  <meta name="description" content="完全沒用過 Vercel 也看得懂：Fork 講師的開源小秘書、拿 Gemini 金鑰、在 Vercel 填環境變數部署、用設定精靈把每一項變綠色、設定主人、用 cron-job.org 讓提醒準時，每一步都有圖、標出要按哪裡。">
+  <!-- 分享到 LINE／Facebook 時的預覽（標題、說明、圖） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vibe Coding 實戰課">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="圖解：Vercel 部署 LINE 小秘書｜Vibe Coding 實戰課">
+  <meta property="og:description" content="完全沒用過 Vercel 也看得懂：Fork 講師的開源小秘書、拿 Gemini 金鑰、在 Vercel 填環境變數部署、用設定精靈把每一項變綠色、設定主人、用 cron-job.org 讓提醒準時，每一步都有圖、標出要按哪裡。">
+  <meta property="og:url" content="https://windsjp00171-star.github.io/vibe-coding-course/guide-vercel.html">
+  <meta property="og:image" content="https://windsjp00171-star.github.io/vibe-coding-course/assets/img/og-course.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202609291242">
+  <link rel="stylesheet" href="assets/css/guide.css?v=202609291242">
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">圖解設定．給第一次用的人</span>
+    <h1>Vercel 部署 LINE 小秘書：<br><em>每一步按哪裡</em></h1>
+    <p class="lead">講師的 LINE 小秘書是開源的：<b>Fork 一份、填幾把鑰匙，就是你自己的</b>。這一頁假設你<b>從來沒用過 Vercel</b>，從複製程式碼一路帶到提醒準時跳出來。右邊示意圖的<b>紅框和號碼</b>就是要按的地方。</p>
+    <p class="muted">示意圖是簡化過的畫面，不是真的截圖；平台偶爾會改按鈕的名字或位置。小秘書自己的 <a href="https://github.com/windsjp00171-star/line-secretary-#readme" target="_blank" rel="noopener">README</a> 有真的截圖，兩邊對照著看。</p>
+    <div class="callout callout-ok"><b>這一頁只帶你點「平台的按鈕」。</b>申請帳號、登入、按「建立」這些事一定要你本人做。<b>真正改程式的部分（改口氣、加功能、找錯誤），交給 Claude Code</b>：每一步都附一句「卡住時對 Claude Code 說」，你負責把狀況講清楚、最後自己驗收。</div>
+    <ul class="gd-toc" data-tour="toc">
+      <li><a href="#words">先認識 5 個名詞</a></li>
+      <li><a href="#v1">1 Fork</a></li><li><a href="#v2">2 AI 金鑰</a></li><li><a href="#v3">3 部署</a></li>
+      <li><a href="#v4">4 設定精靈</a></li><li><a href="#v5">5 設定主人</a></li><li><a href="#v6">6 提醒排程</a></li>
+      <li><a href="#v7">7 看錯誤</a></li><li><a href="#v8">8 接收更新</a></li>
+    </ul>
+  </section>
+
+  <section class="slide" id="words" data-tour="words">
+    <div class="section-head"><span class="section-num">00</span>
+      <div><span class="kicker">開始之前</span><h2>先認識 5 個名詞</h2><p>看不懂也沒關係，做的時候回來查。</p></div></div>
+    <div class="gd-words">
+      <div><b>Fork</b>在 GitHub 上把別人的專案「複製一份到你的帳號」。之後你改你的，不會動到講師的。</div>
+      <div><b>Vercel</b>放程式的雲端平台。你的 GitHub 一有新版本，它就自動重新部署（單元 05）。</div>
+      <div><b>環境變數</b>放鑰匙的地方。程式裡只寫鑰匙的<b>名字</b>，值只填在 Vercel 的設定裡（單元 06）。</div>
+      <div><b>Redeploy</b>重新部署。<b>改了環境變數一定要 Redeploy</b>，新的值才會生效。</div>
+      <div><b>cron-job.org</b>免費的鬧鐘服務：每 5 分鐘叫小秘書檢查一次有沒有要提醒的事。</div>
+    </div>
+    <div class="callout callout-warn" style="margin-top:14px"><b>要準備：</b>GitHub 帳號、Google 帳號、大約 40 分鐘，以及一個記事本，裡面已經有 <a href="guide-line.html">LINE</a> 的兩把和 <a href="guide-supabase.html">Supabase</a> 的兩把鑰匙：
+      <pre class="gen-out" style="margin-top:8px">LINE_CHANNEL_SECRET=
+LINE_CHANNEL_ACCESS_TOKEN=
+SUPABASE_URL=
+SUPABASE_SERVICE_KEY=
+GEMINI_API_KEY=（第 2 步拿）
+DASHBOARD_TOKEN=（自己取一組後台密碼）</pre>
+      記事本存在自己的電腦就好，<b>不要存到雲端共用資料夾、不要傳到 LINE</b>。</div>
+  </section>
+
+  <section class="slide" id="steps">
+    <div class="section-head"><span class="section-num">01</span>
+      <div><span class="kicker">一步一步</span><h2>讓小秘書上線</h2><p>每做完一步，勾一下「我做完了」，下次回來就知道做到哪。</p></div></div>
+
+    <article class="gd-step" id="v1" data-tour="step">
+      <div>
+        <h3><span class="gd-num">1</span>Fork 講師的小秘書</h3>
+        <ol>
+          <li>登入 GitHub，打開 <b>github.com/windsjp00171-star/line-secretary-</b></li>
+          <li>右上角按 <b>Fork</b> ①</li>
+          <li><b>Repository name</b> 可以改成你喜歡的 ②，按 <b>Create fork</b> ③</li>
+        </ol>
+        <p class="gd-why">你的 GitHub 會多一份一模一樣的程式碼。之後用 Claude Code 改的，就是這一份。</p>
+        <div class="gd-warn">⚠️ Fork 出來的專案是<b>公開</b>的。沒關係：鑰匙不在程式碼裡。但也因為公開，<b>之後絕對不能把鑰匙寫進任何檔案</b>。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Fork 和直接下載程式碼有什麼不一樣？Fork 出來的專案是公開的，我要注意什麼？」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-1"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：GitHub Fork">
+        <div class="shot-bar"><i></i><i></i><i></i><span>github.com/windsjp00171-star/line-secretary-</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><b>📋 line-secretary-</b><span class="m-btn hot" data-n="1">⑂ Fork</span></div>
+          <div class="shot-title" style="margin-top:8px">Create a new fork</div>
+          <div class="m-field"><span>Repository name</span><div class="m-input hot" data-n="2">my-secretary</div></div>
+          <span class="m-btn is-main hot" data-n="3" style="justify-self:end">Create fork</span>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v2">
+      <div>
+        <h3><span class="gd-num">2</span>拿 AI 金鑰（免費的 Gemini）</h3>
+        <ol>
+          <li>打開 <b>aistudio.google.com/apikey</b>，用 Google 帳號登入</li>
+          <li>按 <b>Create API key</b> ①（第一次會要你同意條款）</li>
+          <li>複製那串金鑰 ②，存到記事本標上 <code>GEMINI_API_KEY=</code></li>
+        </ol>
+        <p class="gd-why">免費額度對一個人用很夠；每天額度用完時小秘書會主動告訴你，隔天自動恢復。</p>
+        <div class="gd-warn">⚠️ 依 Google 條款，免費方案送出的內容<b>可能被拿去改進 Google 的產品，也可能有人工審閱</b>。練習時記買菜、喝水沒問題；要記個資、公司或教會內部的事，改用付費層（單元 12、21）。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「Gemini 免費方案和付費方案，對我送出去的資料有什麼差別？我想用小秘書記＿＿，適合免費方案嗎？」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-2"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Google AI Studio API key">
+        <div class="shot-bar"><i></i><i></i><i></i><span>aistudio.google.com/apikey</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><b>API Keys</b><span class="m-btn is-main hot" data-n="1">Create API key</span></div>
+          <div class="m-field"><span>你的金鑰 <span class="m-bad">秘密</span></span><div class="m-row"><div class="m-input is-code" style="flex:1">AIza••••••••••••</div><span class="m-btn hot" data-n="2">複製</span></div></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v3" data-tour="deploy">
+      <div>
+        <h3><span class="gd-num">3</span>在 Vercel 填鑰匙、部署</h3>
+        <ol>
+          <li>打開 <b>vercel.com/new</b>，選 <b>Continue with GitHub</b> 登入</li>
+          <li>在 <b>Import Git Repository</b> 找到第 1 步 Fork 的專案，按 <b>Import</b> ①</li>
+          <li>展開 <b>Environment Variables</b> ②，把記事本的 6 組一組一組加進去：<b>Key</b> 填左邊的名稱，<b>Value</b> 貼上值 ③</li>
+          <li>按 <b>Deploy</b> ④，等 1 分鐘左右看到煙火 🎉</li>
+          <li>按 <b>Continue to Dashboard</b>，上方 <b>Domains</b> 那串（例如 <code>https://my-secretary.vercel.app</code>）就是你的小秘書網址，也存到記事本</li>
+        </ol>
+        <div class="gd-warn">⚠️ Key 的名稱<b>大小寫、底線一個字都不能錯</b>，前後不要多空白。<br>⚠️ <code>SUPABASE_SERVICE_KEY</code> 要貼 Supabase 的 <b>secret（service_role）</b>那一把，不是 publishable。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請讀這個專案的 .env.example，用白話告訴我每一個環境變數是做什麼的、值要去哪裡找、哪些是秘密。只列名稱，不要叫我把值貼給你。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-3"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Vercel 匯入並填環境變數">
+        <div class="shot-bar"><i></i><i></i><i></i><span>vercel.com/new</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><span>⑂ my-secretary</span><span class="m-btn hot" data-n="1">Import</span></div>
+          <div class="shot-title hot" data-n="2" style="justify-self:start">▾ Environment Variables</div>
+          <div class="m-row hot" data-n="3"><div class="m-field" style="flex:1"><span>Key</span><div class="m-input is-code">LINE_CHANNEL_SECRET</div></div><div class="m-field" style="flex:1"><span>Value</span><div class="m-input is-code">••••••••</div></div></div>
+          <div class="m-input is-code muted">LINE_CHANNEL_ACCESS_TOKEN．SUPABASE_URL．SUPABASE_SERVICE_KEY．GEMINI_API_KEY．DASHBOARD_TOKEN</div>
+          <span class="m-btn is-main hot" data-n="4" style="justify-self:end">Deploy</span>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v4" data-tour="wizard">
+      <div>
+        <h3><span class="gd-num">4</span>打開設定精靈，把每一項變綠色</h3>
+        <ol>
+          <li>瀏覽器打開 <b>你的網址 + <code>/setup.html</code></b>，輸入你取的 <code>DASHBOARD_TOKEN</code> ①</li>
+          <li>精靈會逐項檢查：環境變數、LINE 連線、Webhook、資料庫、主人、AI、圖文選單、提醒排程</li>
+          <li>第 3 張卡按 <b>一鍵設定 Webhook</b> ②（LINE 那邊就接好了）</li>
+          <li>資料庫是紅色：按「複製建表 SQL」→「打開 SQL Editor」→ 貼上 → Run（<a href="guide-supabase.html#s3">圖解：Supabase 第 3 步</a>）</li>
+          <li>第 7 張卡按 <b>建立圖文選單</b> ③，聊天室下方就會出現按鈕</li>
+          <li>改完任何設定，按 <b>🔄 重新檢查</b> ④</li>
+        </ol>
+        <p class="gd-why">「主人」和「提醒排程」是接下來第 5、6 步；其他卡片綠了就可以往下。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「設定精靈的第＿張卡是紅色，上面寫：（貼上說明文字）。請讀 api/setup/status.js，用白話告訴我它在檢查什麼、我要去哪裡改。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-4"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：設定精靈">
+        <div class="shot-bar"><i></i><i></i><i></i><span>my-secretary.vercel.app/setup.html</span></div>
+        <div class="shot-body">
+          <div class="m-field"><span>後台密碼（DASHBOARD_TOKEN）</span><div class="m-input hot" data-n="1">••••••••</div></div>
+          <div class="m-row" style="justify-content:space-between"><span><span class="m-ok">✓</span> 1. 環境變數　<span class="m-ok">✓</span> 2. LINE 連線</span></div>
+          <div class="m-row" style="justify-content:space-between"><span><span class="m-bad">✗</span> 3. Webhook</span><span class="m-btn is-main hot" data-n="2">一鍵設定 Webhook</span></div>
+          <div class="m-row" style="justify-content:space-between"><span><span class="m-bad">✗</span> 7. 圖文選單</span><span class="m-btn hot" data-n="3">建立圖文選單</span></div>
+          <span class="m-btn hot" data-n="4" style="justify-self:end">🔄 重新檢查</span>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v5" data-tour="owner">
+      <div>
+        <h3><span class="gd-num">5</span>設定主人（只有你能用），然後 Redeploy</h3>
+        <ol>
+          <li>用手機加小秘書好友，傳任何一句話；它會回你一串 <code>U</code> 開頭的 userId（<a href="guide-line.html#l8">圖解：LINE 第 8 步</a>）。設定精靈第 5 張卡也會出現，可以直接複製</li>
+          <li>Vercel → 你的專案 → <b>Settings</b> ① → <b>Environment Variables</b> ② → 新增 Key <code>LINE_USER_ID</code>，Value 貼上 userId ③ → Save</li>
+          <li>到 <b>Deployments</b>，最上面那一筆右邊的 <b>⋯</b> → <b>Redeploy</b> ④</li>
+        </ol>
+        <p class="gd-why">設好主人之後，別人就算加了好友、傳訊息，它也不理、不寫進資料庫、不會用掉你的 AI 額度。</p>
+        <div class="gd-warn">⚠️ Vercel 的環境變數<b>要重新部署後才會生效</b>。之後只要改了任何一個，都要 Redeploy 一次。「改了沒反應」八成是忘了這步。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我設了 LINE_USER_ID 也 Redeploy 了，小秘書還是回我 userId。請讀 api/webhook.js，告訴我它怎麼判斷誰是主人，我該檢查哪裡。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-5"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：新增環境變數並重新部署">
+        <div class="shot-bar"><i></i><i></i><i></i><span>vercel.com/…/my-secretary/settings</span></div>
+        <div class="shot-body shot-cols">
+          <div class="shot-side"><div>Deployments</div><div class="is-on hot" data-n="1">Settings</div><div class="is-on hot" data-n="2">Environment Variables</div></div>
+          <div style="display:grid;gap:8px">
+            <div class="m-row hot" data-n="3"><div class="m-field" style="flex:1"><span>Key</span><div class="m-input is-code">LINE_USER_ID</div></div><div class="m-field" style="flex:1"><span>Value</span><div class="m-input is-code">U1a2b3c…</div></div></div>
+            <div class="m-row" style="justify-content:space-between"><span class="muted">Deployments › 最新一筆 ⋯</span><span class="m-btn is-main hot" data-n="4">Redeploy</span></div>
+          </div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v6" data-tour="cron">
+      <div>
+        <h3><span class="gd-num">6</span>讓提醒準時跳出來（cron-job.org）</h3>
+        <ol>
+          <li>先到 Vercel 新增環境變數 <code>CRON_SECRET</code>，值隨便打 20 個以上的英數字（排程的暗號），然後 <b>Redeploy</b></li>
+          <li>到設定精靈第 8 張卡，按「複製」拿到排程網址 ①</li>
+          <li>打開 <b>cron-job.org</b> 免費註冊並登入，按 <b>CREATE CRONJOB</b> ②</li>
+          <li><b>Title</b> 填「小秘書提醒」；<b>URL</b> 貼上剛剛的網址；<b>Execution schedule</b> 選 <b>Every 5 minutes</b> ③ → <b>CREATE</b></li>
+          <li>5 分鐘後回設定精靈按「重新檢查」，第 8 張卡變綠色就完成了</li>
+        </ol>
+        <p class="gd-why">為什麼要另一個平台？Vercel 免費方案的排程一天只能跑一次，只夠發早安簡報；提醒要每 5 分鐘檢查一次，才交給 cron-job.org。</p>
+        <div class="gd-warn">⚠️ 排程網址裡有你的暗號，<b>不要貼到公開的地方</b>。外洩了就換一組 <code>CRON_SECRET</code>、Redeploy，再更新 cron-job.org 的網址。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「請讀 vercel.json 和 api/cron/remind.js，用白話告訴我哪些排程是 Vercel 跑的、哪些要靠 cron-job.org，時間各是台灣幾點。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-6"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：cron-job.org 建立排程">
+        <div class="shot-bar"><i></i><i></i><i></i><span>console.cron-job.org</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><span class="muted">設定精靈 8. 提醒排程</span><span class="m-btn hot" data-n="1">複製網址</span></div>
+          <span class="m-btn is-main hot" data-n="2" style="justify-self:start">CREATE CRONJOB</span>
+          <div class="m-field"><span>URL</span><div class="m-input is-code">https://my-secretary.vercel.app/api/cron/remind?token=••••</div></div>
+          <div class="m-field"><span>Execution schedule</span><div class="m-input hot" data-n="3">Every 5 minutes ▾</div></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v7" data-tour="logs">
+      <div>
+        <h3><span class="gd-num">7</span>出問題時，去哪裡看錯誤</h3>
+        <ol>
+          <li>Vercel → 你的專案 → 上方的 <b>Logs</b> ①</li>
+          <li>在 LINE 再傳一句話，這裡會多出一行 <code>/api/webhook</code> ②</li>
+          <li>紅色的就是錯誤 ③。<b>先把裡面的鑰匙、權杖換成 xxx</b>，再截圖或複製給 Claude Code 或講師</li>
+        </ol>
+        <p class="gd-why">小秘書不回話，先看這裡有沒有出現紀錄：<b>沒有紀錄</b>是 LINE 沒把訊息送來（Webhook、回應設定）；<b>有紀錄但是紅色</b>是程式或鑰匙的問題。</p>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「這是 Vercel 的 Logs（金鑰已經換成 xxx）：（貼上）。請用白話告訴我哪裡出錯、我下一步該檢查什麼。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-7"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：Vercel Logs">
+        <div class="shot-bar"><i></i><i></i><i></i><span>vercel.com/…/my-secretary/logs</span></div>
+        <div class="shot-body">
+          <div class="m-row"><span class="m-tab">Deployments</span><span class="m-tab is-on hot" data-n="1">Logs</span><span class="m-tab">Settings</span></div>
+          <div class="m-input is-code hot" data-n="2">09:31 POST /api/webhook 200</div>
+          <div class="m-input is-code hot" data-n="3"><span class="m-bad">09:32 POST /api/webhook 403 Invalid signature</span></div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="gd-step" id="v8" data-tour="sync">
+      <div>
+        <h3><span class="gd-num">8</span>接收講師的更新</h3>
+        <ol>
+          <li>到你 GitHub 上 Fork 的那一份，按 <b>Sync fork</b> ①</li>
+          <li>按 <b>Update branch</b> ②，Vercel 會自動重新部署</li>
+          <li>想完全自動：<b>Actions</b> 分頁 → 按 <b>I understand my workflows, go ahead and enable them</b>，之後每週自動合併</li>
+        </ol>
+        <p class="gd-why">講師推出新功能或修好問題，你按一下就跟上。更新說明寫「需要更新資料表」時，再到 Supabase 執行一次最新的 <code>schema.sql</code>（重複執行不會影響已有的資料）。</p>
+        <div class="gd-warn">⚠️ 你自己改過的地方如果剛好和講師改到同一處，同步會失敗，GitHub 會寄信通知你，<b>你的程式不會被弄壞</b>。這是「自己維護一份」的代價：改得越多，跟上更新越要花力氣。</div>
+        <p class="gd-ai">🤖 <b>卡住時對 Claude Code 說：</b>「我按 Sync fork 出現衝突（conflict），請用白話說明是哪個檔案、我的版本和講師的版本各改了什麼，建議怎麼合併。先不要動手。」</p>
+        <ul class="checklist gd-done" data-checklist="gd-vc-8"><li><label><input type="checkbox" value="done"> 我做完了</label></li></ul>
+      </div>
+      <figure class="shot" aria-label="示意圖：GitHub Sync fork">
+        <div class="shot-bar"><i></i><i></i><i></i><span>github.com/你的帳號/my-secretary</span></div>
+        <div class="shot-body">
+          <div class="m-row" style="justify-content:space-between"><span class="muted">This branch is 3 commits behind</span><span class="m-btn hot" data-n="1">⟳ Sync fork</span></div>
+          <span class="m-btn is-main hot" data-n="2" style="justify-self:end">Update branch</span>
+        </div>
+      </figure>
+    </article>
+  </section>
+
+  <section class="slide" id="next">
+    <div class="section-head"><span class="section-num">02</span>
+      <div><span class="kicker">接下來</span><h2>把它改成你的</h2></div></div>
+    <div class="card">
+      <ul>
+        <li>在 LINE 傳「明天早上九點開會」「買牛奶」「今天」，確認回覆都對</li>
+        <li>回<a href="modules/12-line-bot.html#workshop">單元 12 的 LINE 場</a>，用 Claude Code 改小秘書的名字、口氣和分類規則</li>
+        <li>其他平台的步驟：<a href="guide-line.html">圖解：LINE Developers</a>．<a href="guide-supabase.html">圖解：Supabase</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．圖解設定　示意圖為簡化畫面，按鈕名稱以 Vercel、GitHub、cron-job.org 實際畫面為準。</div></footer>
+
+<script src="assets/js/lib.js?v=202609291242"></script>
+<script src="assets/js/config.js?v=202609291242"></script>
+<script src="assets/js/core.js?v=202609291242"></script>
+<script src="assets/js/members.js?v=202609291242"></script>
+<script src="assets/js/tour.js?v=202609291242"></script>
+<script src="assets/js/glossary-data.js?v=202609291242"></script>
+<script src="assets/js/glossary.js?v=202609291242"></script>
+<script>
+  window.Tour.register([
+    { tour: 'toc', title: '目錄', text: '點號碼直接跳到那一步。第一次用就從「先認識 5 個名詞」開始。' },
+    { tour: 'words', title: '5 個名詞', text: 'Fork 是複製一份、環境變數是放鑰匙的地方、改了鑰匙要 Redeploy。' },
+    { tour: 'step', title: '每一步', text: '左邊是要做什麼，右邊的示意圖用紅框和號碼標出要按的地方。做完勾「我做完了」。' },
+    { tour: 'deploy', title: '填鑰匙、部署', text: '記事本裡的 6 組鑰匙只貼在 Vercel 的環境變數，名稱一個字都不能錯。' },
+    { tour: 'wizard', title: '設定精靈', text: '打開 /setup.html，照著每一張卡把紅色變綠色。' },
+    { tour: 'owner', title: '設定主人', text: '只讓你一個人用。改了環境變數一定要 Redeploy。' },
+    { tour: 'cron', title: '提醒排程', text: '提醒靠 cron-job.org 每 5 分鐘叫醒小秘書一次。' },
+    { tour: 'logs', title: '看錯誤', text: '小秘書不回話，先看 Vercel 的 Logs 有沒有紀錄。' },
+    { tour: 'sync', title: '接收更新', text: '按 Sync fork 跟上講師的新版本。' },
+  ]);
+</script>
+</body>
+</html>

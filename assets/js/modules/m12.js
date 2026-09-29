@@ -15,11 +15,11 @@
 
   mountFlow($('[data-flow]'), [
     { title: '你在 LINE 傳訊息', text: '「明天下午去阿秦家」' },
-    { title: 'LINE 轉送給你的程式', text: 'LINE 把訊息送到你設定的網址（webhook），程式放在 Vercel。' },
-    { title: 'Claude 分類', text: '程式把訊息交給 Claude：這是待辦，日期是明天。' },
+    { title: 'LINE 轉送給你的程式', text: 'LINE 把訊息送到你設定的網址（/api/webhook），程式放在 Vercel。先檢查簽章、確認是主人傳的，不是就不理。' },
+    { title: 'Gemini 分類', text: '程式把訊息交給 Gemini：這是待辦，日期是明天。時區由程式補上台灣時間。' },
     { title: '存進 Supabase', text: '待辦和日期存進資料庫。' },
     { title: '馬上回覆你', text: '「行程記下了，需要提醒出發時間嗎？」' },
-    { title: '隔天早上 8 點', text: 'Vercel 的排程每天叫醒程式，查出今天的待辦，推播給你。' },
+    { title: '每 5 分鐘、每天早上 7 點', text: 'cron-job.org 每 5 分鐘叫醒程式檢查快到的提醒；Vercel 的排程每天早上推早安簡報給你。' },
   ]);
 
   // ---------- 小秘書模擬器 ----------
@@ -58,7 +58,8 @@
     $('[data-utc-out]').textContent = h;
     $('[data-tw-out]').textContent = tw;
     const notes = [];
-    if (tw === 8) notes.push('✅ 這就是小秘書的設定：台灣早上 8 點，剛起床看得到。');
+    if (h === 23) notes.push('✅ 這就是小秘書的早安簡報：UTC 23 點＝台灣隔天早上 7 點。');
+    if (h === 0) notes.push('✅ 這就是小秘書的週報（每週五）：UTC 0 點＝台灣早上 8 點。');
     if (tw < 7) notes.push('⚠️ 台灣這時候大家都在睡覺，推播會把人吵醒。');
     if (h >= 16) notes.push('⚠️ UTC 16 點以後，台灣已經是「隔天」了，日期也要跟著換算。');
     $('[data-tz-note]').textContent = notes.join(' ');
@@ -75,8 +76,9 @@
     { tour: 'flow', title: '訊息的旅程', text: '按「下一步」或「從頭播放」，看一則訊息經過哪些地方。' },
     { tour: 'sim', title: '小秘書模擬器', text: '輸入或點選例句，看它被分類成什麼，以及程式收到的資料格式。' },
     { tour: 'tz', title: '時區陷阱', text: '拉動滑桿，看排程時間換算成台灣時間是幾點。' },
-    { tour: 'template', title: '小秘書範本', text: '下載講師準備好的範本：你只要改最上面的 DESIGN（分類、規則、口氣），其他的範本都做好了。' },
-    { tour: 'workshop', title: 'LINE 場', text: '半天：先設計你的小秘書、講給 Claude Code 聽讓它改 DESIGN，再照 README 讓它上工，最後自己驗收、互相測試。' },
+    { tour: 'template', title: '講師的開源小秘書', text: 'Fork 一份就是你的：簽章、只理主人、提醒、設定精靈都做好了，你決定它要幫誰、懂什麼、怎麼回。' },
+    { tour: 'lessons', title: '真實踩過的坑', text: '講師的小秘書壞過的四次，共通點是壞掉時沒人知道。' },
+    { tour: 'workshop', title: 'LINE 場', text: '半天：先設計、照圖解讓小秘書上工，再把設計稿講給 Claude Code 聽，讓它改成你的，最後自己驗收。' },
     { tour: 'challenge', title: '延伸挑戰', text: '請 Claude Code 教小秘書一招新的。需求自己講清楚、自己驗收，這才是 Vibe Coding。' },
   ]);
 })();

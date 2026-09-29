@@ -2,7 +2,8 @@
 """把範本資料夾打包成 downloads/ 裡的 zip，給學員下載。
 
   starter/      → downloads/vibe-starter.zip   （單元 10 登記系統）
-  bot-starter/  → downloads/vibe-line-bot.zip  （LINE 場 AI 小秘書）
+
+LINE 場的 AI 小秘書不在這裡：學員直接 Fork 講師的開源專案 line-secretary-。
 
 改了範本裡的任何檔案後執行一次：python3 scripts/build_starter.py
 """
@@ -10,7 +11,7 @@ import pathlib
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PACKS = [('starter', 'vibe-starter'), ('bot-starter', 'vibe-line-bot')]
+PACKS = [('starter', 'vibe-starter')]
 
 for src_name, name in PACKS:
     src = ROOT / src_name
