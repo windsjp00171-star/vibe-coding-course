@@ -276,6 +276,9 @@ Code, terminal and the Claude Code workbench simulator keep their own dark scree
 - **Do** use `var(--ease)` with `--fast` (150ms) or `--normal` (250ms), stay near 300ms at most, never block interaction during animation, and turn all motion off under `prefers-reduced-motion`.
 - **Do** keep the faint 32px grid on the board ground, and keep dark mode as the glass blackboard with brightened inks and separate `*-fill` solids.
 - **Do** keep `data-tour` attributes, form `name`s and JS-dependent ids and `data-*` untouched when restyling.
+- **Do** label a section only when the label says what the reader does there: `.kicker.mode` with `mode-play` (blue), `mode-class` (ink), `mode-extra` (green), `mode-quiz` (green) or `mode-case` (red). Each gets its stroke icon from CSS.
+- **Do** keep emoji that illustrate content (course-map unit pictures, flip-card fronts, quizshow unit chips): for elderly readers they are recognition aids, not UI icons.
+- **Do** render a row of equal cards inside a section (`.slide .grid-3 > .card`) as one taped sheet split by marker rules, not as separate floating cards.
 
 ### Don't:
 - **Don't** use gradients, glows, neon, sheens or rainbow borders as decoration.
@@ -285,6 +288,8 @@ Code, terminal and the Claude Code workbench simulator keep their own dark scree
 - **Don't** add an arrow or leader line to the analogy box.
 - **Don't** set paragraphs, options or questions in the handwriting faces.
 - **Don't** use bouncy or overshoot easings.
+- **Don't** loop an animation to ask for attention; show the state once (at most 3 pulses), then hold still.
+- **Don't** add a decorative label above or under a heading ("根本原因", "親眼看看"); if it doesn't name the reader's task, leave it out.
 
 ### Known debt (not rules)
-Emoji still appear inside legacy page content. Some sections repeat same-size icon-card rows (`.grid-3`). The index page keeps a hero-metric band. Label-only kickers survive: they have been restyled as blue annotations but still carry no content. The old glow layers in `course.css` are switched off by later overrides, not deleted, and `workbench.css` still keeps pink/blue radial glows on the chat ground and a pulsing rainbow ring on the "your turn" input. Treat all of these as cleanup targets, not patterns to copy.
+The index page keeps a hero-metric band (real numbers; kept on purpose for recruiting). The old glow layers in `course.css` are switched off by later overrides, not deleted; remove them in a code-only cleanup. Treat these as cleanup targets, not patterns to copy.
