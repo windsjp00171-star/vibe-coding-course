@@ -7,12 +7,12 @@
 }
 .lp-hero::after {
   content: ''; position: absolute; inset: auto -120px -220px auto; width: 460px; height: 460px;
-  border-radius: 50%; background: radial-gradient(circle, rgb(129 140 248 / 45%), transparent 68%);
+  border-radius: 50%; background: radial-gradient(circle, rgb(134 168 255 / 45%), transparent 68%);
 }
 .lp-hero > * { position: relative; z-index: 1; }
 .lp-hero .eyebrow { color: #fbbf24; }
 .lp-hero h1 { font-size: var(--text-hero); line-height: 1.12; letter-spacing: -.02em; margin: 10px 0 16px; max-width: 16ch; }
-.lp-hero h1 em { font-style: normal; color: #c7d2fe; }
+.lp-hero h1 em { font-style: normal; color: #b0c6ff; }
 .lp-hero p { max-width: 54ch; color: #dbe0ff; font-size: clamp(1rem, .95rem + .3vw, 1.2rem); margin: 0; }
 .lp-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .lp-badges span { font-size: .88rem; font-weight: 700; color: #eef0ff; } /* 只是重點，不是按鈕：不用膠囊底色 */

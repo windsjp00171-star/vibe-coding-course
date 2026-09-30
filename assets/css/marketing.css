@@ -26,8 +26,8 @@
   padding-block: clamp(56px, 8vw, 104px);
   border-radius: 0;
   background:
-    radial-gradient(120% 90% at 82% 8%, rgb(129 140 248 / 32%), transparent 58%),
-    radial-gradient(90% 70% at 8% 100%, rgb(79 70 229 / 34%), transparent 60%),
+    radial-gradient(120% 90% at 82% 8%, rgb(134 168 255 / 32%), transparent 58%),
+    radial-gradient(90% 70% at 8% 100%, rgb(29 35 39 / 34%), transparent 60%),
     #17143d;
 }
 /* 顆粒：純 CSS，不載圖。沒有它，深色區塊會平得像一塊色票 */
@@ -60,7 +60,7 @@
 .mk .lp-path::after {
   /* 滑過時從左下掃過的光，告訴你「這張是可以點的」 */
   content: ''; position: absolute; inset: auto -40% -60% -40%; height: 70%;
-  background: radial-gradient(60% 100% at 50% 100%, rgb(79 70 229 / 12%), transparent 70%);
+  background: radial-gradient(60% 100% at 50% 100%, rgb(29 35 39 / 12%), transparent 70%);
   opacity: 0; transition: opacity var(--normal) var(--ease);
 }
 .mk .lp-path:hover::after, .mk .lp-path:focus-visible::after { opacity: 1; }
@@ -145,3 +145,32 @@
   position: absolute; top: -10px; left: -10px; background: #cc3b35; color: #fff;
   font-size: .66rem; font-weight: 800; letter-spacing: .1em; padding: 4px 10px; border-radius: 999px;
 }
+
+/* ---------- 白板改版（2026-09）：主視覺不再是深紫色帶，而是寫滿字的白板，兩樣東西貼在上面 ---------- */
+:root .mk .lp-hero { background: transparent; color: var(--ink); border-bottom: 2px solid var(--line); }
+:root .mk .lp-hero::before, :root .mk .lp-hero::after { display: none; }
+:root .mk .lp-hero .eyebrow { color: var(--brand); font-family: var(--hand); font-size: 1.15rem; letter-spacing: 0; text-transform: none; }
+:root .mk .lp-hero h1 { font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.4rem); line-height: 1.35; max-width: none; }
+/* 第二行：紅筆在底下畫一道線 */
+:root .mk .lp-hero h1 em {
+  color: inherit; text-decoration: underline; text-decoration-color: var(--danger);
+  text-decoration-thickness: max(3px, .06em); text-underline-offset: .18em; text-decoration-skip-ink: none;
+}
+:root .mk .lp-hero p { color: var(--muted); }
+:root .mk .lp-hero p b { color: var(--ink); }
+:root .mk .lp-badges span { color: var(--ink); }
+:root .mk .lp-badges span::before { color: var(--ok); }
+/* 報名頁：一張用紙膠帶貼在板上的紙 */
+:root .mk .mk-window { position: relative; overflow: visible; box-shadow: 0 1px 1px rgb(29 35 39 / 8%), 0 22px 40px -22px rgb(29 35 39 / 45%); border-radius: 4px; }
+:root .mk .mk-window::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 84px; height: 22px; translate: -50% 0; rotate: -3deg;
+  background: var(--tape); z-index: 2;
+}
+:root .mk .mk-bar { border-radius: 4px 4px 0 0; }
+:root .mk .mk-title { color: #1d2327; }
+/* 可疑訊息：手機上跳出來的那則，深色螢幕、紅筆標「可疑」 */
+:root .mk .mk-chat { background: #1d2327; color: #eef2f3; box-shadow: var(--shadow-lift); }
+:root .mk .mk-chat p { color: #c9d1d6; }
+:root .mk .mk-flag { background: var(--danger-fill); font-family: var(--hand); letter-spacing: 0; font-size: .8rem; }
+:root .mk .lp-path::after { display: none; }
+:root .mk .lp-path:first-child::before { font-family: var(--hand); letter-spacing: 0; font-size: .85rem; }
