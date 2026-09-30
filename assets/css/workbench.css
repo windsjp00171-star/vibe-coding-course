@@ -287,3 +287,18 @@
 :root .wb-stars span.is-on { background: none; color: #ffcc4d; filter: none; }
 :root .wb-chat { background: var(--wb-bg); }
 :root .wb-input.is-your-turn textarea { background: #151311; border-color: var(--wb-accent); box-shadow: none; animation: none; }
+
+/* ---------- 審查排序第 1 項：不要一直動 ----------
+   長輩看到東西一直閃會分心、會亂點。循環動畫改成「狀態」：出現時提示一次（最多 3 下），之後靜止。 */
+:root .wb-side-head span { animation: none; }
+:root .wb-missions li.is-now { animation: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+:root .wb-bar b::before { animation: none; box-shadow: none; }
+:root .msg-typing .wb-av { animation: none; }
+:root .msg-typing i, :root .wb-dots i { background: var(--wb-dim); animation-iteration-count: 3; }
+/* 輪到你按允許／拒絕：外框提示 3 下就停，框線保持橘色 */
+:root .msg-perm { animation: wb-in .42s var(--ease) both, wb-ask-soft .9s ease-in-out .5s 3; }
+:root .msg-perm:has(.is-picked) { animation: none; }
+@keyframes wb-ask-soft { 50% { box-shadow: 0 0 0 4px rgb(217 119 87 / 22%); } }
+/* 輪到你打字：輸入框一道實心橘框，不閃 */
+:root .wb-input.is-your-turn textarea { outline: 3px solid color-mix(in srgb, var(--wb-accent) 45%, transparent); outline-offset: 1px; }
+@media (prefers-reduced-motion: reduce) { :root .msg-perm, :root .msg-typing i, :root .wb-dots i { animation: none !important; } }

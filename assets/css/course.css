@@ -1488,3 +1488,27 @@ html { scroll-padding-top: 76px; }
 /* 標題像粗的白板筆：文楷最粗只到 700，再描一圈同色細邊讓筆畫變粗 */
 :root h1 { -webkit-text-stroke: .022em currentColor; paint-order: stroke fill; }
 :root h2 { -webkit-text-stroke: .012em currentColor; paint-order: stroke fill; }
+
+/* 審查排序第 3 項：工作坊的三個欄位用線條圖示（原本是 emoji，各系統長得不一樣） */
+:root .ws-how p > b:first-child { display: inline-flex; align-items: center; gap: 6px; }
+:root .ws-how p > b:first-child::before { content: ""; width: 1.15em; height: 1.15em; flex: none; background: currentColor; -webkit-mask: var(--ws-ico) center / contain no-repeat; mask: var(--ws-ico) center / contain no-repeat; }
+:root .ws-how p:nth-of-type(1) > b:first-child { --ws-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3'/%3E%3Cpath d='M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5a3 3 0 0 1 0 6M21 20c0-2.8-1.8-5.2-4.3-5.8'/%3E%3C/svg%3E"); }
+:root .ws-how p:nth-of-type(2) > b:first-child { --ws-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='7' width='16' height='13' rx='2'/%3E%3Cpath d='M9 7V5a3 3 0 0 1 6 0v2M4 12h16'/%3E%3C/svg%3E"); }
+:root .ws-how p:nth-of-type(3) > b:first-child { --ws-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='4'/%3E%3Cpath d='M5 12v9h14v-9M12 8v13M12 8c-2-4-6-4-6-1s6 1 6 1c2-4 6-4 6-1s-6 1-6 1'/%3E%3C/svg%3E"); }
+:root .must-read b .ico { margin-right: 4px; }
+:root .lp-icon .ico, :root .lp-tool .lp-icon .ico { width: 1em; height: 1em; color: var(--brand); }
+:root .lp-path--security .lp-icon .ico { color: var(--warn); }
+
+/* 審查排序第 5 項：一排同樣大小的卡片，改成「一張用膠帶貼在板上的紙，用筆畫線分成幾欄」
+   只看得懂的內容卡才這樣做（直接子元素是 .card 的 .grid-3）；手機上自動變成上下分段 */
+:root .slide .grid-3:has(> .card) {
+  gap: 0; position: relative; background: var(--card); border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  border-radius: 3px; box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%);
+}
+:root .slide .grid-3:has(> .card)::before {
+  content: ""; position: absolute; top: -10px; left: 50%; width: 72px; height: 20px; translate: -50% 0; rotate: 2deg;
+  background: var(--tape); border-radius: 1px; pointer-events: none; z-index: 1;
+}
+:root .slide .grid-3 > .card { background: transparent; border: 0; border-radius: 0; box-shadow: -1.5px 0 0 var(--line), 0 -1.5px 0 var(--line); }
+:root .slide .grid-3 > .card::before { display: none; }
+@media print { :root .slide .grid-3:has(> .card)::before { display: none; } }
