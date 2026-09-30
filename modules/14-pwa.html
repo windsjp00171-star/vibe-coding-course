@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301427">
 </head>
 <body data-module="m14" data-base="../">
 <header data-course-header></header>
@@ -45,7 +45,7 @@
 
   <section class="slide" id="what">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">先比較</span><h2>PWA 和 App Store 的 App 差在哪？</h2></div></div>
+      <div><h2>PWA 和 App Store 的 App 差在哪？</h2></div></div>
     <div class="card"><div class="table-wrap"><table class="compare">
       <thead><tr><th></th><th>App Store 上的 App</th><th class="hl">PWA</th></tr></thead>
       <tbody>
@@ -60,7 +60,7 @@
 
   <section class="slide" id="parts">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">三個零件</span><h2>一個網站要變成 PWA，需要什麼？</h2></div></div>
+      <div><h2>一個網站要變成 PWA，需要什麼？</h2></div></div>
     <div class="grid grid-3">
       <div class="card"><h3>🪪 manifest（名片）</h3><p>一個小檔案，告訴手機：App 叫什麼名字、用什麼圖示、什麼顏色、從哪一頁打開。</p></div>
       <div class="card"><h3>🧑‍🔧 service worker（管家）</h3><p>一支在背景工作的小程式，負責把檔案存在手機上（快取），讓網站開得快、斷網也能看，也負責接收推播。</p></div>
@@ -71,7 +71,7 @@
 
   <section class="slide" id="install" data-tour="install">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">怎麼安裝</span><h2>iPhone 和 Android 不一樣</h2></div></div>
+      <div><h2>iPhone 和 Android 不一樣</h2></div></div>
     <div data-tabs data-default="ios">
       <div class="tab-row" role="group" aria-label="選擇手機">
         <button type="button" data-tab="ios">🍎 iPhone</button>
@@ -99,7 +99,7 @@
 
   <section class="slide" id="cache" data-tour="cache">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">動手玩．最常見的坑</span><h2>改了網站，使用者卻還看到舊版</h2>
+      <div><span class="kicker mode mode-play">動手玩．最常見的坑</span><h2>改了網站，使用者卻還看到舊版</h2>
         <p>PWA 的管家（service worker）會把網站的檔案存在使用者手機上，所以開得很快。但你發布新版時，管家不一定知道要去拿新的——使用者就會一直看到舊版。</p>
         <p><b>怎麼玩：</b>① 先在左邊選一種更新策略　② 按「🚀 發布新版」（代表你改好程式、上線了）　③ 按幾次「📱 使用者打開 App」。右邊會顯示使用者<b>實際看到的版本</b>：v1 是舊版、v2 是你剛發布的新版。三種策略各試一次，看差在哪裡。</p></div></div>
     <div class="split">
@@ -114,13 +114,13 @@
 
   <section class="slide" id="pits" data-tour="pits">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">講師踩過的坑</span><h2>PWA 相關的真實事故</h2></div></div>
+      <div><span class="kicker mode mode-case">講師踩過的坑</span><h2>PWA 相關的真實事故</h2></div></div>
     <div class="grid grid-3" data-pits></div>
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">課中工作坊</span><h2>把你的網站變成 App</h2></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>把你的網站變成 App</h2></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>兩人一組</p>
       <p><b>要準備</b>你已經上線的網站、各自的手機</p>
@@ -146,7 +146,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -165,16 +165,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 14　各手機系統的安裝畫面會隨版本調整。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/modules/electives.js?v=202609301424"></script>
-<script src="../assets/js/modules/m14.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/modules/electives.js?v=202609301427"></script>
+<script src="../assets/js/modules/m14.js?v=202609301427"></script>
 </body>
 </html>

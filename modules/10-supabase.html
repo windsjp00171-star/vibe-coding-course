@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301427">
 </head>
 <body data-module="m10" data-base="../">
 <header data-course-header></header>
@@ -46,7 +46,7 @@
 
   <section class="slide" id="where" data-tour="where">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">先問這個</span><h2>資料要放在哪？不一定要用資料庫</h2>
+      <div><h2>資料要放在哪？不一定要用資料庫</h2>
         <p>很多人一想到「存資料」就要架資料庫。其實先問兩個問題：<b>誰要看得到？</b><b>需不需要登入？</b></p></div></div>
     <div class="table-wrap card" style="margin-bottom:18px"><table class="compare">
       <thead><tr><th>放在哪</th><th>適合</th><th>例子</th><th>缺點</th></tr></thead>
@@ -62,7 +62,7 @@
 
   <section class="slide" id="what">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">先講概念</span><h2>資料庫跟 Excel 哪裡一樣、哪裡不一樣？</h2></div></div>
+      <div><h2>資料庫跟 Excel 哪裡一樣、哪裡不一樣？</h2></div></div>
     <div class="table-wrap card"><table class="compare">
       <thead><tr><th></th><th>Excel</th><th class="hl">資料庫（Supabase）</th></tr></thead>
       <tbody>
@@ -78,7 +78,7 @@
 
   <section class="slide" id="draw" data-tour="draw">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">紙上練習</span><h2>把你的題目畫成一張表</h2>
+      <div><span class="kicker mode mode-play">紙上練習</span><h2>把你的題目畫成一張表</h2>
         <p>動手之前，先在紙上畫：<b>一列是什麼？</b>（一次借用、一張假單、一筆訂單）<b>有哪些欄位？</b>（每一欄要填什麼）</p></div></div>
     <div class="split">
       <div class="card">
@@ -107,7 +107,7 @@
 
   <section class="slide" id="rls" data-tour="rls">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">動手玩．最重要的一課</span><h2>RLS：誰看得到哪一列？</h2>
+      <div><span class="kicker mode mode-play">動手玩．最重要的一課</span><h2>RLS：誰看得到哪一列？</h2>
         <p>這是一張聚餐報名表。切換「你是誰」和「RLS 開關」，看看每個人能看到哪些資料。</p></div></div>
     <div class="split">
       <div class="card">
@@ -126,7 +126,7 @@
 
   <section class="slide" id="matrix" data-tour="matrix">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">權限矩陣</span><h2>誰可以看、誰可以改？</h2>
+      <div><h2>誰可以看、誰可以改？</h2>
         <p>把「誰」和「能做什麼」排成一張表，就是權限矩陣。下面是範本已經設定好的規則，你的題目大多可以直接用。</p></div></div>
     <div class="table-wrap card"><table class="compare">
       <thead><tr><th></th><th>新增</th><th>看自己的</th><th>看別人的</th><th>改狀態</th><th>刪除</th></tr></thead>
@@ -141,7 +141,7 @@
 
   <section class="slide" id="keys" data-tour="keys">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">兩把鑰匙</span><h2>哪一把可以放在網頁上？</h2></div></div>
+      <div><h2>哪一把可以放在網頁上？</h2></div></div>
     <div class="grid grid-2" style="margin-bottom:18px">
       <div class="card"><span class="pill pill-ok">可以公開</span><h3>🪪 Publishable key（訪客證）</h3><p>以 <code>sb_publishable_</code> 開頭（舊版叫 anon key）。放在網頁上沒關係，因為拿著它能做什麼，完全由 RLS 規則決定。</p></div>
       <div class="card"><span class="pill pill-danger">絕對不能公開</span><h3>🗝️ Secret／service_role key（萬能鑰匙）</h3><p>拿到它就能<b>跳過所有 RLS</b>，讀寫刪除全部資料。只能放在伺服器的環境變數裡，永遠不進網頁、不進 GitHub、不貼給任何人。</p></div>
@@ -151,7 +151,7 @@
 
   <section class="slide" id="template" data-tour="template">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">起始範本</span><h2>一個已經裝好門禁的登記系統</h2>
+      <div><h2>一個已經裝好門禁的登記系統</h2>
         <p>權限最容易出錯，所以講師先把它做對了。你要做的，是把範本<b>改成你的題目</b>。</p></div></div>
     <div class="split">
       <div class="card">
@@ -184,13 +184,13 @@
 
   <section class="slide" id="pits" data-tour="pits">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">講師踩過的坑</span><h2>資料庫相關的真實事故</h2><p>點卡片看原因，還有下次可以直接對 Claude Code 說的話。</p></div></div>
+      <div><span class="kicker mode mode-case">講師踩過的坑</span><h2>資料庫相關的真實事故</h2><p>點卡片看原因，還有下次可以直接對 Claude Code 說的話。</p></div></div>
     <div class="grid grid-2" data-pits></div>
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">09</span>
-      <div><span class="kicker">課中工作坊</span><h2>裝好範本，用第二個帳號驗證門禁</h2></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>裝好範本，用第二個帳號驗證門禁</h2></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>三人一組（和單元 01 同一組），每個人做自己的</p>
       <p><b>要準備</b>Supabase 免費帳號（課前先註冊）、GitHub 帳號、兩個能收信的 Email</p>
@@ -227,7 +227,7 @@
 
   <section class="slide" id="challenge" data-tour="challenge">
     <div class="section-head"><span class="section-num">10</span>
-      <div><span class="kicker">延伸挑戰．真正的 Vibe Coding</span><h2>請 Claude Code 加一個範本沒有的功能</h2>
+      <div><span class="kicker mode mode-extra">延伸挑戰．真正的 Vibe Coding</span><h2>請 Claude Code 加一個範本沒有的功能</h2>
         <p>範本只是起點。挑一個你的題目真的需要的功能，<b>自己把需求講清楚、讓 Claude Code 動手、自己驗收</b>。這才是這門課要練的能力。</p></div></div>
     <div class="grid grid-2">
       <div class="card"><h3>🧮 額滿就不能再登記</h3><p>同一天超過 5 筆就擋下來。提示：這要改資料庫的規則（<code>setup.sql</code>），CLAUDE.md 會提醒 Claude Code 先跟你解釋誰多了、少了什麼權限。</p></div>
@@ -249,7 +249,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">11</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -269,16 +269,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 10　Supabase 介面與方案以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/modules/electives.js?v=202609301424"></script>
-<script src="../assets/js/modules/m10.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/modules/electives.js?v=202609301427"></script>
+<script src="../assets/js/modules/m10.js?v=202609301427"></script>
 </body>
 </html>

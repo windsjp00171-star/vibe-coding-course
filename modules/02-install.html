@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301427">
   <style>
     .term-demo { margin: 0; border-radius: var(--radius-m); overflow: hidden; box-shadow: var(--shadow-lift); }
     .term-bar { display: flex; align-items: center; gap: 7px; background: #33313d; padding: 8px 12px; font-size: .78rem; color: #b9b5c6; }
@@ -61,14 +61,14 @@
 
   <section class="slide screen-only" id="sim" data-tour="sim">
     <div class="section-head"><span class="section-num">▶</span>
-      <div><span class="kicker">先玩再學．還沒安裝也能玩</span><h2>今天的任務：幫部門做聚餐報名頁</h2>
+      <div><span class="kicker mode mode-play">先玩再學．還沒安裝也能玩</span><h2>今天的任務：幫部門做聚餐報名頁</h2>
         <p>這是一個模擬的 Claude Code。用自己的話下指令、判斷要不要允許、親手驗收，大約 10 分鐘。玩過一次，等一下裝真的就不會怕。</p></div></div>
     <div data-workbench data-no-gloss></div>
   </section>
 
   <section class="slide" id="tools" data-tour="tools">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">先搞懂差別</span><h2>AI 寫程式工具的三種類型</h2></div></div>
+      <div><h2>AI 寫程式工具的三種類型</h2></div></div>
     <div class="grid grid-3">
       <div class="card"><span class="pill pill-warn">聊天型</span><h3>💬 顧問</h3><p>claude.ai、ChatGPT 的對話視窗。會給你程式碼，但你要自己複製、貼上、存檔、測試。</p><p class="muted">適合：問問題、查概念</p></div>
       <div class="card"><span class="pill pill-ok">編輯器型</span><h3>🧑‍✈️ 副駕駛</h3><p>Cursor、Windsurf、GitHub Copilot。在寫程式的軟體裡幫你補完、修改，畫面上看得到每一行程式碼。</p><p class="muted">適合：想邊看程式碼邊學的人</p></div>
@@ -92,7 +92,7 @@
 
   <section class="slide" id="plan">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">要花多少錢？</span><h2>選一個 Claude 方案</h2><p>Claude Code 需要付費方案。價格和額度常調整，請以 <a href="https://claude.com/pricing" target="_blank" rel="noopener">官網價格頁</a> 為準。</p></div></div>
+      <div><h2>選一個 Claude 方案</h2><p>Claude Code 需要付費方案。價格和額度常調整，請以 <a href="https://claude.com/pricing" target="_blank" rel="noopener">官網價格頁</a> 為準。</p></div></div>
     <div class="grid grid-3">
       <div class="card"><h3>免費版</h3><p>可以在 claude.ai 聊天，但<b>不能用 Claude Code</b>。適合先試試跟 AI 對話的感覺。</p></div>
       <div class="card" style="border:2px solid var(--brand)"><span class="pill pill-brand">建議從這裡開始</span><h3>Pro</h3><p>可以使用 Claude Code。一般練習、做小工具通常夠用。用完額度要等一段時間才會恢復。</p></div>
@@ -103,7 +103,7 @@
 
   <section class="slide" id="install" data-tour="install">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">一步一步來</span><h2>安裝 Claude Code 桌面版</h2><p>選你的電腦，照著做。每做完一步就打勾，卡住了就點「卡住了？」。</p></div></div>
+      <div><h2>安裝 Claude Code 桌面版</h2><p>選你的電腦，照著做。每做完一步就打勾，卡住了就點「卡住了？」。</p></div></div>
     <div data-tabs data-default="win">
       <div class="tab-row screen-only" role="group" aria-label="選擇作業系統">
         <button type="button" data-tab="win">🪟 Windows</button>
@@ -153,7 +153,7 @@
 
   <section class="slide" id="first-task">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">第一個作品</span><h2>5 分鐘做出一個網頁</h2><p>裝好之後，把下面這段話複製貼給 Claude Code。</p></div></div>
+      <div><h2>5 分鐘做出一個網頁</h2><p>裝好之後，把下面這段話複製貼給 Claude Code。</p></div></div>
     <div class="split">
       <div>
         <pre class="gen-out" id="first-prompt">請在這個資料夾做一個「我的自我介紹」網頁：
@@ -172,7 +172,7 @@
 
   <section class="slide" id="permission" data-tour="permission">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">最重要的一件事</span><h2>它問「允許嗎？」的時候</h2>
+      <div><h2>它問「允許嗎？」的時候</h2>
         <p>Claude Code 在修改檔案、執行指令之前，預設會先問你。這是保護你的安全帶，不是囉唆。</p></div></div>
     <div class="grid grid-3" style="margin-bottom:18px">
       <div class="card"><span class="pill pill-ok">放心允許</span><p>建立或修改<b>專案資料夾裡</b>的檔案、看檔案內容、開啟本機預覽。</p></div>
@@ -185,7 +185,7 @@
 
   <section class="slide" id="terminal">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">進階．可以先跳過</span><h2>終端機：電腦的「文字遙控器」</h2>
+      <div><span class="kicker mode mode-extra">進階．可以先跳過</span><h2>終端機：電腦的「文字遙控器」</h2>
         <p>你偶爾會看到 Claude Code 在執行像 <code>git status</code> 這樣的文字指令。那就是終端機的語言。你不用自己打，但認得的話會安心很多。</p></div></div>
     <div class="split" style="margin-bottom:18px">
       <div>
@@ -221,7 +221,7 @@
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">課中工作坊</span><h2>安裝派對</h2><p>兩人一組當「安裝夥伴」，一起完成、一起做出第一個網頁。</p></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>安裝派對</h2><p>兩人一組當「安裝夥伴」，一起完成、一起做出第一個網頁。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>兩人一組，一人操作一人念步驟</p>
       <p><b>要準備</b>自己的筆電、Claude 付費方案帳號</p>
@@ -248,7 +248,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -267,16 +267,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 02　安裝步驟與價格以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/workbench.js?v=202609301424"></script>
-<script src="../assets/js/sims/m2-party.js?v=202609301424"></script>
-<script src="../assets/js/modules/m2.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/workbench.js?v=202609301427"></script>
+<script src="../assets/js/sims/m2-party.js?v=202609301427"></script>
+<script src="../assets/js/modules/m2.js?v=202609301427"></script>
 </body>
 </html>

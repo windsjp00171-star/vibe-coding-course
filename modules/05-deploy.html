@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301427">
 </head>
 <body data-module="m5" data-base="../">
 <header data-course-header></header>
@@ -44,14 +44,14 @@
 
   <section class="slide screen-only" id="sim" data-tour="sim">
     <div class="section-head"><span class="section-num">▶</span>
-      <div><span class="kicker">先玩再學．10 分鐘</span><h2>主管說「傳給我看」，你要怎麼給？</h2>
+      <div><span class="kicker mode mode-play">先玩再學．10 分鐘</span><h2>主管說「傳給我看」，你要怎麼給？</h2>
         <p>模擬把作品放上網路的整個過程：選平台、第一次上線、遇到 404、改一行再上線。大約 10 分鐘。</p></div></div>
     <div data-workbench data-no-gloss></div>
   </section>
 
   <section class="slide" id="what">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">先講概念</span><h2>部署是什麼？</h2></div></div>
+      <div><h2>部署是什麼？</h2></div></div>
     <div class="split">
       <div>
         <div class="analogy"><strong>自家廚房（本機）：</strong>你做的菜只有家人吃得到。Claude Code 幫你開的預覽網址像 <code>localhost:5173</code>，意思是「這台電腦自己」，別人打不開。</div>
@@ -71,7 +71,7 @@
 
   <section class="slide" id="static" data-tour="static">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">最重要的分類</span><h2>靜態網站 vs 動態網站</h2><p>選平台之前，先分清楚你做的是哪一種。</p></div></div>
+      <div><h2>靜態網站 vs 動態網站</h2><p>選平台之前，先分清楚你做的是哪一種。</p></div></div>
     <div class="grid grid-2" style="margin-bottom:18px">
       <div class="card"><span class="pill pill-ok">靜態網站</span><h3>🖨️ 印好的傳單</h3><p>每個人看到的內容都一樣，網站不用「記住」任何東西。作品集、活動介紹、課程網站（就是你現在看的這個）。</p><p><b>上線：免費、簡單。</b></p></div>
       <div class="card"><span class="pill pill-warn">動態網站</span><h3>🧑‍💼 有店員的櫃台</h3><p>要存資料、要登入、每個人看到的不一樣。報名系統、會員系統、LINE 機器人。後面需要一台一直開著的主機和資料庫。</p><p><b>上線：要多設定，可能要付費。</b></p></div>
@@ -81,7 +81,7 @@
 
   <section class="slide" id="picker" data-tour="picker">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">動手選</span><h2>我該放在哪個平台？</h2><p>回答幾個問題，看看適合哪裡。這些平台講師都實際用過。</p></div></div>
+      <div><span class="kicker mode mode-play">動手選</span><h2>我該放在哪個平台？</h2><p>回答幾個問題，看看適合哪裡。這些平台講師都實際用過。</p></div></div>
     <div class="split">
       <div class="card" data-picker aria-live="polite"></div>
       <div class="card">
@@ -102,7 +102,7 @@
 
   <section class="slide" id="pages" data-tour="pages">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">最簡單的上線</span><h2>用 GitHub Pages 上線（免費）</h2><p>適合靜態網站。這個課程網站就是這樣上線的。</p></div></div>
+      <div><h2>用 GitHub Pages 上線（免費）</h2><p>適合靜態網站。這個課程網站就是這樣上線的。</p></div></div>
     <div data-tabs data-default="say">
       <div class="tab-row screen-only" role="group" aria-label="選擇方式">
         <button type="button" data-tab="say">🤖 請 Claude Code 做</button>
@@ -134,7 +134,7 @@
 
   <section class="slide" id="env" data-tour="env">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">動態網站才需要</span><h2>環境變數：店長手機裡的保險箱密碼</h2></div></div>
+      <div><h2>環境變數：店長手機裡的保險箱密碼</h2></div></div>
     <div class="split">
       <div>
         <p>動態網站要連資料庫、要用 LINE 登入，需要各種密碼和金鑰。可是密碼<b>不能放在 GitHub 上</b>，那上線的網站要去哪裡拿密碼？</p>
@@ -156,7 +156,7 @@
 
   <section class="slide" id="stories" data-tour="stories">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">講師踩過的坑</span><h2>四個真實的部署故事</h2><p>點卡片看發生什麼事、怎麼解決。</p></div></div>
+      <div><span class="kicker mode mode-case">講師踩過的坑</span><h2>四個真實的部署故事</h2><p>點卡片看發生什麼事、怎麼解決。</p></div></div>
     <div class="grid grid-2">
       <div class="flip"><div class="flip-inner">
         <div class="flip-face flip-front"><div class="emoji">🚚</div><h3>搬家後，中文網址全壞了</h3><p>讀經網站從一個平台搬到另一個平台，英文頁面都正常，可是所有中文書卷的網址都顯示「查無此章經文」。</p><span class="flip-hint">點我看解法 ↻</span></div>
@@ -179,7 +179,7 @@
 
   <section class="slide" id="order">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">動手玩</span><h2>上線的正確順序</h2></div></div>
+      <div><span class="kicker mode mode-play">動手玩</span><h2>上線的正確順序</h2></div></div>
     <div class="card screen-only" data-order></div>
     <div class="print-only card">
       <h3>✍️ 上線順序（填入 1～6）</h3>
@@ -190,7 +190,7 @@
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">課中工作坊</span><h2>30 分鐘上線挑戰</h2><p>先用自我介紹網頁暖身、走一次上線流程，再把<b>你的題目</b>做出第一個畫面，也放上網路。</p></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>30 分鐘上線挑戰</h2><p>先用自我介紹網頁暖身、走一次上線流程，再把<b>你的題目</b>做出第一個畫面，也放上網路。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>個人做，同組互測</p>
       <p><b>要準備</b>做好的自我介紹網頁、GitHub 帳號、單元 01 的題目卡</p>
@@ -217,7 +217,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">09</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -236,16 +236,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 05　各平台的方案與介面以官方最新說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/workbench.js?v=202609301424"></script>
-<script src="../assets/js/sims/m5-ship.js?v=202609301424"></script>
-<script src="../assets/js/modules/m5.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/workbench.js?v=202609301427"></script>
+<script src="../assets/js/sims/m5-ship.js?v=202609301427"></script>
+<script src="../assets/js/modules/m5.js?v=202609301427"></script>
 </body>
 </html>
