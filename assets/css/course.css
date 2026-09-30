@@ -1,62 +1,85 @@
 /* course.css — AI 安全上班族課程 共用樣式
- * 方向：「工作手冊」編輯風 — 米白紙感底、靛藍主色、粗黑大標、編號章節。 */
+ * 方向：「會議室白板」— 講師站在白板前把一件事講清楚：黑筆寫大字、紅筆圈重點、藍筆拉引線、綠筆打勾。
+ * 墨色只有四支白板筆（黑、藍、紅、綠）加便利貼黃；講師模式另有一支紫筆，只在講師模式出現。
+ * 板面上寫的字是平的；可以按的是吸在板上的磁鐵（有厚度、有影子）。細節見 DESIGN.md。 */
 
 :root {
-  --paper: #faf8f4;
-  --paper-2: #f2eee6;
-  --card: #ffffff;
-  --ink: #1c1b29;
-  --muted: #5d5b6e;
-  --line: #e4dfd5;
-  --brand: #4f46e5;
-  --brand-ink: #3730a3;
-  --brand-soft: #eceefe;
+  --paper: #f5f7f6;    /* 白板琺瑯面：偏冷的白，不是米色紙 */
+  --paper-2: #e8ecec;  /* 擦過的板面、凹槽 */
+  --card: #ffffff;     /* 貼在板上的 A4 紙、磁鐵面 */
+  --ink: #1d2327;      /* 黑色白板筆 */
+  --muted: #4d5961;    /* 淡一點的黑筆：在板面上對比 6.8 */
+  --line: #d3d9dc;
+  --line-strong: #aeb7bd; /* 鋁框、磁鐵邊 */
+  --brand: #1f4fbf;    /* 藍色白板筆 */
+  --brand-ink: #173c93;
+  --brand-soft: #e2e9f8;
   /* 實心底色專用（上面放白字）：淺色模式和品牌色一樣；深色模式的品牌色調亮了，當底色時白字會看不清楚，另外給一組深一點的 */
   /* 反色（深底淺字）：翻牌卡背面、選中的標籤、提示訊息。深色模式不能直接拿文字色當底色，否則會變成一塊亮白 */
-  --invert-bg: #1c1b29; --invert-ink: #faf8f4;
-  --brand-fill: #4f46e5; --brand-fill-hover: #3730a3; --ok-fill: #17835a; --danger-fill: #cc3b35;
-  --ok: #13724e;       /* 文字用：在淺綠底上對比 5 以上（原 #17835a 只有 4.2） */
-  --ok-soft: #e3f4ec;
-  --warn: #92560a;     /* 文字用：在淺黃底上對比 5 以上（原 #b86e0b 只有 3.6） */
-  --warn-soft: #fcf1de;
-  --danger: #b8322c;   /* 文字用：在淺紅底上對比 5 以上（原 #cc3b35 只有 4.5 不到） */
-  --danger-soft: #fbe7e5;
-  --teacher: #7c3aed;
-  --teacher-soft: #f3ecff;
-  --shadow: 0 1px 2px rgb(28 27 41 / 6%), 0 8px 24px -12px rgb(28 27 41 / 18%);
-  --shadow-lift: 0 2px 4px rgb(28 27 41 / 8%), 0 18px 40px -16px rgb(79 70 229 / 35%);
-  --radius-s: 8px;
-  --radius-m: 14px;
-  --radius-l: 22px;
+  --invert-bg: #1d2327; --invert-ink: #f5f7f6;
+  --brand-fill: #1f4fbf; --brand-fill-hover: #173c93; --ok-fill: #1b7f45; --danger-fill: #c62d29;
+  --ok: #176b3b;       /* 綠色白板筆，文字用：在淡綠底上對比 5 以上 */
+  --ok-soft: #e1f1e7;
+  --warn: #7a5600;     /* 便利貼黃的字：黃色本身當字看不見，用深一階的黃褐 */
+  --warn-soft: #fff3bf;
+  --danger: #b3261e;   /* 紅色白板筆，文字用 */
+  --danger-soft: #fbe4e2;
+  --sticky: #ffe27a;   /* 便利貼 */
+  --sticky-ink: #1d2327;
+  --tape: rgb(255 226 122 / 55%); /* 紙膠帶：半透明的便利貼黃 */
+  --teacher: #6d35c9;  /* 講師的紫筆：只在講師模式出現 */
+  --teacher-soft: #f0e9fb;
+  --shadow: 0 1px 2px rgb(29 35 39 / 8%), 0 10px 24px -14px rgb(29 35 39 / 30%);
+  --shadow-lift: 0 2px 4px rgb(29 35 39 / 10%), 0 18px 36px -16px rgb(29 35 39 / 38%);
+  /* 磁鐵：吸在板上的厚度（軟影子，不是硬邊方塊影） */
+  --magnet: 0 1px 0 rgb(255 255 255 / 70%) inset, 0 1px 1px rgb(29 35 39 / 14%), 0 4px 10px -3px rgb(29 35 39 / 28%);
+  --magnet-up: 0 1px 0 rgb(255 255 255 / 70%) inset, 0 2px 2px rgb(29 35 39 / 12%), 0 10px 18px -6px rgb(29 35 39 / 30%);
+  --magnet-down: 0 1px 2px rgb(29 35 39 / 20%) inset, 0 1px 1px rgb(29 35 39 / 10%);
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+  /* 手繪框：白板筆畫出來的框，四個角不一樣圓 */
+  --hand-box: 14px 22px 16px 26px / 22px 14px 24px 16px;
   --font: "Inter", "Noto Sans TC", system-ui, sans-serif;
+  --hand: "Kalam", "LXGW WenKai TC", "Noto Sans TC", system-ui, sans-serif; /* 手寫數字與編號（Kalam 的數字＋文楷的中文） */
+  --hand-text: "LXGW WenKai TC", "Noto Sans TC", system-ui, sans-serif; /* 手寫標題與標註：整句同一種筆跡，英文也用文楷的，不跟中文打架；內文一律用 --font */
   --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-hero: clamp(2.1rem, 1.3rem + 3.6vw, 3.9rem);
+  --text-base: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-hero: clamp(2.3rem, 1.4rem + 3.8vw, 4.4rem);
   --space-section: clamp(3rem, 2rem + 4vw, 6rem);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --fast: 150ms;
-  --normal: 300ms;
+  --normal: 250ms;
   color-scheme: light;
 }
 
+/* 深色：同一塊白板在關燈的教室——玻璃黑板，筆色調亮 */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #15141d; --paper-2: #1d1c28; --card: #211f2e; --ink: #f1eff8; --muted: #aaa7bd;
-    --line: #34314a; --brand: #8b85ff; --brand-ink: #b4b0ff; --brand-soft: #2a2750;
-    --ok: #4cc58f; --ok-soft: #173427; --warn: #f0a94a; --warn-soft: #3a2a12;
-    --danger: #ff7a73; --danger-soft: #3d1d1c; --teacher: #b38cff; --teacher-soft: #2d2143;
-    --invert-bg: #2a2750; --invert-ink: #f1eff8;
-    --brand-fill: #5b52e0; --brand-fill-hover: #4a41c9; --ok-fill: #1f7a52; --danger-fill: #c43c35;
+    --paper: #14181b; --paper-2: #1c2226; --card: #20272c; --ink: #eef2f3; --muted: #a7b2b9;
+    --line: #333d44; --line-strong: #4a565e; --brand: #86a8ff; --brand-ink: #b0c6ff; --brand-soft: #1b2847;
+    --ok: #5fd08f; --ok-soft: #14301f; --warn: #ffd24d; --warn-soft: #3a3110;
+    --danger: #ff8078; --danger-soft: #3d1a18; --teacher: #c3a4ff; --teacher-soft: #2a2140;
+    --invert-bg: #2a3238; --invert-ink: #eef2f3;
+    --brand-fill: #2d5bd0; --brand-fill-hover: #2349ad; --ok-fill: #1d7a44; --danger-fill: #c2352f;
+    --tape: rgb(255 226 122 / 38%);
+    --magnet: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 1px 1px rgb(0 0 0 / 40%), 0 4px 10px -3px rgb(0 0 0 / 60%);
+    --magnet-up: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 2px 2px rgb(0 0 0 / 40%), 0 10px 18px -6px rgb(0 0 0 / 65%);
+    --magnet-down: 0 1px 2px rgb(0 0 0 / 50%) inset;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #15141d; --paper-2: #1d1c28; --card: #211f2e; --ink: #f1eff8; --muted: #aaa7bd;
-  --line: #34314a; --brand: #8b85ff; --brand-ink: #b4b0ff; --brand-soft: #2a2750;
-  --ok: #4cc58f; --ok-soft: #173427; --warn: #f0a94a; --warn-soft: #3a2a12;
-  --danger: #ff7a73; --danger-soft: #3d1d1c; --teacher: #b38cff; --teacher-soft: #2d2143;
-    --invert-bg: #2a2750; --invert-ink: #f1eff8;
-    --brand-fill: #5b52e0; --brand-fill-hover: #4a41c9; --ok-fill: #1f7a52; --danger-fill: #c43c35;
+  --paper: #14181b; --paper-2: #1c2226; --card: #20272c; --ink: #eef2f3; --muted: #a7b2b9;
+  --line: #333d44; --line-strong: #4a565e; --brand: #86a8ff; --brand-ink: #b0c6ff; --brand-soft: #1b2847;
+  --ok: #5fd08f; --ok-soft: #14301f; --warn: #ffd24d; --warn-soft: #3a3110;
+  --danger: #ff8078; --danger-soft: #3d1a18; --teacher: #c3a4ff; --teacher-soft: #2a2140;
+  --invert-bg: #2a3238; --invert-ink: #eef2f3;
+  --brand-fill: #2d5bd0; --brand-fill-hover: #2349ad; --ok-fill: #1d7a44; --danger-fill: #c2352f;
+  --tape: rgb(255 226 122 / 38%);
+  --magnet: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 1px 1px rgb(0 0 0 / 40%), 0 4px 10px -3px rgb(0 0 0 / 60%);
+  --magnet-up: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 2px 2px rgb(0 0 0 / 40%), 0 10px 18px -6px rgb(0 0 0 / 65%);
+  --magnet-down: 0 1px 2px rgb(0 0 0 / 50%) inset;
   color-scheme: dark;
 }
 
@@ -66,8 +89,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 body {
   margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font);
   font-size: var(--text-base); line-height: 1.75; -webkit-font-smoothing: antialiased;
-  background-image: radial-gradient(rgb(28 27 41 / 3.5%) 1px, transparent 1px);
-  background-size: 22px 22px;
+  /* 格線白板：很淡的 32px 方格，一看就是會議室那塊板 */
+  background-image: linear-gradient(rgb(29 35 39 / 3.2%) 1px, transparent 1px), linear-gradient(90deg, rgb(29 35 39 / 3.2%) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 img, svg { max-width: 100%; }
 a { color: var(--brand); }
@@ -137,7 +161,7 @@ main { isolation: isolate; overflow-x: clip; }
 .module-hero { padding: var(--space-section) 0 calc(var(--space-section) * .6); position: relative; }
 .module-hero::before {
   content: ""; position: absolute; z-index: -1; inset: -40px 0 auto auto; width: min(520px, 80vw); aspect-ratio: 1; pointer-events: none;
-  background: radial-gradient(circle at 60% 40%, rgb(99 102 241 / 26%), rgb(168 85 247 / 14%) 40%, transparent 68%);
+  background: radial-gradient(circle at 60% 40%, rgb(31 79 191 / 26%), rgb(168 85 247 / 14%) 40%, transparent 68%);
   filter: blur(20px);
 }
 .module-hero .eyebrow {
@@ -191,7 +215,7 @@ main { isolation: isolate; overflow-x: clip; }
 .split > * { min-width: 0; }
 
 .analogy {
-  border-left: 5px solid var(--brand); background: var(--brand-soft); border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  border: 2px solid var(--brand); border-radius: var(--hand-box);
   padding: 16px 20px; margin: 18px 0; font-weight: 500;
 }
 .analogy strong { color: var(--brand-ink); }
@@ -280,7 +304,7 @@ main { isolation: isolate; overflow-x: clip; }
 .flip { position: relative; }
 .flip-inner { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .18s ease-out; }
 .flip.is-flipped .flip-inner { transform: rotateX(var(--rx, 0deg)) rotateY(calc(180deg + var(--ry, 0deg))); }
-.flip.is-turning .flip-inner { transition: transform 650ms cubic-bezier(.3, 1.35, .5, 1); }
+.flip.is-turning .flip-inner { transition: transform 650ms var(--ease); }
 .flip:hover .flip-face, .flip:focus-visible .flip-face { box-shadow: var(--shadow-lift); }
 .flip-face::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity var(--normal);
@@ -290,7 +314,7 @@ main { isolation: isolate; overflow-x: clip; }
 .flip:hover .flip-face::after { opacity: 1; }
 .flip-front::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; pointer-events: none; opacity: 0;
-  background: conic-gradient(from var(--fx-a), transparent 0 55%, #818cf8 70%, #f472b6 80%, #fbbf24 88%, transparent 96%);
+  background: conic-gradient(from var(--fx-a), transparent 0 55%, #86a8ff 70%, #86a8ff 80%, #fbbf24 88%, transparent 96%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   transition: opacity var(--normal); animation: fx-spin 4s linear infinite;
@@ -317,7 +341,7 @@ main { isolation: isolate; overflow-x: clip; }
 }
 .code-line .ln { color: #8f8cab; user-select: none; min-width: 1.6em; text-align: right; }
 .code.is-clickable .code-line { cursor: pointer; }
-.code.is-clickable .code-line:hover { background: rgb(255 255 255 / 6%); border-left-color: #8b85ff; }
+.code.is-clickable .code-line:hover { background: rgb(255 255 255 / 6%); border-left-color: #86a8ff; }
 .code-line.hit { background: rgb(255 90 80 / 18%); border-left-color: #ff7a73; }
 .code-line.miss { background: rgb(255 255 255 / 5%); animation: shake 300ms; }
 .code-line.found { background: rgb(76 197 143 / 16%); border-left-color: #4cc58f; }
@@ -352,7 +376,7 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 /* 流程步驟：步驟之間畫一條連接線，亮起時從上往下長出來 */
 .steps .step:not(:last-child)::after {
   content: ""; position: absolute; left: 30px; top: 46px; bottom: -28px; width: 2px; border-radius: 2px;
-  background: linear-gradient(var(--brand), #a78bfa); transform-origin: top; transform: scaleY(0);
+  background: linear-gradient(var(--brand), #86a8ff); transform-origin: top; transform: scaleY(0);
   transition: transform .4s var(--ease) .15s;
 }
 .steps .step.is-on:not(:last-child)::after { transform: scaleY(1); }
@@ -363,15 +387,15 @@ textarea.code-input { font-family: var(--mono); font-size: .85rem; background: #
 .fx-reveal-on :is(.analogy, .callout, .steps)[data-reveal]:not(.is-in),
 .fx-reveal-on :is(.goals, .grid-2, .grid-3)[data-reveal]:not(.is-in) > *,
 .fx-reveal-on .compare[data-reveal]:not(.is-in) tbody tr { opacity: 0; }
-.fx-reveal-on :is(.callout, .steps)[data-reveal].is-in { animation: rv-rise .55s cubic-bezier(.2, .9, .3, 1.15) backwards; }
-.fx-reveal-on .analogy[data-reveal].is-in { animation: rv-slide .6s cubic-bezier(.2, .9, .3, 1.15) backwards; position: relative; }
+.fx-reveal-on :is(.callout, .steps)[data-reveal].is-in { animation: rv-rise .55s var(--ease) backwards; }
+.fx-reveal-on .analogy[data-reveal].is-in { animation: rv-slide .6s var(--ease) backwards; position: relative; }
 .fx-reveal-on .analogy[data-reveal].is-in::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 55%) 50%, transparent 65%) 150% 0 / 250% 100% no-repeat;
   animation: fx-shine 1.1s .35s ease-out both;
 }
-.fx-reveal-on :is(.goals, .grid-2, .grid-3)[data-reveal].is-in > * { animation: rv-rise .55s cubic-bezier(.2, .9, .3, 1.15) calc(var(--ri, 0) * 90ms) backwards; }
-.fx-reveal-on .goals[data-reveal].is-in > li::before { animation: fx-pop .4s cubic-bezier(.2, .9, .3, 1.6) calc(var(--ri, 0) * 90ms + .3s) backwards; }
+.fx-reveal-on :is(.goals, .grid-2, .grid-3)[data-reveal].is-in > * { animation: rv-rise .55s var(--ease) calc(var(--ri, 0) * 90ms) backwards; }
+.fx-reveal-on .goals[data-reveal].is-in > li::before { animation: fx-pop .4s var(--ease) calc(var(--ri, 0) * 90ms + .3s) backwards; }
 .fx-reveal-on .compare[data-reveal].is-in tbody tr { animation: rv-row .45s ease-out calc(var(--ri, 0) * 90ms) backwards; }
 .fx-reveal-on .compare[data-reveal].is-in td.hl { animation: rv-hl 1.4s ease-in-out calc(var(--ri, 0) * 90ms + .4s); }
 @keyframes rv-rise { from { opacity: 0; transform: translateY(18px) scale(.98); } }
@@ -492,7 +516,7 @@ body.is-locked [data-module-nav] { display: none; }
 /* ---------- 分類遊戲 ---------- */
 .classify-card {
   font-size: clamp(1.1rem, 1rem + .6vw, 1.4rem); font-weight: 700; background: var(--paper-2); border-radius: var(--radius-m);
-  padding: 22px 24px; margin: 10px 0 16px; border-left: 6px solid var(--brand); min-height: 5em; display: flex; align-items: center;
+  padding: 22px 24px; margin: 10px 0 16px; border: 1px solid var(--line); min-height: 5em; display: flex; align-items: center;
 }
 .classify-choices { display: flex; gap: 10px; flex-wrap: wrap; }
 .classify-choices .btn { flex: 1 1 160px; padding: 14px 16px; }
@@ -514,11 +538,11 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* 排序遊戲炫光：交換的兩格滑過去、排對時一格一格亮綠光、排錯的晃一下 */
 .fx-order .order-list li { transition: border-color var(--fast), background var(--fast), box-shadow var(--fast); }
-.fx-order .order-list li.is-moved { animation: ord-in .32s cubic-bezier(.2, .9, .3, 1.2); z-index: 2; box-shadow: 0 10px 24px -12px rgb(79 70 229 / 70%); border-color: var(--brand); }
-.fx-order .order-list li.is-moved-back { animation: ord-back .32s cubic-bezier(.2, .9, .3, 1.2); }
+.fx-order .order-list li.is-moved { animation: ord-in .32s var(--ease); z-index: 2; box-shadow: 0 10px 24px -12px rgb(29 35 39 / 70%); border-color: var(--brand); }
+.fx-order .order-list li.is-moved-back { animation: ord-back .32s var(--ease); }
 @keyframes ord-in { from { transform: translateY(calc(var(--dir, 0) * (100% + 8px))) scale(1.03); } }
 @keyframes ord-back { from { transform: translateY(calc(var(--dir, 0) * -1 * (100% + 8px))); } }
-.fx-order.is-solved .order-list li.is-right { animation: ord-ok .5s cubic-bezier(.2, .9, .3, 1.5) var(--d, 0ms) both; }
+.fx-order.is-solved .order-list li.is-right { animation: ord-ok .5s var(--ease) var(--d, 0ms) both; }
 .fx-order.is-solved .order-list li.is-right::before { background: var(--ok-fill); color: #fff; }
 @keyframes ord-ok { 0% { transform: scale(.96); box-shadow: 0 0 0 0 rgb(23 131 90 / 50%); } 60% { transform: scale(1.02); } 100% { box-shadow: 0 0 0 10px rgb(23 131 90 / 0%); } }
 .fx-order .order-list li.is-wrong { animation: fx-shake .4s ease; }
@@ -547,7 +571,7 @@ body.is-locked [data-module-nav] { display: none; }
   font-family: var(--mono); font-size: .9rem; background: #1b1a26; color: #e9e7f5; border-radius: var(--radius-s);
   padding: 10px 14px; display: flex; justify-content: space-between; gap: 10px; align-items: center; overflow-x: auto; margin: 8px 0;
 }
-.terminal code::before { content: "$ "; color: #8b85ff; }
+.terminal code::before { content: "$ "; color: #86a8ff; }
 .terminal .btn { flex: none; padding: 3px 10px; font-size: .75rem; background: #34314a; color: #fff; border-color: #34314a; }
 
 /* ---------- 對照表（通用） ---------- */
@@ -587,19 +611,19 @@ body.is-locked [data-module-nav] { display: none; }
 /* 軌道：已拉到的部分從淡紫漸層到主色，一眼看出「長到哪裡了」 */
 .meter-row input[type="range"]::-webkit-slider-runnable-track {
   height: 10px; border-radius: 999px;
-  background: linear-gradient(90deg, #c7d2fe, var(--brand)) 0 / var(--pct, 25%) 100% no-repeat, var(--paper-2);
+  background: linear-gradient(90deg, #b0c6ff, var(--brand)) 0 / var(--pct, 25%) 100% no-repeat, var(--paper-2);
   box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%);
 }
 .meter-row input[type="range"]::-moz-range-track { height: 10px; border-radius: 999px; background: var(--paper-2); }
-.meter-row input[type="range"]::-moz-range-progress { height: 10px; border-radius: 999px; background: linear-gradient(90deg, #c7d2fe, var(--brand)); }
+.meter-row input[type="range"]::-moz-range-progress { height: 10px; border-radius: 999px; background: linear-gradient(90deg, #b0c6ff, var(--brand)); }
 .meter-row input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; width: 26px; height: 26px; margin-top: -8px; border-radius: 50%;
-  background: #fff; border: 3px solid var(--brand); box-shadow: 0 3px 8px rgb(79 70 229 / 35%);
+  background: #fff; border: 3px solid var(--brand); box-shadow: 0 3px 8px rgb(29 35 39 / 35%);
   transition: transform var(--fast) var(--ease);
 }
 .meter-row input[type="range"]::-moz-range-thumb {
   width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--brand);
-  box-shadow: 0 3px 8px rgb(79 70 229 / 35%);
+  box-shadow: 0 3px 8px rgb(29 35 39 / 35%);
 }
 .meter-row input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.18); }
 .meter-row input[type="range"]:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; border-radius: 999px; }
@@ -613,16 +637,16 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* 拉桿炫光：越往右顏色越熱（彩虹一路露出來），把手的光圈跟著變色，拉到滿格發金光、噴火花 */
 .meter-row { position: relative; }
-.meter-row[data-lv="1"] { --lv-c: #a5b4fc; }
-.meter-row[data-lv="2"] { --lv-c: #818cf8; }
-.meter-row[data-lv="3"] { --lv-c: #a78bfa; }
-.meter-row[data-lv="4"] { --lv-c: #f472b6; }
+.meter-row[data-lv="1"] { --lv-c: #86a8ff; }
+.meter-row[data-lv="2"] { --lv-c: #86a8ff; }
+.meter-row[data-lv="3"] { --lv-c: #86a8ff; }
+.meter-row[data-lv="4"] { --lv-c: #86a8ff; }
 .meter-row[data-lv="5"] { --lv-c: #f59e0b; }
 .meter-row input[type="range"]::-webkit-slider-runnable-track {
   background: linear-gradient(90deg, transparent var(--pct, 25%), var(--paper-2) var(--pct, 25%)),
-    linear-gradient(90deg, #a5b4fc, #818cf8 25%, #a78bfa 50%, #f472b6 75%, #fbbf24);
+    linear-gradient(90deg, #86a8ff, #86a8ff 25%, #86a8ff 50%, #86a8ff 75%, #fbbf24);
 }
-.meter-row input[type="range"]::-moz-range-progress { background: linear-gradient(90deg, #a5b4fc, #818cf8, #a78bfa, #f472b6, #fbbf24); }
+.meter-row input[type="range"]::-moz-range-progress { background: linear-gradient(90deg, #86a8ff, #86a8ff, #86a8ff, #86a8ff, #fbbf24); }
 .meter-row input[type="range"]::-webkit-slider-thumb {
   border-color: var(--lv-c, var(--brand));
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--lv-c, var(--brand)) 25%, transparent), 0 3px 10px color-mix(in srgb, var(--lv-c, var(--brand)) 50%, transparent);
@@ -635,7 +659,6 @@ body.is-locked [data-module-nav] { display: none; }
 .meter-row input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.1); }
 .meter-row[data-lv="5"] .meter-emoji { filter: drop-shadow(0 0 8px rgb(251 191 36 / 80%)); animation: fx-flicker 1.4s ease-in-out infinite; }
 .meter-row[data-lv="5"] .meter-out.is-pop .meter-emoji { animation: meter-pop .38s var(--ease), fx-flicker 1.4s .38s ease-in-out infinite; }
-.meter-row[data-lv="5"] .meter-label { background: linear-gradient(90deg, #db2777, #d97706); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (prefers-reduced-motion: reduce) { .meter-row[data-lv="5"] .meter-emoji, .meter-row[data-lv="5"] .meter-out.is-pop .meter-emoji { animation: none; } }
 
 @media (max-width: 560px) {
@@ -653,17 +676,17 @@ body.is-locked [data-module-nav] { display: none; }
 /* 產生器輸出炫光：像一個終端機視窗（左上三顆燈），產生新內容時掃過一道光，複製成功閃綠光 */
 .gen-out {
   position: relative; padding-top: 38px; border: 1px solid #2c2a4d;
-  background: radial-gradient(80% 60% at 100% 0%, rgb(99 102 241 / 18%), transparent 60%), #1b1a26;
-  box-shadow: 0 18px 40px -24px rgb(79 70 229 / 70%); transition: box-shadow var(--normal), border-color var(--normal);
+  background: radial-gradient(80% 60% at 100% 0%, rgb(31 79 191 / 18%), transparent 60%), #1b1a26;
+  box-shadow: 0 18px 40px -24px rgb(29 35 39 / 70%); transition: box-shadow var(--normal), border-color var(--normal);
 }
 .gen-out::before {
   content: ""; position: absolute; top: 14px; left: 16px; width: 10px; height: 10px; border-radius: 50%;
   background: #ff5f57; box-shadow: 16px 0 #febc2e, 32px 0 #28c840;
 }
-.gen-out.is-new { border-color: #818cf8; box-shadow: 0 0 0 3px rgb(129 140 248 / 25%), 0 18px 40px -20px rgb(129 140 248 / 90%); }
+.gen-out.is-new { border-color: #86a8ff; box-shadow: 0 0 0 3px rgb(134 168 255 / 25%), 0 18px 40px -20px rgb(134 168 255 / 90%); }
 .gen-out.is-new::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background: linear-gradient(180deg, transparent 0%, rgb(129 140 248 / 28%) 50%, transparent 100%) 0 -100% / 100% 50% no-repeat;
+  background: linear-gradient(180deg, transparent 0%, rgb(134 168 255 / 28%) 50%, transparent 100%) 0 -100% / 100% 50% no-repeat;
   animation: gen-scan .9s ease-out both;
 }
 @keyframes gen-scan { to { background-position: 0 200%; } }
@@ -685,20 +708,20 @@ body.is-locked [data-module-nav] { display: none; }
 .ck-track { flex: 1; height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
 .ck-track i {
   position: relative; display: block; height: 100%; width: var(--p, 0%); border-radius: inherit; overflow: hidden;
-  background: linear-gradient(90deg, #818cf8, #34d399); transition: width .5s cubic-bezier(.2, .9, .3, 1.2);
+  background: linear-gradient(90deg, #86a8ff, #34d399); transition: width .5s var(--ease);
 }
 .ck-track i::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 55%) 50%, transparent 70%) 150% 0 / 250% 100% no-repeat;
   animation: fx-shine 2.4s ease-in-out infinite;
 }
-.ck-progress.is-all .ck-track i { background: linear-gradient(90deg, #34d399, #fbbf24, #f472b6); box-shadow: 0 0 12px rgb(52 211 153 / 60%); }
+.ck-progress.is-all .ck-track i { background: linear-gradient(90deg, #34d399, #fbbf24, #86a8ff); box-shadow: 0 0 12px rgb(52 211 153 / 60%); }
 .ck-count { font-weight: 800; font-size: .85rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ck-progress.is-all .ck-count { color: var(--ok); }
 /* 安裝步驟清單（install-steps）也是勾選清單，但有自己的卡片外框和左側步驟數字，不能套這裡的留白 */
 .checklist:not(.install-steps) li { position: relative; padding: 6px 10px; margin-inline: -10px; border-radius: var(--radius-m); transition: background var(--fast); }
 .checklist:not(.install-steps) li:hover { background: var(--brand-soft); }
-.checklist li.is-pop { animation: ck-pop .4s cubic-bezier(.2, .9, .3, 1.5); }
+.checklist li.is-pop { animation: ck-pop .4s var(--ease); }
 .checklist li.is-pop input { animation: ck-ring .6s ease-out; }
 @keyframes ck-pop { 40% { transform: scale(1.02); } }
 @keyframes ck-ring { from { box-shadow: 0 0 0 0 rgb(23 131 90 / 55%); } to { box-shadow: 0 0 0 14px rgb(23 131 90 / 0%); } }
@@ -720,7 +743,7 @@ body.is-locked [data-module-nav] { display: none; }
 .phase-pre { background: var(--brand-soft); color: var(--brand); }
 .phase-in { background: var(--teacher-soft); color: var(--teacher); }
 .phase-post { background: var(--ok-soft); color: var(--ok); }
-.ws-how { border-left: 5px solid var(--teacher); margin-bottom: 14px; display: grid; gap: 4px; }
+.ws-how { margin-bottom: 14px; display: grid; gap: 4px; }
 .ws-how p { margin: 0; }
 .ws-how b { display: inline-block; min-width: 7.5em; color: var(--teacher); }
 .ws-how .muted { margin-top: 6px; font-size: .88rem; }
@@ -853,16 +876,16 @@ body.is-locked [data-module-nav] { display: none; }
 .fx-classify { position: relative; } /* 不裁切：卡片飛出去一點點是故意的，彩帶層自己會裁 */
 .qz-bar { display: flex; gap: 5px; margin: 4px 0 16px; }
 .qz-bar i { flex: 1; height: 7px; border-radius: 999px; background: var(--paper-2); transition: background var(--normal) var(--ease); }
-.qz-bar i.now { background: linear-gradient(90deg, var(--brand), #a78bfa); animation: fx-glow 1.6s ease-in-out infinite; }
+.qz-bar i.now { background: linear-gradient(90deg, var(--brand), #86a8ff); animation: fx-glow 1.6s ease-in-out infinite; }
 .qz-bar i.ok { background: var(--ok-fill); }
 .qz-bar i.bad { background: var(--danger-fill); }
 @keyframes fx-glow { 50% { box-shadow: 0 0 0 3px var(--brand-soft); } }
 
 .qz-streak { font-weight: 900; color: #ea580c; font-size: .95rem; min-height: 1.2em; }
-.qz-streak.is-pop { animation: fx-pop .45s cubic-bezier(.2, .9, .3, 1.5); }
+.qz-streak.is-pop { animation: fx-pop .45s var(--ease); }
 @keyframes fx-pop { from { transform: scale(.4); opacity: 0; } }
 
-.qz-card { animation: fx-slide .38s cubic-bezier(.2, .9, .3, 1.15) both; }
+.qz-card { animation: fx-slide .38s var(--ease) both; }
 @keyframes fx-slide { from { opacity: 0; transform: translateX(24px); } }
 .fx-quiz .quiz-q { font-size: clamp(1.12rem, 1rem + .5vw, 1.35rem); font-weight: 800; line-height: 1.55; margin: 0 0 4px; }
 
@@ -871,11 +894,11 @@ body.is-locked [data-module-nav] { display: none; }
   border: 1.5px solid var(--line); box-shadow: 0 1px 0 var(--line);
   transition: transform var(--fast) var(--ease), border-color var(--fast), box-shadow var(--fast), background var(--fast), opacity var(--fast);
 }
-.fx-quiz .option:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--brand); box-shadow: 0 10px 22px -14px rgb(79 70 229 / 70%); }
+.fx-quiz .option:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--brand); box-shadow: 0 10px 22px -14px rgb(29 35 39 / 70%); }
 .fx-quiz .option:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 .fx-quiz .option .key { transition: transform var(--fast) var(--ease); }
 .fx-quiz .option:hover:not(:disabled) .key { transform: scale(1.1); background: var(--brand-fill); color: #fff; }
-.fx-quiz .option.is-right { animation: fx-right .5s cubic-bezier(.2, .9, .3, 1.4); box-shadow: 0 0 0 4px rgb(23 131 90 / 15%); }
+.fx-quiz .option.is-right { animation: fx-right .5s var(--ease); box-shadow: 0 0 0 4px rgb(23 131 90 / 15%); }
 .fx-quiz .option.is-right::after { content: "✓"; position: absolute; right: 16px; top: 50%; translate: 0 -50%; font-weight: 900; color: var(--ok); animation: fx-pop .4s .1s both; }
 .fx-quiz .option.is-wrong { animation: fx-shake .4s ease; }
 .fx-quiz .option.is-dim { opacity: .45; }
@@ -909,7 +932,7 @@ body.is-locked [data-module-nav] { display: none; }
 /* 外框流光：一圈彩色光沿著卡片邊緣繞。連對 3 題以上變成火焰色、繞得更快 */
 .fx-quiz::before, .fx-classify::before, .fx-order::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; pointer-events: none; z-index: 0;
-  background: conic-gradient(from var(--fx-a), transparent 0 55%, #818cf8 70%, #f472b6 80%, #fbbf24 88%, transparent 96%);
+  background: conic-gradient(from var(--fx-a), transparent 0 55%, #86a8ff 70%, #86a8ff 80%, #fbbf24 88%, transparent 96%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   opacity: .55; transition: opacity var(--normal);
@@ -945,18 +968,18 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* 選項：游標所在的位置亮起一圈光 */
 .fx-quiz .option:hover:not(:disabled), .fx-classify .cl-choice:hover:not(:disabled) {
-  background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(129 140 248 / 22%), transparent 65%);
+  background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(134 168 255 / 22%), transparent 65%);
 }
 /* 答對的選項：一道光從左掃到右 */
 .fx-quiz .option.is-right, .fx-classify .cl-choice.is-right {
   background-image: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 70%) 50%, transparent 65%);
   background-size: 250% 100%; background-repeat: no-repeat; background-position: 150% 0;
-  animation: fx-right .5s cubic-bezier(.2, .9, .3, 1.4), fx-shine .9s .1s ease-out both;
+  animation: fx-right .5s var(--ease), fx-shine .9s .1s ease-out both;
 }
 @keyframes fx-shine { to { background-position: -60% 0; } }
 
 /* 進度條：剛答完的那一格從左邊長出來 */
-.fx-quiz .qz-bar i.just { transform-origin: left; animation: fx-grow .45s cubic-bezier(.2, .9, .3, 1.2); }
+.fx-quiz .qz-bar i.just { transform-origin: left; animation: fx-grow .45s var(--ease); }
 .fx-quiz .qz-bar i.ok.just { box-shadow: 0 0 12px var(--ok); }
 @keyframes fx-grow { from { transform: scaleX(0); } }
 
@@ -964,14 +987,14 @@ body.is-locked [data-module-nav] { display: none; }
 .qz-result.is-pass .fx-ring svg { filter: drop-shadow(0 0 10px rgb(23 131 90 / 45%)); }
 .qz-result.is-perfect .fx-ring::before {
   content: ""; position: absolute; inset: -10px; border-radius: 50%; pointer-events: none;
-  background: conic-gradient(from var(--fx-a), #818cf8, #f472b6, #fbbf24, #34d399, #818cf8);
+  background: conic-gradient(from var(--fx-a), #86a8ff, #86a8ff, #fbbf24, #34d399, #86a8ff);
   -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 86%, #000 99%, transparent);
   mask: radial-gradient(closest-side, transparent 84%, #000 86%, #000 99%, transparent);
   animation: fx-spin 3s linear infinite; opacity: .8;
 }
-.fx-trophy { font-size: 3rem; line-height: 1; margin-top: 4px; animation: fx-trophy .8s cubic-bezier(.2, .9, .3, 1.5) .5s both; filter: drop-shadow(0 6px 14px rgb(251 191 36 / 55%)); }
+.fx-trophy { font-size: 3rem; line-height: 1; margin-top: 4px; animation: fx-trophy .8s var(--ease) .5s both; filter: drop-shadow(0 6px 14px rgb(251 191 36 / 55%)); }
 @keyframes fx-trophy { from { transform: translateY(24px) scale(.3) rotate(-25deg); opacity: 0; } }
-.qz-result .qz-recap span { animation: fx-pop .4s cubic-bezier(.2, .9, .3, 1.5) calc(var(--d, 0ms) + .3s) both; }
+.qz-result .qz-recap span { animation: fx-pop .4s var(--ease) calc(var(--d, 0ms) + .3s) both; }
 
 /* 分類卡：卡片跟著游標傾斜，加一道反光 */
 .fx-classify .cl-stack { transition: transform .2s ease-out; transform-style: preserve-3d; }
@@ -984,7 +1007,7 @@ body.is-locked [data-module-nav] { display: none; }
 .fx-classify .cl-card.is-right::before, .fx-classify .cl-card.is-wrong::before {
   /* 貼在卡片上緣（半露在外框上），手機上卡片窄，放在裡面會壓到題目的字 */
   position: absolute; top: -16px; right: 14px; z-index: 2; background: var(--card); padding: 2px 10px; border: 3px solid; border-radius: 10px;
-  font: 900 .95rem/1.4 var(--font); rotate: 12deg; animation: fx-stamp .4s cubic-bezier(.2, .9, .3, 1.4) .15s both;
+  font: 900 .95rem/1.4 var(--font); rotate: 12deg; animation: fx-stamp .4s var(--ease) .15s both;
 }
 .fx-classify .cl-card.is-right::before { content: "✓ 正確"; color: var(--ok); }
 .fx-classify .cl-card.is-wrong::before { content: "✗ 再想想"; color: var(--danger); }
@@ -1015,7 +1038,7 @@ body.is-locked [data-module-nav] { display: none; }
 /* ---------- 分類卡 ---------- */
 .cl-score { font-weight: 800; color: var(--muted); }
 .cl-score b { color: var(--ok); font-size: 1.15rem; }
-.cl-score.is-pop b { display: inline-block; animation: fx-pop .45s cubic-bezier(.2, .9, .3, 1.6); }
+.cl-score.is-pop b { display: inline-block; animation: fx-pop .45s var(--ease); }
 
 .cl-stage { perspective: 900px; padding: 8px 0 26px; } /* 下方多留一點：卡片飛出去時微微旋轉，寬卡片的角才不會壓到選項 */
 .cl-stack { position: relative; }
@@ -1029,9 +1052,9 @@ body.is-locked [data-module-nav] { display: none; }
 .cl-card {
   position: relative; z-index: 1; margin: 0; min-height: 120px; display: grid; place-content: center; text-align: center;
   padding: 26px 28px; border-radius: var(--radius-l); background: linear-gradient(160deg, var(--card), var(--brand-soft));
-  border: 1.5px solid #d8dbfb; box-shadow: 0 18px 40px -22px rgb(79 70 229 / 55%);
+  border: 1.5px solid #d8dbfb; box-shadow: 0 18px 40px -22px rgb(29 35 39 / 55%);
   font-size: clamp(1.08rem, 1rem + .45vw, 1.28rem); font-weight: 800; line-height: 1.6;
-  animation: fx-deal .45s cubic-bezier(.2, .9, .3, 1.2) both;
+  animation: fx-deal .45s var(--ease) both;
   transition: transform .5s cubic-bezier(.4, 0, .2, 1), border-color var(--fast), background var(--fast);
 }
 .cl-no { position: absolute; top: 12px; left: 16px; font: 800 .78rem "Inter", sans-serif; color: var(--muted); }
@@ -1051,7 +1074,7 @@ body.is-locked [data-module-nav] { display: none; }
   border-radius: var(--radius-m); background: var(--card); color: var(--ink); border: 2px solid var(--line);
   transition: transform var(--fast) var(--ease), border-color var(--fast), box-shadow var(--fast), background var(--fast), opacity var(--fast);
 }
-.cl-choice:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--brand); box-shadow: 0 12px 24px -14px rgb(79 70 229 / 70%); }
+.cl-choice:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--brand); box-shadow: 0 12px 24px -14px rgb(29 35 39 / 70%); }
 .cl-choice:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 .cl-key { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--paper-2); font: 800 .85rem "Inter", sans-serif; }
 .cl-choice.is-right { border-color: var(--ok); background: var(--ok-soft); }
@@ -1073,50 +1096,51 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* ==========================================================================
    可以按的 vs. 只能看的：全站統一的樣子
-   - 可以按：淡紫底、紫框、底下一條「按鍵的厚度」；滑過浮起一點、按下去會壓下去，游標是手指
+   - 可以按：白板上的磁鐵（白底、鋁色邊、軟影子）；滑過浮起一點、按下去壓進板面，游標是手指
    - 只能看：平的。沒有按鍵厚度、沒有膠囊外框，滑過不會動、不會發光
    新增互動元件時，把 class 加進下面這串就好（scripts/check_affordance.js 會抓漏網的）
    ========================================================================== */
 :root {
-  --op-line: color-mix(in srgb, var(--brand) 42%, var(--line));
-  --op-edge: color-mix(in srgb, var(--brand) 38%, var(--line));
-  --op-bg: color-mix(in srgb, var(--brand-soft) 60%, var(--card));
+  /* 磁鐵的邊與面：可以按的東西都長這樣 */
+  --op-line: var(--line-strong);
+  --op-edge: var(--line-strong);
+  --op-bg: var(--card);
 }
 :root :is(.option, .cl-choice, .chip, .nw-pick, .tab-row [data-tab], .tab-row [data-admin-tab], .su-cohort,
   .toggle-list label, .checklist:not(.install-steps) li > label, .map-jump a, .show-learn a, a.review-item) {
-  border: 2px solid var(--op-line); background: var(--op-bg); color: var(--ink);
-  box-shadow: 0 3px 0 var(--op-edge); cursor: pointer;
+  border: 1.5px solid var(--op-line); background: var(--op-bg); color: var(--ink);
+  box-shadow: var(--magnet); cursor: pointer;
   transition: transform var(--fast) var(--ease), box-shadow var(--fast), border-color var(--fast), background var(--fast);
 }
 :root :is(.option, .cl-choice, .chip, .nw-pick, .tab-row [data-tab], .tab-row [data-admin-tab], .su-cohort,
   .toggle-list label, .checklist:not(.install-steps) li > label, .map-jump a, .show-learn a, a.review-item):hover:not(:disabled) {
-  border-color: var(--brand); box-shadow: 0 4px 0 color-mix(in srgb, var(--brand) 60%, var(--line)); transform: translateY(-1px);
+  border-color: var(--brand); box-shadow: var(--magnet-up); transform: translateY(-1px);
 }
+/* 按下去：磁鐵壓進板面 */
 :root :is(.option, .cl-choice, .chip, .nw-pick, .tab-row [data-tab], .tab-row [data-admin-tab], .su-cohort,
   .toggle-list label, .checklist:not(.install-steps) li > label, .map-jump a, .show-learn a, a.review-item):active:not(:disabled) {
-  transform: translateY(2px); box-shadow: 0 1px 0 var(--op-edge);
+  transform: translateY(1px); box-shadow: var(--magnet-down);
 }
 :root :is(.option, .cl-choice, .chip, .nw-pick, .tab-row [data-tab], .tab-row [data-admin-tab], .su-cohort, .flip, .code-line, .term):focus-visible {
   outline: 3px solid var(--brand); outline-offset: 2px;
 }
-/* 選中（分頁、篩選標籤）：像按下去沒彈起來 */
+/* 選中（分頁、篩選標籤）：藍色磁鐵，壓在板上 */
 :root :is(.chip, .tab-row [data-tab], .tab-row [data-admin-tab])[aria-pressed="true"] {
-  background: var(--brand-fill); color: #fff; border-color: var(--brand-fill); box-shadow: none; transform: translateY(2px);
+  background: var(--brand-fill); color: #fff; border-color: var(--brand-fill); box-shadow: var(--magnet-down); transform: translateY(1px);
 }
-/* 答完了就不能再按：變平 */
-:root :is(.option, .cl-choice):disabled { box-shadow: none; transform: none; cursor: default; background: var(--card); border-color: var(--line); }
+/* 答完了就不能再按：從磁鐵變成寫在板上的字，平的 */
+:root :is(.option, .cl-choice):disabled { box-shadow: none; transform: none; cursor: default; background: transparent; border-color: var(--line); }
 :root :is(.option, .cl-choice).is-right { border-color: var(--ok); background: var(--ok-soft); }
 :root :is(.option, .cl-choice).is-wrong { border-color: var(--danger); background: var(--danger-soft); }
 :root .su-cohort.is-closed { box-shadow: none; cursor: not-allowed; transform: none; }
 :root .option:hover:not(:disabled) { transform: translateY(-1px); } /* 原本往右滑，跟其他按鈕不一致 */
 
-/* 一般按鈕也有按鍵厚度 */
-:root .btn:not(:disabled) { box-shadow: 0 3px 0 var(--op-edge); }
+/* 一般按鈕：白色磁條；主要按鈕：藍色磁條 */
+:root .btn { border-radius: var(--radius-m); }
+:root .btn:not(:disabled) { box-shadow: var(--magnet); }
 :root .btn:not(.btn-primary):not(.btn-ok):not(.btn-danger) { border-color: var(--op-line); }
-:root .btn-primary:not(:disabled) { box-shadow: 0 3px 0 color-mix(in srgb, var(--brand-fill) 55%, #000); }
-:root .btn-ok:not(:disabled) { box-shadow: 0 3px 0 color-mix(in srgb, var(--ok-fill) 55%, #000); }
-:root .btn-danger:not(:disabled) { box-shadow: 0 3px 0 color-mix(in srgb, var(--danger-fill) 55%, #000); }
-:root .btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--op-edge); }
+:root .btn:hover:not(:disabled) { box-shadow: var(--magnet-up); }
+:root .btn:active:not(:disabled) { transform: translateY(1px); box-shadow: var(--magnet-down); }
 
 /* 勾選清單：整列都是可以按的，勾完變綠、壓下去 */
 :root .checklist:not(.install-steps) li { padding: 0; margin-inline: 0; }
@@ -1129,8 +1153,8 @@ body.is-locked [data-module-nav] { display: none; }
 :root .checklist:not(.install-steps) li > label:has(input:checked) input { accent-color: var(--ok-fill); }
 
 /* 翻牌卡：正面就是一顆大按鈕，右下角一直寫著「點我翻面」 */
-:root .flip-front { border: 2px solid var(--op-line); background: var(--op-bg); box-shadow: 0 4px 0 var(--op-edge); }
-:root .flip:hover .flip-front { border-color: var(--brand); box-shadow: 0 5px 0 color-mix(in srgb, var(--brand) 60%, var(--line)); }
+:root .flip-front { border: 1.5px solid var(--op-line); background: var(--op-bg); box-shadow: var(--magnet); }
+:root .flip:hover .flip-front { border-color: var(--brand); box-shadow: var(--magnet-up); }
 :root .flip:hover .flip-back, :root .flip:focus-visible .flip-face { box-shadow: var(--shadow); }
 :root .flip-inner, :root .flip.is-flipped .flip-inner { transition: transform var(--normal) var(--ease); }
 :root .flip-inner { transform: none; }
@@ -1149,7 +1173,7 @@ body.is-locked [data-module-nav] { display: none; }
   font: 800 .8rem var(--font); color: #c7c3ff;
 }
 :root .code.is-clickable .code-line { border-left-color: rgb(139 133 255 / 40%); }
-:root .code.is-clickable .code-line:hover { background: rgb(139 133 255 / 20%); border-left-color: #8b85ff; }
+:root .code.is-clickable .code-line:hover { background: rgb(139 133 255 / 20%); border-left-color: #86a8ff; }
 
 /* 拉桿：粗一點的軌道、大顆的把手 */
 :root input[type="range"]:not(.meter-row input) { -webkit-appearance: none; appearance: none; height: 34px; background: transparent; cursor: grab; }
@@ -1158,7 +1182,7 @@ body.is-locked [data-module-nav] { display: none; }
 :root input[type="range"]:not(.meter-row input)::-moz-range-track { height: 10px; border-radius: 999px; background: var(--paper-2); border: 1.5px solid var(--op-line); }
 :root input[type="range"]:not(.meter-row input)::-webkit-slider-thumb {
   -webkit-appearance: none; width: 28px; height: 28px; margin-top: -10.5px; border-radius: 50%;
-  background: var(--brand-fill); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--brand-fill), 0 3px 0 2px var(--op-edge);
+  background: var(--brand-fill); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--brand-fill), 0 3px 6px rgb(29 35 39 / 30%);
 }
 :root input[type="range"]:not(.meter-row input)::-moz-range-thumb {
   width: 22px; height: 22px; border-radius: 50%; background: var(--brand-fill); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--brand-fill);
@@ -1224,3 +1248,243 @@ summary::marker { color: var(--brand); }
 .teacher-banner { padding: 3px 12px; font-size: .78rem; }
 html { scroll-padding-top: 76px; }
 .header-tools.is-overflowing { mask-image: linear-gradient(90deg, #000 90%, transparent); padding-right: 24px; }
+
+/* ==========================================================================
+   會議室白板（2026-09 改版）
+   講師站在白板前把一件事講清楚：黑筆寫大字、紅筆圈重點、藍筆拉引線、綠筆打勾。
+   - 墨色只有四支白板筆＋便利貼黃（講師模式的紫筆除外）；不用漸層、彩虹、發光
+   - 寫在板上的字是平的；貼上去的紙有膠帶；可以按的是磁鐵（見上面「可以按的」）
+   - 手寫字（--hand）只給標題、編號、標註；內文一律印刷體，長輩才讀得清楚
+   上面舊的「炫光層」（彩虹外框、發光、掃光）在這裡被關掉，待清理
+   ========================================================================== */
+
+/* ---------- 頁首：白板下緣的筆槽（平的鋁色面＋一道實心的槽邊） ---------- */
+:root .site-header {
+  background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+  border-bottom: 4px solid var(--line-strong);
+  box-shadow: 0 8px 16px -14px rgb(29 35 39 / 45%);
+}
+:root .brand { font-weight: 800; }
+/* 課名前面的 V：一顆藍色圓磁鐵 */
+:root .brand-mark {
+  border-radius: 50%; background: var(--brand-fill);
+  font-family: var(--hand); font-size: 1.2rem; box-shadow: var(--magnet);
+}
+:root .progress-bar { height: 4px; }
+:root .progress-bar span { background: var(--brand); border-radius: 0 4px 4px 0; }
+:root .teacher-banner { background: var(--teacher); }
+
+/* ---------- 字：標題是講師的手寫，內文是印刷體 ---------- */
+:root h1, :root h2 { font-family: var(--hand-text); font-weight: 700; letter-spacing: 0; }
+:root h2 { font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.4rem); line-height: 1.3; }
+:root h3, :root .h3 { font-weight: 800; }
+:root .lead { color: var(--muted); }
+::selection { background: color-mix(in srgb, var(--sticky) 75%, transparent); color: var(--ink); }
+:root { caret-color: var(--brand); accent-color: var(--brand); }
+:root a { text-underline-offset: .2em; text-decoration-thickness: 1.5px; }
+
+/* ---------- 單元開頭：寫在白板正中間的那一段 ---------- */
+:root .module-hero::before { display: none; }
+/* 左上角的單元編號：像講師先在板角寫下今天第幾堂 */
+:root .module-hero .eyebrow {
+  font-family: var(--hand-text); color: var(--muted); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700;
+}
+:root .module-hero .eyebrow b {
+  font-family: var(--hand); font-size: 2rem; line-height: 1; color: var(--ink);
+  border-bottom: 3px solid var(--ink); border-radius: 0; padding: 0 4px 2px;
+}
+:root .module-hero h1 { font-size: var(--text-hero); line-height: 1.38; margin: .3em 0 .4em; max-width: 14em; }
+/* 重點：黑字，紅筆手繪圈起來 */
+:root .module-hero h1 em { color: inherit; }
+:root .module-hero h1 em { padding-inline: .14em; margin-inline: .1em .04em; }
+/* 紅筆手畫的圈：開口、收尾多畫一截，像真的用白板筆圈起來；左右留白，筆畫不會壓到字 */
+:root .module-hero h1 em::after {
+  inset: -.04em -.26em -.08em -.34em; height: auto; z-index: -1; border: 0; border-radius: 0; background: var(--danger);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M22 12 C70 2 150 3 186 14 C199 20 197 42 170 51 C120 61 50 59 18 48 C2 42 3 20 30 11 C48 6 70 5 92 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M22 12 C70 2 150 3 186 14 C199 20 197 42 170 51 C120 61 50 59 18 48 C2 42 3 20 30 11 C48 6 70 5 92 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  transform: rotate(-1.2deg);
+}
+:root .module-hero h1 em:nth-of-type(2)::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M176 10 C130 2 60 3 20 13 C3 19 4 42 30 50 C80 60 150 59 182 47 C198 40 197 18 168 10 C150 6 128 5 104 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M176 10 C130 2 60 3 20 13 C3 19 4 42 30 50 C80 60 150 59 182 47 C198 40 197 18 168 10 C150 6 128 5 104 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); transform: rotate(.8deg);
+}
+:root .module-hero .lead { font-size: clamp(1.1rem, 1.02rem + .4vw, 1.32rem); max-width: 38em; line-height: 1.85; }
+
+/* 學習目標：三張用紙膠帶貼在板上的便利貼（只能看，不能按：平貼、滑過不動） */
+:root .goals-label { font-family: var(--hand-text); color: var(--ink); font-size: 1.25rem; letter-spacing: 0; margin-top: 8px; }
+:root .goals { gap: 22px 18px; margin-top: 14px; }
+:root .goals li {
+  background: var(--sticky); color: var(--sticky-ink); border: 0; border-radius: 2px 2px 3px 14px / 2px 2px 3px 6px;
+  padding: 22px 18px 18px; font-weight: 700; line-height: 1.6;
+  box-shadow: 0 1px 1px rgb(29 35 39 / 10%), 0 12px 16px -12px rgb(29 35 39 / 40%);
+  transform: rotate(-.8deg);
+}
+:root .goals li:nth-child(2) { transform: rotate(.6deg); }
+:root .goals li:nth-child(3) { transform: rotate(-.3deg); }
+:root .goals li::before {
+  content: ""; left: 50%; top: -9px; width: 56px; height: 18px; translate: -50% 0; rotate: -3deg;
+  border-radius: 1px; background: var(--tape); font-size: 0;
+}
+/* 課前／課中／課後：寫在板角的藍筆小字 */
+:root .meta-row { font-family: var(--hand-text); font-size: 1rem; gap: 6px 20px; }
+:root .phase { font-weight: 700; font-size: 1rem; }
+:root .phase::before { content: "—"; font-size: 1em; vertical-align: 0; margin-right: .3em; }
+:root .phase-pre { color: var(--brand); }
+:root .phase-in { color: var(--ink); }
+:root .phase-post { color: var(--ok); }
+
+/* ---------- 段落標題：藍筆圈起來的編號，旁邊是標題，下面一行小字標註 ---------- */
+:root .slide { border-top: 0; position: relative; }
+:root .slide + .slide::before {
+  /* 段落之間：擦過白板留下的一道淡痕，不是一條硬線 */
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--line) 12%, var(--line) 88%, transparent);
+}
+:root .section-head { align-items: flex-start; gap: 18px; }
+:root .section-head .section-num { margin-top: .1em; }
+:root .section-head > div { display: flex; flex-direction: column; }
+:root .section-head h2 { margin-bottom: .15em; }
+/* 原本在標題上面的小標籤，改成寫在標題底下的藍筆註記 */
+:root .section-head .kicker {
+  order: 1; font-family: var(--hand-text); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--brand);
+}
+:root .section-head > div > p { order: 2; margin-top: .35em; }
+:root .section-num {
+  flex: none; display: grid; place-items: center; width: 2.1em; height: 2.1em;
+  font-family: var(--hand); font-size: 1.6rem; font-weight: 700; color: var(--brand); -webkit-text-stroke: 0;
+  border: 2.5px solid var(--brand); border-radius: 46% 54% 52% 48% / 54% 46% 55% 45%; transform: rotate(-4deg);
+}
+:root .kicker { font-family: var(--hand-text); letter-spacing: 0; text-transform: none; font-size: 1.05rem; }
+
+/* ---------- 紙：用紙膠帶貼在板上的 A4 ---------- */
+:root .card {
+  position: relative; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%);
+}
+:root .card:not(.fx-quiz):not(.fx-classify):not(.fx-order):not(.card .card)::before {
+  content: ""; position: absolute; top: -10px; left: 50%; width: 72px; height: 20px; translate: -50% 0; rotate: 2deg;
+  background: var(--tape); border-radius: 1px; pointer-events: none;
+}
+
+/* ---------- 打個比方：藍筆框起來 ---------- */
+:root .analogy {
+  position: relative; border: 2px solid var(--brand); border-radius: var(--hand-box); background: transparent;
+  padding: 18px 22px; margin: 18px 0; font-weight: 500;
+}
+:root .analogy strong { color: var(--brand); font-family: var(--hand-text); font-size: 1.12em; }
+/* 提醒框：紅筆（危險）、綠筆（可以）、便利貼黃（注意），一樣是手畫的框 */
+:root .callout { border-width: 2px; border-radius: var(--hand-box); }
+:root .callout-danger { border-color: var(--danger); background: color-mix(in srgb, var(--danger-soft) 60%, transparent); }
+:root .callout-ok { border-color: var(--ok); background: color-mix(in srgb, var(--ok-soft) 60%, transparent); }
+:root .callout-warn { border-color: color-mix(in srgb, var(--warn) 55%, var(--sticky)); background: var(--warn-soft); }
+/* 講師筆記：紫筆虛線框 */
+:root .teacher-note { border: 2px dashed var(--teacher); border-radius: var(--hand-box); background: var(--teacher-soft); }
+:root .teacher-note > b:first-child { font-family: var(--hand-text); font-size: 1.1rem; }
+
+/* 標籤：寫在板上的小字，用筆的顏色 */
+:root .pill { font-weight: 800; }
+:root .pill-warn { color: var(--warn); }
+
+/* ---------- 測驗：答對綠筆打勾、答錯紅筆劃掉 ---------- */
+:root :is(.fx-quiz, .fx-classify, .fx-order)::before { display: none !important; }
+:root .fx-quiz.fx-hot { box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%); }
+:root .fx-quiz.fx-hot .qz-streak { text-shadow: none; }
+:root .qz-streak { color: var(--danger); font-family: var(--hand-text); font-size: 1.1rem; }
+:root .qz-bar i { border-radius: 2px; height: 6px; }
+:root .qz-bar i.now { background: var(--brand); animation: none; }
+:root .fx-quiz .quiz-q { font-family: var(--font); }
+:root .fx-quiz .option, :root .fx-classify .cl-choice { background-image: none !important; }
+:root .fx-quiz .option:hover:not(:disabled) .key { background: var(--brand-fill); color: #fff; transform: none; }
+:root .option .key, :root .cl-key { border-radius: 50%; font-family: var(--hand); font-size: 1rem; background: var(--paper-2); }
+:root .fx-quiz .option.is-right { box-shadow: none; animation: none; }
+:root .fx-quiz .option.is-right::after {
+  content: ""; right: 14px; width: 30px; height: 26px; background: var(--ok);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M3 14 L11 22 L27 3' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M3 14 L11 22 L27 3' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  animation: wb-draw .26s ease-out both;
+}
+:root .option.is-wrong .opt-text, :root .cl-choice.is-wrong {
+  background-image: linear-gradient(var(--danger), var(--danger)); background-repeat: no-repeat;
+  background-position: 0 58%; background-size: 100% 2.5px;
+}
+:root .option.is-wrong .opt-text { animation: wb-strike .24s ease-out both; }
+:root .fx-quiz .option.is-wrong, :root .cl-choice.is-wrong { animation: none; }
+@keyframes wb-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wb-strike { from { background-size: 0 2.5px; } }
+:root .fx-hit-ok::after, :root .fx-hit-bad::after { animation: none; }
+:root .fx-sparks { display: none; }
+:root .fx-trophy { filter: none; }
+:root .qz-result.is-pass .fx-ring svg { filter: none; }
+:root .qz-result.is-perfect .fx-ring::before { display: none; }
+
+/* 分類卡：題目是貼在板上的一張紙，不是發光卡片 */
+:root .cl-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 3px;
+  box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%);
+}
+:root .cl-card.is-right { background: var(--ok-soft); }
+:root .cl-card.is-wrong { background: var(--danger-soft); }
+:root .fx-classify .cl-card.is-right::before, :root .fx-classify .cl-card.is-wrong::before {
+  font-family: var(--hand); border-width: 2.5px; border-radius: var(--hand-box); background: var(--card);
+}
+:root .cl-stack[data-left]::before, :root .cl-stack[data-left]::after { border-radius: 3px; }
+
+/* ---------- 其他舊的彩色特效，改回白板筆色 ---------- */
+:root .steps .step:not(:last-child)::after { background: var(--brand); }
+:root .step::before, :root .order-list li::before { font-family: var(--hand); }
+:root .install-steps > li::before { border-radius: 50%; font-family: var(--hand); box-shadow: var(--magnet); }
+:root .meter-row input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, var(--brand) var(--pct, 25%), var(--paper-2) var(--pct, 25%));
+}
+:root .meter-row input[type="range"]::-moz-range-progress { background: var(--brand); }
+:root .meter-row[data-lv] { --lv-c: var(--brand); }
+:root .meter-row[data-lv="5"] { --lv-c: var(--ok-fill); }
+:root .meter-row[data-lv="5"] .meter-emoji { filter: none; animation: none; }
+:root .meter-row[data-lv="5"] .meter-label { background: none; color: var(--ok); }
+:root .ck-track i { background: var(--ok-fill); }
+:root .ck-track i::after { display: none; }
+:root .ck-progress.is-all .ck-track i { background: var(--ok-fill); box-shadow: none; }
+:root .gen-out { background: #1b2226; border-color: #2c363c; box-shadow: var(--shadow); }
+:root .gen-out.is-new { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 30%, transparent); }
+:root .gen-out.is-new::after { display: none; }
+:root .gen-out.is-copied { border-color: var(--ok-fill); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok-fill) 35%, transparent); }
+:root :is(.code, .terminal, textarea.code-input) { background: #1b2226; }
+:root .terminal code::before { color: #86a8ff; }
+:root .code.is-clickable .code-line { border-left-color: rgb(134 168 255 / 40%); }
+:root .code.is-clickable .code-line:hover { background: rgb(134 168 255 / 16%); border-left-color: #86a8ff; }
+:root .code.is-clickable::before { color: #b0c6ff; }
+:root .fx-reveal-on .analogy[data-reveal].is-in::after { display: none; }
+:root .flip-back { background: var(--invert-bg); }
+:root .flip-hint { border-radius: var(--radius-m); }
+:root .toast { border-radius: var(--radius-m); }
+:root .tour-spot { border-radius: 8px; }
+:root .term { text-decoration-color: color-mix(in srgb, var(--brand) 70%, transparent); }
+
+/* 手機：板子小，圈圈和便利貼收斂一點 */
+@media (max-width: 640px) {
+  :root .section-num { font-size: 1.25rem; }
+  :root .goals li, :root .goals li:nth-child(n) { transform: none; }
+  :root .analogy { padding: 16px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root .fx-quiz .option.is-right::after, :root .option.is-wrong .opt-text { animation: none; }
+}
+@media print {
+  :root .card::before, :root .goals li::before { display: none; }
+  :root .goals li { background: none; border: 1.5px solid #999; box-shadow: none; transform: none; }
+  :root .site-header { background: none; }
+}
+
+/* 課中工作坊：黑筆手畫的框（學員也看得到，所以不用講師紫） */
+:root .workshop { border: 2px solid var(--ink); border-radius: var(--hand-box); background: transparent; }
+:root .workshop .time { color: var(--ink); font-family: var(--hand-text); }
+:root .ws-how { border-left-width: 1px; border-left-color: color-mix(in srgb, var(--line) 70%, transparent); }
+:root .ws-how b { color: var(--brand); }
+
+/* ---------- 審查修正：拿掉剩下的紅綠燈；頁首圖示 ---------- */
+:root .gen-out::before { display: none; }
+:root .gen-out { padding-top: 14px; }
+.ico { width: 1.15em; height: 1.15em; flex: none; vertical-align: -.2em; }
+:root .site-header .btn { gap: 6px; }
+/* 標題像粗的白板筆：文楷最粗只到 700，再描一圈同色細邊讓筆畫變粗 */
+:root h1 { -webkit-text-stroke: .022em currentColor; paint-order: stroke fill; }
+:root h2 { -webkit-text-stroke: .012em currentColor; paint-order: stroke fill; }

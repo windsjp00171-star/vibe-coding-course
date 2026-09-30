@@ -9,3 +9,9 @@ teacher/
 
 # Impeccable 的執行檔（每個作業系統不同，第一次用時會自動下載）
 .claude/skills/impeccable/scripts/bin/
+
+# Impeccable 的開發用檔案（改版方向、審查截圖）：網站會被 GitHub Pages 公開，這些不能跟著上線
+.impeccable/surfaces/
+.impeccable/review/
+.impeccable/build/
+.impeccable/mocks/

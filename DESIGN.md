@@ -1,45 +1,45 @@
 ---
 name: Vibe Coding 實戰課
-description: 給非軟體背景上班族的 AI 課程網站——學員上課的工作手冊，也是對外招生的門面。
+description: 給非軟體背景上班族的 AI 課程網站；每個單元是講師在會議室白板前把一件事講清楚。
 colors:
-  pen-indigo: "#4f46e5"
-  pen-indigo-deep: "#3730a3"
-  indigo-wash: "#eceefe"
-  key-rim: "#a59fdc"
-  key-edge: "#aba5db"
-  key-face: "#f4f5fe"
-  night-ink-band: "#17143d"
-  paper: "#faf8f4"
-  paper-fold: "#f2eee6"
-  card-white: "#ffffff"
-  ink: "#1c1b29"
-  pencil-gray: "#5d5b6e"
-  rule-line: "#e4dfd5"
-  terminal-ink: "#1b1a26"
-  ok-green: "#13724e"
-  ok-green-fill: "#17835a"
-  ok-wash: "#e3f4ec"
-  warn-amber: "#92560a"
-  warn-wash: "#fcf1de"
-  danger-red: "#b8322c"
-  danger-red-fill: "#cc3b35"
-  danger-wash: "#fbe7e5"
-  teacher-violet: "#7c3aed"
-  teacher-wash: "#f3ecff"
-  highlighter-gold: "#fbbf24"
+  board-enamel: "#f5f7f6"
+  board-wiped: "#e8ecec"
+  paper-sheet: "#ffffff"
+  marker-black: "#1d2327"
+  marker-black-faint: "#4d5961"
+  board-line: "#d3d9dc"
+  aluminium-rim: "#aeb7bd"
+  marker-blue: "#1f4fbf"
+  marker-blue-deep: "#173c93"
+  marker-blue-wash: "#e2e9f8"
+  marker-green: "#176b3b"
+  marker-green-fill: "#1b7f45"
+  marker-green-wash: "#e1f1e7"
+  marker-red: "#b3261e"
+  marker-red-fill: "#c62d29"
+  marker-red-wash: "#fbe4e2"
+  sticky-yellow: "#ffe27a"
+  sticky-ink-brown: "#7a5600"
+  sticky-wash: "#fff3bf"
+  teacher-purple: "#6d35c9"
+  teacher-purple-wash: "#f0e9fb"
+  projected-screen: "#1b2226"
+  glass-board: "#14181b"
+  glass-board-sheet: "#20272c"
+  glass-chalk: "#eef2f3"
 typography:
   display:
-    fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
-    fontSize: "clamp(2.1rem, 1.3rem + 3.6vw, 3.9rem)"
-    fontWeight: 900
-    lineHeight: 1.25
-    letterSpacing: "-0.01em"
+    fontFamily: "LXGW WenKai TC, Noto Sans TC, system-ui, sans-serif"
+    fontSize: "clamp(2.3rem, 1.4rem + 3.8vw, 4.4rem)"
+    fontWeight: 700
+    lineHeight: 1.38
+    letterSpacing: "0"
   headline:
-    fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
-    fontSize: "clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem)"
-    fontWeight: 900
-    lineHeight: 1.25
-    letterSpacing: "-0.01em"
+    fontFamily: "LXGW WenKai TC, Noto Sans TC, system-ui, sans-serif"
+    fontSize: "clamp(1.6rem, 1.2rem + 1.7vw, 2.4rem)"
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: "0"
   title:
     fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
     fontSize: "1.2rem"
@@ -47,255 +47,244 @@ typography:
     lineHeight: 1.25
   body:
     fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
-    fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.125rem)"
+    fontSize: "clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)"
     fontWeight: 400
     lineHeight: 1.75
-  lead:
-    fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
-    fontSize: "clamp(1.05rem, 1rem + .4vw, 1.3rem)"
-    fontWeight: 400
-    lineHeight: 1.75
-  label:
-    fontFamily: "Inter, Noto Sans TC, system-ui, sans-serif"
-    fontSize: "0.8rem"
-    fontWeight: 800
-    letterSpacing: "0.08em"
-  section-number:
-    fontFamily: "Inter, sans-serif"
-    fontSize: "2.6rem"
-    fontWeight: 900
+  annotation:
+    fontFamily: "LXGW WenKai TC, Noto Sans TC, system-ui, sans-serif"
+    fontSize: "1.05rem"
+    fontWeight: 700
+    letterSpacing: "0"
+  numeral:
+    fontFamily: "Kalam, LXGW WenKai TC, Noto Sans TC, system-ui, sans-serif"
+    fontSize: "1.6rem"
+    fontWeight: 700
     lineHeight: 1
-  mono:
+  code:
     fontFamily: "ui-monospace, Cascadia Code, Consolas, monospace"
-    fontSize: "0.88rem"
-    lineHeight: 1.7
+    fontSize: "0.9em"
 rounded:
-  s: "8px"
-  m: "14px"
-  l: "22px"
-  pill: "999px"
+  sheet: "3px"
+  s: "6px"
+  m: "10px"
+  l: "14px"
+  hand-box: "14px 22px 16px 26px / 22px 14px 24px 16px"
+  magnet-round: "50%"
 spacing:
   gutter: "16px"
-  card: "clamp(18px, 3vw, 28px)"
+  grid: "32px"
   section: "clamp(3rem, 2rem + 4vw, 6rem)"
-  container: "1120px"
+  wrap: "1120px"
 components:
-  button:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.pill}"
+  button-magnet:
+    backgroundColor: "{colors.paper-sheet}"
+    textColor: "{colors.marker-black}"
+    rounded: "{rounded.m}"
     padding: "10px 20px"
   button-primary:
-    backgroundColor: "{colors.pen-indigo}"
-    textColor: "{colors.card-white}"
-    rounded: "{rounded.pill}"
+    backgroundColor: "{colors.marker-blue}"
+    textColor: "{colors.paper-sheet}"
+    rounded: "{rounded.m}"
     padding: "10px 20px"
   button-primary-hover:
-    backgroundColor: "{colors.pen-indigo-deep}"
-  button-small:
-    rounded: "{rounded.pill}"
-    padding: "6px 14px"
-  option:
-    backgroundColor: "{colors.key-face}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.marker-blue-deep}"
+  button-ok:
+    backgroundColor: "{colors.marker-green-fill}"
+    textColor: "{colors.paper-sheet}"
     rounded: "{rounded.m}"
-    padding: "12px 16px"
-  option-right:
-    backgroundColor: "{colors.ok-wash}"
-  option-wrong:
-    backgroundColor: "{colors.danger-wash}"
-  chip:
-    backgroundColor: "{colors.key-face}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.pill}"
-    padding: "6px 14px"
+  button-danger:
+    backgroundColor: "{colors.marker-red-fill}"
+    textColor: "{colors.paper-sheet}"
+    rounded: "{rounded.m}"
   chip-selected:
-    backgroundColor: "{colors.pen-indigo}"
-    textColor: "{colors.card-white}"
-  card:
-    backgroundColor: "{colors.card-white}"
-    rounded: "{rounded.l}"
-    padding: "{spacing.card}"
-  input:
-    backgroundColor: "{colors.card-white}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.marker-blue}"
+    textColor: "{colors.paper-sheet}"
+  header-tool:
+    backgroundColor: "transparent"
+    textColor: "{colors.marker-black}"
+    padding: "6px 9px"
+  header-tool-hover:
+    backgroundColor: "{colors.marker-blue-wash}"
+  card-sheet:
+    backgroundColor: "{colors.paper-sheet}"
+    rounded: "{rounded.sheet}"
+  sticky-goal:
+    backgroundColor: "{colors.sticky-yellow}"
+    textColor: "{colors.marker-black}"
+    padding: "22px 18px 18px"
+  analogy-box:
+    backgroundColor: "transparent"
+    rounded: "{rounded.hand-box}"
+    padding: "18px 22px"
+  input-field:
+    backgroundColor: "{colors.paper-sheet}"
+    textColor: "{colors.marker-black}"
     rounded: "{rounded.m}"
     padding: "10px 14px"
-  analogy:
-    backgroundColor: "{colors.indigo-wash}"
-    rounded: "{rounded.m}"
-    padding: "16px 20px"
-  code-block:
-    backgroundColor: "{colors.terminal-ink}"
-    textColor: "#e9e7f5"
-    rounded: "{rounded.m}"
-    typography: "{typography.mono}"
-  landing-hero:
-    backgroundColor: "{colors.night-ink-band}"
-    textColor: "{colors.card-white}"
 ---
 
 # Design System: Vibe Coding 實戰課
 
-> 這份文件記錄的是 **2026-09-30 的現況**，是 Rule 18 改版前的基準。之後 Impeccable 重新決定視覺方向時，這裡是對照組，不是規範。
-
 ## Overview
 
-**Creative North Star: "上班族的工作手冊"**
+**Creative North Star: "會議室白板"**
 
-整個網站像一本攤開在辦公桌上的實戰手冊：米白紙面帶細點格線，粗黑的大標題，章節用空心描邊的大數字編號，重點用鋼筆靛藍劃線、用淡靛藍底色框出「打個比方」。它是給沒有技術背景的上班族看的，所以氛圍是**可靠、清楚、有一點玩心**：閱讀的部分要穩、要好讀；互動的部分（測驗、翻牌卡、拉桿、分類遊戲）才允許有一點遊戲感和獎勵回饋。
+Every unit is the instructor standing at a conference-room whiteboard, making one thing clear: the headline written big in black marker, the key phrase circled in red, structure and links in blue, correct answers ticked in green. The mood is 可靠、清楚、有一點玩心: dependable and legible first, with a little hand-drawn play in the circles, ticks and taped paper. It must never feel like a cold engineer's tool, and it must never feel childish.
 
-系統分成兩個場景，共用同一套 token：**學員頁**（單元、圖解、講義、小辭典）走淺色紙面、層次輕、段落之間用虛線分隔；**對外頁**（首頁、報名、資安內訓，`body.mk`）加上一條滿版的深夜靛藍主視覺帶、光暈和細顆粒，段落間距拉大，數字用編輯式的大字與細線。講師模式另有一條紫色支線（講師筆記、計時器、橫幅），只在 `data-mode="teacher"` 下出現。
+The board is a cool white enamel with a faint 32px grid, not beige paper. Things written on the board are flat. Things stuck to the board have physical logic: paper sheets are held by a translucent strip of tape, sticky notes are taped flat, and anything you can press is a magnet with soft thickness that sinks into the board when pressed. The header is the pen tray along the bottom edge of the board. In dark mode the same board becomes a glass blackboard (玻璃黑板) with brightened inks.
 
-最近一次重點改版把「可以按」和「只能看」徹底分開：可以按的東西都有一顆實體按鍵的厚度（底下 3px 的色邊），按下會真的壓下去；只能看的東西一律是平的，沒有膠囊外框、滑過不動。
+The density suits the product floor: elders and non-technical staff read these pages, so body text is a large, calm print face and the hand-drawn voice is reserved for headings, numerals and annotations. Motion is short and never blocks input.
 
 **Key Characteristics:**
-- 米白紙面 + 22px 點格背景，卡片是純白、帶極淡陰影
-- 單一主色（鋼筆靛藍）撐起所有強調、連結、焦點框
-- Inter + Noto Sans TC，標題 900 粗、內文行高 1.75
-- 大圓角（卡片 22px、元件 14px、按鈕膠囊形）
-- 可按元件有「按鍵厚度」，只能看的元件是平的
-- 完整深色模式，每個語意色都有 `-fill`（實心底色專用）與文字用兩組
+- Four marker inks plus sticky-note yellow; teacher-mode purple is the only exception.
+- Hand-written headings and annotations, printed body.
+- Written = flat; taped paper = tape strip; pressable = magnet.
+- Answers are marked with ink: green tick, red strike-through.
+- Faint 32px grid board ground; glass blackboard in dark mode.
 
 ## Colors
 
-一個主色、一組紙墨中性色，加上三個語意色（成功、警告、危險）和一個講師專用紫；每個語意色都有「文字用」「淡底」「實心底色」三種深淺。
+A strictly counted marker set on cool white enamel: black, blue, red, green, and one sticky-note yellow.
 
 ### Primary
-- **鋼筆靛藍** (`pen-indigo`)：連結、強調字、章節編號描邊、焦點框、主要按鈕、選中狀態。深色模式下文字用版本調亮成 `#8b85ff`，當實心底色時改用 `#5b52e0`，白字才看得清楚。
-- **深鋼筆靛藍** (`pen-indigo-deep`)：主要按鈕滑過、「打個比方」框內的粗體字。
-- **靛藍淡洗** (`indigo-wash`)：「打個比方」的底色、頁首目前頁面、滑過時的底色、小辭典名詞展開。
-- **按鍵三色** (`key-rim`、`key-edge`、`key-face`)：由主色和紙墨色混出來的可按元件外框、底邊厚度與面色（原始碼為 `color-mix()`，這裡的 hex 是換算後的近似值）。
+- **Blue Marker** (marker-blue): links, structure, section-number circles, analogy frames, focus rings, progress, selected magnets. Its deeper sibling (marker-blue-deep) is the hover state of filled blue magnets; the wash (marker-blue-wash) is the hover ground of header tools.
 
 ### Secondary
-- **深夜靛藍帶** (`night-ink-band`)：只用在對外頁的滿版主視覺，疊兩層靛藍光暈和細顆粒。
-- **螢光筆金** (`highlighter-gold`)：只在深色主視覺裡當 eyebrow 和打勾的顏色，以及拉桿滿格、全部完成時的獎勵光。
+- **Green Marker** (marker-green for text, marker-green-fill for solid fills with white text): correct answers, done states, 課後 phase, OK callouts.
+- **Red Marker** (marker-red for text, marker-red-fill for solid fills): the hand-drawn circle around the h1 key phrase, wrong answers, danger callouts, unread dot, quiz streak.
 
 ### Tertiary
-- **講師紫** (`teacher-violet`、`teacher-wash`)：只屬於講師模式。講師筆記的虛線框、講師橫幅、計時器、課中階段標籤。學員看不到它。
+- **Sticky-Note Yellow** (sticky-yellow): learning-goal sticky notes, text selection, and at reduced opacity the tape strip (`rgb(255 226 122 / 55%)`, 38% in dark). Yellow is never text; warning text uses the brown sticky ink (sticky-ink-brown) on the yellow wash.
+- **Teacher Purple** (teacher-purple, teacher-purple-wash): appears only in teacher mode (banner, dashed teacher notes). Students never see it.
 
 ### Neutral
-- **紙面** (`paper`)：頁面底色，加 `rgb(28 27 41 / 3.5%)` 的 22px 點格。
-- **摺頁** (`paper-fold`)：次層底色，統計小格、選項字母鍵、軌道底。
-- **卡片白** (`card-white`)：卡片、輸入框、一般按鈕。
-- **墨** (`ink`)：內文與標題，也是反色區塊（翻牌卡背面）的底色。
-- **鉛筆灰** (`pencil-gray`)：次要說明、引言、頁尾。
-- **格線** (`rule-line`)：所有邊框與分隔線，段落之間用它畫虛線。
-- **終端機墨** (`terminal-ink`)：程式碼區、產生器輸出、指令列，淺色與深色模式都一樣深。
-
-### 語意色
-- **成功綠** / **警告琥珀** / **危險紅**：文字用版本都特別調深過，在各自的淡底上對比達 5 以上；按鈕、答對答錯的實心圓點則用 `-fill` 版本。
+- **Board Enamel** (board-enamel): the page ground, carrying the grid.
+- **Wiped Board** (board-wiped): recessed areas, the pen tray header, option key discs, range tracks.
+- **Paper Sheet** (paper-sheet): taped paper cards and magnet faces.
+- **Black Marker** (marker-black): body text, h1/h2, the workshop frame, the unit-number underline. **Faint Black** (marker-black-faint) for lead and secondary text (6.8:1 on the board).
+- **Board Line / Aluminium Rim** (board-line, aluminium-rim): dividers, and magnet edges plus the header's 4px tray edge.
+- **Projected Screen** (projected-screen): code blocks, terminals and generated-output panes, which read as a dark screen projected onto the board.
+- **Glass Board** (glass-board, glass-board-sheet, glass-chalk): dark-mode ground, sheets and ink. Dark inks brighten (blue `#86a8ff`, green `#5fd08f`, red `#ff8078`); solid fills use separate darker `*-fill` values so white text stays readable.
 
 ### Named Rules
-**The One Ink Rule.** 強調只用鋼筆靛藍。不引入第二個品牌色；琥珀、綠、紅只代表語意（警告、對、錯），紫只代表講師。
+**The Four Pens Rule.** Only black, blue, red, green and sticky yellow appear on the board. There is no fifth hue, no gray gradient, no rainbow. Teacher purple exists only behind teacher mode.
 
-**The Fill vs. Text Rule.** 每個有色的 token 都有兩組：放字的（對比優先）和當實心底放白字的（`-fill`）。深色模式下絕不直接把文字色拿來當底色。
+**The Ink Means Something Rule.** Red marks emphasis and wrongness, green marks rightness and done, blue marks structure and action. A colour is never used for decoration alone.
 
 ## Typography
 
-**Display Font:** Inter（中文由 Noto Sans TC 接手）
-**Body Font:** 同上，system-ui 為後備
-**Label/Mono Font:** ui-monospace, Cascadia Code, Consolas
+**Display Font:** LXGW WenKai TC (with Noto Sans TC, system-ui)
+**Numeral Font:** Kalam (with LXGW WenKai TC fallback for any CJK)
+**Body Font:** Inter + Noto Sans TC (with system-ui)
+**Mono Font:** ui-monospace, Cascadia Code, Consolas
 
-**Character:** 一套字撐全場，靠粗細落差建立層次：標題用 900 的黑體、帶一點負字距，像手冊的章名；內文 400、行高 1.75，給中文足夠的呼吸空間。
+**Character:** The instructor's handwriting (WenKai at 700, thickened with a thin same-colour text-stroke of .022em on h1 and .012em on h2, painted under the fill) sits above a calm, highly legible print body. Kalam supplies the hand-drawn digits.
 
 ### Hierarchy
-- **Display**（900，`clamp(2.1rem → 3.9rem)`，1.25）：單元主標，最多約 16 字寬；`<em>` 改成靛藍字加一條淡靛藍螢光筆底線。對外首頁的深色主視覺縮小為 `clamp(1.95rem → 2.9rem)`、行高 1.22。
-- **Headline**（900，`clamp(1.5rem → 2.25rem)`）：每一段的 h2。
-- **Title**（800，1.2rem）：卡片小標 h3，也可用 `.h3` 讓 h2 長得像 h3。
-- **Body**（400，`clamp(1rem → 1.125rem)`，1.75）：內文。引言（lead）放大到 1.3rem、鉛筆灰、最寬約 40em。
-- **Label**（800，0.8rem，字距 0.08em，大寫）：kicker、eyebrow、名詞分類。對外頁字距加大到 0.16em。
-- **Section Number**（Inter 900，2.6rem，手機 2rem）：空心描邊的章節數字，只有 1.5px 的靛藍描邊、沒有填色。
+- **Display** (h1): the one big statement at the centre of the board, max 14em wide. Its `<em>` phrase stays black and is circled in red.
+- **Headline** (h2): section titles beside a blue-circled Kalam number.
+- **Title** (h3, print face, 800): card and block subheads.
+- **Body** (print face, line-height 1.75): all reading text; the lead runs 1.1 to 1.32rem at line-height 1.85, max 38em.
+- **Annotation** (WenKai 700, about 1.05rem): short marker notes, such as the goals label, the 課前/課中/課後 meta row, the analogy label, and the note under a section heading.
+- **Numeral** (Kalam 700): unit number (2rem, underlined 3px in black), section numbers (1.6rem, 1.25rem on mobile), quiz keys, step numbers and stats.
 
 ### Named Rules
-**The Heavy Heading Rule.** 標題一律 800 以上。層次靠粗細與大小，不靠顏色或斜體。
+**The Hand For Headings Rule.** Handwriting (`--hand-text`) is for h1, h2 and short annotations only. Paragraphs, options, form text and quiz questions stay in the print face, because elders must be able to read them.
+
+**The Kalam Is For Digits Rule.** `--hand` (Kalam) is used only for numerals and short number-like marks, never for sentences.
 
 ## Layout
 
-- **容器**：`.wrap` 為 `min(1120px, 100% - 32px)`，左右各 16px 邊距；頁首放寬到 1440px。
-- **垂直節奏**：段落間距 `clamp(3rem, 2rem + 4vw, 6rem)`，學員頁每段用 0.55 倍再加一條虛線分隔；對外頁拉大到 `clamp(48px, 6vw, 92px)`，一段只講一件事。
-- **格線**：`grid-2`（每欄至少 300px）、`grid-3`（至少 240px），都用 `auto-fit` 自動換行，間距 16px；`split` 是 1.1 : 1 的左右兩欄，860px 以下疊成一欄。
-- **對外首頁**：主視覺 980px 以上分成 1.2 : 0.8 左文右圖，以下隱藏右側示意圖；兩條路的卡片 900px 以上刻意不等寬（1.15 : 1），主要那條比較重。
-- **頁首**：sticky、永遠一排、高度 58px，放不下的工具按鈕可左右滑、右緣淡出；「？ 教學」固定在最右。720px 以下頁首不跟著捲，只留細的區段目錄貼頂。
-- **投影模式**：根字級放大到 125%，一段一頁、垂直置中。
-- **斷點**：560 / 640 / 720 / 760 / 860 / 900 / 980px（依元件各自決定，沒有統一斷點表）。
+Content sits in a centred column of `min(1120px, 100% - 32px)`. The header row widens to 1440px and stays a single non-wrapping row about 58px tall; the tool list scrolls horizontally with a fade mask when it overflows, and the help button stays pinned at the right end. Sections are separated by the section spacing token and a soft 2px "wiped" smudge between consecutive slides, not a hard rule. The ground carries a 32px grid at 3.2% black ink. Learning goals sit as a row of sticky notes with 22px/18px gaps. At 640px and below the section numbers shrink, sticky notes lose their tilt and the analogy padding tightens. Presentation mode scales the root to 125% and steps through slides one at a time; print strips tape, shadows and header ground.
 
 ## Elevation & Depth
 
-以**淡陰影 + 紙面層次**為主的混合系統。卡片浮在紙面上一點點；陰影偏冷、帶一點墨色，不用純黑。可按元件另有一種「實體按鍵」的深度：不是模糊陰影，而是底下一條 3px 的實心色邊。
+Depth is physical and has exactly three levels. Writing on the board is flat. Paper taped to the board has a low, soft paper shadow. Magnets (pressable controls) have a soft, short shadow with an inset top highlight. Nothing uses hard offset blocks or glows.
 
 ### Shadow Vocabulary
-- **Resting** (`box-shadow: 0 1px 2px rgb(28 27 41 / 6%), 0 8px 24px -12px rgb(28 27 41 / 18%)`)：卡片、安裝步驟、作品牆。
-- **Lift** (`box-shadow: 0 2px 4px rgb(28 27 41 / 8%), 0 18px 40px -16px rgb(79 70 229 / 35%)`)：滑過的連結卡、提示訊息、教學彈窗、小辭典彈窗；帶一點靛藍色光。
-- **Key Edge** (`box-shadow: 0 3px 0 <key-edge>`)：可按元件的按鍵厚度；滑過變 4px，按下變 1px 並位移 2px。
-- **Header Rule** (`box-shadow: 0 8px 18px -16px rgb(28 27 41 / 45%)`)：頁首下緣。
+- **Magnet at rest** (`--magnet`: `0 1px 0 rgb(255 255 255 / 70%) inset, 0 1px 1px rgb(29 35 39 / 14%), 0 4px 10px -3px rgb(29 35 39 / 28%)`): every pressable control.
+- **Magnet lifted** (`--magnet-up`): hover, paired with `translateY(-1px)`.
+- **Magnet pressed** (`--magnet-down`: inset `0 1px 2px rgb(29 35 39 / 20%)`): active and selected states, paired with `translateY(1px)` into the board.
+- **Taped paper** (`0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%)`): cards, classify cards, quiz frames.
+- **Sticky note** (`0 1px 1px rgb(29 35 39 / 10%), 0 12px 16px -12px rgb(29 35 39 / 40%)`): learning goals.
+- **Pen tray** (`0 8px 16px -14px rgb(29 35 39 / 45%)`): under the sticky header.
 
 ### Named Rules
-**The Pressable-Has-Depth Rule.** 有按鍵厚度 = 可以按。只能看的東西（標籤、學習目標、題目卡、作品卡）一律平的，滑過不浮起、不發光。
+**The Pressable Is A Magnet Rule.** If it can be pressed, it is a magnet: aluminium-rim 1.5px edge, white face, the magnet shadow, a pointer cursor, lift on hover and a 1px press into the board. If it cannot be pressed, it is flat and does not move or glow on hover.
+
+**The Answered Goes Flat Rule.** Disabled or answered controls lose the magnet: no shadow, no transform, transparent ground, board-line edge.
 
 ## Shapes
 
-大圓角、友善的形狀語言。三級圓角：小（8px）給程式碼小框、字母鍵；中（14px）給選項、輸入框、提示框；大（22px）給卡片與翻牌卡。按鈕、篩選標籤、分頁、提示訊息是膠囊形（999px）。
-
-例外的邊框語言：「打個比方」是左側 5px 靛藍粗線加右側圓角；講師筆記是 1.5px 虛線框；段落之間是虛線。標籤（`.pill`）和課前／課中／課後不再是膠囊，而是「● 文字」，刻意和可以按的標籤區分。
+Paper is nearly square (3px). Magnets and fields use gently rounded corners (10px). Round magnets (brand mark, option keys, install-step numbers) are circles. Anything drawn in marker (analogy, callouts, workshop, teacher note) uses the irregular hand-drawn box radius, four uneven corners. Section numbers sit in a slightly wobbly blue circle (`46% 54% 52% 48% / 54% 46% 55% 45%`, rotated -4deg). Sticky notes have a curled bottom-left corner and tilt by under 1 degree. Tape strips are small translucent rectangles, rotated 2 to 3 degrees.
 
 ## Components
 
-### Buttons
-- **Shape:** 膠囊形 (999px)，1.5px 邊框，字重 700。
-- **Default:** 卡片白底、按鍵色外框、底下 3px 按鍵厚度，內距 10px 20px。
-- **Primary:** 鋼筆靛藍實心、白字，按鍵厚度為主色加 45% 黑。成功綠、危險紅兩個變體同樣做法。
-- **Hover / Active:** 滑過往上 1px、外框變主色；按下往下 2px、厚度剩 1px。停用時 45% 透明、沒有厚度。
-- **頁首按鈕:** 例外，沒有厚度、沒有外框，滑過只有淡靛藍底；「？ 教學」保留靛藍外框。
+### Buttons (magnets)
+- **Shape:** gently rounded (10px), 1.5px aluminium rim.
+- **Default:** white face, black text, magnet shadow.
+- **Primary / OK / Danger:** solid blue, green or red fill with white text; primary hover deepens to marker-blue-deep.
+- **Hover / Active:** magnet-up plus 1px lift; press returns to magnet-down plus 1px sink. Focus is a 3px blue outline at 2px offset.
+- **Disabled:** flat, 45% opacity, no transform.
 
-### Chips / Tabs
-- **Style:** 膠囊形，按鍵面色、按鍵色外框、按鍵厚度。
-- **Selected:** 靛藍實心、白字、沒有厚度、往下 2px，像按下去沒彈起來。
+### Chips, tabs and options
+- **Style:** the same magnet treatment (options, classify choices, chips, tab buttons, checklist rows, map jumps, review items).
+- **Selected:** blue magnet pressed into the board (blue fill, white text, magnet-down).
+- **Quiz options:** Kalam key in a wiped-board disc that turns blue on hover. After answering, the option goes flat; right = green edge on green wash with a green tick, wrong = red edge on red wash with a red strike through the text.
 
-### Cards / Containers
-- **Corner Style:** 22px。
-- **Background:** 卡片白。
-- **Shadow Strategy:** Resting 陰影；可點的卡片滑過改 Lift 並往上 2–3px。
-- **Border:** 1px 格線。
-- **Internal Padding:** `clamp(18px, 3vw, 28px)`。
+### Cards / Containers (taped paper)
+- **Corner Style:** near square (3px).
+- **Background:** paper sheet, with a hairline border at 70% board-line.
+- **Shadow Strategy:** taped-paper shadow (see Elevation).
+- **Tape:** a 72x20px translucent yellow strip centred on the top edge, rotated 2deg. Nested cards and quiz/classify/order frames carry no tape.
 
 ### Inputs / Fields
-- **Style:** 卡片白底、1.5px 格線邊框、14px 圓角、內距 10px 14px，字體繼承內文。
-- **Focus:** 全站統一 3px 靛藍實線焦點框、外距 2px。
-- **程式碼輸入框:** 終端機墨底、淺色等寬字。
+- **Style:** white field, 1.5px board-line edge, 10px radius, 10px 14px padding; blue caret and accent colour.
+- **Range:** 10px wiped-board track with a rim edge and a round blue thumb ringed in white.
+- **Code input:** projected-screen dark ground in monospace.
 
-### Navigation
-- 頁首：品牌方塊（34px、10px 圓角、靛藍實心）+ 課名；右側工具列一排、可左右滑；目前所在頁用淡靛藍底 + 靛藍字標示。頂端 3px 的閱讀進度條。
-- 長頁面有 sticky 的區段目錄（`.page-nav`），毛玻璃背景。
-- 頁尾：鉛筆灰小字，連結加上下留白讓手機好點。
+### Navigation (pen tray)
+- **Style:** flat wiped-board tray at 94% opacity with blur, a solid 4px aluminium bottom edge, and one soft tray shadow.
+- **Tools:** flat, borderless and without magnet shadow, padded 6px 9px; hover and current page use the blue wash. Each tool pairs its label with one icon from a single stroke SVG set (24px viewBox, stroke-width 2, round caps, currentColor).
+- **Brand mark:** a round blue magnet carrying a Kalam "V".
+- **Progress:** a 4px blue line under the tray.
 
-### Quiz Option（招牌元件）
-按鍵面色的橫條，左側 28px 的字母鍵（摺頁底、8px 圓角）。答對變成功淡綠、字母鍵實心綠；答錯變危險淡紅。答完之後整組變平、不能再按。
+### Sticky-note goals
+Flat yellow notes with a tape strip, black 700 text and slight alternating tilt (-.8deg, .6deg, -.3deg). They are only for reading: they do not lift or press.
 
-### Flip Card（招牌元件）
-正面是一顆大按鈕（按鍵外框與 4px 厚度），右下角永遠有一顆靛藍實心的「點我翻面」小標籤；背面是墨色反色面。翻轉 300ms。
+### Analogy and callouts
+- **Analogy:** a 2px blue hand-drawn box on the bare board, with its label in blue WenKai. There is no arrow or leader line.
+- **Callouts:** the same hand box, in red (danger), green (ok) or yellow-brown (warn), on a 60% wash.
+- **Workshop:** a black hand box. **Teacher note:** a dashed purple hand box on the purple wash, shown only in teacher mode.
 
-### Analogy Callout
-「打個比方」：左側 5px 靛藍粗線、淡靛藍底、右側 14px 圓角，粗體字用深鋼筆靛藍。進場時從左滑入。
+### Signature: ink marks
+- **Circled key phrase:** the h1 `<em>` is circled by an authored SVG marker loop (open start, overshooting end) used as a mask over red. A second `<em>` uses a mirrored loop. Loops are rotated about 1deg.
+- **Green tick:** on a correct answer, a green check wipes in via a clip-path draw of 260ms or less.
+- **Red strike:** a wrong answer's text is struck through by a 2.5px red line that grows via background-size in 240ms.
+- **Reduced motion:** ticks and strikes appear instantly, fully drawn.
 
-### Terminal / Code
-終端機墨底、淺紫白字。可點的程式碼每行左側有淡紫線，上方寫明「每一行都可以點」；產生器輸出左上角有三顆視窗燈。
-
-### Teacher Note
-講師紫 1.5px 虛線框、講師淡紫底，只在講師模式出現。
+### Projected screens
+Code, terminal and the Claude Code workbench simulator keep their own dark screen palette as "a screen projected onto the board". The workbench keeps Claude's warm accent inside the screen only.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** 所有強調、連結、焦點都用鋼筆靛藍；語意色只用在對、錯、警告。
-- **Do** 可以按的元件加按鍵厚度（`0 3px 0` 的實心底邊），按下時往下 2px。
-- **Do** 有色文字用文字用的 token，放白字的實心底用 `-fill` 的 token。
-- **Do** 每一種動畫都附 `prefers-reduced-motion: reduce` 的關閉版本（全站已有一條總開關）。
-- **Do** 教學綁定用 `data-tour` 屬性；改版時保留 `data-tour`、表單 `name`、JS 依賴的 `id`。
-- **Do** 手機上點得到：連結加上下留白，拉桿至少 32px 高。
+- **Do** draw every colour from the four marker inks plus sticky yellow; use teacher purple only in teacher mode.
+- **Do** make every new pressable control a magnet (`--magnet` / `--magnet-up` / `--magnet-down`, press = `translateY(1px)`), and add its class to the shared affordance selector list.
+- **Do** keep read-only text flat: labels and phases are plain marker text, not capsules.
+- **Do** use `--hand-text` for h1, h2 and annotations, `--hand` (Kalam) only for numerals, and Inter + Noto Sans TC for everything people read at length.
+- **Do** use `var(--ease)` with `--fast` (150ms) or `--normal` (250ms), stay near 300ms at most, never block interaction during animation, and turn all motion off under `prefers-reduced-motion`.
+- **Do** keep the faint 32px grid on the board ground, and keep dark mode as the glass blackboard with brightened inks and separate `*-fill` solids.
+- **Do** keep `data-tour` attributes, form `name`s and JS-dependent ids and `data-*` untouched when restyling.
 
 ### Don't:
-- **Don't** 讓只能看的東西看起來能按：不用膠囊外框、不加按鍵厚度、滑過不浮起不發光。
-- **Don't** 在深色模式直接拿文字色當底色（會變成一塊亮白）。
-- **Don't** 用 `calc(50% - 50vw)` 負邊距做滿版區塊（會多出捲軸寬度、被 `main` 裁掉）；要滿版就讓外層 `main` 滿版、內層再套 `.wrap`。
-- **Don't** 讓頁首折成兩排或在手機上一直蓋住內容。
+- **Don't** use gradients, glows, neon, sheens or rainbow borders as decoration.
+- **Don't** use hard offset block shadows; depth is soft magnet or paper shadow only.
+- **Don't** add emoji as new UI icons; use the stroke SVG icon set.
+- **Don't** give written or read-only content (sticky notes, labels, phases, headings, classify prompt cards) a hover lift, magnet shadow or pointer cursor.
+- **Don't** add an arrow or leader line to the analogy box.
+- **Don't** set paragraphs, options or questions in the handwriting faces.
+- **Don't** use bouncy or overshoot easings.
+
+### Known debt (not rules)
+Emoji still appear inside legacy page content. Some sections repeat same-size icon-card rows (`.grid-3`). The index page keeps a hero-metric band. Label-only kickers survive: they have been restyled as blue annotations but still carry no content. The old glow layers in `course.css` are switched off by later overrides, not deleted, and `workbench.css` still keeps pink/blue radial glows on the chat ground and a pulsing rainbow ring on the "your turn" input. Treat all of these as cleanup targets, not patterns to copy.
