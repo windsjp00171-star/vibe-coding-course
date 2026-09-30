@@ -1512,3 +1512,16 @@ html { scroll-padding-top: 76px; }
 :root .slide .grid-3 > .card { background: transparent; border: 0; border-radius: 0; box-shadow: -1.5px 0 0 var(--line), 0 -1.5px 0 var(--line); }
 :root .slide .grid-3 > .card::before { display: none; }
 @media print { :root .slide .grid-3:has(> .card)::before { display: none; } }
+
+/* ---------- 審查排序第 4 項：段落小標只留「這段要做什麼」，統一成圖示＋一行字 ----------
+   玩（藍）、課中（黑）、延伸（綠）、測驗（綠）、真實案例（紅）。純裝飾的小標已從單元裡刪掉 */
+:root .section-head .kicker.mode { display: inline-flex; align-items: center; gap: 6px; font-size: 1.05rem; }
+:root .section-head .kicker.mode::before {
+  content: ""; width: 1.15em; height: 1.15em; flex: none; background: currentColor;
+  -webkit-mask: var(--mode-ico) center / contain no-repeat; mask: var(--mode-ico) center / contain no-repeat;
+}
+:root .kicker.mode-play { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11.5v-2a1.5 1.5 0 0 1 3 0V12M14 10.5a1.5 1.5 0 0 1 3 0V12M17 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L4.3 14.5a1.5 1.5 0 0 1 2.4-1.8L8 14'/%3E%3C/svg%3E"); color: var(--brand); }
+:root .kicker.mode-class { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3'/%3E%3Cpath d='M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5a3 3 0 0 1 0 6M21 20c0-2.8-1.8-5.2-4.3-5.8'/%3E%3C/svg%3E"); color: var(--ink); }
+:root .kicker.mode-extra { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E"); color: var(--ok); }
+:root .kicker.mode-quiz { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E"); color: var(--ok); }
+:root .kicker.mode-case { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3L2 20h20z'/%3E%3Cpath d='M12 10v4M12 17.5v.01'/%3E%3C/svg%3E"); color: var(--danger); }

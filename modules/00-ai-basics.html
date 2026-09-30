@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
   <style>
     .nw-sentence { font-size: clamp(1.1rem, 1rem + .8vw, 1.6rem); font-weight: 800; line-height: 1.8; min-height: 2.4em; }
     .nw-caret { color: var(--brand); animation: nw-blink 1s steps(1) infinite; }
@@ -59,7 +59,7 @@
 
   <section class="slide" id="nextword" data-tour="nextword">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">先玩一下</span><h2>你就是 AI：一次只能猜一個字</h2>
+      <div><span class="kicker mode mode-play">先玩一下</span><h2>你就是 AI：一次只能猜一個字</h2>
         <p>AI 寫文章、寫程式，其實都是同一件事：看著前面的字，猜下一個最可能出現的字，然後不斷重複。下面每一步都給你三個選擇，括號裡是「AI 覺得有多可能」。</p></div></div>
     <div class="card">
       <p class="nw-sentence" data-nw-sentence></p>
@@ -84,7 +84,7 @@
 
   <section class="slide" id="hallucination" data-tour="halluc">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">最重要的一課</span><h2>所以它會唬爛，而且講得很有自信</h2>
+      <div><h2>所以它會唬爛，而且講得很有自信</h2>
         <p>因為它在「猜最像答案的話」，不是在查資料。當它不知道的時候，也會猜一個「看起來很像真的」的東西出來。這叫<b>幻覺</b>。</p></div></div>
     <div class="grid grid-3">
       <div class="card"><h3>🔗 捏造網址</h3><p>給你一個看起來很正常、點進去卻是 404 的連結。</p></div>
@@ -112,7 +112,7 @@
 
   <section class="slide" id="context" data-tour="context">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">為什麼它會忘記</span><h2>Token 和上下文：AI 的桌面只有這麼大</h2>
+      <div><h2>Token 和上下文：AI 的桌面只有這麼大</h2>
         <p>AI 一次能「看著」的文字量是有上限的。拉拉看下面的滑桿，看看一段對話變長之後會發生什麼事。</p></div></div>
     <div class="split">
       <div class="card">
@@ -138,7 +138,7 @@
 
   <section class="slide" id="models" data-tour="models">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">為什麼有好幾個名字</span><h2>模型有大有小，挑合適的就好</h2>
+      <div><h2>模型有大有小，挑合適的就好</h2>
         <p>同一家公司會出好幾種模型。差別大致是「聰明程度」和「速度、價錢」的取捨。Claude 目前分成三種尺寸：</p></div></div>
     <div class="card" style="overflow-x:auto">
       <table class="compare">
@@ -158,7 +158,7 @@
 
   <section class="slide" id="kinds" data-tour="kinds">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">這門課的主角</span><h2>會聊天的 AI，和會動手的 AI</h2>
+      <div><h2>會聊天的 AI，和會動手的 AI</h2>
         <p>同樣叫 AI，能做的事差很多。點卡片看差別。</p></div></div>
     <div class="grid grid-3">
       <div class="flip" tabindex="0"><div class="flip-inner">
@@ -187,7 +187,7 @@
 
   <section class="slide" id="limits" data-tour="limits">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">先講清楚</span><h2>哪些事不要交給 AI</h2></div></div>
+      <div><h2>哪些事不要交給 AI</h2></div></div>
     <div class="grid grid-3">
       <div class="card"><h3>🙅 不要貼個資</h3><p>身分證字號、電話、地址、病歷、客戶名單，不要整份貼給 AI。要用的話先把個資換成假的（單元 6 會教）。</p></div>
       <div class="card"><h3>🙅 不要當專業判斷</h3><p>醫療、法律、財務這種會影響別人的決定，AI 的話只能當參考，最後要有專業的人看過。</p></div>
@@ -201,7 +201,7 @@
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">課中工作坊</span><h2>抓唬爛大賽</h2><p>兩人一組。每個人用自己最熟的領域出題，看誰先抓到 AI 講錯的地方。</p></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>抓唬爛大賽</h2><p>兩人一組。每個人用自己最熟的領域出題，看誰先抓到 AI 講錯的地方。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>兩人一組</p>
       <p><b>要準備</b>你的手機或筆電，能打開任一個 AI 聊天視窗</p>
@@ -221,7 +221,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2><p>答對 70% 就算這個單元過關。</p></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -246,14 +246,14 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 00　內容以教學為目的簡化，實際功能與費用以官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/modules/m0.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/modules/m0.js?v=202609301427"></script>
 </body>
 </html>

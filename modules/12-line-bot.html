@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301427">
 </head>
 <body data-module="m12" data-base="../">
 <header data-course-header></header>
@@ -47,21 +47,21 @@
 
   <section class="slide screen-only" id="play" data-tour="sim">
     <div class="section-head"><span class="section-num">▶</span>
-      <div><span class="kicker">先玩再學．10 分鐘</span><h2>讓小秘書上工：從設定到測試</h2>
+      <div><span class="kicker mode mode-play">先玩再學．10 分鐘</span><h2>讓小秘書上工：從設定到測試</h2>
         <p>模擬做一個 LINE 小秘書：訊息怎麼進來、鑰匙放哪、排程時區怎麼換算，最後自己傳一句話測試。大約 10 分鐘。</p></div></div>
     <div data-workbench data-no-gloss></div>
   </section>
 
   <section class="slide" id="flow" data-tour="flow">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">拆解</span><h2>一則訊息的旅程</h2><p>按「下一步」，看一句話從你的手機到被記下來、再被提醒，中間經過哪些地方。</p></div></div>
+      <div><h2>一則訊息的旅程</h2><p>按「下一步」，看一句話從你的手機到被記下來、再被提醒，中間經過哪些地方。</p></div></div>
     <div data-flow></div>
     <p class="muted" style="margin-top:12px">講師的小秘書是公開的專案 <a href="https://github.com/windsjp00171-star/line-secretary-" target="_blank" rel="noopener">line-secretary-</a>：程式放 Vercel、資料放 Supabase、AI 用免費的 Gemini、提醒靠 cron-job.org 每 5 分鐘叫醒一次，全部用免費方案。</p>
   </section>
 
   <section class="slide" id="sim" data-tour="sim">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">動手玩</span><h2>小秘書模擬器</h2>
+      <div><span class="kicker mode mode-play">動手玩</span><h2>小秘書模擬器</h2>
         <p>輸入一句話，看它被分成哪一類，以及程式實際收到的資料長什麼樣子。</p></div></div>
     <div class="split">
       <div>
@@ -82,7 +82,7 @@
 
   <section class="slide" id="tz" data-tour="tz">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">最常見的坑</span><h2>排程的時區陷阱</h2>
+      <div><h2>排程的時區陷阱</h2>
         <p>排程（Vercel、cron-job.org、Supabase 都一樣）用的是<b>國際標準時間（UTC）</b>，台灣比它快 8 小時。拉拉看：</p></div></div>
     <div class="split">
       <div class="card">
@@ -104,7 +104,7 @@
 
   <section class="slide" id="split">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">設計原則</span><h2>AI 做判斷，程式做排程</h2></div></div>
+      <div><h2>AI 做判斷，程式做排程</h2></div></div>
     <div class="grid grid-2">
       <div class="card"><span class="pill pill-brand">交給 AI</span><h3>🤖 需要「懂意思」的事</h3><ul><li>這句話是待辦、提醒還是筆記？</li><li>「下週三」是幾月幾號？</li><li>用自然的口氣回一句話</li><li>看懂活動海報上的時間地點</li></ul></div>
       <div class="card"><span class="pill pill-ok">交給程式</span><h3>⚙️ 規則固定的事</h3><ul><li>「今天」「待辦」「完成 2」這種固定指令</li><li>「待辦 買牛奶」這種有前綴的，直接照前綴存，<b>不經過 AI</b></li><li>每 5 分鐘檢查有沒有快到的提醒</li><li>時區換算、存進資料庫</li></ul></div>
@@ -114,7 +114,7 @@
 
   <section class="slide" id="keys">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">金鑰清單</span><h2>一個 LINE Bot 需要幾把鑰匙？</h2></div></div>
+      <div><h2>一個 LINE Bot 需要幾把鑰匙？</h2></div></div>
     <div class="card"><div class="table-wrap"><table class="compare">
       <thead><tr><th>Vercel 環境變數</th><th>做什麼用</th><th>秘密嗎</th></tr></thead>
       <tbody>
@@ -133,7 +133,7 @@
 
   <section class="slide" id="template" data-tour="template">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">開源專案</span><h2>講師的小秘書：Fork 一份就是你的</h2>
+      <div><h2>講師的小秘書：Fork 一份就是你的</h2>
         <p>講師把「收訊息、檢查簽章、存資料、提醒、時區換算、設定精靈」都做好了。你要決定的，是它<b>要幫誰、懂什麼、怎麼回</b>。</p></div></div>
     <div class="split">
       <div class="card">
@@ -177,7 +177,7 @@ CHANGELOG.md        講師做過的每一次調整</pre>
 
   <section class="slide" id="lessons" data-tour="lessons">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">真實踩過的坑</span><h2>講師的小秘書壞過的四次</h2>
+      <div><span class="kicker mode mode-case">真實踩過的坑</span><h2>講師的小秘書壞過的四次</h2>
         <p>這些都寫在專案的程式註解和 CHANGELOG 裡。共通點：<b>壞掉的時候沒有任何人知道</b>。</p></div></div>
     <div class="grid grid-2">
       <div class="card"><h3>🤫 AI 靜靜地失敗了好幾個月</h3><p>付費 AI 帳戶沒餘額，分類一直失敗，程式就默默把每句話存成「筆記」，回覆看起來一切正常。時間沒抓到、提醒也沒了，好幾個月沒人發現。</p><p><b>後來：</b>第一次撞到額度就推 LINE 通知，回覆也明說「AI 額度用完了」。</p></div>
@@ -190,7 +190,7 @@ CHANGELOG.md        講師做過的每一次調整</pre>
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">08</span>
-      <div><span class="kicker">LINE 場．半天</span><h2>讓它上工，再改成你的</h2><p>先不寫程式，把「它要幫誰、懂什麼、怎麼回」想清楚；接著照圖解讓講師的小秘書住進你的 LINE；最後<b>用 Claude Code 把它改成你的</b>，自己驗收。</p></div></div>
+      <div><span class="kicker mode mode-class">LINE 場．半天</span><h2>讓它上工，再改成你的</h2><p>先不寫程式，把「它要幫誰、懂什麼、怎麼回」想清楚；接著照圖解讓講師的小秘書住進你的 LINE；最後<b>用 Claude Code 把它改成你的</b>，自己驗收。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>三人一組，每個人做自己的小秘書；卡住時先問組員，再問講師</p>
       <p><b>要準備</b>手機上的 LINE、筆電、GitHub 帳號、Google 帳號（Vercel、Supabase、cron-job.org 都用 GitHub 登入；AI 用免費的 Gemini，不用先儲值）</p>
@@ -231,7 +231,7 @@ CHANGELOG.md        講師做過的每一次調整</pre>
 
   <section class="slide" id="challenge" data-tour="challenge">
     <div class="section-head"><span class="section-num">09</span>
-      <div><span class="kicker">延伸挑戰．真正的 Vibe Coding</span><h2>請 Claude Code 教小秘書一招新的</h2>
+      <div><span class="kicker mode mode-extra">延伸挑戰．真正的 Vibe Coding</span><h2>請 Claude Code 教小秘書一招新的</h2>
         <p>講師的版本只是起點。挑一個你真的會用的功能，<b>自己把需求講清楚、讓 Claude Code 動手、自己驗收</b>。</p></div></div>
     <div class="grid grid-2">
       <div class="card"><h3>🌅 早安簡報改成 6:30</h3><p>只改 <code>vercel.json</code> 的一行。想想看：台灣早上 6:30 是 UTC 幾點？是「今天」還是「前一天」？</p></div>
@@ -254,7 +254,7 @@ CHANGELOG.md        講師做過的每一次調整</pre>
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">10</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -276,18 +276,18 @@ CHANGELOG.md        講師做過的每一次調整</pre>
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 12　LINE 平台設定以 LINE Developers 官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/modules/electives.js?v=202609301424"></script>
-<script src="../assets/js/workbench.js?v=202609301424"></script>
-<script src="../assets/js/sims/m12-bot.js?v=202609301424"></script>
-<script src="../assets/js/modules/m12.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/modules/electives.js?v=202609301427"></script>
+<script src="../assets/js/workbench.js?v=202609301427"></script>
+<script src="../assets/js/sims/m12-bot.js?v=202609301427"></script>
+<script src="../assets/js/modules/m12.js?v=202609301427"></script>
 </body>
 </html>

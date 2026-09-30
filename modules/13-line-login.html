@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301424">
-  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301424">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202609301427">
+  <link rel="stylesheet" href="../assets/css/electives.css?v=202609301427">
 </head>
 <body data-module="m13" data-base="../">
 <header data-course-header></header>
@@ -46,27 +46,27 @@
 
   <section class="slide screen-only" id="sim" data-tour="sim">
     <div class="section-head"><span class="section-num">▶</span>
-      <div><span class="kicker">先玩再學．10 分鐘</span><h2>同事說「我登入不了」，而程式沒有報錯</h2>
+      <div><span class="kicker mode mode-play">先玩再學．10 分鐘</span><h2>同事說「我登入不了」，而程式沒有報錯</h2>
         <p>模擬 LINE 登入最常見的四個坑：回呼網址沒登記、LINE 內建瀏覽器開不起來、登入後跳錯頁、憑證過期。每一個都不會報錯。</p></div></div>
     <div data-workbench data-no-gloss></div>
   </section>
 
   <section class="slide" id="flow" data-tour="flow">
     <div class="section-head"><span class="section-num">01</span>
-      <div><span class="kicker">白話流程</span><h2>LINE 登入就像去櫃台換證</h2><p>你的網站不會碰到使用者的 LINE 密碼，全程由 LINE 負責確認身分。按「下一步」看流程。</p></div></div>
+      <div><h2>LINE 登入就像去櫃台換證</h2><p>你的網站不會碰到使用者的 LINE 密碼，全程由 LINE 負責確認身分。按「下一步」看流程。</p></div></div>
     <div data-flow></div>
     <div class="analogy" style="margin-top:16px"><strong>為什麼要「回程票」再換一次？</strong>回程票會出現在網址上，可能被別人看到。所以它只能用一次、很快就過期，真正的身分資料由伺服器在背後向 LINE 換。<b>state（防偽印章）</b>則確認回來的人，就是剛剛出發的那個人。</div>
   </section>
 
   <section class="slide" id="pits" data-tour="pits">
     <div class="section-head"><span class="section-num">02</span>
-      <div><span class="kicker">十個坑精選</span><h2>五個「看起來好了，其實是壞的」</h2><p>這些都不會跳錯誤訊息。你以為功能完成了，使用者那邊卻卡住，而且通常不會有人回報。</p></div></div>
+      <div><span class="kicker mode mode-case">十個坑精選</span><h2>五個「看起來好了，其實是壞的」</h2><p>這些都不會跳錯誤訊息。你以為功能完成了，使用者那邊卻卡住，而且通常不會有人回報。</p></div></div>
     <div class="grid grid-3" data-line-pits></div>
   </section>
 
   <section class="slide" id="handoff" data-tour="handoff">
     <div class="section-head"><span class="section-num">03</span>
-      <div><span class="kicker">最有價值的一課</span><h2>把坑寫成交接文件，交給 AI</h2></div></div>
+      <div><h2>把坑寫成交接文件，交給 AI</h2></div></div>
     <div class="split">
       <div>
         <p>講師第一次做 LINE 登入，前前後後修了很多次。搞定之後，講師請 Claude Code 把整套做法和<b>十個坑</b>整理成一個可以整包帶走的工具包，附上交接文件，準備給其他專案用。每個坑都寫清楚：</p>
@@ -94,13 +94,13 @@
 
   <section class="slide" id="order">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker">動手玩</span><h2>排出 LINE 登入的正確順序</h2></div></div>
+      <div><span class="kicker mode mode-play">動手玩</span><h2>排出 LINE 登入的正確順序</h2></div></div>
     <div class="card screen-only" data-order></div>
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
     <div class="section-head"><span class="section-num">05</span>
-      <div><span class="kicker">課中工作坊</span><h2>寫一份你自己的交接文件</h2><p>挑一個你在課程中「卡最久」的地方，把它變成下次可以直接交給 AI 的文件。</p></div></div>
+      <div><span class="kicker mode mode-class">課中工作坊</span><h2>寫一份你自己的交接文件</h2><p>挑一個你在課程中「卡最久」的地方，把它變成下次可以直接交給 AI 的文件。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>個人做</p>
       <p><b>要準備</b>你卡最久的那個功能</p>
@@ -126,7 +126,7 @@
 
   <section class="slide" id="line-session" data-tour="line-session">
     <div class="section-head"><span class="section-num">06</span>
-      <div><span class="kicker">課後加裝．約 90 分</span><h2>把 LINE 登入和通知，接到你的登記系統</h2>
+      <div><span class="kicker mode mode-extra">課後加裝．約 90 分</span><h2>把 LINE 登入和通知，接到你的登記系統</h2>
         <p>LINE 場的主軸是<a href="12-line-bot.html">單元 12 的 AI 小秘書</a>；做完之後，可以照這一段自己把 LINE 登入和通知加到單元 10 的登記系統。系統會變成「用 LINE 登入」，管理者改了狀態，本人會收到 LINE 訊息。</p></div></div>
     <div class="split">
       <div class="card">
@@ -165,7 +165,7 @@
 
   <section class="slide" id="quiz" data-tour="quiz">
     <div class="section-head"><span class="section-num">07</span>
-      <div><span class="kicker">驗收一下</span><h2>隨堂小測驗</h2></div></div>
+      <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
@@ -184,18 +184,18 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 13　LINE 平台規則以 LINE Developers 官方說明為準。</div></footer>
 
-<script src="../assets/js/lib.js?v=202609301424"></script>
-<script src="../assets/js/quiz-bank.js?v=202609301424"></script>
-<script src="../assets/js/pitfalls-data.js?v=202609301424"></script>
-<script src="../assets/js/config.js?v=202609301424"></script>
-<script src="../assets/js/core.js?v=202609301424"></script>
-<script src="../assets/js/members.js?v=202609301424"></script>
-<script src="../assets/js/tour.js?v=202609301424"></script>
-<script src="../assets/js/glossary-data.js?v=202609301424"></script>
-<script src="../assets/js/glossary.js?v=202609301424"></script>
-<script src="../assets/js/modules/electives.js?v=202609301424"></script>
-<script src="../assets/js/workbench.js?v=202609301424"></script>
-<script src="../assets/js/sims/m13-login.js?v=202609301424"></script>
-<script src="../assets/js/modules/m13.js?v=202609301424"></script>
+<script src="../assets/js/lib.js?v=202609301427"></script>
+<script src="../assets/js/quiz-bank.js?v=202609301427"></script>
+<script src="../assets/js/pitfalls-data.js?v=202609301427"></script>
+<script src="../assets/js/config.js?v=202609301427"></script>
+<script src="../assets/js/core.js?v=202609301427"></script>
+<script src="../assets/js/members.js?v=202609301427"></script>
+<script src="../assets/js/tour.js?v=202609301427"></script>
+<script src="../assets/js/glossary-data.js?v=202609301427"></script>
+<script src="../assets/js/glossary.js?v=202609301427"></script>
+<script src="../assets/js/modules/electives.js?v=202609301427"></script>
+<script src="../assets/js/workbench.js?v=202609301427"></script>
+<script src="../assets/js/sims/m13-login.js?v=202609301427"></script>
+<script src="../assets/js/modules/m13.js?v=202609301427"></script>
 </body>
 </html>
