@@ -177,7 +177,7 @@ body { position: relative; isolation: isolate; }
 
 /* ---------- 白板改版（2026-09）：拿掉極光背景，主視覺是寫在白板上的字 ---------- */
 :root .aurora { display: none; }
-:root .home-hero .eyebrow { font-family: var(--hand); font-size: 1.1rem; letter-spacing: 0; font-weight: 700; }
+:root .home-hero .eyebrow { font-family: var(--hand-text); font-size: 1.1rem; letter-spacing: 0; font-weight: 700; }
 :root .home-hero h1 { line-height: 1.3; }
 /* 重點：藍筆在底下畫一道線 */
 :root .home-hero h1 em {
@@ -189,3 +189,11 @@ body { position: relative; isolation: isolate; }
 :root .map-num { font-family: var(--hand); color: var(--brand); -webkit-text-stroke: 0; font-size: 1.45rem; }
 :root .map-part-title { font-family: var(--hand); font-size: 1.15rem; letter-spacing: 0; color: var(--ink); }
 :root .map-item { border-radius: var(--radius-m); }
+:root .ai-bar i, :root .ai-bar i:nth-child(n) { display: none; }
+:root .ai-bar span { margin-left: 0; }
+:root .map-path { background: var(--card); }
+:root .mp-node.is-linked::after { background: var(--ok-fill); box-shadow: none; }
+:root .mp-node.is-done a { background: var(--ok-soft); border-color: var(--ok-fill); box-shadow: none; }
+:root .home-hero > div:first-child { display: flex; flex-direction: column; align-items: flex-start; }
+:root .home-hero > div:first-child h1 { order: -1; margin-bottom: .15em; }
+:root .home-hero .eyebrow { margin-bottom: 10px; }

@@ -41,7 +41,8 @@
   /* 手繪框：白板筆畫出來的框，四個角不一樣圓 */
   --hand-box: 14px 22px 16px 26px / 22px 14px 24px 16px;
   --font: "Inter", "Noto Sans TC", system-ui, sans-serif;
-  --hand: "Kalam", "LXGW WenKai TC", "Noto Sans TC", system-ui, sans-serif; /* 講師的手寫：只給標題、編號、標註，內文一律用 --font */
+  --hand: "Kalam", "LXGW WenKai TC", "Noto Sans TC", system-ui, sans-serif; /* 手寫數字與編號（Kalam 的數字＋文楷的中文） */
+  --hand-text: "LXGW WenKai TC", "Noto Sans TC", system-ui, sans-serif; /* 手寫標題與標註：整句同一種筆跡，英文也用文楷的，不跟中文打架；內文一律用 --font */
   --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
   --text-base: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --text-hero: clamp(2.3rem, 1.4rem + 3.8vw, 4.4rem);
@@ -1095,7 +1096,7 @@ body.is-locked [data-module-nav] { display: none; }
 
 /* ==========================================================================
    可以按的 vs. 只能看的：全站統一的樣子
-   - 可以按：淡紫底、紫框、底下一條「按鍵的厚度」；滑過浮起一點、按下去會壓下去，游標是手指
+   - 可以按：白板上的磁鐵（白底、鋁色邊、軟影子）；滑過浮起一點、按下去壓進板面，游標是手指
    - 只能看：平的。沒有按鍵厚度、沒有膠囊外框，滑過不會動、不會發光
    新增互動元件時，把 class 加進下面這串就好（scripts/check_affordance.js 會抓漏網的）
    ========================================================================== */
@@ -1257,16 +1258,16 @@ html { scroll-padding-top: 76px; }
    上面舊的「炫光層」（彩虹外框、發光、掃光）在這裡被關掉，待清理
    ========================================================================== */
 
-/* ---------- 頁首：白板下緣的鋁製筆槽 ---------- */
+/* ---------- 頁首：白板下緣的筆槽（平的鋁色面＋一道實心的槽邊） ---------- */
 :root .site-header {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, transparent), color-mix(in srgb, var(--paper-2) 92%, transparent));
-  border-bottom: 3px solid var(--line-strong);
-  box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset, 0 8px 16px -14px rgb(29 35 39 / 45%);
+  background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+  border-bottom: 4px solid var(--line-strong);
+  box-shadow: 0 8px 16px -14px rgb(29 35 39 / 45%);
 }
 :root .brand { font-weight: 800; }
 /* 課名前面的 V：一顆藍色圓磁鐵 */
 :root .brand-mark {
-  border-radius: 50%; background: radial-gradient(circle at 35% 30%, #4d78d8, var(--brand-fill) 60%);
+  border-radius: 50%; background: var(--brand-fill);
   font-family: var(--hand); font-size: 1.2rem; box-shadow: var(--magnet);
 }
 :root .progress-bar { height: 4px; }
@@ -1274,7 +1275,7 @@ html { scroll-padding-top: 76px; }
 :root .teacher-banner { background: var(--teacher); }
 
 /* ---------- 字：標題是講師的手寫，內文是印刷體 ---------- */
-:root h1, :root h2 { font-family: var(--hand); font-weight: 700; letter-spacing: 0; }
+:root h1, :root h2 { font-family: var(--hand-text); font-weight: 700; letter-spacing: 0; }
 :root h2 { font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.4rem); line-height: 1.3; }
 :root h3, :root .h3 { font-weight: 800; }
 :root .lead { color: var(--muted); }
@@ -1286,7 +1287,7 @@ html { scroll-padding-top: 76px; }
 :root .module-hero::before { display: none; }
 /* 左上角的單元編號：像講師先在板角寫下今天第幾堂 */
 :root .module-hero .eyebrow {
-  font-family: var(--hand); color: var(--muted); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700;
+  font-family: var(--hand-text); color: var(--muted); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700;
 }
 :root .module-hero .eyebrow b {
   font-family: var(--hand); font-size: 2rem; line-height: 1; color: var(--ink);
@@ -1295,16 +1296,21 @@ html { scroll-padding-top: 76px; }
 :root .module-hero h1 { font-size: var(--text-hero); line-height: 1.38; margin: .3em 0 .4em; max-width: 14em; }
 /* 重點：黑字，紅筆手繪圈起來 */
 :root .module-hero h1 em { color: inherit; }
+:root .module-hero h1 em { padding-inline: .14em; margin-inline: .1em .04em; }
+/* 紅筆手畫的圈：開口、收尾多畫一截，像真的用白板筆圈起來；左右留白，筆畫不會壓到字 */
 :root .module-hero h1 em::after {
-  inset: .04em -.16em -.02em -.14em; height: auto; z-index: -1; background: none;
-  border: max(2.5px, .05em) solid var(--danger); border-radius: 48% 52% 46% 54% / 58% 44% 56% 42%;
-  transform: rotate(-1.6deg);
+  inset: -.04em -.26em -.08em -.34em; height: auto; z-index: -1; border: 0; border-radius: 0; background: var(--danger);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M22 12 C70 2 150 3 186 14 C199 20 197 42 170 51 C120 61 50 59 18 48 C2 42 3 20 30 11 C48 6 70 5 92 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M22 12 C70 2 150 3 186 14 C199 20 197 42 170 51 C120 61 50 59 18 48 C2 42 3 20 30 11 C48 6 70 5 92 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  transform: rotate(-1.2deg);
 }
-:root .module-hero h1 em:nth-of-type(2)::after { transform: rotate(1.2deg); border-radius: 52% 46% 55% 45% / 44% 58% 42% 56%; }
+:root .module-hero h1 em:nth-of-type(2)::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M176 10 C130 2 60 3 20 13 C3 19 4 42 30 50 C80 60 150 59 182 47 C198 40 197 18 168 10 C150 6 128 5 104 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M176 10 C130 2 60 3 20 13 C3 19 4 42 30 50 C80 60 150 59 182 47 C198 40 197 18 168 10 C150 6 128 5 104 6' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); transform: rotate(.8deg);
+}
 :root .module-hero .lead { font-size: clamp(1.1rem, 1.02rem + .4vw, 1.32rem); max-width: 38em; line-height: 1.85; }
 
 /* 學習目標：三張用紙膠帶貼在板上的便利貼（只能看，不能按：平貼、滑過不動） */
-:root .goals-label { font-family: var(--hand); color: var(--ink); font-size: 1.25rem; letter-spacing: 0; margin-top: 8px; }
+:root .goals-label { font-family: var(--hand-text); color: var(--ink); font-size: 1.25rem; letter-spacing: 0; margin-top: 8px; }
 :root .goals { gap: 22px 18px; margin-top: 14px; }
 :root .goals li {
   background: var(--sticky); color: var(--sticky-ink); border: 0; border-radius: 2px 2px 3px 14px / 2px 2px 3px 6px;
@@ -1319,7 +1325,7 @@ html { scroll-padding-top: 76px; }
   border-radius: 1px; background: var(--tape); font-size: 0;
 }
 /* 課前／課中／課後：寫在板角的藍筆小字 */
-:root .meta-row { font-family: var(--hand); font-size: 1rem; gap: 6px 20px; }
+:root .meta-row { font-family: var(--hand-text); font-size: 1rem; gap: 6px 20px; }
 :root .phase { font-weight: 700; font-size: 1rem; }
 :root .phase::before { content: "—"; font-size: 1em; vertical-align: 0; margin-right: .3em; }
 :root .phase-pre { color: var(--brand); }
@@ -1339,7 +1345,7 @@ html { scroll-padding-top: 76px; }
 :root .section-head h2 { margin-bottom: .15em; }
 /* 原本在標題上面的小標籤，改成寫在標題底下的藍筆註記 */
 :root .section-head .kicker {
-  order: 1; font-family: var(--hand); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--brand);
+  order: 1; font-family: var(--hand-text); font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--brand);
 }
 :root .section-head > div > p { order: 2; margin-top: .35em; }
 :root .section-num {
@@ -1347,7 +1353,7 @@ html { scroll-padding-top: 76px; }
   font-family: var(--hand); font-size: 1.6rem; font-weight: 700; color: var(--brand); -webkit-text-stroke: 0;
   border: 2.5px solid var(--brand); border-radius: 46% 54% 52% 48% / 54% 46% 55% 45%; transform: rotate(-4deg);
 }
-:root .kicker { font-family: var(--hand); letter-spacing: 0; text-transform: none; font-size: 1.05rem; }
+:root .kicker { font-family: var(--hand-text); letter-spacing: 0; text-transform: none; font-size: 1.05rem; }
 
 /* ---------- 紙：用紙膠帶貼在板上的 A4 ---------- */
 :root .card {
@@ -1359,18 +1365,12 @@ html { scroll-padding-top: 76px; }
   background: var(--tape); border-radius: 1px; pointer-events: none;
 }
 
-/* ---------- 打個比方：藍筆框起來，一支箭頭指回它在解釋的那段 ---------- */
+/* ---------- 打個比方：藍筆框起來 ---------- */
 :root .analogy {
   position: relative; border: 2px solid var(--brand); border-radius: var(--hand-box); background: transparent;
-  padding: 18px 22px; margin: 26px 0 18px; font-weight: 500;
+  padding: 18px 22px; margin: 18px 0; font-weight: 500;
 }
-:root .analogy strong { color: var(--brand); font-family: var(--hand); font-size: 1.12em; }
-:root .analogy::before {
-  content: ""; position: absolute; top: -26px; left: 18px; width: 30px; height: 26px; pointer-events: none;
-  background: var(--brand);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M6 25 C8 15 12 9 22 4' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M14 3 L23 3.5 L19 11' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M6 25 C8 15 12 9 22 4' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M14 3 L23 3.5 L19 11' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
+:root .analogy strong { color: var(--brand); font-family: var(--hand-text); font-size: 1.12em; }
 /* 提醒框：紅筆（危險）、綠筆（可以）、便利貼黃（注意），一樣是手畫的框 */
 :root .callout { border-width: 2px; border-radius: var(--hand-box); }
 :root .callout-danger { border-color: var(--danger); background: color-mix(in srgb, var(--danger-soft) 60%, transparent); }
@@ -1378,7 +1378,7 @@ html { scroll-padding-top: 76px; }
 :root .callout-warn { border-color: color-mix(in srgb, var(--warn) 55%, var(--sticky)); background: var(--warn-soft); }
 /* 講師筆記：紫筆虛線框 */
 :root .teacher-note { border: 2px dashed var(--teacher); border-radius: var(--hand-box); background: var(--teacher-soft); }
-:root .teacher-note > b:first-child { font-family: var(--hand); font-size: 1.1rem; }
+:root .teacher-note > b:first-child { font-family: var(--hand-text); font-size: 1.1rem; }
 
 /* 標籤：寫在板上的小字，用筆的顏色 */
 :root .pill { font-weight: 800; }
@@ -1388,7 +1388,7 @@ html { scroll-padding-top: 76px; }
 :root :is(.fx-quiz, .fx-classify, .fx-order)::before { display: none !important; }
 :root .fx-quiz.fx-hot { box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%); }
 :root .fx-quiz.fx-hot .qz-streak { text-shadow: none; }
-:root .qz-streak { color: var(--danger); font-family: var(--hand); font-size: 1.1rem; }
+:root .qz-streak { color: var(--danger); font-family: var(--hand-text); font-size: 1.1rem; }
 :root .qz-bar i { border-radius: 2px; height: 6px; }
 :root .qz-bar i.now { background: var(--brand); animation: none; }
 :root .fx-quiz .quiz-q { font-family: var(--font); }
@@ -1469,13 +1469,19 @@ html { scroll-padding-top: 76px; }
   :root .fx-quiz .option.is-right::after, :root .option.is-wrong .opt-text { animation: none; }
 }
 @media print {
-  :root .card::before, :root .goals li::before, :root .analogy::before { display: none; }
+  :root .card::before, :root .goals li::before { display: none; }
   :root .goals li { background: none; border: 1.5px solid #999; box-shadow: none; transform: none; }
   :root .site-header { background: none; }
 }
 
 /* 課中工作坊：黑筆手畫的框（學員也看得到，所以不用講師紫） */
 :root .workshop { border: 2px solid var(--ink); border-radius: var(--hand-box); background: transparent; }
-:root .workshop .time { color: var(--ink); font-family: var(--hand); }
+:root .workshop .time { color: var(--ink); font-family: var(--hand-text); }
 :root .ws-how { border-left-width: 1px; border-left-color: color-mix(in srgb, var(--line) 70%, transparent); }
 :root .ws-how b { color: var(--brand); }
+
+/* ---------- 審查修正：拿掉剩下的紅綠燈；頁首圖示 ---------- */
+:root .gen-out::before { display: none; }
+:root .gen-out { padding-top: 14px; }
+.ico { width: 1.15em; height: 1.15em; flex: none; vertical-align: -.2em; }
+:root .site-header .btn { gap: 6px; }

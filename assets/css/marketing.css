@@ -149,7 +149,7 @@
 /* ---------- 白板改版（2026-09）：主視覺不再是深紫色帶，而是寫滿字的白板，兩樣東西貼在上面 ---------- */
 :root .mk .lp-hero { background: transparent; color: var(--ink); border-bottom: 2px solid var(--line); }
 :root .mk .lp-hero::before, :root .mk .lp-hero::after { display: none; }
-:root .mk .lp-hero .eyebrow { color: var(--brand); font-family: var(--hand); font-size: 1.15rem; letter-spacing: 0; text-transform: none; }
+:root .mk .lp-hero .eyebrow { color: var(--brand); font-family: var(--hand-text); font-size: 1.15rem; letter-spacing: 0; text-transform: none; }
 :root .mk .lp-hero h1 { font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.4rem); line-height: 1.35; max-width: none; }
 /* 第二行：紅筆在底下畫一道線 */
 :root .mk .lp-hero h1 em {
@@ -174,3 +174,8 @@
 :root .mk .mk-flag { background: var(--danger-fill); font-family: var(--hand); letter-spacing: 0; font-size: .8rem; }
 :root .mk .lp-path::after { display: none; }
 :root .mk .lp-path:first-child::before { font-family: var(--hand); letter-spacing: 0; font-size: .85rem; }
+:root .mk .lp-hero-text { display: flex; flex-direction: column; }
+/* 原本在主標上面的一行小字，改成寫在主標底下的藍筆註記 */
+:root .mk .lp-hero-text h1 { order: -1; margin-bottom: .1em; }
+:root .mk .lp-hero .eyebrow { margin-bottom: 14px; }
+:root .mk .lp-hero .eyebrow::before { display: none; }

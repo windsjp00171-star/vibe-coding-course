@@ -90,3 +90,8 @@
   .lp-free { grid-template-columns: auto minmax(0, 1fr); }
   .lp-free-go { grid-column: 1 / -1; }
 }
+
+/* 白板改版（2026-09）：兩條路與公益講座不用漸層底；數字用手寫 */
+:root .lp-path--security { background: var(--warn-soft); }
+:root .lp-free { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); }
+:root .lp-proof b { font-family: var(--hand); font-weight: 700; }
