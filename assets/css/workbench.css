@@ -285,3 +285,5 @@
 :root .msg-you { background: #3a4a8a; box-shadow: none; }
 :root .msg-finish { box-shadow: none; }
 :root .wb-stars span.is-on { background: none; color: #ffcc4d; filter: none; }
+:root .wb-chat { background: var(--wb-bg); }
+:root .wb-input.is-your-turn textarea { background: #151311; border-color: var(--wb-accent); box-shadow: none; animation: none; }

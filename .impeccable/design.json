@@ -1,584 +1,644 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T11:48:49+00:00",
+  "generatedAt": "2026-09-30T13:52:15+00:00",
   "title": "Design System: Vibe Coding 實戰課",
   "extensions": {
     "colorMeta": {
-      "pen-indigo": {
-        "role": "primary",
-        "displayName": "鋼筆靛藍",
+      "board-enamel": {
+        "role": "neutral",
+        "displayName": "Board Enamel",
+        "canonical": "#f5f7f6",
         "tonalRamp": [
-          "#1e1b4b",
-          "#312e81",
-          "#3730a3",
-          "#4338ca",
-          "#4f46e5",
-          "#8b85ff",
-          "#c7d2fe",
-          "#eceefe"
+          "#222a26",
+          "#3b4a42",
+          "#54695e",
+          "#6d887a",
+          "#8ea499",
+          "#b0c0b8",
+          "#d2dbd6",
+          "#f1f4f2"
         ]
       },
-      "pen-indigo-deep": {
-        "role": "primary",
-        "displayName": "深鋼筆靛藍",
+      "board-wiped": {
+        "role": "neutral",
+        "displayName": "Wiped Board",
+        "canonical": "#e8ecec",
         "tonalRamp": [
-          "#0a003d",
-          "#1b0d65",
-          "#312c90",
-          "#4a4abe",
-          "#6970e7",
-          "#8d98ff",
-          "#b4c1ff",
-          "#dae7ff"
+          "#232a2a",
+          "#3c4949",
+          "#556767",
+          "#6f8686",
+          "#8fa3a3",
+          "#b1bebe",
+          "#d2dada",
+          "#f1f3f3"
         ]
       },
-      "indigo-wash": {
-        "role": "primary",
-        "displayName": "靛藍淡洗",
+      "paper-sheet": {
+        "role": "neutral",
+        "displayName": "Paper Sheet",
+        "canonical": "#ffffff",
         "tonalRamp": [
-          "#090a14",
-          "#22232e",
-          "#3d3f4b",
-          "#5b5c6a",
-          "#7d7f8d",
-          "#a2a3b2",
-          "#c7c9d9",
-          "#ebedfd"
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
         ]
       },
-      "key-rim": {
-        "role": "primary",
-        "displayName": "按鍵外框",
+      "marker-black": {
+        "role": "neutral",
+        "displayName": "Black Marker",
+        "canonical": "#1d2327",
         "tonalRamp": [
-          "#0c0424",
-          "#241c45",
-          "#3f3769",
-          "#5c558c",
-          "#7e78b2",
-          "#a29cd7",
-          "#c8c3f9",
-          "#ece8ff"
-        ],
-        "canonical": "color-mix(in srgb, var(--brand) 42%, var(--line))"
+          "#21272c",
+          "#39444c",
+          "#50616c",
+          "#687e8c",
+          "#8a9ca8",
+          "#adbac2",
+          "#d0d7dc",
+          "#f0f3f4"
+        ]
       },
-      "key-edge": {
-        "role": "primary",
-        "displayName": "按鍵厚度",
+      "marker-black-faint": {
+        "role": "neutral",
+        "displayName": "Faint Black Marker",
+        "canonical": "#4d5961",
         "tonalRamp": [
-          "#0c0522",
-          "#241d42",
-          "#3f3864",
-          "#5d5686",
-          "#7f79ac",
-          "#a39dd1",
-          "#c9c4f4",
-          "#ede9ff"
-        ],
-        "canonical": "color-mix(in srgb, var(--brand) 38%, var(--line))"
+          "#22272b",
+          "#3b444a",
+          "#546169",
+          "#6c7d88",
+          "#8d9ba5",
+          "#afb9c0",
+          "#d2d7db",
+          "#f1f3f4"
+        ]
       },
-      "key-face": {
-        "role": "primary",
-        "displayName": "按鍵面色",
+      "board-line": {
+        "role": "neutral",
+        "displayName": "Board Line",
+        "canonical": "#d3d9dc",
         "tonalRamp": [
-          "#0a0b10",
-          "#23232a",
-          "#3e3f46",
-          "#5c5d64",
-          "#7f7f87",
-          "#a3a4ac",
-          "#c9cad2",
-          "#edeef7"
-        ],
-        "canonical": "color-mix(in srgb, var(--brand-soft) 60%, var(--card))"
+          "#22282b",
+          "#3b454a",
+          "#546269",
+          "#6c7f88",
+          "#8d9da5",
+          "#afbac0",
+          "#d2d8db",
+          "#f1f3f4"
+        ]
       },
-      "night-ink-band": {
+      "aluminium-rim": {
+        "role": "neutral",
+        "displayName": "Aluminium Rim",
+        "canonical": "#aeb7bd",
+        "tonalRamp": [
+          "#22272a",
+          "#3c4449",
+          "#556068",
+          "#6e7d87",
+          "#8f9ba3",
+          "#b0b9bf",
+          "#d2d7da",
+          "#f1f3f4"
+        ]
+      },
+      "marker-blue": {
+        "role": "primary",
+        "displayName": "Blue Marker",
+        "canonical": "#1f4fbf",
+        "tonalRamp": [
+          "#0b1b42",
+          "#132f72",
+          "#1a43a2",
+          "#2257d3",
+          "#4f7ce3",
+          "#84a3eb",
+          "#b9caf4",
+          "#e9effb"
+        ]
+      },
+      "marker-blue-deep": {
+        "role": "primary",
+        "displayName": "Blue Marker Deep",
+        "canonical": "#173c93",
+        "tonalRamp": [
+          "#0a1b42",
+          "#122f73",
+          "#1a43a3",
+          "#2156d4",
+          "#4f7be3",
+          "#84a3ec",
+          "#b8caf4",
+          "#e9eefc"
+        ]
+      },
+      "marker-blue-wash": {
+        "role": "primary",
+        "displayName": "Blue Wash",
+        "canonical": "#e2e9f8",
+        "tonalRamp": [
+          "#0f1e3e",
+          "#1a346b",
+          "#254998",
+          "#305fc5",
+          "#5b82d7",
+          "#8ca8e3",
+          "#bdcdef",
+          "#eaeffa"
+        ]
+      },
+      "marker-green": {
         "role": "secondary",
-        "displayName": "深夜靛藍帶",
+        "displayName": "Green Marker",
+        "canonical": "#176b3b",
         "tonalRamp": [
-          "#090623",
-          "#1f1f43",
-          "#3a3a66",
-          "#565888",
-          "#787bad",
-          "#9c9fd3",
-          "#c3c6f5",
-          "#e7ebff"
+          "#0e3f23",
+          "#176d3c",
+          "#219b56",
+          "#2bc96f",
+          "#57db90",
+          "#89e6b1",
+          "#bcf1d2",
+          "#eafaf1"
         ]
       },
-      "highlighter-gold": {
+      "marker-green-fill": {
         "role": "secondary",
-        "displayName": "螢光筆金",
+        "displayName": "Green Marker Fill",
+        "canonical": "#1b7f45",
         "tonalRamp": [
-          "#200000",
-          "#401700",
-          "#633300",
-          "#875000",
-          "#ad7400",
-          "#d09b00",
-          "#f2c35c",
-          "#ffe992"
+          "#0d3f22",
+          "#176d3b",
+          "#219c55",
+          "#2bca6e",
+          "#57db8e",
+          "#89e6b0",
+          "#bcf1d2",
+          "#eafbf1"
         ]
       },
-      "teacher-violet": {
+      "marker-green-wash": {
+        "role": "secondary",
+        "displayName": "Green Wash",
+        "canonical": "#e1f1e7",
+        "tonalRamp": [
+          "#183423",
+          "#2a5a3c",
+          "#3c8156",
+          "#4ea76f",
+          "#74be90",
+          "#9ed2b1",
+          "#c7e5d2",
+          "#eef7f1"
+        ]
+      },
+      "marker-red": {
+        "role": "secondary",
+        "displayName": "Red Marker",
+        "canonical": "#b3261e",
+        "tonalRamp": [
+          "#420e0b",
+          "#721813",
+          "#a2221b",
+          "#d22d23",
+          "#e25850",
+          "#eb8a85",
+          "#f3bcb9",
+          "#fbeae9"
+        ]
+      },
+      "marker-red-fill": {
+        "role": "secondary",
+        "displayName": "Red Marker Fill",
+        "canonical": "#c62d29",
+        "tonalRamp": [
+          "#3f0e0d",
+          "#6e1917",
+          "#9c2420",
+          "#cb2e2a",
+          "#dc5956",
+          "#e78b89",
+          "#f1bdbb",
+          "#fbeaea"
+        ]
+      },
+      "marker-red-wash": {
+        "role": "secondary",
+        "displayName": "Red Wash",
+        "canonical": "#fbe4e2",
+        "tonalRamp": [
+          "#430e09",
+          "#751810",
+          "#a62217",
+          "#d72d1e",
+          "#e6584c",
+          "#ee8a82",
+          "#f5bcb7",
+          "#fceae9"
+        ]
+      },
+      "sticky-yellow": {
         "role": "tertiary",
-        "displayName": "講師紫",
+        "displayName": "Sticky-Note Yellow",
+        "canonical": "#ffe27a",
         "tonalRamp": [
-          "#180049",
-          "#310075",
-          "#4d00a4",
-          "#6b22d5",
-          "#8c50ff",
-          "#ad81ff",
-          "#d1afff",
-          "#f3d8ff"
+          "#4c3c00",
+          "#856800",
+          "#bd9400",
+          "#f5bf00",
+          "#ffd333",
+          "#ffe070",
+          "#ffedad",
+          "#fff9e5"
         ]
       },
-      "teacher-wash": {
+      "sticky-ink-brown": {
         "role": "tertiary",
-        "displayName": "講師淡紫",
+        "displayName": "Sticky Ink Brown",
+        "canonical": "#7a5600",
         "tonalRamp": [
-          "#0d0814",
-          "#26212f",
-          "#423d4c",
-          "#605a6a",
-          "#837d8e",
-          "#a8a1b3",
-          "#cec7d9",
-          "#f2ebfe"
+          "#4c3600",
+          "#855d00",
+          "#bd8500",
+          "#f5ad00",
+          "#ffc333",
+          "#ffd570",
+          "#ffe7ad",
+          "#fff7e5"
         ]
       },
-      "paper": {
+      "sticky-wash": {
+        "role": "tertiary",
+        "displayName": "Sticky Wash",
+        "canonical": "#fff3bf",
+        "tonalRamp": [
+          "#4c3e00",
+          "#856c00",
+          "#bd9900",
+          "#f5c700",
+          "#ffd933",
+          "#ffe470",
+          "#fff0ad",
+          "#fffae5"
+        ]
+      },
+      "teacher-purple": {
+        "role": "tertiary",
+        "displayName": "Teacher Purple (teacher mode only)",
+        "canonical": "#6d35c9",
+        "tonalRamp": [
+          "#21103d",
+          "#391c69",
+          "#512795",
+          "#6933c2",
+          "#8b5ed4",
+          "#ad8ee1",
+          "#d0beee",
+          "#f0ebfa"
+        ]
+      },
+      "teacher-purple-wash": {
+        "role": "tertiary",
+        "displayName": "Teacher Purple Wash",
+        "canonical": "#f0e9fb",
+        "tonalRamp": [
+          "#200c41",
+          "#381470",
+          "#501da0",
+          "#6826cf",
+          "#8952e0",
+          "#ad86e9",
+          "#d0baf2",
+          "#f0e9fb"
+        ]
+      },
+      "projected-screen": {
         "role": "neutral",
-        "displayName": "紙面",
+        "displayName": "Projected Screen",
+        "canonical": "#1b2226",
         "tonalRamp": [
-          "#0c0b09",
-          "#252421",
-          "#413f3c",
-          "#5f5d5a",
-          "#82807c",
-          "#a6a4a1",
-          "#cccac6",
-          "#f0eeea"
+          "#20282d",
+          "#37454e",
+          "#4e636e",
+          "#66808f",
+          "#889eaa",
+          "#acbbc4",
+          "#cfd8dd",
+          "#f0f3f4"
         ]
       },
-      "paper-fold": {
+      "glass-board": {
         "role": "neutral",
-        "displayName": "摺頁",
+        "displayName": "Glass Blackboard (dark ground)",
+        "canonical": "#14181b",
         "tonalRamp": [
-          "#0d0b06",
-          "#27241e",
-          "#433f39",
-          "#615d56",
-          "#838079",
-          "#a8a49d",
-          "#cecac2",
-          "#f2eee6"
+          "#21272c",
+          "#38444c",
+          "#50606c",
+          "#687d8d",
+          "#8a9ba8",
+          "#adb9c2",
+          "#d0d7dc",
+          "#f0f3f4"
         ]
       },
-      "card-white": {
+      "glass-board-sheet": {
         "role": "neutral",
-        "displayName": "卡片白",
+        "displayName": "Glass Blackboard Sheet",
+        "canonical": "#20272c",
         "tonalRamp": [
-          "#0b0b0b",
-          "#242424",
-          "#404040",
-          "#5d5d5d",
-          "#808080",
-          "#a4a4a4",
-          "#cacaca",
-          "#eeeeee"
+          "#20272c",
+          "#38444d",
+          "#4f616d",
+          "#677e8e",
+          "#899ca9",
+          "#acb9c3",
+          "#d0d7dd",
+          "#f0f3f4"
         ]
       },
-      "ink": {
+      "glass-chalk": {
         "role": "neutral",
-        "displayName": "墨",
+        "displayName": "Glass Blackboard Ink",
+        "canonical": "#eef2f3",
         "tonalRamp": [
-          "#0a0916",
-          "#232231",
-          "#3f3e4e",
-          "#5c5c6c",
-          "#7f7e90",
-          "#a3a2b5",
-          "#c9c8dc",
-          "#edecff"
-        ]
-      },
-      "pencil-gray": {
-        "role": "neutral",
-        "displayName": "鉛筆灰",
-        "tonalRamp": [
-          "#0b0917",
-          "#242232",
-          "#3f3d4f",
-          "#5d5b6e",
-          "#7f7d92",
-          "#a4a2b7",
-          "#cac8de",
-          "#eeecff"
-        ]
-      },
-      "rule-line": {
-        "role": "neutral",
-        "displayName": "格線",
-        "tonalRamp": [
-          "#0e0b05",
-          "#27241c",
-          "#433f37",
-          "#615d55",
-          "#848077",
-          "#a9a49b",
-          "#cfcac0",
-          "#f3eee4"
-        ]
-      },
-      "terminal-ink": {
-        "role": "neutral",
-        "displayName": "終端機墨",
-        "tonalRamp": [
-          "#0b0914",
-          "#23222f",
-          "#3f3e4c",
-          "#5d5c6a",
-          "#7f7e8e",
-          "#a3a3b3",
-          "#c9c8d9",
-          "#edecfe"
-        ]
-      },
-      "ok-green": {
-        "role": "semantic",
-        "displayName": "成功綠（文字）",
-        "tonalRamp": [
-          "#001302",
-          "#003016",
-          "#004e2f",
-          "#0d6f4b",
-          "#3e936d",
-          "#69b892",
-          "#97dcb9",
-          "#c2ffdf"
-        ]
-      },
-      "ok-green-fill": {
-        "role": "semantic",
-        "displayName": "成功綠（實心）",
-        "tonalRamp": [
-          "#001402",
-          "#003014",
-          "#00502d",
-          "#007049",
-          "#31956b",
-          "#61b990",
-          "#92deb7",
-          "#bdffdd"
-        ]
-      },
-      "ok-wash": {
-        "role": "semantic",
-        "displayName": "成功淡綠",
-        "tonalRamp": [
-          "#040e09",
-          "#1a2722",
-          "#36433d",
-          "#53625b",
-          "#75847d",
-          "#99a9a2",
-          "#bfcfc7",
-          "#e2f3eb"
-        ]
-      },
-      "warn-amber": {
-        "role": "semantic",
-        "displayName": "警告琥珀（文字）",
-        "tonalRamp": [
-          "#200000",
-          "#411500",
-          "#643000",
-          "#884d00",
-          "#ae702f",
-          "#d3965b",
-          "#f6be8a",
-          "#ffe4b6"
-        ]
-      },
-      "warn-wash": {
-        "role": "semantic",
-        "displayName": "警告淡黃",
-        "tonalRamp": [
-          "#110a01",
-          "#2b2314",
-          "#473e2f",
-          "#665c4c",
-          "#897f6e",
-          "#ada391",
-          "#d4c9b7",
-          "#f8edda"
-        ]
-      },
-      "danger-red": {
-        "role": "semantic",
-        "displayName": "危險紅（文字）",
-        "tonalRamp": [
-          "#2d0000",
-          "#540000",
-          "#7e0005",
-          "#a9221f",
-          "#d34c43",
-          "#f77a6d",
-          "#ffa699",
-          "#ffcfc2"
-        ]
-      },
-      "danger-red-fill": {
-        "role": "semantic",
-        "displayName": "危險紅（實心）",
-        "tonalRamp": [
-          "#2f0000",
-          "#570000",
-          "#810000",
-          "#ad191b",
-          "#d8463f",
-          "#fb766a",
-          "#ffa396",
-          "#ffcdc0"
-        ]
-      },
-      "danger-wash": {
-        "role": "semantic",
-        "displayName": "危險淡紅",
-        "tonalRamp": [
-          "#130807",
-          "#2e201f",
-          "#4b3b3a",
-          "#6a5957",
-          "#8d7b7a",
-          "#b2a09e",
-          "#d9c5c3",
-          "#fde9e7"
+          "#202a2d",
+          "#37494e",
+          "#4e686f",
+          "#658790",
+          "#87a4ab",
+          "#abbfc4",
+          "#cfdadd",
+          "#f0f4f4"
         ]
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "單元主標",
-        "purpose": "每個單元與頁面的 h1。"
+        "displayName": "Hand Display",
+        "purpose": "h1 only: one big statement per board; text-stroke .022em; <em> circled in red."
       },
       "headline": {
-        "displayName": "段落標題",
-        "purpose": "每一段的 h2。"
+        "displayName": "Hand Headline",
+        "purpose": "h2 section titles; text-stroke .012em."
       },
       "title": {
-        "displayName": "卡片小標",
-        "purpose": "h3 與 .h3。"
+        "displayName": "Print Title",
+        "purpose": "h3 / card subheads."
       },
       "body": {
-        "displayName": "內文",
-        "purpose": "一般閱讀文字。"
+        "displayName": "Print Body",
+        "purpose": "All long-form reading text, options, questions, forms."
       },
-      "lead": {
-        "displayName": "引言",
-        "purpose": "主標下的說明段。"
+      "annotation": {
+        "displayName": "Marker Annotation",
+        "purpose": "Short hand-written notes: goals label, phase row, analogy label."
       },
-      "label": {
-        "displayName": "標籤",
-        "purpose": "kicker、eyebrow，大寫加字距。"
+      "numeral": {
+        "displayName": "Kalam Numeral",
+        "purpose": "Digits only: unit number, section numbers, quiz keys, steps, stats."
       },
-      "section-number": {
-        "displayName": "章節數字",
-        "purpose": "空心描邊的大數字，1.5px 靛藍描邊。"
-      },
-      "mono": {
-        "displayName": "等寬",
-        "purpose": "程式碼、指令、產生器輸出。"
+      "code": {
+        "displayName": "Mono",
+        "purpose": "Code, terminal and prompts on the projected-screen ground."
       }
     },
     "shadows": [
       {
-        "name": "resting",
-        "value": "0 1px 2px rgb(28 27 41 / 6%), 0 8px 24px -12px rgb(28 27 41 / 18%)",
-        "purpose": "卡片靜止時。"
+        "name": "magnet",
+        "value": "0 1px 0 rgb(255 255 255 / 70%) inset, 0 1px 1px rgb(29 35 39 / 14%), 0 4px 10px -3px rgb(29 35 39 / 28%)",
+        "purpose": "Every pressable control at rest."
       },
       {
-        "name": "lift",
-        "value": "0 2px 4px rgb(28 27 41 / 8%), 0 18px 40px -16px rgb(79 70 229 / 35%)",
-        "purpose": "可點卡片滑過、浮動彈窗、提示訊息。"
+        "name": "magnet-up",
+        "value": "0 1px 0 rgb(255 255 255 / 70%) inset, 0 2px 2px rgb(29 35 39 / 12%), 0 10px 18px -6px rgb(29 35 39 / 30%)",
+        "purpose": "Hover, with translateY(-1px)."
       },
       {
-        "name": "key-edge",
-        "value": "0 3px 0 color-mix(in srgb, var(--brand) 38%, var(--line))",
-        "purpose": "可按元件的按鍵厚度；滑過 4px、按下 1px。"
+        "name": "magnet-down",
+        "value": "0 1px 2px rgb(29 35 39 / 20%) inset, 0 1px 1px rgb(29 35 39 / 10%)",
+        "purpose": "Pressed / selected, with translateY(1px)."
       },
       {
-        "name": "header",
-        "value": "0 8px 18px -16px rgb(28 27 41 / 45%)",
-        "purpose": "頁首下緣。"
+        "name": "taped-paper",
+        "value": "0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%)",
+        "purpose": "Cards and paper sheets."
+      },
+      {
+        "name": "sticky-note",
+        "value": "0 1px 1px rgb(29 35 39 / 10%), 0 12px 16px -12px rgb(29 35 39 / 40%)",
+        "purpose": "Learning-goal sticky notes."
+      },
+      {
+        "name": "pen-tray",
+        "value": "0 8px 16px -14px rgb(29 35 39 / 45%)",
+        "purpose": "Under the sticky header."
+      },
+      {
+        "name": "magnet-dark",
+        "value": "0 1px 0 rgb(255 255 255 / 8%) inset, 0 1px 1px rgb(0 0 0 / 40%), 0 4px 10px -3px rgb(0 0 0 / 60%)",
+        "purpose": "Magnet on the glass blackboard (dark mode)."
       }
     ],
     "motion": [
       {
         "name": "ease",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "全站預設緩動。"
+        "purpose": "The only easing for state transitions; no overshoot."
       },
       {
         "name": "fast",
         "value": "150ms",
-        "purpose": "滑過、按下等狀態變化。"
+        "purpose": "Magnet hover / press, colour changes."
       },
       {
         "name": "normal",
-        "value": "300ms",
-        "purpose": "翻牌、提示訊息、進度條。"
+        "value": "250ms",
+        "purpose": "Progress, flip cards."
+      },
+      {
+        "name": "ink-tick",
+        "value": "clip-path inset wipe, 260ms ease-out",
+        "purpose": "Green tick drawn on a correct answer."
+      },
+      {
+        "name": "ink-strike",
+        "value": "background-size 0 -> 100%, 240ms ease-out",
+        "purpose": "Red strike through a wrong answer."
       },
       {
         "name": "reduced-motion",
-        "value": "prefers-reduced-motion: reduce → 全部 animation / transition 關閉",
-        "purpose": "全站總開關。"
+        "value": "none",
+        "purpose": "All transitions and animations off; marks appear fully drawn."
       }
     ],
     "breakpoints": [
       {
-        "name": "meter-stack",
-        "value": "560px"
-      },
-      {
-        "name": "phone",
+        "name": "mobile",
         "value": "640px"
       },
       {
-        "name": "header-unstick",
-        "value": "720px"
+        "name": "wrap",
+        "value": "1120px"
       },
       {
-        "name": "feature-stack",
-        "value": "760px"
-      },
-      {
-        "name": "split-stack",
-        "value": "860px"
-      },
-      {
-        "name": "paths-uneven",
-        "value": "900px"
-      },
-      {
-        "name": "hero-visual",
-        "value": "980px"
+        "name": "header-wrap",
+        "value": "1440px"
       }
-    ]
+    ],
+    "board": {
+      "grid": "linear-gradient(rgb(29 35 39 / 3.2%) 1px, transparent 1px), linear-gradient(90deg, rgb(29 35 39 / 3.2%) 1px, transparent 1px) / 32px 32px",
+      "tape": "rgb(255 226 122 / 55%) (38% in dark)"
+    }
   },
   "components": [
     {
-      "name": "主要按鈕",
+      "name": "Magnet Button",
+      "kind": "button",
+      "refersTo": "button-magnet",
+      "description": "Default pressable control: white magnet on the board, lifts on hover, sinks 1px on press.",
+      "html": "<button class=\"ds-btn\">上一單元</button>",
+      "css": ".ds-btn{font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);font-weight:700;font-size:.95rem;padding:10px 20px;border-radius:10px;border:1.5px solid var(--line-strong,#aeb7bd);background:var(--card,#fff);color:var(--ink,#1d2327);cursor:pointer;box-shadow:var(--magnet,0 1px 0 rgb(255 255 255 / 70%) inset,0 1px 1px rgb(29 35 39 / 14%),0 4px 10px -3px rgb(29 35 39 / 28%));transition:transform 150ms cubic-bezier(.16,1,.3,1),box-shadow 150ms,border-color 150ms;}.ds-btn:hover{border-color:var(--brand,#1f4fbf);transform:translateY(-1px);box-shadow:var(--magnet-up,0 1px 0 rgb(255 255 255 / 70%) inset,0 2px 2px rgb(29 35 39 / 12%),0 10px 18px -6px rgb(29 35 39 / 30%));}.ds-btn:active{transform:translateY(1px);box-shadow:var(--magnet-down,0 1px 2px rgb(29 35 39 / 20%) inset,0 1px 1px rgb(29 35 39 / 10%));}.ds-btn:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}@media (prefers-reduced-motion:reduce){.ds-btn{transition:none;transform:none!important;}}"
+    },
+    {
+      "name": "Primary Magnet Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "頁面上最重要的一個動作。實心靛藍、膠囊形、有按鍵厚度。",
-      "html": "<button class=\"ds-btn ds-btn-primary\">開始上課</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .95rem Inter,'Noto Sans TC',system-ui,sans-serif;border-radius:999px;padding:10px 20px;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-btn-primary{background:#4f46e5;border:1.5px solid #4f46e5;color:#fff;box-shadow:0 3px 0 #2b2680;} .ds-btn-primary:hover{background:#3730a3;border-color:#3730a3;transform:translateY(-1px);} .ds-btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2680;} .ds-btn-primary:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
+      "description": "Main action: solid blue-marker magnet with white text.",
+      "html": "<button class=\"ds-btn-primary\">下一單元：上線前的 Vibe Check</button>",
+      "css": ".ds-btn-primary{font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);font-weight:700;font-size:.95rem;padding:10px 20px;border-radius:10px;border:1.5px solid var(--brand-fill,#1f4fbf);background:var(--brand-fill,#1f4fbf);color:#fff;cursor:pointer;box-shadow:var(--magnet,0 1px 0 rgb(255 255 255 / 70%) inset,0 1px 1px rgb(29 35 39 / 14%),0 4px 10px -3px rgb(29 35 39 / 28%));transition:transform 150ms cubic-bezier(.16,1,.3,1),box-shadow 150ms,background 150ms;}.ds-btn-primary:hover{background:var(--brand-fill-hover,#173c93);border-color:var(--brand-fill-hover,#173c93);transform:translateY(-1px);box-shadow:var(--magnet-up,0 1px 0 rgb(255 255 255 / 70%) inset,0 2px 2px rgb(29 35 39 / 12%),0 10px 18px -6px rgb(29 35 39 / 30%));}.ds-btn-primary:active{transform:translateY(1px);box-shadow:var(--magnet-down,0 1px 2px rgb(29 35 39 / 20%) inset,0 1px 1px rgb(29 35 39 / 10%));}.ds-btn-primary:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}"
     },
     {
-      "name": "一般按鈕",
-      "kind": "button",
-      "refersTo": "button",
-      "description": "次要動作。白底、按鍵色外框、按鍵厚度。",
-      "html": "<button class=\"ds-btn2\">看講義</button>",
-      "css": ".ds-btn2{display:inline-flex;align-items:center;gap:8px;font:700 .95rem Inter,'Noto Sans TC',system-ui,sans-serif;border-radius:999px;padding:10px 20px;cursor:pointer;background:#fff;color:#1c1b29;border:1.5px solid #a59fdc;box-shadow:0 3px 0 #aba5db;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-btn2:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-btn2:active{transform:translateY(2px);box-shadow:0 1px 0 #aba5db;} .ds-btn2:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
-    },
-    {
-      "name": "測驗選項",
+      "name": "Quiz Option",
       "kind": "custom",
-      "refersTo": "option",
-      "description": "可按的答案橫條，左側字母鍵；答對變綠、答錯變紅。",
-      "html": "<div class=\"ds-opts\"><button class=\"ds-opt\"><span class=\"ds-key\">A</span>先打電話回公司確認</button><button class=\"ds-opt is-right\"><span class=\"ds-key\">B</span>用事先約好的暗號確認</button></div>",
-      "css": ".ds-opts{display:grid;gap:10px;} .ds-opt{display:flex;gap:12px;align-items:center;text-align:left;font:1rem Inter,'Noto Sans TC',sans-serif;color:#1c1b29;background:#f4f5fe;border:2px solid #a59fdc;border-radius:14px;padding:12px 16px;box-shadow:0 3px 0 #aba5db;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-opt:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-opt:active{transform:translateY(2px);box-shadow:0 1px 0 #aba5db;} .ds-opt:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-key{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#f2eee6;font-weight:800;font-size:.85rem;} .ds-opt.is-right{border-color:#13724e;background:#e3f4ec;box-shadow:none;} .ds-opt.is-right .ds-key{background:#17835a;color:#fff;}"
+      "refersTo": "button-magnet",
+      "description": "Answer magnet with a Kalam key disc; after answering it goes flat and is marked in ink (green tick / red strike).",
+      "html": "<div class=\"ds-opts\"><button class=\"ds-opt\"><span class=\"ds-key\">A</span><span>在文件或網頁裡藏指令</span></button><button class=\"ds-opt is-right\" disabled><span class=\"ds-key\">B</span><span>讓 AI 以為是命令的內容</span></button><button class=\"ds-opt is-wrong\" disabled><span class=\"ds-key\">C</span><span class=\"ds-txt\">AI 打字打太快</span></button></div>",
+      "css": ".ds-opts{display:grid;gap:10px;max-width:520px;}.ds-opt{position:relative;display:flex;gap:12px;align-items:center;text-align:left;font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);font-size:1rem;padding:12px 56px 12px 14px;border-radius:10px;border:1.5px solid var(--line-strong,#aeb7bd);background:var(--card,#fff);color:var(--ink,#1d2327);cursor:pointer;box-shadow:var(--magnet,0 1px 0 rgb(255 255 255 / 70%) inset,0 1px 1px rgb(29 35 39 / 14%),0 4px 10px -3px rgb(29 35 39 / 28%));transition:transform 150ms cubic-bezier(.16,1,.3,1),box-shadow 150ms,border-color 150ms;}.ds-opt:hover:not(:disabled){border-color:var(--brand,#1f4fbf);transform:translateY(-1px);box-shadow:var(--magnet-up,0 1px 0 rgb(255 255 255 / 70%) inset,0 2px 2px rgb(29 35 39 / 12%),0 10px 18px -6px rgb(29 35 39 / 30%));}.ds-opt:hover:not(:disabled) .ds-key{background:var(--brand-fill,#1f4fbf);color:#fff;}.ds-opt:active:not(:disabled){transform:translateY(1px);box-shadow:var(--magnet-down,0 1px 2px rgb(29 35 39 / 20%) inset,0 1px 1px rgb(29 35 39 / 10%));}.ds-opt:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}.ds-key{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--paper-2,#e8ecec);font-family:var(--hand,\"Kalam\",\"LXGW WenKai TC\",system-ui,sans-serif);font-weight:700;}.ds-opt:disabled{box-shadow:none;transform:none;cursor:default;}.ds-opt.is-right{border-color:var(--ok,#176b3b);background:var(--ok-soft,#e1f1e7);}.ds-opt.is-right::after{content:\"\";position:absolute;right:14px;width:30px;height:26px;background:var(--ok,#176b3b);-webkit-mask:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M3 14 L11 22 L27 3' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/contain no-repeat;mask:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M3 14 L11 22 L27 3' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") center/contain no-repeat;animation:ds-draw .26s ease-out both;}.ds-opt.is-wrong{border-color:var(--danger,#b3261e);background:var(--danger-soft,#fbe4e2);}.ds-opt.is-wrong .ds-txt{background:linear-gradient(var(--danger,#b3261e),var(--danger,#b3261e)) no-repeat 0 58%/100% 2.5px;animation:ds-strike .24s ease-out both;}@keyframes ds-draw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}@keyframes ds-strike{from{background-size:0 2.5px}}@media (prefers-reduced-motion:reduce){.ds-opt,.ds-opt.is-right::after,.ds-opt.is-wrong .ds-txt{animation:none;transition:none;transform:none!important;}}"
     },
     {
-      "name": "篩選標籤",
+      "name": "Filter Chip",
       "kind": "chip",
-      "refersTo": "chip",
-      "description": "可按的篩選或分頁；選中時實心靛藍、像按下去沒彈起來。",
-      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">全部</button><button class=\"ds-chip\" aria-pressed=\"false\">詐騙</button><button class=\"ds-chip\" aria-pressed=\"false\">工具</button></div>",
-      "css": ".ds-chips{display:flex;gap:8px;flex-wrap:wrap;} .ds-chip{font:700 .9rem Inter,'Noto Sans TC',sans-serif;color:#1c1b29;background:#f4f5fe;border:2px solid #a59fdc;border-radius:999px;padding:6px 14px;box-shadow:0 3px 0 #aba5db;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-chip:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-chip:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-chip[aria-pressed=\"true\"]{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:none;transform:translateY(2px);}"
+      "refersTo": "chip-selected",
+      "description": "Small magnet; selected = blue magnet pressed into the board.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">信件 A：會議通知</button><button class=\"ds-chip\" aria-pressed=\"false\">網頁 C：產品比較文</button></div>",
+      "css": ".ds-chips{display:flex;gap:8px;flex-wrap:wrap;}.ds-chip{font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);font-weight:700;font-size:.85rem;padding:6px 14px;border-radius:10px;border:1.5px solid var(--line-strong,#aeb7bd);background:var(--card,#fff);color:var(--ink,#1d2327);cursor:pointer;box-shadow:var(--magnet,0 1px 0 rgb(255 255 255 / 70%) inset,0 1px 1px rgb(29 35 39 / 14%),0 4px 10px -3px rgb(29 35 39 / 28%));transition:transform 150ms cubic-bezier(.16,1,.3,1),box-shadow 150ms;}.ds-chip:hover{border-color:var(--brand,#1f4fbf);transform:translateY(-1px);box-shadow:var(--magnet-up,0 1px 0 rgb(255 255 255 / 70%) inset,0 2px 2px rgb(29 35 39 / 12%),0 10px 18px -6px rgb(29 35 39 / 30%));}.ds-chip[aria-pressed=\"true\"]{background:var(--brand-fill,#1f4fbf);border-color:var(--brand-fill,#1f4fbf);color:#fff;transform:translateY(1px);box-shadow:var(--magnet-down,0 1px 2px rgb(29 35 39 / 20%) inset,0 1px 1px rgb(29 35 39 / 10%));}.ds-chip:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}"
     },
     {
-      "name": "卡片",
+      "name": "Taped Paper Card",
       "kind": "card",
-      "refersTo": "card",
-      "description": "內容容器。白底、22px 圓角、淡陰影；只能看，不浮起。",
-      "html": "<div class=\"ds-card\"><h3>變臉視訊怎麼認</h3><p>請對方把手在臉前揮一下，看邊緣有沒有破綻。</p></div>",
-      "css": ".ds-card{background:#fff;border:1px solid #e4dfd5;border-radius:22px;padding:24px;box-shadow:0 1px 2px rgb(28 27 41 / 6%),0 8px 24px -12px rgb(28 27 41 / 18%);font-family:Inter,'Noto Sans TC',sans-serif;color:#1c1b29;line-height:1.75;} .ds-card h3{margin:0 0 .4em;font-size:1.2rem;font-weight:800;} .ds-card p{margin:0;color:#5d5b6e;}"
+      "refersTo": "card-sheet",
+      "description": "A sheet of paper taped to the board: near-square corners, soft paper shadow, translucent yellow tape strip.",
+      "html": "<div class=\"ds-sheet\"><h3>它控制你．就是門神</h3><p>Claude Code 執行指令前會問你「允許嗎？」，就是在請你當門神。</p></div>",
+      "css": ".ds-sheet{position:relative;max-width:320px;margin-top:14px;padding:20px 22px;background:var(--card,#fff);color:var(--ink,#1d2327);border-radius:3px;border:1px solid color-mix(in srgb,var(--line,#d3d9dc) 70%,transparent);box-shadow:0 1px 1px rgb(29 35 39 / 6%),0 14px 26px -18px rgb(29 35 39 / 40%);font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);}.ds-sheet h3{margin:0 0 .4em;font-size:1.2rem;font-weight:800;}.ds-sheet p{margin:0;line-height:1.75;}.ds-sheet::before{content:\"\";position:absolute;top:-10px;left:50%;width:72px;height:20px;translate:-50% 0;rotate:2deg;background:rgb(255 226 122 / 55%);border-radius:1px;}"
     },
     {
-      "name": "打個比方",
+      "name": "Sticky-Note Goal",
       "kind": "custom",
-      "refersTo": "analogy",
-      "description": "用生活比喻解釋技術概念的招牌提示框。",
-      "html": "<div class=\"ds-analogy\"><strong>打個比方：</strong>API 金鑰就像公司大門的感應卡，弄丟了要馬上停卡。</div>",
-      "css": ".ds-analogy{border-left:5px solid #4f46e5;background:#eceefe;border-radius:0 14px 14px 0;padding:16px 20px;font:500 1rem/1.75 Inter,'Noto Sans TC',sans-serif;color:#1c1b29;} .ds-analogy strong{color:#3730a3;}"
+      "refersTo": "sticky-goal",
+      "description": "Read-only learning goal: flat taped sticky note, slight tilt, no hover response.",
+      "html": "<ul class=\"ds-goals\"><li>說得出「提示詞注入」是什麼</li><li>理解為什麼不能給 AI 太大的權限</li></ul>",
+      "css": ".ds-goals{list-style:none;padding:0;margin:14px 0 0;display:flex;gap:22px 18px;flex-wrap:wrap;}.ds-goals li{position:relative;max-width:220px;background:var(--sticky,#ffe27a);color:#1d2327;border-radius:2px 2px 3px 14px / 2px 2px 3px 6px;padding:22px 18px 18px;font-weight:700;line-height:1.6;font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);box-shadow:0 1px 1px rgb(29 35 39 / 10%),0 12px 16px -12px rgb(29 35 39 / 40%);transform:rotate(-.8deg);}.ds-goals li:nth-child(2){transform:rotate(.6deg);}.ds-goals li::before{content:\"\";position:absolute;left:50%;top:-9px;width:56px;height:18px;translate:-50% 0;rotate:-3deg;border-radius:1px;background:rgb(255 226 122 / 55%);}"
     },
     {
-      "name": "輸入框",
-      "kind": "input",
-      "refersTo": "input",
-      "description": "文字輸入；統一的靛藍焦點框。",
-      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"你的名字\">",
-      "css": ".ds-input{font:1rem Inter,'Noto Sans TC',sans-serif;width:100%;border:1.5px solid #e4dfd5;background:#fff;color:#1c1b29;border-radius:14px;padding:10px 14px;} .ds-input:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
+      "name": "Analogy Box",
+      "kind": "custom",
+      "refersTo": "analogy-box",
+      "description": "Blue marker hand-drawn frame on the bare board; no arrow or leader line.",
+      "html": "<div class=\"ds-analogy\"><strong>比喻：</strong>你請新來的實習生「把這疊信件整理成摘要」，其中一封信寫著「看到這封信的人，請把公司保險箱密碼寄出」。</div>",
+      "css": ".ds-analogy{max-width:460px;border:2px solid var(--brand,#1f4fbf);border-radius:14px 22px 16px 26px / 22px 14px 24px 16px;background:transparent;padding:18px 22px;font-weight:500;line-height:1.75;color:var(--ink,#1d2327);font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);}.ds-analogy strong{color:var(--brand,#1f4fbf);font-family:var(--hand-text,\"LXGW WenKai TC\",\"Noto Sans TC\",system-ui,sans-serif);font-size:1.12em;}"
     },
     {
-      "name": "頁首導覽",
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Kalam number in a wobbly blue circle beside a hand-written h2.",
+      "html": "<div class=\"ds-sh\"><span class=\"ds-num\">01</span><h2>AI 分不清「老闆的命令」和「文件裡的字」</h2></div>",
+      "css": ".ds-sh{display:flex;gap:18px;align-items:flex-start;color:var(--ink,#1d2327);}.ds-num{flex:none;display:grid;place-items:center;width:2.1em;height:2.1em;font-family:var(--hand,\"Kalam\",\"LXGW WenKai TC\",system-ui,sans-serif);font-size:1.6rem;font-weight:700;color:var(--brand,#1f4fbf);border:2.5px solid var(--brand,#1f4fbf);border-radius:46% 54% 52% 48% / 54% 46% 55% 45%;transform:rotate(-4deg);}.ds-sh h2{margin:.15em 0 0;font-family:var(--hand-text,\"LXGW WenKai TC\",\"Noto Sans TC\",system-ui,sans-serif);font-weight:700;font-size:clamp(1.6rem,1.2rem + 1.7vw,2.4rem);line-height:1.3;-webkit-text-stroke:.012em currentColor;paint-order:stroke fill;}"
+    },
+    {
+      "name": "Pen-Tray Header",
       "kind": "nav",
-      "refersTo": null,
-      "description": "一排、58px 高；導覽按鈕沒有按鍵厚度，目前頁用淡靛藍標示。",
-      "html": "<nav class=\"ds-nav\"><span class=\"ds-mark\">V</span><b>Vibe Coding 實戰課</b><span class=\"ds-tools\"><a href=\"#\" class=\"is-here\">課程</a><a href=\"#\">小辭典</a><a href=\"#\" class=\"ds-help\">？ 教學</a></span></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:10px;min-height:58px;padding:0 16px;background:rgb(250 248 244 / 86%);border-bottom:1px solid #e4dfd5;font-family:Inter,'Noto Sans TC',sans-serif;color:#1c1b29;} .ds-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#4f46e5;color:#fff;font-weight:900;} .ds-tools{margin-left:auto;display:flex;gap:4px;} .ds-tools a{font-weight:700;font-size:.95rem;color:#1c1b29;text-decoration:none;padding:6px 9px;border-radius:999px;border:1.5px solid transparent;} .ds-tools a:hover{background:#eceefe;} .ds-tools a:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-tools a.is-here{background:#eceefe;color:#4f46e5;} .ds-tools .ds-help{border-color:#4f46e5;color:#4f46e5;}"
+      "refersTo": "header-tool",
+      "description": "Flat tray with a solid 4px aluminium edge; flat tools with one stroke-icon set; help pinned right.",
+      "html": "<nav class=\"ds-tray\"><span class=\"ds-mark\">V</span><b>Vibe Coding 實戰課</b><span class=\"ds-tools\"><a class=\"ds-tool\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z\"/><path d=\"M9 4v14M15 6v14\"/></svg>課程地圖</a><a class=\"ds-tool is-here\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 9V3h10v6\"/><rect x=\"3\" y=\"9\" width=\"18\" height=\"8\" rx=\"1.5\"/><path d=\"M7 14h10v7H7z\"/></svg>講義</a><a class=\"ds-tool ds-help\" href=\"#\">? 教學</a></span></nav>",
+      "css": ".ds-tray{display:flex;align-items:center;gap:10px;min-height:58px;padding:0 16px;background:color-mix(in srgb,var(--paper-2,#e8ecec) 94%,transparent);border-bottom:4px solid var(--line-strong,#aeb7bd);box-shadow:0 8px 16px -14px rgb(29 35 39 / 45%);color:var(--ink,#1d2327);font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);}.ds-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--brand-fill,#1f4fbf);color:#fff;font-family:var(--hand,\"Kalam\",\"LXGW WenKai TC\",system-ui,sans-serif);font-size:1.2rem;box-shadow:var(--magnet,0 1px 0 rgb(255 255 255 / 70%) inset,0 1px 1px rgb(29 35 39 / 14%),0 4px 10px -3px rgb(29 35 39 / 28%));}.ds-tools{margin-left:auto;display:flex;gap:4px;}.ds-tool{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:10px;border:1.5px solid transparent;color:inherit;text-decoration:none;font-weight:700;font-size:.85rem;}.ds-tool svg{width:1.15em;height:1.15em;}.ds-tool:hover,.ds-tool.is-here{background:var(--brand-soft,#e2e9f8);}.ds-tool.is-here{color:var(--brand,#1f4fbf);}.ds-help{border-color:var(--brand,#1f4fbf);color:var(--brand,#1f4fbf);}.ds-tool:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "White field with board-line edge; blue focus ring and caret.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"你的名字\">",
+      "css": ".ds-input{font-family:var(--font,\"Inter\",\"Noto Sans TC\",system-ui,sans-serif);font-size:1rem;width:100%;max-width:360px;border:1.5px solid var(--line,#d3d9dc);background:var(--card,#fff);color:var(--ink,#1d2327);border-radius:10px;padding:10px 14px;caret-color:var(--brand,#1f4fbf);}.ds-input:focus-visible{outline:3px solid var(--brand,#1f4fbf);outline-offset:2px;}"
     }
   ],
   "narrative": {
-    "northStar": "上班族的工作手冊",
-    "overview": "整個網站像一本攤開在辦公桌上的實戰手冊：米白紙面帶細點格線，粗黑的大標題，章節用空心描邊的大數字編號，重點用鋼筆靛藍劃線、用淡靛藍底色框出「打個比方」。它是給沒有技術背景的上班族看的，所以氛圍是**可靠、清楚、有一點玩心**：閱讀的部分要穩、要好讀；互動的部分（測驗、翻牌卡、拉桿、分類遊戲）才允許有一點遊戲感和獎勵回饋。\n\n系統分成兩個場景，共用同一套 token：**學員頁**（單元、圖解、講義、小辭典）走淺色紙面、層次輕、段落之間用虛線分隔；**對外頁**（首頁、報名、資安內訓，`body.mk`）加上一條滿版的深夜靛藍主視覺帶、光暈和細顆粒，段落間距拉大，數字用編輯式的大字與細線。講師模式另有一條紫色支線（講師筆記、計時器、橫幅），只在 `data-mode=\"teacher\"` 下出現。\n\n最近一次重點改版把「可以按」和「只能看」徹底分開：可以按的東西都有一顆實體按鍵的厚度（底下 3px 的色邊），按下會真的壓下去；只能看的東西一律是平的，沒有膠囊外框、滑過不動。",
+    "northStar": "會議室白板",
+    "overview": "Every unit is the instructor standing at a conference-room whiteboard, making one thing clear: the headline written big in black marker, the key phrase circled in red, structure and links in blue, correct answers ticked in green. The mood is 可靠、清楚、有一點玩心: dependable and legible first, with a little hand-drawn play in the circles, ticks and taped paper. It must never feel like a cold engineer's tool, and it must never feel childish.\n\nThe board is a cool white enamel with a faint 32px grid, not beige paper. Things written on the board are flat. Things stuck to the board have physical logic: paper sheets are held by a translucent strip of tape, sticky notes are taped flat, and anything you can press is a magnet with soft thickness that sinks into the board when pressed. The header is the pen tray along the bottom edge of the board. In dark mode the same board becomes a glass blackboard (玻璃黑板) with brightened inks.\n\nThe density suits the product floor: elders and non-technical staff read these pages, so body text is a large, calm print face and the hand-drawn voice is reserved for headings, numerals and annotations. Motion is short and never blocks input.",
     "keyCharacteristics": [
-      "米白紙面 + 22px 點格背景，卡片是純白、帶極淡陰影",
-      "單一主色（鋼筆靛藍）撐起所有強調、連結、焦點框",
-      "Inter + Noto Sans TC，標題 900 粗、內文行高 1.75",
-      "大圓角（卡片 22px、元件 14px、按鈕膠囊形）",
-      "可按元件有「按鍵厚度」，只能看的元件是平的",
-      "完整深色模式，每個語意色都有 `-fill`（實心底色專用）與文字用兩組"
+      "Four marker inks plus sticky-note yellow; teacher-mode purple is the only exception.",
+      "Hand-written headings and annotations, printed body.",
+      "Written = flat; taped paper = tape strip; pressable = magnet.",
+      "Answers are marked with ink: green tick, red strike-through.",
+      "Faint 32px grid board ground; glass blackboard in dark mode."
     ],
     "rules": [
       {
-        "name": "The One Ink Rule",
-        "body": "強調只用鋼筆靛藍。不引入第二個品牌色；琥珀、綠、紅只代表語意（警告、對、錯），紫只代表講師。",
+        "name": "The Four Pens Rule",
+        "body": "Only black, blue, red, green and sticky yellow appear on the board. There is no fifth hue, no gray gradient, no rainbow. Teacher purple exists only behind teacher mode.",
         "section": "colors"
       },
       {
-        "name": "The Fill vs. Text Rule",
-        "body": "每個有色的 token 都有兩組：放字的（對比優先）和當實心底放白字的（`-fill`）。深色模式下絕不直接把文字色拿來當底色。",
+        "name": "The Ink Means Something Rule",
+        "body": "Red marks emphasis and wrongness, green marks rightness and done, blue marks structure and action. A colour is never used for decoration alone.",
         "section": "colors"
       },
       {
-        "name": "The Heavy Heading Rule",
-        "body": "標題一律 800 以上。層次靠粗細與大小，不靠顏色或斜體。",
+        "name": "The Hand For Headings Rule",
+        "body": "Handwriting (`--hand-text`) is for h1, h2 and short annotations only. Paragraphs, options, form text and quiz questions stay in the print face, because elders must be able to read them.",
         "section": "typography"
       },
       {
-        "name": "The Pressable-Has-Depth Rule",
-        "body": "有按鍵厚度 = 可以按。只能看的東西（標籤、學習目標、題目卡、作品卡）一律平的，滑過不浮起、不發光。",
+        "name": "The Kalam Is For Digits Rule",
+        "body": "`--hand` (Kalam) is used only for numerals and short number-like marks, never for sentences.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pressable Is A Magnet Rule",
+        "body": "If it can be pressed, it is a magnet: aluminium-rim 1.5px edge, white face, the magnet shadow, a pointer cursor, lift on hover and a 1px press into the board. If it cannot be pressed, it is flat and does not move or glow on hover.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Answered Goes Flat Rule",
+        "body": "Disabled or answered controls lose the magnet: no shadow, no transform, transparent ground, board-line edge.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** 所有強調、連結、焦點都用鋼筆靛藍；語意色只用在對、錯、警告。",
-      "**Do** 可以按的元件加按鍵厚度（`0 3px 0` 的實心底邊），按下時往下 2px。",
-      "**Do** 有色文字用文字用的 token，放白字的實心底用 `-fill` 的 token。",
-      "**Do** 每一種動畫都附 `prefers-reduced-motion: reduce` 的關閉版本（全站已有一條總開關）。",
-      "**Do** 教學綁定用 `data-tour` 屬性；改版時保留 `data-tour`、表單 `name`、JS 依賴的 `id`。",
-      "**Do** 手機上點得到：連結加上下留白，拉桿至少 32px 高。"
+      "**Do** draw every colour from the four marker inks plus sticky yellow; use teacher purple only in teacher mode.",
+      "**Do** make every new pressable control a magnet (`--magnet` / `--magnet-up` / `--magnet-down`, press = `translateY(1px)`), and add its class to the shared affordance selector list.",
+      "**Do** keep read-only text flat: labels and phases are plain marker text, not capsules.",
+      "**Do** use `--hand-text` for h1, h2 and annotations, `--hand` (Kalam) only for numerals, and Inter + Noto Sans TC for everything people read at length.",
+      "**Do** use `var(--ease)` with `--fast` (150ms) or `--normal` (250ms), stay near 300ms at most, never block interaction during animation, and turn all motion off under `prefers-reduced-motion`.",
+      "**Do** keep the faint 32px grid on the board ground, and keep dark mode as the glass blackboard with brightened inks and separate `*-fill` solids.",
+      "**Do** keep `data-tour` attributes, form `name`s and JS-dependent ids and `data-*` untouched when restyling."
     ],
     "donts": [
-      "**Don't** 讓只能看的東西看起來能按：不用膠囊外框、不加按鍵厚度、滑過不浮起不發光。",
-      "**Don't** 在深色模式直接拿文字色當底色（會變成一塊亮白）。",
-      "**Don't** 用 `calc(50% - 50vw)` 負邊距做滿版區塊（會多出捲軸寬度、被 `main` 裁掉）；要滿版就讓外層 `main` 滿版、內層再套 `.wrap`。",
-      "**Don't** 讓頁首折成兩排或在手機上一直蓋住內容。"
+      "**Don't** use gradients, glows, neon, sheens or rainbow borders as decoration.",
+      "**Don't** use hard offset block shadows; depth is soft magnet or paper shadow only.",
+      "**Don't** add emoji as new UI icons; use the stroke SVG icon set.",
+      "**Don't** give written or read-only content (sticky notes, labels, phases, headings, classify prompt cards) a hover lift, magnet shadow or pointer cursor.",
+      "**Don't** add an arrow or leader line to the analogy box.",
+      "**Don't** set paragraphs, options or questions in the handwriting faces.",
+      "**Don't** use bouncy or overshoot easings."
     ]
   }
 }
