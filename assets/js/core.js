@@ -164,8 +164,8 @@
           ${current ? '<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">🖨️ 講義</button>' : ''}
           <a class="btn btn-sm btn-ghost" href="${base}glossary.html${current ? `?from=${current.id}` : ''}" data-tour="glossary" title="看不懂的專業名詞，這裡查">📖 名詞</a>
           <span data-auth-slot data-tour="auth"></span>
-          <button type="button" class="btn btn-sm btn-help" data-action="tour">？ 教學</button>
         </div>
+        <button type="button" class="btn btn-sm btn-help" data-action="tour">？ 教學</button>
       </div>
       <div class="progress-bar" aria-hidden="true"><span></span></div>`;
     host.addEventListener('click', (e) => {
@@ -177,6 +177,12 @@
       if (action === 'print') window.open(`${base}handout.html?m=${current.id}`, '_blank', 'noopener');
       if (action === 'tour' && window.Tour) window.Tour.start();
     });
+    // 按鈕太多放不下時（講師登入後多了幾顆），右邊淡出，提示可以左右滑
+    const tools = host.querySelector('.header-tools');
+    const markOverflow = () => tools.classList.toggle('is-overflowing', tools.scrollWidth > tools.clientWidth + 2);
+    if (window.ResizeObserver) new ResizeObserver(markOverflow).observe(tools);
+    new MutationObserver(markOverflow).observe(tools, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+    markOverflow();
     refreshProgressBar();
     renderPageNav();
   }

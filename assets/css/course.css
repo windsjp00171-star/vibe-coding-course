@@ -1205,3 +1205,22 @@ summary::marker { color: var(--brand); }
 /* 單元編號只是標示，不是按鈕 */
 :root .module-hero .eyebrow b { background: none; color: var(--brand); padding: 0; font-size: 1.15rem; }
 :root input[type="checkbox"], :root input[type="radio"] { cursor: pointer; }
+
+/* ---------- 頁首：永遠一排、矮一點，往下捲時不要切掉一大塊內容 ---------- */
+/* 原本工具按鈕折成兩排，加上講師模式的橫幅，桌機上頁首高達 180px，捲動時把內容切得很難看 */
+.site-header .wrap { width: min(1440px, 100% - 32px); flex-wrap: nowrap; min-height: 58px; }
+.brand { flex: none; }
+.header-tools { flex-wrap: nowrap; min-width: 0; overflow-x: auto; scrollbar-width: none; gap: 4px; }
+.header-tools::-webkit-scrollbar { display: none; }
+.header-tools > * { flex: 0 0 auto; }
+/* 頁首是導覽列：按鈕做成輕的樣子（沒有按鍵厚度），滑過有底色、游標是手指 */
+:root .site-header .btn { box-shadow: none; border-color: transparent; background: transparent; padding: 6px 9px; transform: none; }
+/* 「？ 教學」固定在最右邊，不跟著其他按鈕被擠出畫面 */
+.site-header .btn-help { flex: none; }
+:root .site-header .btn:hover { background: var(--brand-soft); border-color: transparent; }
+:root .site-header .btn-help { border-color: var(--brand); }
+:root .site-header .is-here { background: var(--brand-soft); color: var(--brand); }
+.site-header { box-shadow: 0 8px 18px -16px rgb(28 27 41 / 45%); }
+.teacher-banner { padding: 3px 12px; font-size: .78rem; }
+html { scroll-padding-top: 76px; }
+.header-tools.is-overflowing { mask-image: linear-gradient(90deg, #000 90%, transparent); padding-right: 24px; }
