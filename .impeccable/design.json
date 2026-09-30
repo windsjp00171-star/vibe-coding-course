@@ -1,0 +1,584 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-30T11:48:49+00:00",
+  "title": "Design System: Vibe Coding 實戰課",
+  "extensions": {
+    "colorMeta": {
+      "pen-indigo": {
+        "role": "primary",
+        "displayName": "鋼筆靛藍",
+        "tonalRamp": [
+          "#1e1b4b",
+          "#312e81",
+          "#3730a3",
+          "#4338ca",
+          "#4f46e5",
+          "#8b85ff",
+          "#c7d2fe",
+          "#eceefe"
+        ]
+      },
+      "pen-indigo-deep": {
+        "role": "primary",
+        "displayName": "深鋼筆靛藍",
+        "tonalRamp": [
+          "#0a003d",
+          "#1b0d65",
+          "#312c90",
+          "#4a4abe",
+          "#6970e7",
+          "#8d98ff",
+          "#b4c1ff",
+          "#dae7ff"
+        ]
+      },
+      "indigo-wash": {
+        "role": "primary",
+        "displayName": "靛藍淡洗",
+        "tonalRamp": [
+          "#090a14",
+          "#22232e",
+          "#3d3f4b",
+          "#5b5c6a",
+          "#7d7f8d",
+          "#a2a3b2",
+          "#c7c9d9",
+          "#ebedfd"
+        ]
+      },
+      "key-rim": {
+        "role": "primary",
+        "displayName": "按鍵外框",
+        "tonalRamp": [
+          "#0c0424",
+          "#241c45",
+          "#3f3769",
+          "#5c558c",
+          "#7e78b2",
+          "#a29cd7",
+          "#c8c3f9",
+          "#ece8ff"
+        ],
+        "canonical": "color-mix(in srgb, var(--brand) 42%, var(--line))"
+      },
+      "key-edge": {
+        "role": "primary",
+        "displayName": "按鍵厚度",
+        "tonalRamp": [
+          "#0c0522",
+          "#241d42",
+          "#3f3864",
+          "#5d5686",
+          "#7f79ac",
+          "#a39dd1",
+          "#c9c4f4",
+          "#ede9ff"
+        ],
+        "canonical": "color-mix(in srgb, var(--brand) 38%, var(--line))"
+      },
+      "key-face": {
+        "role": "primary",
+        "displayName": "按鍵面色",
+        "tonalRamp": [
+          "#0a0b10",
+          "#23232a",
+          "#3e3f46",
+          "#5c5d64",
+          "#7f7f87",
+          "#a3a4ac",
+          "#c9cad2",
+          "#edeef7"
+        ],
+        "canonical": "color-mix(in srgb, var(--brand-soft) 60%, var(--card))"
+      },
+      "night-ink-band": {
+        "role": "secondary",
+        "displayName": "深夜靛藍帶",
+        "tonalRamp": [
+          "#090623",
+          "#1f1f43",
+          "#3a3a66",
+          "#565888",
+          "#787bad",
+          "#9c9fd3",
+          "#c3c6f5",
+          "#e7ebff"
+        ]
+      },
+      "highlighter-gold": {
+        "role": "secondary",
+        "displayName": "螢光筆金",
+        "tonalRamp": [
+          "#200000",
+          "#401700",
+          "#633300",
+          "#875000",
+          "#ad7400",
+          "#d09b00",
+          "#f2c35c",
+          "#ffe992"
+        ]
+      },
+      "teacher-violet": {
+        "role": "tertiary",
+        "displayName": "講師紫",
+        "tonalRamp": [
+          "#180049",
+          "#310075",
+          "#4d00a4",
+          "#6b22d5",
+          "#8c50ff",
+          "#ad81ff",
+          "#d1afff",
+          "#f3d8ff"
+        ]
+      },
+      "teacher-wash": {
+        "role": "tertiary",
+        "displayName": "講師淡紫",
+        "tonalRamp": [
+          "#0d0814",
+          "#26212f",
+          "#423d4c",
+          "#605a6a",
+          "#837d8e",
+          "#a8a1b3",
+          "#cec7d9",
+          "#f2ebfe"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "紙面",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#413f3c",
+          "#5f5d5a",
+          "#82807c",
+          "#a6a4a1",
+          "#cccac6",
+          "#f0eeea"
+        ]
+      },
+      "paper-fold": {
+        "role": "neutral",
+        "displayName": "摺頁",
+        "tonalRamp": [
+          "#0d0b06",
+          "#27241e",
+          "#433f39",
+          "#615d56",
+          "#838079",
+          "#a8a49d",
+          "#cecac2",
+          "#f2eee6"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "卡片白",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "墨",
+        "tonalRamp": [
+          "#0a0916",
+          "#232231",
+          "#3f3e4e",
+          "#5c5c6c",
+          "#7f7e90",
+          "#a3a2b5",
+          "#c9c8dc",
+          "#edecff"
+        ]
+      },
+      "pencil-gray": {
+        "role": "neutral",
+        "displayName": "鉛筆灰",
+        "tonalRamp": [
+          "#0b0917",
+          "#242232",
+          "#3f3d4f",
+          "#5d5b6e",
+          "#7f7d92",
+          "#a4a2b7",
+          "#cac8de",
+          "#eeecff"
+        ]
+      },
+      "rule-line": {
+        "role": "neutral",
+        "displayName": "格線",
+        "tonalRamp": [
+          "#0e0b05",
+          "#27241c",
+          "#433f37",
+          "#615d55",
+          "#848077",
+          "#a9a49b",
+          "#cfcac0",
+          "#f3eee4"
+        ]
+      },
+      "terminal-ink": {
+        "role": "neutral",
+        "displayName": "終端機墨",
+        "tonalRamp": [
+          "#0b0914",
+          "#23222f",
+          "#3f3e4c",
+          "#5d5c6a",
+          "#7f7e8e",
+          "#a3a3b3",
+          "#c9c8d9",
+          "#edecfe"
+        ]
+      },
+      "ok-green": {
+        "role": "semantic",
+        "displayName": "成功綠（文字）",
+        "tonalRamp": [
+          "#001302",
+          "#003016",
+          "#004e2f",
+          "#0d6f4b",
+          "#3e936d",
+          "#69b892",
+          "#97dcb9",
+          "#c2ffdf"
+        ]
+      },
+      "ok-green-fill": {
+        "role": "semantic",
+        "displayName": "成功綠（實心）",
+        "tonalRamp": [
+          "#001402",
+          "#003014",
+          "#00502d",
+          "#007049",
+          "#31956b",
+          "#61b990",
+          "#92deb7",
+          "#bdffdd"
+        ]
+      },
+      "ok-wash": {
+        "role": "semantic",
+        "displayName": "成功淡綠",
+        "tonalRamp": [
+          "#040e09",
+          "#1a2722",
+          "#36433d",
+          "#53625b",
+          "#75847d",
+          "#99a9a2",
+          "#bfcfc7",
+          "#e2f3eb"
+        ]
+      },
+      "warn-amber": {
+        "role": "semantic",
+        "displayName": "警告琥珀（文字）",
+        "tonalRamp": [
+          "#200000",
+          "#411500",
+          "#643000",
+          "#884d00",
+          "#ae702f",
+          "#d3965b",
+          "#f6be8a",
+          "#ffe4b6"
+        ]
+      },
+      "warn-wash": {
+        "role": "semantic",
+        "displayName": "警告淡黃",
+        "tonalRamp": [
+          "#110a01",
+          "#2b2314",
+          "#473e2f",
+          "#665c4c",
+          "#897f6e",
+          "#ada391",
+          "#d4c9b7",
+          "#f8edda"
+        ]
+      },
+      "danger-red": {
+        "role": "semantic",
+        "displayName": "危險紅（文字）",
+        "tonalRamp": [
+          "#2d0000",
+          "#540000",
+          "#7e0005",
+          "#a9221f",
+          "#d34c43",
+          "#f77a6d",
+          "#ffa699",
+          "#ffcfc2"
+        ]
+      },
+      "danger-red-fill": {
+        "role": "semantic",
+        "displayName": "危險紅（實心）",
+        "tonalRamp": [
+          "#2f0000",
+          "#570000",
+          "#810000",
+          "#ad191b",
+          "#d8463f",
+          "#fb766a",
+          "#ffa396",
+          "#ffcdc0"
+        ]
+      },
+      "danger-wash": {
+        "role": "semantic",
+        "displayName": "危險淡紅",
+        "tonalRamp": [
+          "#130807",
+          "#2e201f",
+          "#4b3b3a",
+          "#6a5957",
+          "#8d7b7a",
+          "#b2a09e",
+          "#d9c5c3",
+          "#fde9e7"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "單元主標",
+        "purpose": "每個單元與頁面的 h1。"
+      },
+      "headline": {
+        "displayName": "段落標題",
+        "purpose": "每一段的 h2。"
+      },
+      "title": {
+        "displayName": "卡片小標",
+        "purpose": "h3 與 .h3。"
+      },
+      "body": {
+        "displayName": "內文",
+        "purpose": "一般閱讀文字。"
+      },
+      "lead": {
+        "displayName": "引言",
+        "purpose": "主標下的說明段。"
+      },
+      "label": {
+        "displayName": "標籤",
+        "purpose": "kicker、eyebrow，大寫加字距。"
+      },
+      "section-number": {
+        "displayName": "章節數字",
+        "purpose": "空心描邊的大數字，1.5px 靛藍描邊。"
+      },
+      "mono": {
+        "displayName": "等寬",
+        "purpose": "程式碼、指令、產生器輸出。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "resting",
+        "value": "0 1px 2px rgb(28 27 41 / 6%), 0 8px 24px -12px rgb(28 27 41 / 18%)",
+        "purpose": "卡片靜止時。"
+      },
+      {
+        "name": "lift",
+        "value": "0 2px 4px rgb(28 27 41 / 8%), 0 18px 40px -16px rgb(79 70 229 / 35%)",
+        "purpose": "可點卡片滑過、浮動彈窗、提示訊息。"
+      },
+      {
+        "name": "key-edge",
+        "value": "0 3px 0 color-mix(in srgb, var(--brand) 38%, var(--line))",
+        "purpose": "可按元件的按鍵厚度；滑過 4px、按下 1px。"
+      },
+      {
+        "name": "header",
+        "value": "0 8px 18px -16px rgb(28 27 41 / 45%)",
+        "purpose": "頁首下緣。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "全站預設緩動。"
+      },
+      {
+        "name": "fast",
+        "value": "150ms",
+        "purpose": "滑過、按下等狀態變化。"
+      },
+      {
+        "name": "normal",
+        "value": "300ms",
+        "purpose": "翻牌、提示訊息、進度條。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce → 全部 animation / transition 關閉",
+        "purpose": "全站總開關。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "meter-stack",
+        "value": "560px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "header-unstick",
+        "value": "720px"
+      },
+      {
+        "name": "feature-stack",
+        "value": "760px"
+      },
+      {
+        "name": "split-stack",
+        "value": "860px"
+      },
+      {
+        "name": "paths-uneven",
+        "value": "900px"
+      },
+      {
+        "name": "hero-visual",
+        "value": "980px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "主要按鈕",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "頁面上最重要的一個動作。實心靛藍、膠囊形、有按鍵厚度。",
+      "html": "<button class=\"ds-btn ds-btn-primary\">開始上課</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .95rem Inter,'Noto Sans TC',system-ui,sans-serif;border-radius:999px;padding:10px 20px;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-btn-primary{background:#4f46e5;border:1.5px solid #4f46e5;color:#fff;box-shadow:0 3px 0 #2b2680;} .ds-btn-primary:hover{background:#3730a3;border-color:#3730a3;transform:translateY(-1px);} .ds-btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #2b2680;} .ds-btn-primary:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
+    },
+    {
+      "name": "一般按鈕",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "次要動作。白底、按鍵色外框、按鍵厚度。",
+      "html": "<button class=\"ds-btn2\">看講義</button>",
+      "css": ".ds-btn2{display:inline-flex;align-items:center;gap:8px;font:700 .95rem Inter,'Noto Sans TC',system-ui,sans-serif;border-radius:999px;padding:10px 20px;cursor:pointer;background:#fff;color:#1c1b29;border:1.5px solid #a59fdc;box-shadow:0 3px 0 #aba5db;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-btn2:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-btn2:active{transform:translateY(2px);box-shadow:0 1px 0 #aba5db;} .ds-btn2:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
+    },
+    {
+      "name": "測驗選項",
+      "kind": "custom",
+      "refersTo": "option",
+      "description": "可按的答案橫條，左側字母鍵；答對變綠、答錯變紅。",
+      "html": "<div class=\"ds-opts\"><button class=\"ds-opt\"><span class=\"ds-key\">A</span>先打電話回公司確認</button><button class=\"ds-opt is-right\"><span class=\"ds-key\">B</span>用事先約好的暗號確認</button></div>",
+      "css": ".ds-opts{display:grid;gap:10px;} .ds-opt{display:flex;gap:12px;align-items:center;text-align:left;font:1rem Inter,'Noto Sans TC',sans-serif;color:#1c1b29;background:#f4f5fe;border:2px solid #a59fdc;border-radius:14px;padding:12px 16px;box-shadow:0 3px 0 #aba5db;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-opt:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-opt:active{transform:translateY(2px);box-shadow:0 1px 0 #aba5db;} .ds-opt:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-key{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#f2eee6;font-weight:800;font-size:.85rem;} .ds-opt.is-right{border-color:#13724e;background:#e3f4ec;box-shadow:none;} .ds-opt.is-right .ds-key{background:#17835a;color:#fff;}"
+    },
+    {
+      "name": "篩選標籤",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "可按的篩選或分頁；選中時實心靛藍、像按下去沒彈起來。",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">全部</button><button class=\"ds-chip\" aria-pressed=\"false\">詐騙</button><button class=\"ds-chip\" aria-pressed=\"false\">工具</button></div>",
+      "css": ".ds-chips{display:flex;gap:8px;flex-wrap:wrap;} .ds-chip{font:700 .9rem Inter,'Noto Sans TC',sans-serif;color:#1c1b29;background:#f4f5fe;border:2px solid #a59fdc;border-radius:999px;padding:6px 14px;box-shadow:0 3px 0 #aba5db;cursor:pointer;transition: transform 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms, border-color 150ms, background 150ms;} .ds-chip:hover{border-color:#4f46e5;transform:translateY(-1px);} .ds-chip:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-chip[aria-pressed=\"true\"]{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:none;transform:translateY(2px);}"
+    },
+    {
+      "name": "卡片",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "內容容器。白底、22px 圓角、淡陰影；只能看，不浮起。",
+      "html": "<div class=\"ds-card\"><h3>變臉視訊怎麼認</h3><p>請對方把手在臉前揮一下，看邊緣有沒有破綻。</p></div>",
+      "css": ".ds-card{background:#fff;border:1px solid #e4dfd5;border-radius:22px;padding:24px;box-shadow:0 1px 2px rgb(28 27 41 / 6%),0 8px 24px -12px rgb(28 27 41 / 18%);font-family:Inter,'Noto Sans TC',sans-serif;color:#1c1b29;line-height:1.75;} .ds-card h3{margin:0 0 .4em;font-size:1.2rem;font-weight:800;} .ds-card p{margin:0;color:#5d5b6e;}"
+    },
+    {
+      "name": "打個比方",
+      "kind": "custom",
+      "refersTo": "analogy",
+      "description": "用生活比喻解釋技術概念的招牌提示框。",
+      "html": "<div class=\"ds-analogy\"><strong>打個比方：</strong>API 金鑰就像公司大門的感應卡，弄丟了要馬上停卡。</div>",
+      "css": ".ds-analogy{border-left:5px solid #4f46e5;background:#eceefe;border-radius:0 14px 14px 0;padding:16px 20px;font:500 1rem/1.75 Inter,'Noto Sans TC',sans-serif;color:#1c1b29;} .ds-analogy strong{color:#3730a3;}"
+    },
+    {
+      "name": "輸入框",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "文字輸入；統一的靛藍焦點框。",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"你的名字\">",
+      "css": ".ds-input{font:1rem Inter,'Noto Sans TC',sans-serif;width:100%;border:1.5px solid #e4dfd5;background:#fff;color:#1c1b29;border-radius:14px;padding:10px 14px;} .ds-input:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;}"
+    },
+    {
+      "name": "頁首導覽",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "一排、58px 高；導覽按鈕沒有按鍵厚度，目前頁用淡靛藍標示。",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-mark\">V</span><b>Vibe Coding 實戰課</b><span class=\"ds-tools\"><a href=\"#\" class=\"is-here\">課程</a><a href=\"#\">小辭典</a><a href=\"#\" class=\"ds-help\">？ 教學</a></span></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:10px;min-height:58px;padding:0 16px;background:rgb(250 248 244 / 86%);border-bottom:1px solid #e4dfd5;font-family:Inter,'Noto Sans TC',sans-serif;color:#1c1b29;} .ds-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#4f46e5;color:#fff;font-weight:900;} .ds-tools{margin-left:auto;display:flex;gap:4px;} .ds-tools a{font-weight:700;font-size:.95rem;color:#1c1b29;text-decoration:none;padding:6px 9px;border-radius:999px;border:1.5px solid transparent;} .ds-tools a:hover{background:#eceefe;} .ds-tools a:focus-visible{outline:3px solid #4f46e5;outline-offset:2px;} .ds-tools a.is-here{background:#eceefe;color:#4f46e5;} .ds-tools .ds-help{border-color:#4f46e5;color:#4f46e5;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "上班族的工作手冊",
+    "overview": "整個網站像一本攤開在辦公桌上的實戰手冊：米白紙面帶細點格線，粗黑的大標題，章節用空心描邊的大數字編號，重點用鋼筆靛藍劃線、用淡靛藍底色框出「打個比方」。它是給沒有技術背景的上班族看的，所以氛圍是**可靠、清楚、有一點玩心**：閱讀的部分要穩、要好讀；互動的部分（測驗、翻牌卡、拉桿、分類遊戲）才允許有一點遊戲感和獎勵回饋。\n\n系統分成兩個場景，共用同一套 token：**學員頁**（單元、圖解、講義、小辭典）走淺色紙面、層次輕、段落之間用虛線分隔；**對外頁**（首頁、報名、資安內訓，`body.mk`）加上一條滿版的深夜靛藍主視覺帶、光暈和細顆粒，段落間距拉大，數字用編輯式的大字與細線。講師模式另有一條紫色支線（講師筆記、計時器、橫幅），只在 `data-mode=\"teacher\"` 下出現。\n\n最近一次重點改版把「可以按」和「只能看」徹底分開：可以按的東西都有一顆實體按鍵的厚度（底下 3px 的色邊），按下會真的壓下去；只能看的東西一律是平的，沒有膠囊外框、滑過不動。",
+    "keyCharacteristics": [
+      "米白紙面 + 22px 點格背景，卡片是純白、帶極淡陰影",
+      "單一主色（鋼筆靛藍）撐起所有強調、連結、焦點框",
+      "Inter + Noto Sans TC，標題 900 粗、內文行高 1.75",
+      "大圓角（卡片 22px、元件 14px、按鈕膠囊形）",
+      "可按元件有「按鍵厚度」，只能看的元件是平的",
+      "完整深色模式，每個語意色都有 `-fill`（實心底色專用）與文字用兩組"
+    ],
+    "rules": [
+      {
+        "name": "The One Ink Rule",
+        "body": "強調只用鋼筆靛藍。不引入第二個品牌色；琥珀、綠、紅只代表語意（警告、對、錯），紫只代表講師。",
+        "section": "colors"
+      },
+      {
+        "name": "The Fill vs. Text Rule",
+        "body": "每個有色的 token 都有兩組：放字的（對比優先）和當實心底放白字的（`-fill`）。深色模式下絕不直接把文字色拿來當底色。",
+        "section": "colors"
+      },
+      {
+        "name": "The Heavy Heading Rule",
+        "body": "標題一律 800 以上。層次靠粗細與大小，不靠顏色或斜體。",
+        "section": "typography"
+      },
+      {
+        "name": "The Pressable-Has-Depth Rule",
+        "body": "有按鍵厚度 = 可以按。只能看的東西（標籤、學習目標、題目卡、作品卡）一律平的，滑過不浮起、不發光。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** 所有強調、連結、焦點都用鋼筆靛藍；語意色只用在對、錯、警告。",
+      "**Do** 可以按的元件加按鍵厚度（`0 3px 0` 的實心底邊），按下時往下 2px。",
+      "**Do** 有色文字用文字用的 token，放白字的實心底用 `-fill` 的 token。",
+      "**Do** 每一種動畫都附 `prefers-reduced-motion: reduce` 的關閉版本（全站已有一條總開關）。",
+      "**Do** 教學綁定用 `data-tour` 屬性；改版時保留 `data-tour`、表單 `name`、JS 依賴的 `id`。",
+      "**Do** 手機上點得到：連結加上下留白，拉桿至少 32px 高。"
+    ],
+    "donts": [
+      "**Don't** 讓只能看的東西看起來能按：不用膠囊外框、不加按鍵厚度、滑過不浮起不發光。",
+      "**Don't** 在深色模式直接拿文字色當底色（會變成一塊亮白）。",
+      "**Don't** 用 `calc(50% - 50vw)` 負邊距做滿版區塊（會多出捲軸寬度、被 `main` 裁掉）；要滿版就讓外層 `main` 滿版、內層再套 `.wrap`。",
+      "**Don't** 讓頁首折成兩排或在手機上一直蓋住內容。"
+    ]
+  }
+}

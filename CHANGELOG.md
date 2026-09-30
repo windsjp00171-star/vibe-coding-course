@@ -27,6 +27,7 @@
   - 首頁、報名頁、作品牆的小秘書介紹改成開源、Fork、只回應主人
 
 ### Added
+- 新增 `DESIGN.md`（與 `.impeccable/design.json`）：記錄目前網站的配色、字體、圓角、陰影、元件與設計守則，作為之後改版的對照基準
 - 專案內安裝 Impeccable 設計技能（`.claude/skills/impeccable`、`.claude/agents`），在 Claude Code 輸入 `/impeccable` 使用；執行檔不進 repo，第一次用時自動下載
 - `scripts/check_affordance.js`：逐頁實際點點看，抓出「像按鈕卻沒反應」和「能按卻看不出來」的元件
 - `guide-vercel.html` 圖解：Vercel 部署小秘書，8 步（Fork、Gemini 金鑰、填鑰匙部署、設定精靈、設定主人並 Redeploy、cron-job.org、看錯誤、Sync fork 接收更新）
