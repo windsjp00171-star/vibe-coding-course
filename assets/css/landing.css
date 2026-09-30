@@ -96,3 +96,4 @@
 :root .lp-free { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); }
 :root .lp-proof b { font-family: var(--hand); font-weight: 700; }
 :root .lp-path--security .lp-who, :root .lp-path--security .lp-go { color: var(--warn); }
+:root .lp-free-icon .ico { width: 1em; height: 1em; color: var(--ok); }

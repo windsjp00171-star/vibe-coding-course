@@ -194,6 +194,7 @@
     mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
     target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/>',
     print: '<path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="1.5"/><path d="M7 14h10v7H7z"/>',
+    clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
     book: '<path d="M4 5c3-1.5 5.5-1.5 8 .5 2.5-2 5-2 8-.5v14c-3-1.5-5.5-1.5-8 .5-2.5-2-5-2-8-.5z"/><path d="M12 5.5v14"/>',
   };
   const ico = (name) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</svg>`;
@@ -208,7 +209,7 @@
       return h ? `<a href="#${id}">${esc(h.textContent)}</a>` : '';
     }).filter(Boolean);
     row.insertAdjacentHTML('afterend', `<div class="callout callout-warn must-read">
-      <b>⏱️ 時間不夠？至少看這 ${links.length} 段（約 ${unit.mustMin} 分鐘）</b>：${links.join('、')}，再做<a href="#quiz">隨堂小測驗</a>。
+      <b>${ico('clock')}時間不夠？至少看這 ${links.length} 段（約 ${unit.mustMin} 分鐘）</b>：${links.join('、')}，再做<a href="#quiz">隨堂小測驗</a>。
       其他段落上課時會帶到；真的沒預習也照樣來，工作坊會安排你跟有預習的人同組。</div>`);
   }
 

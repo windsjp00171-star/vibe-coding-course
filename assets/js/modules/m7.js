@@ -114,8 +114,8 @@
       <div class="gate-request reveal"><span class="gate-avatar" aria-hidden="true">🤖</span>
         <div><p style="margin:0 0 6px"><b>AI 代理人：</b>${esc(r.text)}</p><span class="gate-tool">要執行：${esc(r.tool)}</span></div></div>
       <div class="gate-actions">
-        <button type="button" class="btn btn-ok" data-decide="allow">✅ 放行</button>
-        <button type="button" class="btn btn-danger" data-decide="block">🛑 退回</button>
+        <button type="button" class="btn btn-ok" data-decide="allow"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6"/></svg>放行</button>
+        <button type="button" class="btn btn-danger" data-decide="block"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>退回</button>
       </div>
       <div data-gate-after></div>`;
   }
