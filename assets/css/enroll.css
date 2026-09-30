@@ -75,3 +75,12 @@
 .ct-note { font-size: .85rem; margin: 0; }
 /* 機器人陷阱欄位：移到畫面外，真人看不到（不用 display:none，有些機器人會跳過隱藏欄位） */
 .ct-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- 白板改版（2026-09） ---------- */
+/* 主標上面那行小字，改成寫在主標底下的藍筆註記 */
+:root .en-hero > div:first-child { display: flex; flex-direction: column; align-items: flex-start; }
+:root .en-hero > div:first-child h1 { order: -1; margin-bottom: .2em; }
+:root .en-hero .eyebrow { font-family: var(--hand-text); color: var(--brand); letter-spacing: 0; text-transform: none; font-size: 1.1rem; margin-bottom: 14px; }
+:root .mk .en-hero .eyebrow::before { display: none; }
+/* 事實卡：數字用白板筆寫 */
+:root .en-facts b { font-family: var(--hand); font-weight: 700; }

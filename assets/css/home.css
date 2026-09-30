@@ -83,7 +83,7 @@ body { position: relative; isolation: isolate; }
 .role ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
 .role-you { background: var(--card); }
 .role-you .tag { color: var(--brand); }
-.role-ai { background: #1e1b4b; color: #e0e7ff; }
+.role-ai { background: #1b2226; color: #eef2f3; }
 .role-ai .tag { color: #86a8ff; }
 .roles-quote { margin: 16px 0 0; font-weight: 700; color: var(--muted); }
 

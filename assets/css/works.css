@@ -19,7 +19,7 @@
 .wk-links { display: flex; flex-wrap: wrap; gap: 14px; font-weight: 700; font-size: .9rem; }
 .wk-links a { color: var(--brand); text-decoration: underline; text-underline-offset: .2em; }
 
-.wk-card--demo { background: linear-gradient(180deg, var(--card), var(--brand-soft)); border-color: var(--line); }
+.wk-card--demo { background: var(--card); border-color: var(--line); }
 
 .wk-seat {
   position: relative; place-content: center; text-align: center; min-height: 190px;

@@ -5,7 +5,7 @@
 
 .ho-paper {
   /* 紙張一律用淺色，深色模式下也像真的紙 */
-  --ink: #111; --muted: #444; --line: #bbb; --card: #fff; --paper: #fff; --brand: #3730a3; --brand-soft: #eef;
+  --ink: #111; --muted: #444; --line: #bbb; --card: #fff; --paper: #fff; --brand: #173c93; --brand-soft: #eef2fb;
   width: min(210mm, 100% - 24px); margin: 0 auto 48px; padding: 14mm; background: #fff; color: #111;
   box-shadow: 0 10px 40px -12px rgb(0 0 0 / 35%); border-radius: 4px; font-size: 12pt; line-height: 1.6;
 }
