@@ -1485,3 +1485,6 @@ html { scroll-padding-top: 76px; }
 :root .gen-out { padding-top: 14px; }
 .ico { width: 1.15em; height: 1.15em; flex: none; vertical-align: -.2em; }
 :root .site-header .btn { gap: 6px; }
+/* 標題像粗的白板筆：文楷最粗只到 700，再描一圈同色細邊讓筆畫變粗 */
+:root h1 { -webkit-text-stroke: .022em currentColor; paint-order: stroke fill; }
+:root h2 { -webkit-text-stroke: .012em currentColor; paint-order: stroke fill; }

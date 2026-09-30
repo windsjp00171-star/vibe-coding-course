@@ -179,3 +179,5 @@
 :root .mk .lp-hero-text h1 { order: -1; margin-bottom: .1em; }
 :root .mk .lp-hero .eyebrow { margin-bottom: 14px; }
 :root .mk .lp-hero .eyebrow::before { display: none; }
+:root .mk .lp-hero-text h1 { margin-bottom: .45em; }
+:root .mk .lp-hero .eyebrow { margin-bottom: 22px; }

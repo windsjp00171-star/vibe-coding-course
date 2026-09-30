@@ -151,7 +151,7 @@
     const meLink = `<a class="btn btn-sm btn-ghost" href="${base}me.html" title="看自己的進度、改顯示名稱">📈 我的學習</a> `;
     slot.innerHTML = user
       ? `${adminLink}${meLink}<button type="button" class="btn btn-sm btn-ghost" data-auth="out" title="登出">👤 ${esc(profile?.display_name || user.email || '已登入')}${profile?.role === 'teacher' ? '．講師' : ''}</button>`
-      : '<button type="button" class="btn btn-sm btn-ghost" data-auth="in" title="用 Google 登入，換電腦也能接著學">☁️ 登入保存進度</button>';
+      : '<button type="button" class="btn btn-sm btn-ghost" data-auth="in" title="用 Google 登入，換電腦也能接著學">登入保存進度</button>';
   }
 
   // 講師：頁首「管理後台」旁顯示還沒回覆的聯絡留言數。只算數量，不讀內容
