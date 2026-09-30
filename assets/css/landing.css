@@ -37,7 +37,7 @@
 .lp-back {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
   margin-top: 22px; padding: 18px 22px; border-radius: var(--radius-m);
-  background: var(--brand-soft); border: 1px solid #d8dbfb;
+  background: var(--brand-soft); border: 1px solid color-mix(in srgb, var(--brand) 25%, var(--line));
 }
 .lp-back b { display: block; }
 .lp-back p { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
@@ -95,3 +95,4 @@
 :root .lp-path--security { background: var(--warn-soft); }
 :root .lp-free { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); }
 :root .lp-proof b { font-family: var(--hand); font-weight: 700; }
+:root .lp-path--security .lp-who, :root .lp-path--security .lp-go { color: var(--warn); }

@@ -181,3 +181,4 @@
 :root .mk .lp-hero .eyebrow::before { display: none; }
 :root .mk .lp-hero-text h1 { margin-bottom: .45em; }
 :root .mk .lp-hero .eyebrow { margin-bottom: 22px; }
+:root .mk .section-head .kicker { letter-spacing: 0; }
