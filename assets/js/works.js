@@ -8,9 +8,10 @@
   const { $, esc } = window.Course;
 
   // 收作品的方式。還沒決定就留 null，畫面會顯示「待填」而不是假連結。
+  // 投稿方式：預設用網站內建的投稿表單（寫進後台「聯絡留言」，主題是「作品投稿」，只有講師看得到）。
+  // 想改用 Google 表單就填 formUrl。不要填信箱：公開網頁上的 Email 會被爬蟲收去寄垃圾信。
   const SUBMIT = {
-    formUrl: null,       // 例如 Google 表單網址
-    email: null,         // 或收件信箱
+    formUrl: null,
   };
 
   const SEATS = 6; // 第一屆保留席次
@@ -56,10 +57,8 @@
   function renderSubmit() {
     const host = $('[data-wk-submit]');
     const how = SUBMIT.formUrl
-      ? `<a class="btn btn-primary" href="${esc(SUBMIT.formUrl)}" target="_blank" rel="noopener">填表單投稿 →</a>`
-      : SUBMIT.email
-        ? `<a class="btn btn-primary" href="mailto:${esc(SUBMIT.email)}">寄信投稿 →</a>`
-        : '<span class="wk-todo">投稿方式待填（在 assets/js/works.js 的 SUBMIT 設定）</span>';
+      ? `<p><a class="btn btn-primary" href="${esc(SUBMIT.formUrl)}" target="_blank" rel="noopener">填表單投稿 →</a></p>`
+      : '<div class="wk-form" data-contact data-contact-lock data-contact-topic="works" data-contact-page="works" data-tour="submit"></div>';
     host.innerHTML = `
       <h3>想把作品放上來？</h3>
       <ul>
@@ -68,7 +67,7 @@
         <li>可以只放截圖與說明，不一定要公開原始碼。</li>
         <li>署名用你同意公開的稱呼就好，不會放全名或聯絡方式。</li>
       </ul>
-      <p>${how}</p>`;
+      ${how}`;
   }
 
   function render() {

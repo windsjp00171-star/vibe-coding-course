@@ -1525,3 +1525,19 @@ html { scroll-padding-top: 76px; }
 :root .kicker.mode-extra { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E"); color: var(--ok); }
 :root .kicker.mode-quiz { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E"); color: var(--ok); }
 :root .kicker.mode-case { --mode-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3L2 20h20z'/%3E%3Cpath d='M12 10v4M12 17.5v.01'/%3E%3C/svg%3E"); color: var(--danger); }
+
+/* ---------- 聯絡表單（contact.js：聯絡表單、作品投稿、意見回饋） ---------- */
+.ct-form { display: grid; gap: 14px; margin-top: 12px; }
+.ct-form input, .ct-form select, .ct-form textarea { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: var(--radius-s); border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+.ct-form input:focus, .ct-form select:focus, .ct-form textarea:focus { outline: 3px solid var(--brand-soft); border-color: var(--brand); }
+.ct-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; }
+.ct-note { font-size: .85rem; margin: 0; }
+/* 機器人陷阱欄位：移到畫面外，真人看不到（不用 display:none，有些機器人會跳過隱藏欄位） */
+.ct-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.ct-form .su-done, .su-done { padding: 20px 22px; border-radius: var(--radius-m); background: var(--ok-soft); }
+.su-done b { display: block; font-size: 1.1rem; margin-bottom: 6px; }
+.fb-stars { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.fb-stars legend { font-weight: 700; font-size: .92rem; margin-bottom: 6px; padding: 0; }
+.fb-stars label { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; cursor: pointer; }
+.fb-stars input { width: 20px; height: 20px; accent-color: var(--brand-fill); }

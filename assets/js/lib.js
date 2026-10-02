@@ -683,7 +683,7 @@
 
   // 聯絡表單：送出前的檢查。長度上限和 supabase/add-contact.sql 的寫入規則一致，
   // 前台先擋下來，對方才看得到白話說明，而不是資料庫的英文錯誤
-  const CONTACT_TOPICS = { course: '實戰課報名', corporate: '企業內訓', security: '半日資安講座', other: '其他問題' };
+  const CONTACT_TOPICS = { course: '實戰課報名', corporate: '企業內訓', security: '半日資安講座', feedback: '課程意見回饋', works: '作品投稿', other: '其他問題' };
   function checkContact({ name = '', contact = '', topic = '', message = '' } = {}) {
     const n = name.trim(); const c = contact.trim(); const m = message.trim();
     if (!n) return '請填你的稱呼。';
