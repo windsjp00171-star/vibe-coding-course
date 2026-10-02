@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202610010703">
-  <link rel="stylesheet" href="assets/css/home.css?v=202610010703">
+  <link rel="stylesheet" href="assets/css/course.css?v=202610020608">
+  <link rel="stylesheet" href="assets/css/home.css?v=202610020608">
 </head>
 <body data-base="./">
 <header data-course-header></header>
@@ -87,6 +87,13 @@
     </div>
   </section>
 
+  <section class="slide" id="feedback" data-nav="意見回饋" data-tour="feedback">
+    <div class="section-head"><span class="section-num">💬</span>
+      <div><span class="kicker">幫課程變更好</span><h2>試上之後，告訴講師你的感想</h2>
+        <p>哪裡卡住、哪裡看不懂、最喜歡哪一段，都可以寫。想和其他學員聊，到<a href="board.html">交流留言板</a>。</p></div></div>
+    <div class="card" data-feedback></div>
+  </section>
+
   <section class="slide" id="more" data-nav="延伸">
     <div class="section-head"><span class="section-num">↗</span>
       <div><span class="kicker">看更多</span><h2>還想知道什麼</h2></div></div>
@@ -95,6 +102,8 @@
         <h3>📋 課程介紹與報名</h3><p>上課方式、時數、費用、梯次、常見問題，以及講師做過的專案。要推薦給別人看的就是這一頁。</p></a>
       <a class="card" href="works.html" style="text-decoration:none;color:inherit">
         <h3>🏆 學員作品牆</h3><p>結業時大家做出什麼。第一屆還沒開課，先放講師的示範作品。</p></a>
+      <a class="card" href="board.html" style="text-decoration:none;color:inherit">
+        <h3>🗨️ 交流留言板</h3><p>開通的學員和講師一起討論：卡關求救、分享做出來的東西、互相幫忙。</p></a>
       <a class="card" href="pitfalls.html" style="text-decoration:none;color:inherit">
         <h3>🕳️ 踩坑圖鑑</h3><p>講師真實踩過的 27 個坑，可以玩「看症狀猜原因」。</p></a>
     </div>
@@ -104,14 +113,15 @@
 
 <footer class="site-footer"><div class="wrap"><a href="index.html">首頁</a>．<a href="enroll.html">課程介紹與報名</a>．<a href="works.html">學員作品牆</a>．<a href="verify.html">結業證明查證</a>．<a href="security.html">半日資安課</a>．<a href="me.html">我的學習</a>．<a href="quizshow.html">課堂搶答</a>．<a href="glossary.html">名詞小辭典</a>．<a href="teacher.html" data-teacher-only hidden>講師後台</a><a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課．進度會存在這台電腦的瀏覽器；登入後會同步到雲端，換電腦也能接著學。</div></footer>
 
-<script src="assets/js/lib.js?v=202610010703"></script>
-<script src="assets/js/config.js?v=202610010703"></script>
-<script src="assets/js/core.js?v=202610010703"></script>
-<script src="assets/js/members.js?v=202610010703"></script>
-<script src="assets/js/tour.js?v=202610010703"></script>
-<script src="assets/js/glossary-data.js?v=202610010703"></script>
-<script src="assets/js/glossary.js?v=202610010703"></script>
-<script src="assets/js/home.js?v=202610010703"></script>
+<script src="assets/js/lib.js?v=202610020608"></script>
+<script src="assets/js/config.js?v=202610020608"></script>
+<script src="assets/js/core.js?v=202610020608"></script>
+<script src="assets/js/members.js?v=202610020608"></script>
+<script src="assets/js/tour.js?v=202610020608"></script>
+<script src="assets/js/glossary-data.js?v=202610020608"></script>
+<script src="assets/js/glossary.js?v=202610020608"></script>
+<script src="assets/js/home.js?v=202610020608"></script>
+<script src="assets/js/contact.js?v=202610020608"></script>
 <script>
   (function () {
     const { MODULES, getState, esc, $, completedCount } = window.Course;
@@ -199,6 +209,7 @@
       { tour: 'roles', title: '你和 AI 怎麼分工', text: '程式交給 AI 寫，你負責說清楚、做決定、驗收。這門課教的就是左邊這些能力。' },
       { tour: 'pitfalls', title: '踩坑圖鑑', text: '講師真實踩過的坑，可以玩「看症狀猜原因」。' },
       { tour: 'path', title: '你的關卡路線', text: '每個圓圈是一個單元。做完小測驗過關就會點亮，會閃的那一個是你的下一關，點圓圈可以直接進去。' },
+      { tour: 'feedback', title: '意見回饋', text: '試上之後的感想、卡住的地方寫在這裡，只有講師看得到。想跟其他學員聊，到交流留言板。' },
       { tour: 'map', title: '課程地圖', text: 'A 到 C 是必修，最後在結業單元做出你自己的工具；D 是進階選修（資料庫、LINE、手機 App、防詐騙）。做完小測驗過關的單元會打勾。' },
       { tour: 'showcase', title: '講師的作品', text: '這些都是用同一套方法做出來的，還在線上的可以點開來玩。卡片下方告訴你用到的技術在哪個單元學。' },
     ]);

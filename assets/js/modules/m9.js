@@ -69,19 +69,20 @@
   function renderCert() {
     const state = getState();
     const passed = Boolean(state.finalScore);
+    // 結業只看總測驗；作品登記是加分：有登記就印在證明上，沒登記也能結業（自學的人不一定做得出作品）
     const built = projectReady(state.project).ok;
-    const earned = passed && built;
+    const earned = passed;
     const name = state.name || '';
     $('[data-cert-name]').value = name;
     $('[data-cert-out-name]').textContent = name || '＿＿＿＿＿＿';
     $('[data-cert-date]').textContent = `結業日期　${new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' })}`;
     $('[data-cert-score]').textContent = earned ? `總測驗　${state.finalScore} 分` : '';
-    $('[data-cert-project]').textContent = !earned ? '' : state.project.public ? `結業作品　${state.project.url}` : '結業作品　已完成並上線（未公開）';
+    $('[data-cert-project]').textContent = !earned || !built ? '' : state.project.public ? `結業作品　${state.project.url}` : '結業作品　已完成並上線（未公開）';
     $('[data-cert]').classList.toggle('is-earned', earned);
     $('[data-cert-print]').disabled = !(earned && name);
     $('[data-cert-status]').innerHTML = earned
       ? (name ? '<div class="feedback ok">🎉 恭喜結業！可以列印證明了。</div>' : '<div class="feedback ok">🎉 已通過總測驗！輸入名字就能列印證明。</div>')
-      : `<div class="callout callout-warn">列印證明還差：${[!built && '上面的作品登記', !passed && `總測驗 ${FINAL_PASS_PERCENT} 分以上`].filter(Boolean).join('、')}</div>`;
+      : `<div class="callout callout-warn">列印證明還差：總測驗 ${FINAL_PASS_PERCENT} 分以上${built ? '' : '（作品登記是選填，有登記的話會印在證明上）'}</div>`;
   }
 
   // ---------- 可驗證的證明編號 ----------
@@ -111,7 +112,7 @@
   $('[data-cert-issue]').addEventListener('click', async () => {
     const btn = $('[data-cert-issue]');
     const state = getState();
-    if (!state.finalScore || !state.name || !projectReady(state.project).ok) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先完成作品登記、通過總測驗，並填上名字。</div>'; return; }
+    if (!state.finalScore || !state.name) { $('[data-cert-issue-out]').innerHTML = '<div class="feedback bad" style="margin-top:12px">要先通過總測驗，並填上名字。</div>'; return; }
     btn.disabled = true;
     try {
       const cert = await window.Members.issueCertificate(state.name);
@@ -176,7 +177,7 @@
     { tour: 'review', title: '學習紀錄', text: '十一個必修單元的小測驗成績。沒過的可以點進去重做。' },
     { tour: 'build', title: '做出你的工具', text: '課中用 90 分鐘把你的題目做出第一版並上線。做完把網址填進「作品登記」，四項檢查都打勾。' },
     { tour: 'exam', title: '總測驗', text: '12 題、80 分過關。每次都會重新抽題、打亂選項。' },
-    { tour: 'cert', title: '結業證明', text: '作品登記完成、通過總測驗、輸入名字後，就能列印結業證明或存成 PDF。作品網址要不要印在上面，由你自己決定。' },
+    { tour: 'cert', title: '結業證明', text: '通過總測驗、輸入名字後，就能列印結業證明或存成 PDF。作品登記是選填：有登記會印在證明上，網址要不要公開由你決定。' },
     { tour: 'growth', title: '上課前 vs 現在', text: '把單元 1 拉過的五種能力再拉一次，右邊會顯示每一項進步了幾分。' },
     { tour: 'next', title: '結業之後', text: '明天就能做的五件事，做完打勾。' },
   ]);

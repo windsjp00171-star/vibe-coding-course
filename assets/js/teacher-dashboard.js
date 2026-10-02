@@ -42,7 +42,7 @@
   }
 
   let tab = 'overview';
-  let memberFilter = 'pending';
+  let memberFilter = 'noclass';
   let memberSearch = '';
 
   // 連結要真的放進頁面、網址晚一點才收回，不然瀏覽器會忽略檔名，存成「download」
@@ -393,7 +393,7 @@
   const BACKUP_TABLES = [
     ['profiles', '會員'], ['classes', '班級'], ['class_members', '班級成員'], ['progress', '學習進度'],
     ['cohorts', '報名梯次'], ['signups', '報名名單'], ['contact_messages', '聯絡留言'],
-    ['certificates', '結業證明'], ['teacher_invites', '講師邀請'], ['teacher_notes', '講師筆記'],
+    ['certificates', '結業證明'], ['teacher_invites', '講師邀請'], ['teacher_notes', '講師筆記'], ['board_posts', '交流留言'],
   ];
   async function exportAll(btn) {
     const db = window.Members.client;
@@ -461,15 +461,21 @@
   // ---------- 會員管理 ----------
   async function renderMembers() {
     const db = window.Members.client;
-    const [{ data: people, error }, { data: rows }, { data: invites, error: inviteErr }] = await Promise.all([
+    const [{ data: people, error }, { data: rows }, { data: invites, error: inviteErr }, { data: myClasses }, { data: memberships }] = await Promise.all([
       db.from('profiles').select('id, display_name, email, role, enrolled, created_at').order('created_at', { ascending: false }),
       db.from('progress').select('user_id, done'),
       db.from('teacher_invites').select('email, created_at').order('created_at', { ascending: false }),
+      db.from('classes').select('id, name').eq('teacher_id', window.Members.user.id).order('created_at', { ascending: false }),
+      db.from('class_members').select('class_id, user_id'),
     ]);
+    // 每位會員在哪幾個班（只看得到自己開的班）：社群連結發出去後，有人登入了卻沒進班，要一眼看出來、直接編班
+    const classes = myClasses || [];
+    const classesOf = (uid) => classes.filter((c) => (memberships || []).some((m) => m.class_id === c.id && m.user_id === uid));
     const body = $('[data-admin-body]');
     if (error) { body.innerHTML = `<div class="card"><p>讀取會員失敗：${esc(error.message)}</p></div>`; return; }
     const doneCount = (uid) => (rows || []).filter((r) => r.user_id === uid && r.done).length;
     const filters = {
+      noclass: (u) => u.role !== 'teacher' && !classesOf(u.id).length,
       pending: (u) => !u.enrolled && u.role !== 'teacher',
       enrolled: (u) => u.enrolled && u.role !== 'teacher',
       teacher: (u) => u.role === 'teacher',
@@ -479,7 +485,7 @@
     const q = memberSearch.trim().toLowerCase();
     const list = people.filter(filters[memberFilter])
       .filter((u) => !q || `${u.display_name || ''} ${u.email || ''}`.toLowerCase().includes(q));
-    const label = { pending: '待開通', enrolled: '已開通', teacher: '講師', all: '全部' };
+    const label = { noclass: '還沒進班', pending: '待開通', enrolled: '已開通', teacher: '講師', all: '全部' };
     // 邀請講師：資料庫還沒加上邀請功能時（inviteErr），提示要執行 add-teacher-invites.sql
     const inviteBlock = inviteErr
       ? '<div class="card" style="margin-bottom:18px"><h3>✉️ 邀請講師</h3><p class="muted">要啟用這個功能，請到 Supabase SQL Editor 執行一次 <code>supabase/add-teacher-invites.sql</code>。</p></div>'
@@ -498,20 +504,23 @@
         <input type="search" class="admin-search" data-member-search value="${esc(memberSearch)}" placeholder="搜尋姓名或 Email">
         <button type="button" class="btn btn-sm btn-ghost" data-export="members">⬇️ 匯出 CSV</button>
       </div>
-      <div class="table-wrap"><table class="roster"><thead><tr><th>會員</th><th>Email</th><th>加入日期</th><th>完成單元</th><th>狀態</th><th>操作</th></tr></thead>
+      <div class="table-wrap"><table class="roster"><thead><tr><th>會員</th><th>Email</th><th>加入日期</th><th>完成單元</th><th>狀態</th><th>班級</th><th>操作</th></tr></thead>
       <tbody>${list.map((u) => `<tr>
         <td>${esc(u.display_name || '（未命名）')}</td><td>${esc(u.email)}</td>
         <td>${new Date(u.created_at).toLocaleDateString('zh-TW')}</td><td>${doneCount(u.id)}</td>
         <td>${u.role === 'teacher' ? '<span class="pill pill-brand">講師</span>' : u.enrolled ? '<span class="pill pill-ok">已開通</span>' : '<span class="pill pill-warn">待開通</span>'}</td>
+        <td data-tour="add-class">${classesOf(u.id).map((c) => esc(c.name)).join('、') || '<span class="muted">（沒有）</span>'}
+          ${classes.some((c) => !classesOf(u.id).includes(c)) ? `<select class="admin-add-class" data-add-class="${u.id}" data-name="${esc(u.display_name || u.email || '')}" aria-label="把 ${esc(u.display_name || u.email || '這位會員')} 編入班級">
+            <option value="">＋ 編入班級…</option>${classes.filter((c) => !classesOf(u.id).includes(c)).map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>` : ''}</td>
         <td>${u.id === window.Members.user.id ? '<span class="muted">（你自己）</span>' : `
           <button type="button" class="btn btn-sm" data-set="${u.id}" data-enrolled="${!u.enrolled}" data-role="${u.role}">${u.enrolled ? '取消開通' : '開通'}</button>
           <button type="button" class="btn btn-sm btn-ghost" data-set="${u.id}" data-enrolled="true" data-role="${u.role === 'teacher' ? 'student' : 'teacher'}">${u.role === 'teacher' ? '改回學員' : '設為講師'}</button>`}</td>
-      </tr>`).join('') || '<tr><td colspan="6" class="muted">這個分類目前沒有會員。</td></tr>'}</tbody></table></div>
-      <p class="muted" style="margin:10px 0 0">學員用 Google 登入後會出現在「待開通」。用加入碼加入班級的學員會自動開通。${q ? `　目前搜尋：「${esc(memberSearch)}」，共 ${list.length} 筆。` : ''}</p></div>`;
+      </tr>`).join('') || '<tr><td colspan="7" class="muted">這個分類目前沒有會員。</td></tr>'}</tbody></table></div>
+      <p class="muted" style="margin:10px 0 0">學員用 Google 登入後會出現在「待開通」。用加入碼加入、或在這裡「編入班級」的學員都會自動開通。${q ? `　目前搜尋：「${esc(memberSearch)}」，共 ${list.length} 筆。` : ''}</p></div>`;
     body.dataset.membersCsv = window.CourseLib.toCSV([
-      ['顯示名稱', 'Email', '加入日期', '完成單元數', '狀態'],
+      ['顯示名稱', 'Email', '加入日期', '完成單元數', '狀態', '班級'],
       ...list.map((u) => [u.display_name || '', u.email || '', new Date(u.created_at).toLocaleDateString('zh-TW'), doneCount(u.id),
-        u.role === 'teacher' ? '講師' : u.enrolled ? '已開通' : '待開通']),
+        u.role === 'teacher' ? '講師' : u.enrolled ? '已開通' : '待開通', classesOf(u.id).map((c) => c.name).join('、')]),
     ]);
   }
 
@@ -693,6 +702,25 @@
     if (!error) renderSignups();
   });
 
+  // 會員管理：編入班級
+  host.addEventListener('change', async (e) => {
+    const sel = e.target.closest('[data-add-class]');
+    if (!sel || !sel.value) return;
+    const name = sel.selectedOptions[0].textContent;
+    if (!window.confirm(`把「${sel.dataset.name}」編入「${name}」嗎？編進去就會開通全部單元。`)) { sel.value = ''; return; }
+    sel.disabled = true;
+    const { error } = await window.Members.client.rpc('admin_add_to_class', { target_class: sel.value, member: sel.dataset.addClass });
+    if (error) {
+      sel.disabled = false; sel.value = '';
+      toast(/admin_add_to_class|function|schema cache/i.test(error.message)
+        ? '資料庫還沒有編班功能：請到 Supabase 執行一次 supabase/add-community.sql'
+        : `編班失敗：${error.message}`);
+      return;
+    }
+    toast(`已編入「${name}」`);
+    renderMembers();
+  });
+
   host.addEventListener('click', async (e) => {
     const t = e.target.closest('[data-admin-tab]');
     if (t) { tab = t.dataset.adminTab; render(); return; }
@@ -853,6 +881,6 @@
   render();
 
   window.Tour.register([
-    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師；「報名管理」可以新增、編輯梯次（時間、地點、費用、名額），招生頁會自動顯示，並有可以分享的報名連結；收到款項後把報名者改成「已繳費」，按「🔑 開通通知」複製含加入碼的訊息給學員；每個梯次會自動有一個同名班級，在「班級」看全班進度、控制開放單元、刪除不用的班，並用「上課前檢查」看誰還沒預習、複製提醒訊息；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
+    { tour: 'dash', title: '管理後台', text: '「會員管理」可以開通學員、設定講師，「還沒進班」列出登入了卻沒加入班級的人，在「班級」欄直接編入班級；「報名管理」可以新增、編輯梯次（時間、地點、費用、名額），招生頁會自動顯示，並有可以分享的報名連結；收到款項後把報名者改成「已繳費」，按「🔑 開通通知」複製含加入碼的訊息給學員；每個梯次會自動有一個同名班級，在「班級」看全班進度、控制開放單元、刪除不用的班，並用「上課前檢查」看誰還沒預習、複製提醒訊息；「聯絡留言」是招生頁聯絡表單收到的洽詢，回覆完記得標記。「總覽」的「資料備份」可以一鍵匯出全部資料，每個月存一份。' },
   ]);
 })();

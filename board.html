@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>交流留言板｜Vibe Coding 實戰課</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202610020608">
+  <style>
+    .bd-form textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: var(--radius-s); border: 1.5px solid var(--line); background: var(--card); color: var(--ink); resize: vertical; }
+    .bd-form textarea:focus { outline: 3px solid var(--brand-soft); border-color: var(--brand); }
+    .bd-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .bd-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; }
+    .bd-post { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 14px 16px; }
+    .bd-post.is-teacher { border-left: 4px solid var(--teacher); }
+    .bd-meta { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; font-size: .85rem; color: var(--muted); margin-bottom: 6px; }
+    .bd-meta b { color: var(--ink); font-size: .95rem; }
+    .bd-body { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+    .bd-del { margin-left: auto; }
+  </style>
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">學員交流</span>
+    <h1>交流<em>留言板</em></h1>
+    <p class="lead">卡關求救、分享你做出來的東西、互相幫忙。開通的學員和講師都看得到；訪客和還沒開通的人看不到。</p>
+    <div class="callout callout-warn">貼之前想一下：<b>金鑰、密碼、真實的名單和電話不要貼</b>。要貼錯誤訊息，先把裡面的鑰匙換成 xxx（單元 06）。</div>
+  </section>
+
+  <section class="slide" id="board" data-tour="board">
+    <div data-board><p class="muted">載入中…</p></div>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="learn.html">課程教材</a>．<a href="learn.html#feedback">意見回饋</a>．<a href="me.html">我的學習</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
+
+<script src="assets/js/lib.js?v=202610020608"></script>
+<script src="assets/js/config.js?v=202610020608"></script>
+<script src="assets/js/core.js?v=202610020608"></script>
+<script src="assets/js/members.js?v=202610020608"></script>
+<script src="assets/js/tour.js?v=202610020608"></script>
+<script src="assets/js/board.js?v=202610020608"></script>
+</body>
+</html>
