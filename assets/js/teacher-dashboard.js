@@ -361,7 +361,7 @@
     }
     const rows = data || [];
     const { CONTACT_TOPICS } = window.CourseLib;
-    const PAGE = { enroll: '招生頁', security: '資安課頁' };
+    const PAGE = { enroll: '招生頁', security: '資安課頁', 'learn.html': '課程首頁．意見回饋', learn: '課程首頁．意見回饋', works: '作品牆．投稿' };
     body.dataset.messagesCsv = window.CourseLib.toCSV([
       ['稱呼', '聯絡方式', '主題', '內容', '來自', '已回覆', '留言時間'],
       ...rows.map((r) => [r.name, r.contact, CONTACT_TOPICS[r.topic] || r.topic, r.message, PAGE[r.page] || r.page || '',
@@ -370,7 +370,7 @@
     const waiting = rows.filter((r) => !r.handled).length;
     body.innerHTML = `<div class="card" style="margin-bottom:18px">
         <h3>✉️ 聯絡留言</h3>
-        <p>招生頁、資安課頁的聯絡表單會進到這裡，<b>只有講師讀得到</b>。回覆完按「標記已回覆」，下次一眼就知道還有哪些沒處理。</p>
+        <p>招生頁、資安課頁的聯絡表單，課程首頁的「意見回饋」，作品牆的「投稿作品」都會進到這裡，<b>只有講師讀得到</b>。回覆完按「標記已回覆」，下次一眼就知道還有哪些沒處理。</p>
       </div>
       <div class="card">
         <div class="quiz-head"><h3 style="margin:0">留言（${rows.length}，未回覆 ${waiting}）</h3>
