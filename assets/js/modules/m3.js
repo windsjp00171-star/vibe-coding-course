@@ -120,6 +120,7 @@
     { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'parts', title: '指令健檢', text: '在左邊輸入你的指令，右邊會即時檢查五個零件齊不齊。' },
     { tour: 'steps', title: '拆成小步驟', text: '用 ↑ ↓ 把步驟排好，再按「檢查順序」。' },
+    { tour: 'keys', title: '講師的三個鍵', text: '複製、貼上、截圖：看到問題就截圖貼給 Claude Code，再說一句你要什麼。貼之前先看有沒有金鑰或個資。' },
     { tour: 'modes', title: '三種模式', text: '決定 Claude Code 要多自動。新手先用規劃模式和每次詢問。' },
     { tour: 'claudemd', title: '講師的守則', text: '講師所有專案共用的規矩，點卡片看每一條背後的原因。' },
     { tour: 'generator', title: 'CLAUDE.md 產生器', text: '填好勾好，右邊就會產生你的 CLAUDE.md，按複製貼給 Claude Code。' },
