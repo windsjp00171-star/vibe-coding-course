@@ -163,6 +163,7 @@
           <a class="btn btn-sm btn-ghost${pageKey === 'quizshow' ? ' is-here' : ''}" href="${base}quizshow.html" data-tour="quizshow"${pageKey === 'quizshow' ? ' aria-current="page"' : ''} title="課堂搶答：投影出來，學員舉手作答">${ico('target')}搶答</a>
           ${current ? `<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">${ico('print')}講義</button>` : ''}
           <a class="btn btn-sm btn-ghost" href="${base}glossary.html${current ? `?from=${current.id}` : ''}" data-tour="glossary" title="看不懂的專業名詞，這裡查">${ico('book')}名詞</a>
+          <a class="btn btn-sm btn-ghost${pageKey === 'board' ? ' is-here' : ''}" href="${base}board.html" data-tour="board-link"${pageKey === 'board' ? ' aria-current="page"' : ''} title="開通的學員和講師一起討論：卡關求救、分享作品">${ico('chat')}留言板</a>
           <span data-auth-slot data-tour="auth"></span>
         </div>
         <button type="button" class="btn btn-sm btn-help" data-action="tour">？ 教學</button>
@@ -196,6 +197,7 @@
     print: '<path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="1.5"/><path d="M7 14h10v7H7z"/>',
     clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
     book: '<path d="M4 5c3-1.5 5.5-1.5 8 .5 2.5-2 5-2 8-.5v14c-3-1.5-5.5-1.5-8 .5-2.5-2-5-2-8-.5z"/><path d="M12 5.5v14"/>',
+    chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
   };
   const ico = (name) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</svg>`;
 

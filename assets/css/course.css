@@ -1541,3 +1541,8 @@ html { scroll-padding-top: 76px; }
 .fb-stars legend { font-weight: 700; font-size: .92rem; margin-bottom: 6px; padding: 0; }
 .fb-stars label { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; cursor: pointer; }
 .fb-stars input { width: 20px; height: 20px; accent-color: var(--brand-fill); }
+
+/* 單元 03「講師的三個鍵」：畫成鍵盤上的鍵帽（只在這一段，其他地方的 kbd 維持原樣） */
+#three-keys kbd { display: inline-block; padding: 1px 7px; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 6px; background: var(--card); color: var(--ink); font-weight: 700; line-height: 1.5; white-space: nowrap; }
+.key-caps { font-size: 1.3rem; margin: 0 0 6px; }
+.key-caps kbd { padding: 4px 12px; }

@@ -36,7 +36,7 @@ const pages = [
         const text = (el.innerText || '').trim();
         const isNative = el.matches(NATIVE) || el.closest(NATIVE);
         // 標明是示意圖（.shot、role=img）的畫面，裡面畫的按鈕本來就不能按
-        if (el.closest('.shot, [role=img], [aria-hidden=true]')) continue;
+        if (el.closest('.shot, [role=img], [aria-hidden=true], kbd')) continue; // kbd：畫成鍵盤按鍵，大家都知道是在說鍵盤
         if (!isNative && text.length >= 1 && text.length <= 28 && !text.includes('\n')) {
           const r = el.getBoundingClientRect();
           const radius = parseFloat(cs.borderTopLeftRadius) || 0;

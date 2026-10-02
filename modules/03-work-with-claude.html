@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202610020618">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610020618">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202610021106">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610021106">
 </head>
 <body data-module="m3" data-base="../">
 <header data-course-header></header>
@@ -84,8 +84,33 @@
     </div>
   </section>
 
-  <section class="slide" id="modes" data-tour="modes">
+  <section class="slide" id="three-keys" data-tour="keys">
     <div class="section-head"><span class="section-num">03</span>
+      <div><h2>講師的三個鍵：複製、貼上、截圖</h2>
+        <p>跟 Claude Code 合作，最常做的不是打字，而是<b>把你看到的東西原封不動交給它</b>。這三個鍵練熟，溝通快一半。</p></div></div>
+    <div class="grid grid-3 keys-grid">
+      <div class="card key-card"><p class="key-caps"><kbd>Ctrl</kbd> + <kbd>C</kbd></p><h3>📋 複製</h3>
+        <p>錯誤訊息、終端機的紅字、網頁上的文字：<b>整段複製</b>，不要自己重打、不要只說「它壞了」。少一個字，AI 可能就猜錯方向。</p>
+        <p class="muted">Mac：<kbd>⌘</kbd> + <kbd>C</kbd></p></div>
+      <div class="card key-card"><p class="key-caps"><kbd>Ctrl</kbd> + <kbd>V</kbd></p><h3>📥 貼上</h3>
+        <p>貼進 Claude Code 的對話框。<b>截圖也能直接貼</b>：按完截圖鍵，回到 Claude Code 按 <kbd>Ctrl</kbd> + <kbd>V</kbd>，圖片就附上去了。</p>
+        <p class="muted">Mac：<kbd>⌘</kbd> + <kbd>V</kbd></p></div>
+      <div class="card key-card"><p class="key-caps"><kbd>PrtSc</kbd></p><h3>📸 截圖</h3>
+        <p>鍵盤右上角、<kbd>F12</kbd> 旁邊那顆。按一下，整個畫面就進了剪貼簿，直接貼給 Claude Code：「畫面長這樣，我要的是……」。</p>
+        <p class="muted">只截一塊：<kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>　｜　Mac：<kbd>⌘</kbd> + <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd>　｜　筆電可能要加按 <kbd>Fn</kbd></p></div>
+    </div>
+    <div class="analogy" style="margin-top:16px"><strong>講師的口訣：看到 → 截圖 → 貼上 → 說一句你要什麼。</strong>「按鈕跑到畫面外了」不如一張截圖加一句「這顆按鈕要在表格下面」。AI 看圖比聽你形容準。</div>
+    <div class="callout callout-warn" style="margin-top:12px"><b>貼之前看一眼（單元 06）：</b>截圖和複製的內容裡，有沒有金鑰、密碼、別人的電話和名單？有的話先遮掉或換成 xxx 再貼。</div>
+    <div class="card" style="margin-top:16px"><h3>現在就試一次</h3>
+      <ul class="checklist" data-checklist="m3-keys">
+        <li><label><input type="checkbox" value="copy"> 把這一頁的標題複製（<kbd>Ctrl</kbd> + <kbd>C</kbd>），貼到記事本（<kbd>Ctrl</kbd> + <kbd>V</kbd>）</label></li>
+        <li><label><input type="checkbox" value="shot"> 按 <kbd>PrtSc</kbd> 或 <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> 截一張圖，貼到 Claude Code 的對話框（先不要送出）</label></li>
+        <li><label><input type="checkbox" value="ask"> 在圖片後面打一句「這張圖裡有什麼？」送出，看它讀不讀得懂</label></li>
+      </ul></div>
+  </section>
+
+  <section class="slide" id="modes" data-tour="modes">
+    <div class="section-head"><span class="section-num">04</span>
       <div><h2>你可以決定它要多「自動」</h2>
         <p>Claude Code 可以切換不同的權限模式。名稱和位置可能隨版本調整，概念是一樣的。</p></div></div>
     <div class="grid grid-3">
@@ -98,7 +123,7 @@
   </section>
 
   <section class="slide" id="claude-md" data-tour="claudemd">
-    <div class="section-head"><span class="section-num">04</span>
+    <div class="section-head"><span class="section-num">05</span>
       <div><h2>CLAUDE.md：寫一次，每次都照做</h2>
         <p>每次開新對話，Claude Code 都會先讀專案資料夾裡的 <code>CLAUDE.md</code>。把你的規矩寫進去，就不用每次重講。</p></div></div>
     <div class="analogy"><strong>就像新同事報到第一天拿到的員工手冊：</strong>公司的習慣、不能碰的東西、做完要怎麼回報，寫清楚，大家都省事。</div>
@@ -131,7 +156,7 @@
   </section>
 
   <section class="slide" id="generator" data-tour="generator">
-    <div class="section-head"><span class="section-num">05</span>
+    <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker mode mode-play">動手做</span><h2>產生你的第一份 CLAUDE.md</h2><p>填好、勾選，複製下來貼給 Claude Code，請它存成專案裡的 CLAUDE.md。</p></div></div>
     <div class="split">
       <div class="card form-grid">
@@ -149,7 +174,7 @@
   </section>
 
   <section class="slide" id="handoff" data-tour="handoff">
-    <div class="section-head"><span class="section-num">06</span>
+    <div class="section-head"><span class="section-num">07</span>
       <div><h2>AI 會「失憶」，所以要留紙條</h2>
         <p>對話太長時，Claude Code 會把前面的內容壓縮成摘要，細節可能就不見了。開新對話更是從零開始。</p></div></div>
     <div class="grid grid-2">
@@ -167,13 +192,13 @@
   </section>
 
   <section class="slide" id="rescue" data-tour="rescue">
-    <div class="section-head"><span class="section-num">07</span>
+    <div class="section-head"><span class="section-num">08</span>
       <div><h2>萬用救援句</h2><p>AI 越改越亂、一直出錯的時候，複製這些句子給它。</p></div></div>
     <div class="grid grid-2" data-rescue></div>
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
-    <div class="section-head"><span class="section-num">08</span>
+    <div class="section-head"><span class="section-num">09</span>
       <div><span class="kicker mode mode-class">課中工作坊</span><h2>A／B 指令對決</h2><p>同一個題目、兩種說法，看看 Claude Code 交出來的東西差多少。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>兩人一組</p>
@@ -201,14 +226,14 @@
   </section>
 
   <section class="slide" id="quiz" data-tour="quiz">
-    <div class="section-head"><span class="section-num">09</span>
+    <div class="section-head"><span class="section-num">10</span>
       <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
 
   <section class="slide" id="homework">
-    <div class="section-head"><span class="section-num">10</span>
+    <div class="section-head"><span class="section-num">11</span>
       <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
     <div class="card"><ul class="checklist" data-checklist="m3-home">
       <li><label><input type="checkbox" value="md"> 把產生的 CLAUDE.md 放進你的練習專案，開新對話問它「你讀到了哪些規矩？」</label></li>
@@ -221,16 +246,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 03</div></footer>
 
-<script src="../assets/js/lib.js?v=202610020618"></script>
-<script src="../assets/js/quiz-bank.js?v=202610020618"></script>
-<script src="../assets/js/config.js?v=202610020618"></script>
-<script src="../assets/js/core.js?v=202610020618"></script>
-<script src="../assets/js/members.js?v=202610020618"></script>
-<script src="../assets/js/tour.js?v=202610020618"></script>
-<script src="../assets/js/glossary-data.js?v=202610020618"></script>
-<script src="../assets/js/glossary.js?v=202610020618"></script>
-<script src="../assets/js/workbench.js?v=202610020618"></script>
-<script src="../assets/js/sims/m3-brief.js?v=202610020618"></script>
-<script src="../assets/js/modules/m3.js?v=202610020618"></script>
+<script src="../assets/js/lib.js?v=202610021106"></script>
+<script src="../assets/js/quiz-bank.js?v=202610021106"></script>
+<script src="../assets/js/config.js?v=202610021106"></script>
+<script src="../assets/js/core.js?v=202610021106"></script>
+<script src="../assets/js/members.js?v=202610021106"></script>
+<script src="../assets/js/tour.js?v=202610021106"></script>
+<script src="../assets/js/glossary-data.js?v=202610021106"></script>
+<script src="../assets/js/glossary.js?v=202610021106"></script>
+<script src="../assets/js/workbench.js?v=202610021106"></script>
+<script src="../assets/js/sims/m3-brief.js?v=202610021106"></script>
+<script src="../assets/js/modules/m3.js?v=202610021106"></script>
 </body>
 </html>
