@@ -236,7 +236,7 @@ Paper is nearly square (3px). Magnets and fields use gently rounded corners (10p
 - **Corner Style:** near square (3px).
 - **Background:** paper sheet, with a hairline border at 70% board-line.
 - **Shadow Strategy:** taped-paper shadow (see Elevation).
-- **Tape:** a 72x20px translucent yellow strip centred on the top edge, rotated 2deg. Nested cards and quiz/classify/order frames carry no tape.
+- **Tape:** a 72x20px translucent yellow strip centred on the top edge, rotated 2deg — only on things that really are a sheet of paper: the workshop handout (`.ws-how`), the landing page's sign-up page mock, and sticky notes. Ordinary cards carry no tape, so the tape keeps its meaning.
 
 ### Inputs / Fields
 - **Style:** white field, 1.5px board-line edge, 10px radius, 10px 14px padding; blue caret and accent colour.
@@ -278,7 +278,9 @@ Code, terminal and the Claude Code workbench simulator keep their own dark scree
 - **Do** keep `data-tour` attributes, form `name`s and JS-dependent ids and `data-*` untouched when restyling.
 - **Do** label a section only when the label says what the reader does there: `.kicker.mode` with `mode-play` (blue), `mode-class` (ink), `mode-extra` (green), `mode-quiz` (green) or `mode-case` (red). Each gets its stroke icon from CSS.
 - **Do** keep emoji that illustrate content (course-map unit pictures, flip-card fronts, quizshow unit chips): they are recognition aids for content, not UI icons.
-- **Do** render a row of equal cards inside a section (`.slide .grid-3 > .card`) as one taped sheet split by marker rules, not as separate floating cards.
+- **Do** render a row of equal cards inside a section (`.slide .grid-3 > .card`) as one sheet split by marker rules, not as separate floating cards.
+- **Do** treat presenter mode as the classroom board, not the website: the header shrinks to a slim unit label (tools and progress hidden, Esc exits), content widens to 1480px, and interactive controls scale up.
+- **Do** give a section more space above its heading than below it.
 
 ### Don't:
 - **Don't** use gradients, glows, neon, sheens or rainbow borders as decoration.

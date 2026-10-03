@@ -293,7 +293,8 @@
   function slides() { return $$('.slide').filter((s) => s.getClientRects().length > 0); }
 
   // 投影時一段一頁。內容比螢幕高就整段等比縮小，否則下面會被切掉看不到。
-  const HEADER_H = 84;
+  // 投影時頁首縮成一條細的單元名稱，高度用量的，不寫死
+  const headerH = () => (document.querySelector('.site-header')?.offsetHeight || 84) + 12;
   const MIN_ZOOM = 0.72; // 再小投影幕後排就看不清楚了，寧可分兩次捲
   let fitTimer = null;
 
@@ -302,7 +303,7 @@
     el.style.minHeight = '';
     if (!document.documentElement.classList.contains('presenting')) return;
     if (el.offsetParent === null) return; // 還沒開放或被隱藏的段落，等它出現再量
-    const avail = window.innerHeight - HEADER_H;
+    const avail = window.innerHeight - headerH();
     const zoom = el.scrollHeight > avail ? Math.max(MIN_ZOOM, avail / el.scrollHeight) : 1;
     if (zoom < 1) el.style.zoom = zoom.toFixed(3);
     el.style.minHeight = `${Math.round(avail / zoom)}px`;
@@ -411,7 +412,7 @@
       // 縮到最小還是放不下的長段落（例如課程地圖），先把這一段捲完再換頁，不要跳過去
       const here = slides()[currentSlide()];
       const bottom = here ? here.getBoundingClientRect().bottom : 0;
-      if (bottom > window.innerHeight + 8) window.scrollBy({ top: window.innerHeight - HEADER_H - 40, behavior: 'smooth' });
+      if (bottom > window.innerHeight + 8) window.scrollBy({ top: window.innerHeight - headerH() - 40, behavior: 'smooth' });
       else goSlide(currentSlide() + 1);
     }
     if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goSlide(currentSlide() - 1); }
