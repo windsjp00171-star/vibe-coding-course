@@ -91,7 +91,7 @@
     const wb = {
       async story(from, text, cta) {
         const el = add('msg-story', `<div class="wb-phone"><b>${esc(from)}</b><p>${esc(text)}</p></div>
-          <button type="button" class="btn btn-primary" data-value="go">${esc(cta)} 開始任務 →</button>`);
+          <button type="button" class="btn btn-primary" data-value="go">${esc(cta)} →</button>`);
         await buttons(el, '[data-value]');
       },
       async claude(text) {
@@ -112,9 +112,9 @@
       },
       async boom(text) {
         await wait(calm ? 0 : 300);
-        add('msg-boom', `<p>💥 ${esc(text)}</p>`);
+        add('msg-boom', `<p>${esc(text)}</p>`); // 每一句都自帶表情，不再疊一個 💥
         host.classList.remove('is-hit'); void host.offsetWidth; host.classList.add('is-hit');
-        setTimeout(() => host.classList.remove('is-hit'), 700);
+        setTimeout(() => host.classList.remove('is-hit'), 300);
       },
       choose(options) {
         const el = add('msg-choose', options.map((o) => `<button type="button" class="btn" data-value="${esc(o.value)}">${esc(o.label)}</button>`).join(''));
@@ -123,7 +123,7 @@
       async permission(action, detail, note) {
         const el = add('msg-perm', `<p class="wb-perm-q">Claude 想要<b>${esc(action)}</b></p><code>${esc(detail)}</code>
           ${note ? `<p class="muted">${esc(note)}</p>` : ''}
-          <div class="wb-perm-btns"><button type="button" class="btn btn-ok" data-value="allow">允許</button><button type="button" class="btn" data-value="deny">拒絕</button></div>`);
+          <div class="wb-perm-btns"><button type="button" class="btn" data-value="allow">允許</button><button type="button" class="btn" data-value="deny">拒絕</button></div>`);
         return (await buttons(el, '[data-value]')) === 'allow';
       },
       prompt({ placeholder, hints = [] }) {
@@ -216,7 +216,7 @@
             `<span class="${k < stars ? 'is-on' : ''}" style="--d:${k * 220}ms" aria-hidden="true">${k < stars ? '★' : '☆'}</span>`).join('')}</p>
           <h3>任務完成！</h3>
           <p>${mistakes ? `過程中踩了 ${mistakes} 個坑，沒關係，在模擬裡踩總比在真的電腦上踩好。` : '一個坑都沒踩，太強了！'}</p>
-          <p><b>你剛剛做的，就是 Vibe Coding：</b></p>
+          <p><b>這次練到的：</b></p>
           <ul>${lessons.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>
           ${config.after ? `<p class="muted">${esc(config.after)}</p>` : ''}`);
       },

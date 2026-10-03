@@ -289,3 +289,12 @@
 :root .wb-input:has(textarea:disabled) .wb-row { display: none; }
 /* 「重來一次」等開始之後才出現，手機上不會自己孤零零佔一行 */
 :root .wb:not(:has(.wb-missions li:is(.is-now, .is-done))) [data-wb-reset] { display: none; }
+/* 第五輪（2026-10）：允許／拒絕兩顆一樣重，不先用綠色暗示答案；動畫一律 ≤300ms、不重複 */
+:root .msg-boom { animation: shake 300ms ease 1; }
+:root .wb-msg { animation: wb-in .3s var(--ease) both; }
+:root .msg-perm { animation: wb-in .3s var(--ease) both; }
+:root .msg-notify { animation: wb-drop .3s var(--ease) both; }
+:root .wb-preview.is-new { animation: wb-flash 300ms var(--ease); }
+:root .wb-stars span { animation-duration: .3s; }
+:root .wb.is-hit .wb-chat::after { animation-duration: .3s; }
+:root .wb-missions li.is-done span::after { animation-duration: .3s; }
