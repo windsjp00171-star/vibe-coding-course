@@ -81,8 +81,9 @@
   function renderAgency() {
     const a = AGENCY[Number(agency.value)];
     const bg = { ok: 'var(--ok-soft)', warn: 'var(--warn-soft)', danger: 'var(--danger-soft)' }[a.tone];
-    agency.setAttribute('aria-valuetext', ['只能讀', '寫草稿', '可以寄信', '可以刪資料', '管理員'][Number(agency.value)]);
-    $('[data-agency-out]').innerHTML = `<div class="agency-card" style="background:${bg}"><b>萬一被騙，最糟的情況：</b>${esc(a.worst)}</div>`;
+    const level = ['只能讀', '寫草稿', '可以寄信', '可以刪資料', '管理員'][Number(agency.value)];
+    agency.setAttribute('aria-valuetext', level);
+    $('[data-agency-out]').innerHTML = `<div class="agency-card" style="background:${bg}"><b class="agency-level">${level}</b><b>萬一被騙，最糟的情況：</b>${esc(a.worst)}</div>`;
   }
   agency.addEventListener('input', renderAgency);
   renderAgency();
@@ -154,7 +155,7 @@
     { tour: 'sim', title: '先玩再學', text: '模擬的 Claude Code：跟著情境自己下指令、做判斷，玩壞了按「重來一次」。' },
     { tour: 'secretary', title: '螢光筆照照看', text: '挑一份文件，按「螢光筆照照看」，看看人看不到、AI 卻讀得到的字藏在哪裡。' },
     { tour: 'keys', title: '權限滑桿', text: '拉動滑桿，看看給 AI 越大的權限，被騙時損失有多大。' },
-    { tour: 'gate', title: '你是門神', text: 'AI 代理人會提出 8 個請求，由你決定允許或不允許，就像 Claude Code 跳出的「允許嗎？」。' },
+    { tour: 'gate', title: '你是門神', text: '一句話記住門神的判斷原則。想多練習，可以展開「再當 8 次門神」，自己決定允許或不允許。' },
     { tour: 'cc', title: 'Claude Code 也是代理人', text: '把學到的判斷用在每天的 Claude Code 上。' },
     { tour: 'workshop', title: '紅隊演練', text: '課堂上分組當一次壞人，試試看能不能騙到 AI。' },
   ]);

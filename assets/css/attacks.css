@@ -45,3 +45,12 @@
 /* 權限拉桿的刻度字放大一點 */
 :root .agency-scale { font-size: .9rem; }
 :root .doc-paper { min-height: 0; }
+/* 第四輪：文件是一張貼在板上的紙，不是輸入框（拿掉內圈，換成紙的陰影與膠帶） */
+:root .doc-paper { position: relative; box-shadow: 0 1px 1px rgb(29 35 39 / 6%), 0 14px 26px -18px rgb(29 35 39 / 40%); margin-top: 10px; }
+:root .doc-paper::before { content: ""; position: absolute; top: -10px; left: 50%; width: 64px; height: 18px; translate: -50% 0; rotate: -2deg; background: var(--tape); border-radius: 1px; pointer-events: none; }
+/* 權限拉桿：目前等級寫在結果卡上；手機上刻度只留兩端，免得五個字擠在一起 */
+:root .agency-level { display: block; font-family: var(--hand-text); font-size: 1.3rem; margin-bottom: 4px; }
+@media (max-width: 640px) { :root .agency-scale span:not(:first-child):not(:last-child) { display: none; } }
+/* 文件直接貼在白板上，不再包一層白卡片 */
+:root .secretary > .card { background: transparent; border: 0; box-shadow: none; padding: 0; }
+@media print { .doc-paper::before { display: none; } }
