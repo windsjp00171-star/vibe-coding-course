@@ -1574,5 +1574,5 @@ html { scroll-padding-top: 76px; }
 @media (max-width: 640px) { :root .workshop .time { display: block; margin-right: 0; } }
 /* 內容區裡可以按的東西至少 44px 高（手機手指按得到） */
 :root main :is(.chip, .btn-sm, .tab-row [data-tab]) { min-height: 44px; }
-:root main details > summary { min-height: 44px; display: flex; align-items: center; gap: 6px; }
+:root main details > summary { min-height: 44px; display: list-item; padding-block: 10px; } /* list-item 保留展開三角形；flex 會把它吃掉 */
 :root .gate-tool summary { display: list-item; padding-block: 10px; min-height: 0; }
