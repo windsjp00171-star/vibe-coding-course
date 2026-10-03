@@ -1567,3 +1567,12 @@ html { scroll-padding-top: 76px; }
 :root.presenting .slide { scroll-margin-top: 52px; }
 :root.presenting main.wrap { width: min(1480px, 100% - 64px); }
 :root.presenting :is(.agency-scale, .gate-tool, .chip, .gate-actions .btn) { font-size: 1rem; }
+
+/* ---------- 評分修正（2026-10，第三輪）：全站共用元件 ---------- */
+/* 工作坊時間表：時間和內容分開，手機上時間自成一行，講師在後排也指得到「現在第幾段」 */
+:root .workshop .time { display: inline-block; min-width: 5.5em; margin-right: .6em; }
+@media (max-width: 640px) { :root .workshop .time { display: block; margin-right: 0; } }
+/* 內容區裡可以按的東西至少 44px 高（手機手指按得到） */
+:root main :is(.chip, .btn-sm, .tab-row [data-tab]) { min-height: 44px; }
+:root main details > summary { min-height: 44px; display: flex; align-items: center; gap: 6px; }
+:root .gate-tool summary { display: list-item; padding-block: 10px; min-height: 0; }

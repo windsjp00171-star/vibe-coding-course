@@ -280,3 +280,12 @@
 /* 輪到你打字：輸入框一道實心橘框，不閃 */
 :root .wb-input.is-your-turn textarea { outline: 3px solid color-mix(in srgb, var(--wb-accent) 45%, transparent); outline-offset: 1px; }
 @media (prefers-reduced-motion: reduce) { :root .msg-perm, :root .msg-typing i, :root .wb-dots i { animation: none !important; } }
+
+/* ---------- 評分修正（2026-10，第三輪）：開始前不要有一大片空白、不要假裝能打字 ---------- */
+/* 預覽和檔案都還是空的時候，右邊整欄先收起來，對話區佔滿；有東西出現才展開 */
+:root .wb:has(.wb-preview > .wb-empty):has(.wb-files > li.muted:only-child) .wb-side { display: none; }
+:root .wb:has(.wb-preview > .wb-empty):has(.wb-files > li.muted:only-child) .wb-main { grid-template-columns: 1fr; min-height: 0; }
+/* 輸入列只在輪到你打字時出現；沒輪到時是灰的、看起來像要你打字，反而讓人困惑 */
+:root .wb-input:has(textarea:disabled) .wb-row { display: none; }
+/* 「重來一次」等開始之後才出現，手機上不會自己孤零零佔一行 */
+:root .wb:not(:has(.wb-missions li:is(.is-now, .is-done))) [data-wb-reset] { display: none; }
