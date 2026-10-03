@@ -29,10 +29,11 @@ grant insert on public.signups to anon, authenticated;
 grant select, update, delete on public.signups to authenticated;
 
 -- ---------- 結業證書 ----------
-grant select, insert, update on public.certificates to authenticated;
+-- 只給讀取；發證書走 issue_certificate()（fix-security.sql），不能讓網頁直接寫入
+grant select on public.certificates to authenticated;
 
 -- ---------- 檢查（可以單獨執行這段，把結果截圖給我）----------
--- 預期：anon 對 cohorts 有 SELECT、對 signups 有 INSERT；authenticated 對 certificates 有 INSERT/SELECT/UPDATE
+-- 預期：anon 對 cohorts 有 SELECT、對 signups 有 INSERT；authenticated 對 certificates 只有 SELECT
 -- select grantee, table_name, string_agg(privilege_type, ', ' order by privilege_type) as privileges
 --   from information_schema.role_table_grants
 --  where table_schema = 'public' and table_name in ('cohorts', 'signups', 'certificates')
