@@ -18,18 +18,16 @@ create unique index if not exists certificates_user_idx on public.certificates (
 
 alter table public.certificates enable row level security;
 
--- 2) 學員只能操作自己的證書；講師可以看全部（後台要查）
+-- 2) 學員只看得到自己的證書；講師可以看全部（後台要查）
+--    發證書、改名字只能透過 fix-security.sql 的 issue_certificate()（資料庫自己檢查開通與成績）。
+--    這裡不能再開「自己寫入證書」的規則，否則重跑這支就會把資安修正蓋掉。
 drop policy if exists "自己發自己的證書" on public.certificates;
-create policy "自己發自己的證書" on public.certificates for insert to authenticated
-  with check (auth.uid() = user_id);
 
 drop policy if exists "自己看自己的證書" on public.certificates;
 create policy "自己看自己的證書" on public.certificates for select to authenticated
   using (auth.uid() = user_id or public.is_teacher());
 
 drop policy if exists "自己更新自己的證書" on public.certificates;
-create policy "自己更新自己的證書" on public.certificates for update to authenticated
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 -- 3) 公開驗證：只能用「完整的證書編號」查，而且只回傳姓名、分數、日期。
 --    不開放列表查詢，避免有人把所有學員名單抓下來。
@@ -50,4 +48,5 @@ grant execute on function public.verify_certificate(text) to anon, authenticated
 
 -- 4) 表權限（同上：RLS 之外還要 GRANT）
 grant usage on schema public to authenticated;
-grant select, insert, update on public.certificates to authenticated;
+grant select on public.certificates to authenticated;
+revoke insert, update, delete on public.certificates from anon, authenticated;

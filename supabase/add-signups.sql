@@ -72,6 +72,13 @@ create policy "任何人都能報名" on public.signups for insert to anon, auth
     exists (select 1 from public.cohorts c where c.id = cohort_id and c.is_open)
     and char_length(name) between 1 and 40
     and char_length(email) between 5 and 120
+    and coalesce(char_length(phone), 0) <= 30
+    and coalesce(char_length(org), 0) <= 80
+    and coalesce(char_length(role), 0) <= 80
+    and coalesce(char_length(goal), 0) <= 1000
+    and coalesce(char_length(source), 0) <= 80
+    and note is null
+    and user_id is null
     and status in ('registered', 'waitlisted')
   );
 
