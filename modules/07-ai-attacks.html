@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202610021106">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610021106">
-  <link rel="stylesheet" href="../assets/css/attacks.css?v=202610021106">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202610030206">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610030206">
+  <link rel="stylesheet" href="../assets/css/attacks.css?v=202610030206">
 </head>
 <body data-module="m7" data-base="../">
 <header data-course-header></header>
@@ -64,21 +64,15 @@
 
   <section class="slide" id="secretary" data-tour="secretary">
     <div class="section-head"><span class="section-num">02</span>
-      <div><h2>AI 秘書模擬器</h2><p>選一份文件交給 AI 秘書摘要。用「螢光筆」照照看，文件裡藏了什麼？再打開或關掉防護，比較結果。</p></div></div>
+      <div><h2>用螢光筆照照看：文件裡藏了什麼？</h2><p>剛剛的模擬裡，壞人把指令藏在信裡。挑一份文件，按「螢光筆」照出人看不到、但 AI 讀得到的字。</p></div></div>
     <div class="secretary screen-only" data-secretary>
       <div class="card">
         <div class="chip-row" data-docs style="margin-bottom:12px"></div>
         <div class="doc-paper" data-doc></div>
         <div class="secretary-tools">
-          <label class="switch"><input type="checkbox" data-highlighter> 🖍️ 螢光筆（照出隱藏文字）</label>
-          <label class="switch"><input type="checkbox" data-guard> 🛡️ 防護開關</label>
+          <button type="button" class="btn" data-highlighter aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l-4 4h4l2-2M9 15l7-7 4 4-7 7zM14 6l4 4"/></svg>螢光筆照照看</button>
         </div>
-        <button type="button" class="btn btn-primary" data-run>🤖 請 AI 秘書摘要這份文件</button>
-      </div>
-      <div class="card">
-        <p class="kicker">AI 秘書的動作</p>
-        <div data-ai-output aria-live="polite"><p class="muted">還沒開始。先選一份文件，按下左邊的按鈕。</p></div>
-        <ol class="steps" data-attack-steps style="padding:0;margin-top:16px"></ol>
+        <div data-ai-output aria-live="polite"></div>
       </div>
     </div>
     <div data-teacher-slot="m7-1"></div>
@@ -99,7 +93,7 @@
 
   <section class="slide" id="gate" data-tour="gate">
     <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker mode mode-play">動手玩</span><h2>你是門神</h2><p>一個幫公司處理行政的 AI 代理人，會陸續提出 8 個請求。你決定放行還是退回。<b>放走一個危險的請求，會扣很多分。</b></p></div></div>
+      <div><span class="kicker mode mode-play">動手玩</span><h2>你是門神</h2><p>一個幫公司處理行政的 AI 代理人，會陸續提出 8 個請求。就像 Claude Code 跳出「允許嗎？」，你一個一個決定：允許，還是不允許。</p></div></div>
     <div class="card screen-only" data-gate></div>
   </section>
 
@@ -117,7 +111,7 @@
     <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker mode mode-class">課中工作坊</span><h2>騙騙看 AI（紅隊演練）</h2><p>當一次壞人，才知道要怎麼防。</p></div></div>
     <div class="ws-how card">
-      <p><b>怎麼分組</b>三人一組</p>
+      <p><b>怎麼分組</b>3～4 人一組</p>
       <p><b>要準備</b>紙筆</p>
       <p><b>做完要交出</b>一份「哪些動作要人點頭」的清單，貼在你的專案 CLAUDE.md 裡</p>
       <p class="muted">下面是時間表，講師會在每一段開始前說一次。跟不上也沒關係，重點是做出上面那個產出。</p>
@@ -160,16 +154,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 07</div></footer>
 
-<script src="../assets/js/lib.js?v=202610021106"></script>
-<script src="../assets/js/quiz-bank.js?v=202610021106"></script>
-<script src="../assets/js/config.js?v=202610021106"></script>
-<script src="../assets/js/core.js?v=202610021106"></script>
-<script src="../assets/js/members.js?v=202610021106"></script>
-<script src="../assets/js/tour.js?v=202610021106"></script>
-<script src="../assets/js/glossary-data.js?v=202610021106"></script>
-<script src="../assets/js/glossary.js?v=202610021106"></script>
-<script src="../assets/js/workbench.js?v=202610021106"></script>
-<script src="../assets/js/sims/m7-gate.js?v=202610021106"></script>
-<script src="../assets/js/modules/m7.js?v=202610021106"></script>
+<script src="../assets/js/lib.js?v=202610030206"></script>
+<script src="../assets/js/quiz-bank.js?v=202610030206"></script>
+<script src="../assets/js/config.js?v=202610030206"></script>
+<script src="../assets/js/core.js?v=202610030206"></script>
+<script src="../assets/js/members.js?v=202610030206"></script>
+<script src="../assets/js/tour.js?v=202610030206"></script>
+<script src="../assets/js/glossary-data.js?v=202610030206"></script>
+<script src="../assets/js/glossary.js?v=202610030206"></script>
+<script src="../assets/js/workbench.js?v=202610030206"></script>
+<script src="../assets/js/sims/m7-gate.js?v=202610030206"></script>
+<script src="../assets/js/modules/m7.js?v=202610030206"></script>
 </body>
 </html>

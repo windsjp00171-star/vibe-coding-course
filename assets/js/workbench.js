@@ -39,7 +39,7 @@
         </section>
         <section class="wb-side" aria-label="網頁預覽與檔案">
           <div class="wb-side-head">🌐 預覽<span data-wb-sitehint></span></div>
-          <div class="wb-preview"><p class="wb-empty">還沒有網頁。<br>跟 Claude Code 說你要做什麼，這裡就會長出來。</p></div>
+          <div class="wb-preview"><p class="wb-empty">${config.previewEmpty ? esc(config.previewEmpty) : '還沒有網頁。<br>跟 Claude Code 說你要做什麼，這裡就會長出來。'}</p></div>
           <div class="wb-side-head">📁 檔案</div>
           <ul class="wb-files" data-wb-files><li class="muted">（空的）</li></ul>
         </section>

@@ -14,7 +14,7 @@
     { id: 'm4', part: 'B 上線', emoji: '💾', title: 'Git 與 GitHub 白話講', file: 'modules/04-git-github.html', minutes: 20, inClass: 25, post: 15, must: ['git-vs-github', 'claude-git'], mustMin: 8 },
     { id: 'm5', part: 'B 上線', emoji: '🚀', title: '把作品放上網路', file: 'modules/05-deploy.html', minutes: 20, inClass: 35, post: 15, must: ['static', 'pages'], mustMin: 10 },
     { id: 'm6', part: 'C 資安與存資料', emoji: '🔑', title: '鑰匙與機密別外流', file: 'modules/06-secrets.html', minutes: 20, inClass: 30, post: 10, must: ['what', 'pack', 'leaked'], mustMin: 10 },
-    { id: 'm7', part: 'C 資安與存資料', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 20, inClass: 35, post: 10, must: ['why', 'claude-code'], mustMin: 8 },
+    { id: 'm7', part: 'C 資安與存資料', emoji: '🛡️', title: 'AI 會被騙：你是門神', file: 'modules/07-ai-attacks.html', minutes: 20, inClass: 35, post: 10, must: ['sim', 'claude-code'], mustMin: 12 },
     { id: 'm8', part: 'C 資安與存資料', emoji: '🩺', title: '上線前的 Vibe Check', file: 'modules/08-vibe-check.html', minutes: 25, inClass: 35, post: 15, must: ['traps', 'checklist'], mustMin: 10 },
     { id: 'm10', part: 'C 資安與存資料', emoji: '🗄️', title: '存資料：放在哪、誰看得到', file: 'modules/10-supabase.html', minutes: 25, inClass: 150, post: 20, must: ['where', 'matrix', 'template'], mustMin: 12 },
     { id: 'm20', part: 'C 資安與存資料', emoji: '🛟', title: '三個月後還救得回來嗎', file: 'modules/20-handover.html', minutes: 20, inClass: 35, post: 15, must: ['pack', 'drill'], mustMin: 10 },
