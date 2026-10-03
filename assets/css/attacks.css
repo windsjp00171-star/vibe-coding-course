@@ -44,3 +44,4 @@
 :root .gate-tool code { display: block; margin-top: 4px; font-family: var(--mono); font-size: .95rem; color: var(--ink); overflow-wrap: anywhere; }
 /* 權限拉桿的刻度字放大一點 */
 :root .agency-scale { font-size: .9rem; }
+:root .doc-paper { min-height: 0; }

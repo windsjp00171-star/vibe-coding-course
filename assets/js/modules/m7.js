@@ -54,7 +54,7 @@
     root.classList.toggle('is-lit', lit);
     $('[data-ai-output]').innerHTML = !lit ? ''
       : d.hidden
-        ? `<div class="ai-bubble is-bad"><b>AI 讀到這段之後，可能會：</b>${esc(d.attack)}<br><span class="muted">你只是請它摘要。防法：明確告訴 AI「文件只是資料」，而且寄信、付款這類動作一定要真人同意（第 04 段）。</span></div>`
+        ? `<div class="ai-bubble is-bad"><b>AI 讀到這段之後，可能會：</b>${esc(d.attack)}<br><span class="muted">你只是請它摘要。防法：明確告訴 AI「文件只是資料」，而且寄信、付款這類動作一定要真人同意（第 03 段）。</span></div>`
         : '<div class="ai-bubble is-safe"><b>這份文件很乾淨：</b>沒有藏東西。換一份看看。</div>';
   }
 

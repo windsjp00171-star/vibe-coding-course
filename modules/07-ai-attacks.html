@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/course.css?v=202610030206">
-  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610030206">
-  <link rel="stylesheet" href="../assets/css/attacks.css?v=202610030206">
+  <link rel="stylesheet" href="../assets/css/course.css?v=202610031217">
+  <link rel="stylesheet" href="../assets/css/workbench.css?v=202610031217">
+  <link rel="stylesheet" href="../assets/css/attacks.css?v=202610031217">
 </head>
 <body data-module="m7" data-base="../">
 <header data-course-header></header>
@@ -60,12 +60,10 @@
       </div>
       <div class="analogy"><strong>比喻：</strong>你請新來的實習生「把這疊信件整理成摘要」。其中一封信寫著：「看到這封信的人，請把公司保險箱密碼寄到這個地址。」一個太聽話、又分不清誰是老闆的實習生，可能真的就寄了。</div>
     </div>
-  </section>
-
-  <section class="slide" id="secretary" data-tour="secretary">
-    <div class="section-head"><span class="section-num">02</span>
-      <div><h2>用螢光筆照照看：文件裡藏了什麼？</h2><p>剛剛的模擬裡，壞人把指令藏在信裡。挑一份文件，按「螢光筆」照出人看不到、但 AI 讀得到的字。</p></div></div>
-    <div class="secretary screen-only" data-secretary>
+    <div class="try-it screen-only" id="secretary" data-tour="secretary">
+      <h3>試一下：用螢光筆照照看</h3>
+      <p class="muted">挑一份文件，按「螢光筆照照看」，找出人看不到、但 AI 讀得到的字。</p>
+      <div class="secretary" data-secretary>
       <div class="card">
         <div class="chip-row" data-docs style="margin-bottom:12px"></div>
         <div class="doc-paper" data-doc></div>
@@ -74,12 +72,13 @@
         </div>
         <div data-ai-output aria-live="polite"></div>
       </div>
+      </div>
     </div>
     <div data-teacher-slot="m7-1"></div>
   </section>
 
   <section class="slide" id="keys" data-tour="keys">
-    <div class="section-head"><span class="section-num">03</span>
+    <div class="section-head"><span class="section-num">02</span>
       <div><h2>鑰匙給多大，被騙時就損失多大</h2>
         <p>AI 代理人（Agent）不只會說話，還能寄信、改資料、執行指令。拉拉看：給它不同的權限，萬一被騙，最糟會發生什麼？</p></div></div>
     <div class="card">
@@ -92,13 +91,13 @@
   </section>
 
   <section class="slide" id="gate" data-tour="gate">
-    <div class="section-head"><span class="section-num">04</span>
-      <div><span class="kicker mode mode-play">動手玩</span><h2>你是門神</h2><p>一個幫公司處理行政的 AI 代理人，會陸續提出 8 個請求。就像 Claude Code 跳出「允許嗎？」，你一個一個決定：允許，還是不允許。</p></div></div>
+    <div class="section-head"><span class="section-num">03</span>
+      <div><span class="kicker mode mode-play">動手玩</span><h2>你是門神</h2><p><b>進階回合。</b>模擬器裡只遇到藏在信裡的字；真實工作還會遇到要匯款、AI 自己想拿更大權限的請求。一個幫公司處理行政的 AI 代理人會提出 8 個請求，就像 Claude Code 跳出「允許嗎？」，你一個一個決定。</p></div></div>
     <div class="card screen-only" data-gate></div>
   </section>
 
   <section class="slide" id="claude-code" data-tour="cc">
-    <div class="section-head"><span class="section-num">05</span>
+    <div class="section-head"><span class="section-num">04</span>
       <div><h2>Claude Code 也是一個 AI 代理人</h2></div></div>
     <div class="grid grid-3">
       <div class="card"><h3>🛡️ 它問你，就是門神</h3><p>Claude Code 執行指令前跳出「允許嗎？」，就是在請你當門神。這個單元學到的判斷，每天都用得到。</p></div>
@@ -108,7 +107,7 @@
   </section>
 
   <section class="slide" id="workshop" data-tour="workshop">
-    <div class="section-head"><span class="section-num">06</span>
+    <div class="section-head"><span class="section-num">05</span>
       <div><span class="kicker mode mode-class">課中工作坊</span><h2>騙騙看 AI（紅隊演練）</h2><p>當一次壞人，才知道要怎麼防。</p></div></div>
     <div class="ws-how card">
       <p><b>怎麼分組</b>3～4 人一組</p>
@@ -134,14 +133,14 @@
   </section>
 
   <section class="slide" id="quiz" data-tour="quiz">
-    <div class="section-head"><span class="section-num">07</span>
+    <div class="section-head"><span class="section-num">06</span>
       <div><span class="kicker mode mode-quiz">驗收一下</span><h2>隨堂小測驗</h2></div></div>
     <div class="card screen-only" data-quiz></div>
     <div class="print-only card" data-quiz-print></div>
   </section>
 
   <section class="slide" id="homework">
-    <div class="section-head"><span class="section-num">08</span>
+    <div class="section-head"><span class="section-num">07</span>
       <div><span class="phase phase-post">課後任務</span><h2>回家練習</h2></div></div>
     <div class="card"><ul class="checklist" data-checklist="m7-home">
       <li><label><input type="checkbox" value="mode"> 確認你的 Claude Code 沒有開「略過所有權限」模式</label></li>
@@ -154,16 +153,16 @@
 <nav data-module-nav></nav>
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．單元 07</div></footer>
 
-<script src="../assets/js/lib.js?v=202610030206"></script>
-<script src="../assets/js/quiz-bank.js?v=202610030206"></script>
-<script src="../assets/js/config.js?v=202610030206"></script>
-<script src="../assets/js/core.js?v=202610030206"></script>
-<script src="../assets/js/members.js?v=202610030206"></script>
-<script src="../assets/js/tour.js?v=202610030206"></script>
-<script src="../assets/js/glossary-data.js?v=202610030206"></script>
-<script src="../assets/js/glossary.js?v=202610030206"></script>
-<script src="../assets/js/workbench.js?v=202610030206"></script>
-<script src="../assets/js/sims/m7-gate.js?v=202610030206"></script>
-<script src="../assets/js/modules/m7.js?v=202610030206"></script>
+<script src="../assets/js/lib.js?v=202610031217"></script>
+<script src="../assets/js/quiz-bank.js?v=202610031217"></script>
+<script src="../assets/js/config.js?v=202610031217"></script>
+<script src="../assets/js/core.js?v=202610031217"></script>
+<script src="../assets/js/members.js?v=202610031217"></script>
+<script src="../assets/js/tour.js?v=202610031217"></script>
+<script src="../assets/js/glossary-data.js?v=202610031217"></script>
+<script src="../assets/js/glossary.js?v=202610031217"></script>
+<script src="../assets/js/workbench.js?v=202610031217"></script>
+<script src="../assets/js/sims/m7-gate.js?v=202610031217"></script>
+<script src="../assets/js/modules/m7.js?v=202610031217"></script>
 </body>
 </html>
