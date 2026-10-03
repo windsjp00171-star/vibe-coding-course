@@ -26,3 +26,21 @@
 .gate-actions .btn { flex: 1 1 180px; padding: 14px; }
 .gate-log { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: .9rem; }
 .gate-log li { display: flex; gap: 8px; }
+
+/* ---------- 白板改版（2026-10）：精簡後的單元 07 ---------- */
+/* 螢光筆：一顆磁鐵按鈕，按下去變便利貼黃 */
+:root .secretary { grid-template-columns: 1fr; }
+:root .secretary [data-highlighter][aria-pressed="true"] { background: var(--sticky); color: var(--sticky-ink); border-color: color-mix(in srgb, var(--warn) 50%, var(--sticky)); box-shadow: var(--magnet-down); transform: translateY(1px); }
+:root .secretary [data-ai-output]:not(:empty) { margin-top: 14px; }
+/* 文件紙：深色模式下是燈光暗一點的紙，不是刺眼的純白 */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .doc-paper { background: #dfe3e1; box-shadow: none; } :root:not([data-theme="light"]) .doc-paper .hidden-text { color: #dfe3e1; } }
+:root[data-theme="dark"] .doc-paper { background: #dfe3e1; box-shadow: none; }
+:root[data-theme="dark"] .doc-paper .hidden-text { color: #dfe3e1; }
+:root .secretary.is-lit .doc-paper .hidden-text { color: #b3261e; background: var(--sticky); }
+/* 門神：跟 Claude Code 一樣的「允許／不允許」，兩顆一樣重的白色磁鐵；對錯的紅綠只出現在按完之後 */
+:root .gate-actions .btn { font-size: 1.05rem; }
+:root .gate-tool { margin-top: 4px; font-family: var(--font); font-size: .9rem; color: var(--muted); }
+:root .gate-tool summary { cursor: pointer; width: fit-content; }
+:root .gate-tool code { display: block; margin-top: 4px; font-family: var(--mono); font-size: .95rem; color: var(--ink); overflow-wrap: anywhere; }
+/* 權限拉桿的刻度字放大一點 */
+:root .agency-scale { font-size: .9rem; }

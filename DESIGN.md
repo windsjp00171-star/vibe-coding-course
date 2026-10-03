@@ -133,7 +133,7 @@ Every unit is the instructor standing at a conference-room whiteboard, making on
 
 The board is a cool white enamel with a faint 32px grid, not beige paper. Things written on the board are flat. Things stuck to the board have physical logic: paper sheets are held by a translucent strip of tape, sticky notes are taped flat, and anything you can press is a magnet with soft thickness that sinks into the board when pressed. The header is the pen tray along the bottom edge of the board. In dark mode the same board becomes a glass blackboard (玻璃黑板) with brightened inks.
 
-The density suits the product floor: elders and non-technical staff read these pages, so body text is a large, calm print face and the hand-drawn voice is reserved for headings, numerals and annotations. Motion is short and never blocks input.
+The density suits the audience: non-technical office workers, often reading on a phone, so body text is a large, calm print face and the hand-drawn voice is reserved for headings, numerals and annotations. Motion is short and never blocks input.
 
 **Key Characteristics:**
 - Four marker inks plus sticky-note yellow; teacher-mode purple is the only exception.
@@ -189,7 +189,7 @@ A strictly counted marker set on cool white enamel: black, blue, red, green, and
 - **Numeral** (Kalam 700): unit number (2rem, underlined 3px in black), section numbers (1.6rem, 1.25rem on mobile), quiz keys, step numbers and stats.
 
 ### Named Rules
-**The Hand For Headings Rule.** Handwriting (`--hand-text`) is for h1, h2 and short annotations only. Paragraphs, options, form text and quiz questions stay in the print face, because elders must be able to read them.
+**The Hand For Headings Rule.** Handwriting (`--hand-text`) is for h1, h2 and short annotations only. Paragraphs, options, form text and quiz questions stay in the print face, because they must stay easy to read on a phone.
 
 **The Kalam Is For Digits Rule.** `--hand` (Kalam) is used only for numerals and short number-like marks, never for sentences.
 
@@ -277,7 +277,7 @@ Code, terminal and the Claude Code workbench simulator keep their own dark scree
 - **Do** keep the faint 32px grid on the board ground, and keep dark mode as the glass blackboard with brightened inks and separate `*-fill` solids.
 - **Do** keep `data-tour` attributes, form `name`s and JS-dependent ids and `data-*` untouched when restyling.
 - **Do** label a section only when the label says what the reader does there: `.kicker.mode` with `mode-play` (blue), `mode-class` (ink), `mode-extra` (green), `mode-quiz` (green) or `mode-case` (red). Each gets its stroke icon from CSS.
-- **Do** keep emoji that illustrate content (course-map unit pictures, flip-card fronts, quizshow unit chips): for elderly readers they are recognition aids, not UI icons.
+- **Do** keep emoji that illustrate content (course-map unit pictures, flip-card fronts, quizshow unit chips): they are recognition aids for content, not UI icons.
 - **Do** render a row of equal cards inside a section (`.slide .grid-3 > .card`) as one taped sheet split by marker rules, not as separate floating cards.
 
 ### Don't:

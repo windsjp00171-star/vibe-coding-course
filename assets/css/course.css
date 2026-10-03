@@ -1546,3 +1546,9 @@ html { scroll-padding-top: 76px; }
 #three-keys kbd { display: inline-block; padding: 1px 7px; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 6px; background: var(--card); color: var(--ink); font-weight: 700; line-height: 1.5; white-space: nowrap; }
 .key-caps { font-size: 1.3rem; margin: 0 0 6px; }
 .key-caps kbd { padding: 4px 12px; }
+
+/* ---------- 評分修正（2026-10）：全站共用 ---------- */
+/* 「用這一課的題目玩課堂搶答」是講師用的，學員模式不顯示 */
+:root:not([data-mode="teacher"]) .quizshow-link { display: none; }
+/* 勾選框、單選鈕太小不好按 */
+:root input[type="checkbox"], :root input[type="radio"] { min-width: 20px; min-height: 20px; }
