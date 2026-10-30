@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>金鑰體檢站｜Vibe Coding 實戰課</title>
+  <meta name="description" content="AI 幫你寫的程式，有沒有把密碼、金鑰直接寫進去？貼上來 30 秒檢查。免費、不用登入，內容只在你的瀏覽器裡處理，不會上傳。">
+  <!-- 分享到 LINE／Facebook 時的預覽（標題、說明、圖） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vibe Coding 實戰課">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="金鑰體檢站｜Vibe Coding 實戰課">
+  <meta property="og:description" content="AI 幫你寫的程式，有沒有把密碼、金鑰直接寫進去？貼上來 30 秒檢查。免費、不用登入，不會上傳。">
+  <meta property="og:url" content="https://windsjp00171-star.github.io/vibe-coding-course/scan.html">
+  <meta property="og:image" content="https://windsjp00171-star.github.io/vibe-coding-course/assets/img/og-course.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/course.css?v=202610301102">
+</head>
+<body data-base="./">
+<header data-course-header></header>
+
+<main class="wrap">
+  <section class="module-hero slide">
+    <span class="eyebrow">免費．不用登入</span>
+    <h1>AI 寫的程式，<em>鑰匙外洩了嗎</em>？</h1>
+    <p class="lead">Vibe Coding 最常見的事故，是密碼和金鑰被直接寫進程式、再一起上傳到網路。把程式貼進來，30 秒告訴你有沒有。<b>內容只在你的瀏覽器裡檢查，不會上傳到任何地方。</b></p>
+  </section>
+
+  <section class="slide" id="scan">
+    <div class="split screen-only">
+      <div class="card" data-tour="scan-box">
+        <label for="scan-code"><b>貼上要檢查的程式碼</b></label>
+        <textarea id="scan-code" class="code-input" data-scan-input spellcheck="false" style="min-height:220px" placeholder="把 AI 幫你寫的程式貼在這裡，例如整個檔案的內容"></textarea>
+        <div class="chip-row" data-presets style="margin-top:10px"></div>
+        <p style="margin-top:10px"><button type="button" class="btn btn-primary" data-scan>🩺 開始體檢</button></p>
+        <p class="muted" style="margin:0">請不要貼真的金鑰，用假的練習就好。如果貼過真的，當作已經外洩，去服務商後台換一把新的。</p>
+      </div>
+      <div class="card" data-tour="scan-result" data-scan-result aria-live="polite"><p class="muted">體檢報告會出現在這裡。</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="callout"><b>能抓到什麼：</b>寫死的密碼與金鑰（OpenAI／Claude 的 <code>sk-</code>、GitHub、Google、AWS、Supabase 的 <code>service_role</code>）、直接拼進資料庫查詢的字、直接叫電腦執行指令、AI 編出來的不存在套件。<br><b>抓不到的：</b>這只是幾條簡單的規則，沒有問題不代表安全。上線前還是要走完整的檢查表。</div>
+    <p style="margin-top:16px"><a class="btn btn-primary" href="learn.html">看完整課程：做東西，也不被騙 →</a>　<a class="btn btn-ghost" href="pitfalls.html">講師踩過的 27 個坑</a></p>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><a href="learn.html">回課程首頁</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
+
+<script src="assets/js/lib.js?v=202610301102"></script>
+<script src="assets/js/config.js?v=202610301102"></script>
+<script src="assets/js/core.js?v=202610301102"></script>
+<script src="assets/js/members.js?v=202610301102"></script>
+<script src="assets/js/tour.js?v=202610301102"></script>
+<script>
+  (function () {
+    const { $, $$, esc } = window.Course;
+    const { scanCode } = window.CourseLib;
+    // 每一種問題對應到教它怎麼修的單元
+    const FIX_UNIT = {
+      secret: { file: 'modules/06-secrets.html', name: '單元 06 鑰匙與機密別外流' },
+      shell: { file: 'modules/08-vibe-check.html', name: '單元 08 上線前的 Vibe Check' },
+      sql: { file: 'modules/08-vibe-check.html', name: '單元 08 上線前的 Vibe Check' },
+      package: { file: 'modules/08-vibe-check.html', name: '單元 08 上線前的 Vibe Check' },
+    };
+    const PRESETS = [
+      { name: '🚨 金鑰寫死', code: "import OpenAI from 'openai';\n\nconst openai = new OpenAI({\n  apiKey: \"sk-proj-7890abcdef1234567890\",\n});" },
+      { name: '🚨 拼接查詢', code: "app.get('/user', (req, res) => {\n  const id = req.query.id;\n  const sql = \"SELECT * FROM users WHERE id = '\" + id + \"'\";\n  db.query(sql, (err, rows) => res.json(rows));\n});" },
+      { name: '✅ 修好的版本', code: "require('dotenv').config();\nconst OpenAI = require('openai');\n\nconst openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });\ndb.query('SELECT * FROM users WHERE id = ?', [id]);" },
+    ];
+    const input = $('[data-scan-input]');
+    const host = $('[data-scan-result]');
+    $('[data-presets]').innerHTML = PRESETS.map((p, i) => `<button type="button" class="chip" data-preset="${i}">${esc(p.name)}</button>`).join('');
+    $('[data-presets]').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-preset]');
+      if (!b) return;
+      input.value = PRESETS[Number(b.dataset.preset)].code;
+      host.innerHTML = '<p class="muted">按「開始體檢」。</p>';
+    });
+    $('[data-scan]').addEventListener('click', () => {
+      if (!input.value.trim()) { host.innerHTML = '<p class="muted">先貼上一段程式碼，或點下面的範例。</p>'; return; }
+      const findings = scanCode(input.value);
+      if (!findings.length) {
+        host.innerHTML = '<div class="feedback ok"><b>✅ 沒有發現常見問題</b><br>這只查得到幾種問題，上線前還是要走完整的檢查表。</div>';
+        return;
+      }
+      host.innerHTML = `<p class="kicker">體檢報告：發現 ${findings.length} 個問題</p>${findings.map((f) => {
+        const fix = FIX_UNIT[f.rule];
+        return `<div class="feedback ${f.level === 'danger' ? 'bad' : ''}" style="${f.level === 'warn' ? 'background:var(--warn-soft)' : ''};margin-bottom:8px">
+          <b>第 ${f.line} 行．${esc(f.title)}</b><br>${esc(f.plain)}${fix ? `<br><a href="${fix.file}">怎麼修：${esc(fix.name)} →</a>` : ''}</div>`;
+      }).join('')}`;
+    });
+    window.Tour.register([
+      { tour: 'scan-box', title: '貼上程式碼', text: '把 AI 幫你寫的程式貼進來，或點下面的範例。內容只在你的瀏覽器裡檢查，不會上傳。' },
+      { tour: 'scan-result', title: '體檢報告', text: '按「開始體檢」後，這裡會列出每個問題在第幾行、為什麼危險，以及去哪個單元學怎麼修。' },
+    ]);
+  })();
+</script>
+</body>
+</html>
