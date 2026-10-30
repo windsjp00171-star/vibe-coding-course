@@ -1581,3 +1581,13 @@ html { scroll-padding-top: 76px; }
 :root main :is(.chip, .btn-sm, .tab-row [data-tab]) { min-height: 44px; }
 :root main details > summary { min-height: 44px; display: list-item; padding-block: 10px; } /* list-item 保留展開三角形；flex 會把它吃掉 */
 :root .gate-tool summary { display: list-item; padding-block: 10px; min-height: 0; }
+
+/* ---------- 手機點擊目標至少 44px（頁首按鈕、區段目錄、跳轉連結、頁尾連結） ---------- */
+@media (max-width: 720px) {
+  :root .site-header .btn, :root .map-jump a { min-height: 44px; }
+  :root .page-nav a { min-height: 44px; display: flex; align-items: center; }
+  .page-nav ul { padding-block: 4px; }
+  .site-footer a { padding-block: 12px; }
+  .brand { min-height: 44px; }
+  .fb-stars label { min-height: 44px; display: inline-flex; align-items: center; gap: 4px; }
+}
