@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202610301102">
+  <link rel="stylesheet" href="assets/css/course.css?v=202610301111">
   <style>
     .pit-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
     .pit-grid .flip { min-height: 300px; }
@@ -48,6 +48,8 @@
   <section class="slide" data-tour="pits">
     <div class="section-head"><span class="section-num">✦</span>
       <div><span class="kicker">圖鑑</span><h2>全部的坑</h2><p>正面是使用者看到的狀況，翻面看原因、教訓，以及下次可以直接對 Claude Code 說的話。</p></div></div>
+    <label for="pit-q" class="sr-only">用症狀搜尋</label>
+    <input id="pit-q" class="gl-search" type="search" placeholder="用你看到的狀況搜尋，例如：時間、LINE、沒反應、備份" data-pit-q data-tour="pit-search" style="font:inherit;width:100%;padding:12px 16px;margin-bottom:12px;border:1.5px solid var(--line);border-radius:var(--radius-m);background:var(--card);color:var(--ink)">
     <div class="chip-row" data-cats style="margin-bottom:16px"></div>
     <p class="muted" data-cat-desc></p>
     <div class="pit-grid" data-pits></div>
@@ -56,14 +58,14 @@
 
 <footer class="site-footer"><div class="wrap">Vibe Coding 實戰課．踩坑圖鑑</div></footer>
 
-<script src="assets/js/lib.js?v=202610301102"></script>
-<script src="assets/js/pitfalls-data.js?v=202610301102"></script>
-<script src="assets/js/config.js?v=202610301102"></script>
-<script src="assets/js/core.js?v=202610301102"></script>
-<script src="assets/js/members.js?v=202610301102"></script>
-<script src="assets/js/tour.js?v=202610301102"></script>
-<script src="assets/js/glossary-data.js?v=202610301102"></script>
-<script src="assets/js/glossary.js?v=202610301102"></script>
+<script src="assets/js/lib.js?v=202610301111"></script>
+<script src="assets/js/pitfalls-data.js?v=202610301111"></script>
+<script src="assets/js/config.js?v=202610301111"></script>
+<script src="assets/js/core.js?v=202610301111"></script>
+<script src="assets/js/members.js?v=202610301111"></script>
+<script src="assets/js/tour.js?v=202610301111"></script>
+<script src="assets/js/glossary-data.js?v=202610301111"></script>
+<script src="assets/js/glossary.js?v=202610301111"></script>
 <script>
   (function () {
     const { $, $$, esc, initFlips, mountQuiz } = window.Course;
@@ -75,9 +77,14 @@
     $('[data-cats]').innerHTML = [['all', { label: `全部 ${PITFALLS.length}` }], ...Object.entries(CATEGORIES)]
       .map(([k, c], i) => `<button type="button" class="chip" aria-pressed="${i === 0}" data-cat="${k}">${esc(c.label)}</button>`).join('');
 
-    function renderPits(cat) {
-      $('[data-cat-desc]').textContent = cat === 'all' ? '' : CATEGORIES[cat].desc;
-      $('[data-pits]').innerHTML = PITFALLS.filter((p) => cat === 'all' || p.cat === cat).map((p) => `
+    let curCat = 'all';
+    function renderPits(cat = curCat) {
+      curCat = cat;
+      const q = $('[data-pit-q]').value.trim().toLowerCase();
+      const shown = PITFALLS.filter((p) => (cat === 'all' || p.cat === cat)
+        && (!q || [p.title, p.symptom, p.cause, p.lesson, p.where].join(' ').toLowerCase().includes(q)));
+      $('[data-cat-desc]').textContent = shown.length ? (cat === 'all' ? '' : CATEGORIES[cat].desc) : '找不到符合的坑。換個說法試試，例如「時間」「LINE」「備份」。';
+      $('[data-pits]').innerHTML = shown.map((p) => `
         <div class="flip"><div class="flip-inner">
           <div class="flip-face flip-front"><span class="pill pill-brand">${esc(CATEGORIES[p.cat].label)}</span>
             <h3 style="margin-top:10px">${esc(p.title)}</h3><p>${esc(p.symptom)}</p><p class="pit-where">${esc(p.where)}</p>
@@ -93,6 +100,7 @@
       $$('[data-cat]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
       renderPits(b.dataset.cat);
     });
+    $('[data-pit-q]').addEventListener('input', () => renderPits());
     renderPits('all');
 
     // ---------- 猜原因（題目由圖鑑資料產生，選項打亂） ----------
@@ -107,6 +115,7 @@
 
     window.Tour.register([
       { tour: 'guess', title: '猜原因挑戰', text: '看使用者遇到的狀況，猜是什麼原因。每次隨機 8 題。' },
+      { tour: 'pit-search', title: '用症狀搜尋', text: '輸入你看到的狀況，例如「時間」「LINE」「備份」，下面只留下相關的坑。' },
       { tour: 'pits', title: '踩坑圖鑑', text: '上方可以依類型篩選，點卡片翻面看原因和解法。' },
     ]);
   })();
