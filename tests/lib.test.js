@@ -94,6 +94,18 @@ test('scanCode：單元 6「找鑰匙」遊戲的答案靠這個判斷，寫死�
   assert.deepEqual(lines('const c = new OpenAI({\n  apiKey: process.env.OPENAI_API_KEY,\n});'), [], '讀 process.env 的是正確寫法，不能被誤判');
 });
 
+test('scanCode：課程會用到的服務金鑰（GitHub、LINE、Supabase service_role）也要抓到，anon 金鑰不能誤報', () => {
+  const b64u = (o) => Buffer.from(JSON.stringify(o)).toString('base64url');
+  const jwt = (role) => `eyJ${b64u({ alg: 'HS256' })}.${b64u({ role })}.c2lnbmF0dXJlMTIzNDU2`;
+  const secret = (code) => lib.scanCode(code).filter((f) => f.rule === 'secret').map((f) => f.line);
+  assert.deepEqual(secret(`const key = "${jwt('service_role')}";`), [1]);
+  assert.deepEqual(secret(`const key = "${jwt('anon')}";`), [], 'anon 金鑰本來就公開，報警會讓學員以為連它都不能放前端');
+  assert.deepEqual(secret('token = "ghp_' + 'a'.repeat(36) + '"'), [1]);
+  assert.deepEqual(secret('AWS = "AKIA' + 'A'.repeat(16) + '"'), [1]);
+  assert.deepEqual(secret("const channelSecret = '0123456789abcdef0123456789abcdef';"), [1]);
+  assert.deepEqual(secret('const channelSecret = process.env.LINE_CHANNEL_SECRET;'), []);
+});
+
 test('scoreQuiz：可以指定較高的及格線（總測驗 80 分）', () => {
   const qs = Array.from({ length: 10 }, () => ({ answer: 0 }));
   const sevenFive = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1];

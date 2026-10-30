@@ -36,6 +36,27 @@
     'requests', 'flask', 'django', 'fastapi', 'pydantic', 'numpy', 'pandas',
   ]);
 
+  // 課程會用到的服務金鑰長相（GitHub、Google、AWS）。LINE 的 Channel secret／token 寫成 xxx = "..." 時，
+  // 已被下面的通用規則抓到。
+  const VENDOR_KEY_RES = [
+    /\bgh[pousr]_[A-Za-z0-9]{30,}/,
+    /\bgithub_pat_[A-Za-z0-9_]{30,}/,
+    /\bAIza[0-9A-Za-z_-]{35}/,
+    /\bAKIA[0-9A-Z]{16}\b/,
+  ];
+
+  // Supabase 的 anon 金鑰本來就是公開的，service_role 才是萬能鑰匙；兩者都是 JWT，
+  // 只能解開中間那段看 role，不能看到 eyJ 就報警。
+  function hasServiceRoleJwt(line) {
+    const found = String(line).match(/\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g) || [];
+    return found.some((jwt) => {
+      try {
+        const b64 = jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(atob(b64 + '='.repeat((4 - (b64.length % 4)) % 4))).role === 'service_role';
+      } catch (e) { return false; }
+    });
+  }
+
   const SCAN_RULES = [
     {
       id: 'secret',
@@ -43,7 +64,8 @@
       title: '密碼／金鑰直接寫在程式裡',
       plain: '就像把家裡鑰匙貼在大門上。程式一上傳到網路，幾分鐘內就可能被盜用。',
       test: (line) => /\bsk-[A-Za-z0-9_-]{8,}/.test(line) ||
-        /(api[_-]?key|password|secret|token)\s*[:=]\s*["'][^"']{6,}["']/i.test(line),
+        /(api[_-]?key|password|secret|token)\s*[:=]\s*["'][^"']{6,}["']/i.test(line) ||
+        VENDOR_KEY_RES.some((re) => re.test(line)) || hasServiceRoleJwt(line),
     },
     {
       id: 'shell',
