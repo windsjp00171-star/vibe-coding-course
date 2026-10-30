@@ -138,7 +138,7 @@
     // 逛起來會分不出「介紹頁」和「教材頁」的差別。
     const PAGE_NAMES = {
       index: '首頁', learn: '課程教材', enroll: '課程介紹與報名', security: '半日資安課', church: 'AI 資安講座',
-      works: '學員作品牆', verify: '結業證明查證', me: '我的學習', glossary: '名詞小辭典',
+      works: '學員作品牆', verify: '結業證明查證', me: '我的學習', glossary: '名詞小辭典', scan: '金鑰體檢站',
       pitfalls: '踩坑圖鑑', quizshow: '課堂搶答', handout: '紙本講義', teacher: '管理後台', quote: '內訓報價單',
       'guide-supabase': '圖解：Supabase', 'guide-line': '圖解：LINE Developers', 'guide-vercel': '圖解：Vercel', board: '交流留言板',
     };
