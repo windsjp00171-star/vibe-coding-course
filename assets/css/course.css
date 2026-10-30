@@ -832,6 +832,11 @@ body.is-locked [data-module-nav] { display: none; }
   }
   .header-tools::-webkit-scrollbar { display: none; }
   .header-tools > * { flex: 0 0 auto; }
+  /* 手機上品牌名稱只留「第幾單元」那行，騰出位置，登入鈕才不會被擠出畫面；搶答是投影用的，收起來 */
+  .brand > span:last-child { font-size: 0; }
+  .brand > span:last-child small { font-size: .8rem; }
+  .header-tools [data-auth-slot] { order: -1; }
+  .header-tools [data-tour="quizshow"] { display: none; }
   .page-nav { top: 0; }
   :root:not(.presenting) body:has(.page-nav:not([hidden])) .slide[id] { scroll-margin-top: 64px; }
 }

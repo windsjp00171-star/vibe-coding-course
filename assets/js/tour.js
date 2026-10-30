@@ -4,7 +4,7 @@
  * 以免版面調整改掉 class 後導覽默默失效。
  *
  * 用法：Tour.register([{ tour: 'mode', title: '…', text: '…' }, …])
- * 整個網站只有第一次來訪會自動播放；之後的新頁面只讓「？ 教學」按鈕閃幾下，隨時可以按它重看。
+ * 整個網站只有第一次來訪、而且是進到單元頁時才會自動播放；之後的新頁面只讓「？ 教學」按鈕閃幾下，隨時可以按它重看。
  */
 (function () {
   'use strict';
@@ -33,8 +33,9 @@
     if (seen[page]) return;
     const firstEver = Object.keys(seen).length === 0;
     try { localStorage.setItem(SEEN_KEY, JSON.stringify({ ...seen, [page]: true })); } catch { /* 忽略 */ }
-    // 從分享連結直接跳到頁面某一段（例如 #signup）時不自動播放，免得導覽把畫面捲回最上面
-    if (firstEver && !location.hash) setTimeout(start, 700);
+    // 從分享連結直接跳到頁面某一段（例如 #signup）時不自動播放，免得導覽把畫面捲回最上面。
+    // 首頁、教材入口這種第一眼的頁面也不自動播放：導覽視窗會蓋住標題，第一步又是講師用的功能。
+    if (firstEver && !location.hash && document.body.dataset.module) setTimeout(start, 700);
     else setTimeout(hintButton, 900);
   }
 
