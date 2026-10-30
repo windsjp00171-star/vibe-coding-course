@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] — 2026-10-30
+
+### Changed
+- 單元 08 程式碼體檢器、單元 06 找鑰匙：「寫死的密碼」現在也抓得到 Supabase `service_role` 金鑰、GitHub 與 Google 金鑰、AWS 金鑰。Supabase 的 `anon` 金鑰本來就公開，不會誤報。
+
 ## [Unreleased] — 2026-10-03
 
 ### Changed
