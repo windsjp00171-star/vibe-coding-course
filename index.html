@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Kalam:wght@700&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/course.css?v=202610301111">
-  <link rel="stylesheet" href="assets/css/landing.css?v=202610301111">
-  <link rel="stylesheet" href="assets/css/marketing.css?v=202610301111">
+  <link rel="stylesheet" href="assets/css/course.css?v=202610310903">
+  <link rel="stylesheet" href="assets/css/landing.css?v=202610310903">
+  <link rel="stylesheet" href="assets/css/marketing.css?v=202610310903">
 </head>
 <body class="mk" data-base="./">
 <header data-course-header></header>
@@ -40,16 +40,18 @@
     </div>
     </div>
 
-    <div class="lp-visual" aria-hidden="true">
-      <div class="mk-window">
-        <div class="mk-bar"><i></i><i></i><i></i><span>你做的報名頁</span></div>
+    <div class="lp-visual">
+      <div class="mk-window" data-hero-demo data-tour="hero-demo">
+        <div class="mk-bar"><i></i><i></i><i></i><span>AI 幫你寫的程式（試試看）</span></div>
         <div class="mk-body">
-          <p class="mk-title">🍱 週五部門聚餐報名</p>
-          <ul class="mk-list"><li>王小明<span>葷食</span></li><li>陳美美<span>素食</span></li><li>林大同<span>葷食</span></li></ul>
-          <p class="mk-note">上線中．已經有 12 位同事報名</p>
+          <pre class="mk-code" data-hero-code>const client = new OpenAI({
+  apiKey: "sk-proj-7890abcdef1234567890",
+});</pre>
+          <button type="button" class="btn btn-primary btn-sm" data-hero-scan>🩺 體檢這段程式</button>
+          <div class="mk-found" data-hero-result aria-live="polite"></div>
         </div>
       </div>
-      <div class="mk-chat">
+      <div class="mk-chat" aria-hidden="true">
         <span class="mk-flag">可疑</span>
         <b>「老闆」</b>
         <p>我現在在開會不方便講電話，<br>這筆款很急，<b>先別跟其他人講</b></p>
@@ -197,11 +199,11 @@
 
 <footer class="site-footer"><div class="wrap"><a href="enroll.html">課程介紹與報名</a>．<a href="security.html">半日資安課</a>．<a href="learn.html">課程教材</a>．<a href="works.html">學員作品牆</a>．<a href="verify.html">結業證明查證</a>．<a href="glossary.html">名詞小辭典</a>．<a href="privacy.html">隱私權政策</a>．Vibe Coding 實戰課</div></footer>
 
-<script src="assets/js/lib.js?v=202610301111"></script>
-<script src="assets/js/config.js?v=202610301111"></script>
-<script src="assets/js/core.js?v=202610301111"></script>
-<script src="assets/js/members.js?v=202610301111"></script>
-<script src="assets/js/tour.js?v=202610301111"></script>
+<script src="assets/js/lib.js?v=202610310903"></script>
+<script src="assets/js/config.js?v=202610310903"></script>
+<script src="assets/js/core.js?v=202610310903"></script>
+<script src="assets/js/members.js?v=202610310903"></script>
+<script src="assets/js/tour.js?v=202610310903"></script>
 <script>
   (function () {
     const { $ } = window.Course;
@@ -215,9 +217,18 @@
     };
     apply(window.Members?.profile);
     document.addEventListener('course:auth', (e) => apply(e.detail.profile));
-    window.Tour.register([]);
+    // 首頁右邊的體檢示範：用跟「金鑰體檢站」同一套規則真的掃一次
+    $('[data-hero-scan]').addEventListener('click', () => {
+      const found = window.CourseLib.scanCode($('[data-hero-code]').textContent)[0];
+      $('[data-hero-result]').innerHTML = found
+        ? `🚨 第 ${found.line} 行：${found.title}。<a href="scan.html">貼上你自己的程式檢查 →</a>`
+        : '';
+    });
+    window.Tour.register([
+      { tour: 'hero-demo', title: '先試試看', text: '按「體檢這段程式」，看 AI 寫的程式裡有什麼問題。想檢查自己的程式，到金鑰體檢站貼上來，免費、不用登入。' },
+    ]);
   })();
 </script>
-<script src="assets/js/marketing.js?v=202610301111"></script>
+<script src="assets/js/marketing.js?v=202610310903"></script>
 </body>
 </html>

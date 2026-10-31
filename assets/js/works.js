@@ -54,6 +54,14 @@
     </article>`;
   }
 
+  // 還沒有學員作品時，不放一排空格子，只放一個橫幅
+  function emptyBanner() {
+    return `<article class="wk-card wk-seat" style="grid-column:1/-1;min-height:0">
+      <h3>第一屆保留 ${SEATS} 個作品席次</h3>
+      <p>結業時，你的作品會放在這裡：作品名稱、你想給誰用、做了多久，以及可以點開來看的連結。先看下面講師示範的作品，了解這門課做得出什麼。</p>
+    </article>`;
+  }
+
   function renderSubmit() {
     const host = $('[data-wk-submit]');
     const how = SUBMIT.formUrl
@@ -74,7 +82,7 @@
     const seats = Math.max(0, SEATS - STUDENT_WORKS.length);
     $('[data-wk-students]').innerHTML =
       STUDENT_WORKS.map((w) => card(w, 'student')).join('') +
-      Array.from({ length: seats }, (_, i) => seat(STUDENT_WORKS.length + i)).join('');
+      (STUDENT_WORKS.length ? Array.from({ length: seats }, (_, i) => seat(STUDENT_WORKS.length + i)).join('') : emptyBanner());
     $('[data-wk-demos]').innerHTML = DEMOS.map((w) => card(w, 'demo')).join('');
     $('[data-wk-count]').textContent = STUDENT_WORKS.length
       ? `目前 ${STUDENT_WORKS.length} 件學員作品，還有 ${seats} 個位子`

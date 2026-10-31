@@ -158,9 +158,9 @@
             <button type="button" data-mode="teacher" aria-pressed="false">講師</button>
           </div>
           <a class="btn btn-sm btn-ghost${pageKey === 'learn' ? ' is-here' : ''}" href="${base}learn.html#map" data-tour="map-link"${pageKey === 'learn' ? ' aria-current="page"' : ''} title="所有單元的清單，可以跳著上">${ico('map')}課程地圖</a>
-          <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" title="投影模式（快捷鍵 P）">${ico('screen')}投影</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-action="present" data-tour="present" data-teacher-only hidden title="投影模式（快捷鍵 P）">${ico('screen')}投影</button>
           <button type="button" class="btn btn-sm btn-ghost" data-action="presenter" data-teacher-only hidden title="開一個只有你看得到的提詞視窗：講師提示、下一段、計時（快捷鍵 S）">${ico('mic')}提詞</button>
-          <a class="btn btn-sm btn-ghost${pageKey === 'quizshow' ? ' is-here' : ''}" href="${base}quizshow.html" data-tour="quizshow"${pageKey === 'quizshow' ? ' aria-current="page"' : ''} title="課堂搶答：投影出來，學員舉手作答">${ico('target')}搶答</a>
+          <a class="btn btn-sm btn-ghost${pageKey === 'quizshow' ? ' is-here' : ''}" href="${base}quizshow.html" data-tour="quizshow" data-teacher-only hidden${pageKey === 'quizshow' ? ' aria-current="page"' : ''} title="課堂搶答：投影出來，學員舉手作答">${ico('target')}搶答</a>
           ${current ? `<button type="button" class="btn btn-sm btn-ghost" data-action="print" data-tour="print" title="打開這個單元的紙本講義（2～4 張 A4）">${ico('print')}講義</button>` : ''}
           <a class="btn btn-sm btn-ghost" href="${base}glossary.html${current ? `?from=${current.id}` : ''}" data-tour="glossary" title="看不懂的專業名詞，這裡查">${ico('book')}名詞</a>
           <a class="btn btn-sm btn-ghost${pageKey === 'board' ? ' is-here' : ''}" href="${base}board.html" data-tour="board-link"${pageKey === 'board' ? ' aria-current="page"' : ''} title="開通的學員和講師一起討論：卡關求救、分享作品">${ico('chat')}留言板</a>
