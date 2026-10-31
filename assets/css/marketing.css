@@ -131,6 +131,11 @@
 .mk .mk-list span { color: #6b6880; }
 .mk .mk-note { margin: 12px 0 0; font-size: .74rem; color: #17835a; font-weight: 700; }
 .mk .mk-window { margin-bottom: 34px; }
+.mk .mk-code { margin: 0 0 12px; padding: 12px 14px; border-radius: 6px; background: #1d2327; color: #eef2f3; font: .8rem/1.6 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.mk .mk-found { margin-top: 12px; font-size: .84rem; font-weight: 700; color: #b42318; }
+.mk .mk-found:empty { display: none; }
+.mk .mk-found a { color: #1d4ed8; }
+
 
 .mk .mk-chat {
   position: absolute; right: 0; bottom: 0; width: min(280px, 88%);
