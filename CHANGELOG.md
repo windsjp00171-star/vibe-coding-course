@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] — 2026-11-22
+
+### Added
+- 課程結構化資料加上講師（EMMARK，連到作品集與 GitHub）；課程介紹頁的「講師」段落寫出講師名稱
+
 ## [Unreleased] — 2026-11-21
 
 ### Added
