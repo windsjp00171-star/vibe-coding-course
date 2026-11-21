@@ -1,0 +1,22 @@
+# Vibe Coding 實戰課
+
+> 給非軟體背景上班族的 AI 課程：兩種選擇——用 Claude Code 做出自己的網站與工具，或半日「AI 資安意識」全員內訓，教變臉詐騙怎麼防。
+
+給沒有技術背景的上班族：用 Claude Code 做出真的上線的小工具，同時學會不被 AI 騙。教材全部來自講師 17 個真實上線專案與 27 個踩過的坑。
+
+## 頁面
+
+- [Vibe Coding 實戰課｜用 AI 做出自己的工具，也學會不被 AI 詐騙](https://windsjp00171-star.github.io/vibe-coding-course/): 給非軟體背景上班族的 AI 課程：兩種選擇——用 Claude Code 做出自己的網站與工具，或半日「AI 資安意識」全員內訓，教變臉詐騙怎麼防。
+- [課程介紹｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/enroll.html): 給非工程師上班族的 Vibe Coding 實戰課：四個半天做出一個真的上線、同事能一起用的小系統，並學會 AI 時代最該懂的資安。含課程大綱、上課方式、費用與報名方式。
+- [AI 資安意識．半日課｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/security.html): 三小時、不用電腦的企業與機構內訓：AI 變臉變聲詐騙怎麼防、AI 會被騙、公司的祕密怎麼保管。含模擬演練，結訓帶走一條可以公告的匯款查核規則。
+- [課程教材｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/learn.html): 給非軟體背景上班族的 Vibe Coding 課程：安裝 Claude Code、Git 與 GitHub、部署上線、AI 資安，翻轉教室互動教材。
+- [踩坑圖鑑｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/pitfalls.html): 講師用 Vibe Coding 做了 17 個專案，真實踩過的 27 個坑：時區、LINE 與 iPhone、靜默失敗、AI 服務、個資、使用者體驗、上線快取。
+- [金鑰體檢站｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/scan.html): AI 幫你寫的程式，有沒有把密碼、金鑰直接寫進去？貼上來 30 秒檢查。免費、不用登入，內容只在你的瀏覽器裡處理，不會上傳。
+- [名詞小辭典｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/glossary.html): Vibe Coding 常見專業名詞的白話解釋：Git、部署、API 金鑰、RLS、Webhook、PWA……看不懂的詞，這裡都有生活比喻。
+- [那通電話裡的人，可能不是本人｜AI 資安講座](https://windsjp00171-star.github.io/vibe-coding-course/church.html): 教會、協會的 90 分鐘 AI 資安講座：變臉、變聲、假公文怎麼防。五個警訊、兩道防線、萬一匯出去了先做哪四件事，以及可以帶回家的自保卡。
+- [圖解：LINE Developers 從零開始｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/guide-line.html): 完全沒用過 LINE Developers 也看得懂：登入、建 Provider、建官方帳號、抄秘密、接 Webhook、關掉自動回應、加好友設定主人，以及 LINE 登入的設定，每一步都有圖、標出要按哪裡。
+- [圖解：Supabase 從零開始｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/guide-supabase.html): 完全沒用過 Supabase 也看得懂：註冊、建專案、貼 SQL、找鑰匙、設定登入網址、看資料、放後端小程式、看錯誤，每一步都有圖、標出要按哪裡。
+- [圖解：Vercel 部署 LINE 小秘書｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/guide-vercel.html): 完全沒用過 Vercel 也看得懂：Fork 講師的開源小秘書、拿 Gemini 金鑰、在 Vercel 填環境變數部署、用設定精靈把每一項變綠色、設定主人、用 cron-job.org 讓提醒準時，每一步都有圖、標出要按哪裡。
+- [隱私權政策｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/privacy.html): Vibe Coding 實戰課網站收集哪些資料、用在哪裡、存在哪裡，以及如何刪除。
+- [結業證明查證｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/verify.html): 輸入結業證明編號，確認這張 Vibe Coding 實戰課證明是否由本課程核發。
+- [學員作品牆｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/works.html): Vibe Coding 實戰課學員結業時做出來的東西。第一屆開課前先放講師示範作品，位子留給學員。

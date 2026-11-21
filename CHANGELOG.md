@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased] — 2026-11-21
+
+### Added
+- 對外的 14 個頁面都加上 canonical 網址：從 Facebook 分享出去、網址後面帶著 `?code=` 或 `fbclid=` 的連結，搜尋引擎會認回同一頁
+- 首頁加上 `Course` 結構化資料、課程介紹頁加上 `FAQPage` 結構化資料（內容直接取自頁面上的常見問題，「發票／收據」那題還沒填所以先不放），讓 Google 與 AI 搜尋能正確描述這門課
+- 新增 `sitemap.xml` 與給 AI 看的 `llms.txt`，列出 14 個對外頁面與各自的說明
+
+### Changed
+- 首頁的「講師模式」區塊加上 `data-nosnippet`，搜尋結果不會引用「你是以講師身分登入的…」這段文字
+
 ## [Unreleased] — 2026-10-31
 
 ### Changed
