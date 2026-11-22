@@ -51,6 +51,8 @@
     { when: '2026/06', kind: 'tool', title: '個人作品集網站', desc: '從 Claude 對話產出的網頁，瘦身後放在 GitHub Pages。' },
     { when: '2026/07', kind: 'work', title: '小組共讀靈修', desc: '學生小組每天讀同一段經文、分享一句話，刻意不做排行榜。' },
     { when: '2026/07', kind: 'tool', title: '吉他鋼琴練習工具', desc: '和弦指法、掉落式練習，給初學者用的練習網站。' },
+    { when: '2026/09', kind: 'tool', title: 'Vibe Coding 實戰課', desc: '就是你現在看的這個課程網站：教材、互動練習、講師模式和學習單都在這裡。' },
+    { when: '2026/10', kind: 'fun', title: '宣教之路', desc: '以使徒行傳為背景的像素風遊戲，手機、電腦都能玩，兩週存檔超過 140 次。' },
   ];
 
   function renderWall(kind) {
@@ -81,7 +83,7 @@
   window.Tour.register([
     { tour: 'drivers', title: '三種開車方式', text: '先點三張卡片翻面，看看用 AI 寫程式的三種態度。' },
     { tour: 'classify', title: '分類挑戰', text: '讀情境、選答案，選完會馬上看到解說。' },
-    { tour: 'wall', title: '講師作品牆', text: '講師 9 個月內做的 17 個專案，上面的按鈕可以篩選類型。' },
+    { tour: 'wall', title: '講師作品牆', text: '講師一年內做的 19 個專案，上面的按鈕可以篩選類型。' },
     { tour: 'fit', title: '適合嗎？', text: '學會判斷什麼題目適合 Vibe Coding，什麼要找專業的人。' },
     { tour: 'workshop', title: '課中工作坊', text: '上課時把你的煩惱改寫成一句話的題目，之後的單元都會用它練習。' },
     { tour: 'quiz', title: '小測驗', text: '答對 70% 就算過關。' },
