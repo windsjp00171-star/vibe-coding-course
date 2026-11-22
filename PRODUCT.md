@@ -53,7 +53,7 @@ web
 
 ## Evidence on Hand
 
-- 講師的真實上線專案與踩坑紀錄（網站文案：做過 19 個專案、14 個正常使用中（「正常使用中」＝作品集收錄的作品數，作品集加一件這裡就跟著改；2026-11-22 依作品集更新為 14，作品牆加上課程本身與宣教之路成為 19）、27 個踩過的坑；`pitfalls.html` 與 `assets/js/pitfalls-data.js`）。
+- 講師的真實上線專案與踩坑紀錄（網站文案：做過 19 個專案、14 個收進作品集（＝作品集收錄的作品數，作品集加一件這裡就跟著改；不寫「正常使用中」，因為美食獵人的線上版已下線；作品牆加上課程本身與宣教之路成為 19）、27 個踩過的坑；`pitfalls.html` 與 `assets/js/pitfalls-data.js`）。
 - 開源的 LINE AI 小秘書 [line-secretary-](https://github.com/windsjp00171-star/line-secretary-)，是 LINE 場的教材。
 - 分享預覽圖 `assets/img/og-*.jpg`、防詐小卡 `assets/files/ai-scam-card.pdf`。
 - 全課程題庫（`assets/js/quiz-bank.js`）、名詞小辭典資料（`assets/js/glossary-data.js`）。
