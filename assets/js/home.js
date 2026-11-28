@@ -67,7 +67,7 @@
     { glyph: '🎹', kind: '音樂工具', name: 'PitchPal', text: '自動偵測一首歌是什麼調（Key），再用滑桿一鍵移調。給敬拜團帶領者用。', hl: '放在 Hugging Face Spaces，任何人都能免費用', learn: ['m5'], demo: 'https://winds00171-pitchpal.hf.space/', code: 'https://github.com/windsjp00171-star/pitchpal', note: '⏳ 沒人用時會進入休眠，打開後要等它醒來（單元 5 會講為什麼）' },
     { glyph: '📖', kind: '聖經閱讀器', name: '聖經互動全書', text: '讀經時看不懂的人名、地名，點一下就跳出解釋和地圖。這個網站的「名詞小辭典」就是同一個點子。', hl: '字典→資料庫→AI 三層查詢，常見的詞不用每次都花錢問 AI', learn: ['m10'], demo: 'https://bibile-actionbook.vercel.app/', code: 'https://github.com/windsjp00171-star/bibile-actionbook' },
     { glyph: '🌱', kind: '小組共讀 App', name: '群體共讀靈修', text: '小組每天讀同一段經文、留下心得，用 LINE 登入，可以加到手機主畫面。', hl: '為了守住「經文不能被改」，親手拿掉一個功能：判斷比功能重要', learn: ['m13', 'm14'], code: 'https://github.com/windsjp00171-star/GROUP-Devotion', note: RETIRED },
-    { glyph: '🏛', kind: '整合平台', name: '教會整合管理系統（示範版）', text: '把靈修日記、小組回報、檔案分享、活動報名四個系統整合在一起。', hl: '講師最大的專案，約 4.4 萬行程式碼', learn: ['m11', 'm10'], code: 'https://github.com/windsjp00171-star/Church-Management-System-demo', note: RETIRED },
+    { glyph: '🏛', kind: '整合平台', name: '教會整合管理系統（示範版）', text: '把靈修日記、小組回報、檔案分享、活動報名等系統整合在一起，二十個功能模組由各單位自己決定要開哪些。', hl: '關掉的功能整塊消失，但資料照常保留和備份', learn: ['m11', 'm10'], code: 'https://github.com/windsjp00171-star/Church-Management-System-demo', note: RETIRED },
     { glyph: '🤖', kind: 'LINE Bot', name: 'EmmArk 小秘書', text: '在 LINE 上隨口說一句「週五下午三點開會」，它就記下來，時間到主動提醒你。開源，Fork 一份就是你的。', hl: 'LINE 場就是 Fork 它、再用 Claude Code 改成你的', learn: ['m12', 'm15'], code: 'https://github.com/windsjp00171-star/line-secretary-' },
   ];
 

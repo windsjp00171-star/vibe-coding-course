@@ -2,7 +2,7 @@
 
 > 給非軟體背景上班族的 AI 課程：兩種選擇——用 Claude Code 做出自己的網站與工具，或半日「AI 資安意識」全員內訓，教變臉詐騙怎麼防。
 
-給沒有技術背景的上班族：用 Claude Code 做出真的上線的小工具，同時學會不被 AI 騙。教材全部來自講師做過的 17 個專案（13 個正常使用中）與 27 個踩過的坑。
+給沒有技術背景的上班族：用 Claude Code 做出真的上線的小工具，同時學會不被 AI 騙。教材全部來自講師做過的 19 個專案（16 件收進作品集）與 27 個踩過的坑。
 
 ## 頁面
 
@@ -10,7 +10,7 @@
 - [課程介紹｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/enroll.html): 給非工程師上班族的 Vibe Coding 實戰課：四個半天做出一個真的上線、同事能一起用的小系統，並學會 AI 時代最該懂的資安。含課程大綱、上課方式、費用與報名方式。
 - [AI 資安意識．半日課｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/security.html): 三小時、不用電腦的企業與機構內訓：AI 變臉變聲詐騙怎麼防、AI 會被騙、公司的祕密怎麼保管。含模擬演練，結訓帶走一條可以公告的匯款查核規則。
 - [課程教材｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/learn.html): 給非軟體背景上班族的 Vibe Coding 課程：安裝 Claude Code、Git 與 GitHub、部署上線、AI 資安，翻轉教室互動教材。
-- [踩坑圖鑑｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/pitfalls.html): 講師用 Vibe Coding 做了 17 個專案，真實踩過的 27 個坑：時區、LINE 與 iPhone、靜默失敗、AI 服務、個資、使用者體驗、上線快取。
+- [踩坑圖鑑｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/pitfalls.html): 講師用 Vibe Coding 做了 19 個專案，真實踩過的 27 個坑：時區、LINE 與 iPhone、靜默失敗、AI 服務、個資、使用者體驗、上線快取。
 - [金鑰體檢站｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/scan.html): AI 幫你寫的程式，有沒有把密碼、金鑰直接寫進去？貼上來 30 秒檢查。免費、不用登入，內容只在你的瀏覽器裡處理，不會上傳。
 - [名詞小辭典｜Vibe Coding 實戰課](https://windsjp00171-star.github.io/vibe-coding-course/glossary.html): Vibe Coding 常見專業名詞的白話解釋：Git、部署、API 金鑰、RLS、Webhook、PWA……看不懂的詞，這裡都有生活比喻。
 - [那通電話裡的人，可能不是本人｜AI 資安講座](https://windsjp00171-star.github.io/vibe-coding-course/church.html): 教會、協會的 90 分鐘 AI 資安講座：變臉、變聲、假公文怎麼防。五個警訊、兩道防線、萬一匯出去了先做哪四件事，以及可以帶回家的自保卡。

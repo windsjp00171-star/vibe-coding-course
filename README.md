@@ -63,3 +63,7 @@ tests/                  單元測試
 ## 關於案例
 
 教材中的案例來自講師用 Vibe Coding 做過的真實專案。為保護使用單位，私人專案一律匿名化，不含程式碼、網址或組織名稱。
+
+---
+
+作者 EMMARK 的其他作品與履歷：[作品集](https://windsjp00171-star.github.io/CLAUDE-DESIGN/)
